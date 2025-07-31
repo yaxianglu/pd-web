@@ -1,5 +1,5 @@
 import React from "react";
-import png2 from '../asserts/2.svg';
+import png2 from '../asserts/2-white.svg';
 import './BrandCompareTable.scss';
 import CardWrapper from "../components/card-wrapper";
 
