@@ -1,0 +1,749 @@
+.step3-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: white;
+}
+
+.step3-content {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+}
+
+/* 顶部信息区 */
+.step3-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 12px 16px;
+  background-color: rgba(0, 0, 0);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.step-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.step-number {
+  font-size: 12px;
+  font-weight: bold;
+  text-align: left;
+  letter-spacing: 1px;
+}
+
+.step-instruction {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.5;
+  text-align: left;
+  max-width: 400px;
+}
+
+.mobile-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 12px 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  min-width: 120px;
+
+  .mobile-icon {
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+
+  span {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    line-height: 1.3;
+  }
+}
+
+/* 中部拍照区域 */
+.camera-area {
+  flex: 1;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #1a1a1a;
+  min-height: 0; /* 移除固定高度，让容器自适应 */
+}
+
+.camera-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%; /* 使用padding-bottom: 100%来创建正方形 */
+}
+
+.camera-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background-color: #000;
+}
+
+.camera-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1a1a1a;
+}
+
+.placeholder-text {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+}
+
+
+.smile-curve {
+  position: absolute;
+  width: 60%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgb(83, 222, 210), transparent);
+  border-radius: 1px;
+}
+
+.smile-curve.top {
+  top: 30%;
+  left: 20%;
+  transform: rotate(-5deg);
+}
+
+.smile-curve.bottom {
+  bottom: 30%;
+  left: 20%;
+  transform: rotate(5deg);
+}
+
+.grid-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.grid-line {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.grid-line.horizontal {
+  width: 100%;
+  height: 1px;
+}
+
+.grid-line.horizontal:nth-child(1) {
+  top: 25%;
+}
+
+.grid-line.horizontal:nth-child(2) {
+  top: 75%;
+}
+
+.grid-line.vertical {
+  width: 1px;
+  height: 100%;
+}
+
+.grid-line.vertical:nth-child(3) {
+  left: 25%;
+}
+
+.grid-line.vertical:nth-child(4) {
+  left: 75%;
+}
+
+/* 姿势提示图标 */
+.posture-hint {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+}
+
+.posture-hint-tishi-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto !important;
+  z-index: 999;
+}
+
+/* 左上角案例照片样式 */
+.example-photo-corner {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background-color: #858585;
+}
+
+.posture-hint-small {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+/* 底部操作区 */
+.step3-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 10px;
+}
+
+/* 照片缩略图区域 */
+.photo-thumbnails {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.thumbnail-container {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  border: 2px solid transparent;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  &.active {
+    border-color: rgb(83, 222, 210);
+    box-shadow: 0 0 0 2px rgba(83, 222, 210, 0.3);
+  }
+}
+
+.thumbnail-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+
+  .thumbnail-container:hover & {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  .thumbnail-container.active & {
+    background-color: rgba(83, 222, 210, 0.1);
+    border-color: rgba(83, 222, 210, 0.5);
+    color: rgb(83, 222, 210);
+  }
+}
+
+.thumbnail-photo {
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .delete-photo {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #ff4757;
+    color: white;
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 10;
+
+    &:hover {
+      background-color: #ff3742;
+      transform: scale(1.1);
+    }
+  }
+}
+
+/* 拍照控制按钮 */
+.capture-controls {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.gallery-button {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 120px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.capture-button {
+  background-color: rgb(83, 222, 210);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 40px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 140px;
+
+  &:hover {
+    background-color: rgb(72, 210, 198);
+  }
+}
+
+.exit-camera-button {
+  background-color: #fff;
+  color: #333;
+  border: 1.5px solid rgba(83, 222, 210, 0.3);
+  border-radius: 8px;
+  padding: 14px 40px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 140px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  margin-left: 12px;
+
+  &:hover {
+    background-color: #f5f5f5;
+    border-color: rgb(83, 222, 210);
+    color: #1bb5a3;
+  }
+}
+
+/* 示例照片样式 */
+.example-photo {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%; /* 使用padding-bottom: 100%来创建正方形 */
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+
+/* 导航按钮 */
+.step3-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.step3-prev-button,
+.step3-next-button {
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  width: 120px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step3-prev-button {
+  background-color: rgb(83, 222, 210);
+  color: white;
+
+  &:hover {
+    background-color: rgb(72, 210, 198);
+  }
+}
+
+.step3-next-button {
+  background-color: rgb(83, 222, 210);
+  color: white;
+
+  &:hover:not(:disabled) {
+    background-color: rgb(72, 210, 198);
+  }
+
+  &:disabled {
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: not-allowed;
+  }
+}
+
+/* 移动端响应式布局 */
+@media screen and (max-width: 768px) {
+  .step3-wrapper {
+    padding: 14px;
+  }
+
+  .step3-content {
+    gap: 14px;
+  }
+
+  .step3-header {
+    padding: 14px;
+    margin-bottom: 14px;
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .step-number {
+    font-size: 18px;
+  }
+
+  .step-instruction {
+    font-size: 14px;
+    max-width: 100%;
+  }
+
+  .mobile-prompt {
+    padding: 10px 14px;
+    min-width: 100px;
+
+    .mobile-icon {
+      font-size: 18px;
+    }
+
+    span {
+      font-size: 11px;
+    }
+  }
+
+  .camera-area {
+    min-height: 0;
+  }
+
+  .step3-footer {
+    gap: 14px;
+    padding: 0 5px;
+  }
+
+  .photo-thumbnails {
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .thumbnail-container {
+    width: 50px;
+    height: 50px;
+  }
+
+  .thumbnail-placeholder {
+    font-size: 14px;
+  }
+
+  .thumbnail-photo .delete-photo {
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+  }
+
+  .capture-controls {
+    gap: 10px;
+    flex-direction: column;
+  }
+
+  .gallery-button {
+    padding: 10px 16px;
+    font-size: 13px;
+    min-width: 120px;
+    height: 44px;
+  }
+
+  .capture-button {
+    padding: 12px 30px;
+    font-size: 14px;
+    min-width: 120px;
+    height: 44px;
+  }
+
+  .exit-camera-button {
+    padding: 12px 30px;
+    font-size: 14px;
+    min-width: 120px;
+    height: 44px;
+  }
+
+  .example-text {
+    font-size: 14px;
+    padding: 14px;
+  }
+
+  .step3-buttons {
+    gap: 14px;
+  }
+
+  .step3-prev-button,
+  .step3-next-button {
+    padding: 10px 25px;
+    font-size: 14px;
+    width: 100px;
+    height: 44px;
+  }
+
+  .example-photo-corner {
+    top: 14px;
+    left: 14px;
+    width: 60px;
+    height: 60px;
+  }
+}
+
+/* 小屏幕手机端优化 */
+@media screen and (max-width: 480px) {
+  .step3-wrapper {
+    padding: 10px;
+  }
+
+  .step3-content {
+    gap: 12px;
+  }
+
+  .step3-header {
+    padding: 12px;
+    margin-bottom: 12px;
+    gap: 12px;
+  }
+
+  .step-number {
+    font-size: 14px;
+  }
+
+  .step-instruction {
+    font-size: 13px;
+  }
+
+  .mobile-prompt {
+    padding: 8px 12px;
+    min-width: 90px;
+
+    .mobile-icon {
+      font-size: 14px;
+    }
+
+    span {
+      font-size: 10px;
+    }
+  }
+
+  .camera-area {
+    min-height: 0;
+  }
+
+  .step3-footer {
+    gap: 12px;
+  }
+
+  .photo-thumbnails {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .thumbnail-container {
+    width: 45px;
+    height: 45px;
+  }
+
+  .thumbnail-placeholder {
+    font-size: 14px;
+  }
+
+  .thumbnail-photo .delete-photo {
+    width: 14px;
+    height: 14px;
+    font-size: 11px;
+  }
+
+  .capture-controls {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .gallery-button {
+    padding: 8px 14px;
+    font-size: 12px;
+    min-width: 120px;
+    height: 40px;
+  }
+
+  .capture-button {
+    padding: 10px 25px;
+    font-size: 14px;
+    min-width: 120px;
+    height: 40px;
+  }
+
+  .exit-camera-button {
+    padding: 10px 25px;
+    font-size: 14px;
+    min-width: 120px;
+    height: 40px;
+  }
+
+  .example-text {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .step3-buttons {
+    gap: 12px;
+  }
+
+  .step3-prev-button,
+  .step3-next-button {
+    padding: 8px 20px;
+    font-size: 14px;
+    width: 120px;
+    height: 40px;
+  }
+
+  .example-photo-corner {
+    top: 10px;
+    left: 10px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.thumbnail-container.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.gallery-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(0.3);
+}
+
+.qr-fullscreen-mask {
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s;
+}
+
+.qr-fullscreen-mask img {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  background: #fff;
+}
+
+.qr-fullscreen-tip {
+  color: #fff;
+  margin-top: 24px;
+  font-size: 14px;
+  opacity: 0.8;
+  letter-spacing: 2px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

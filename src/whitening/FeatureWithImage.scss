@@ -1,0 +1,113 @@
+.feature-with-image {
+  width: 100vw;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  font-family: 'PingFang SC', 'PingFang TC', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  box-sizing: border-box;
+
+  .content-container {
+    max-width: 1080px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 80px;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      padding: 0 20px;
+    }
+  }
+
+  .left-content {
+    flex: 3;
+
+    .feature-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 24px 36px;
+      padding-right: 30px;
+
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding-right: 0;
+      }
+
+      .feature-item {
+        .icon-section {
+          display: flex;
+          align-items: center;
+          margin-bottom: 14px;
+
+          .feature-icon {
+            width: 40px;
+          }
+
+          .feature-title {
+            font-weight: bold;
+            font-size: 20px;
+            margin-left: 10px;
+          }
+        }
+
+        .feature-subtitle {
+          font-size: 17px;
+          font-weight: 600;
+          margin-bottom: 6px;
+          text-align: left;
+        }
+
+        .feature-description {
+          color: #686868;
+          font-size: 14px;
+          line-height: 1.7;
+          text-align: left;
+        }
+      }
+
+      .divider {
+        grid-column: 1 / 4;
+        border-bottom: 2px solid #40c8cc;
+        margin: 20px 0 4px 0;
+
+        @media (max-width: 768px) {
+          grid-column: 1 / 2;
+        }
+      }
+    }
+  }
+
+  .right-image {
+    flex: 2;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 0;
+    min-height: 440px;
+    position: relative;
+    display: none; // 暂时隐藏右侧图片区域
+
+    .background-circle {
+      position: absolute;
+      right: 0;
+      width: 540px;
+      height: 540px;
+      border-radius: 50%;
+      top: 50%;
+      transform: translateY(-55%);
+      z-index: 1;
+    }
+
+    .product-image {
+      width: 460px;
+      height: auto;
+      position: relative;
+      z-index: 2;
+      object-fit: contain;
+    }
+  }
+} 

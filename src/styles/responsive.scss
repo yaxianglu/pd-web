@@ -1,0 +1,157 @@
+// 响应式断点
+$mobile-breakpoint: 768px;
+$tablet-breakpoint: 1024px;
+$desktop-breakpoint: 1025px;
+
+// 响应式混入
+@mixin mobile {
+  @media (max-width: $mobile-breakpoint) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$mobile-breakpoint + 1px}) and (max-width: $tablet-breakpoint) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $desktop-breakpoint) {
+    @content;
+  }
+}
+
+@mixin tablet-and-up {
+  @media (min-width: #{$mobile-breakpoint + 1px}) {
+    @content;
+  }
+}
+
+@mixin mobile-and-tablet {
+  @media (max-width: $tablet-breakpoint) {
+    @content;
+  }
+}
+
+// 响应式工具类
+.responsive-container {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+  
+  @include mobile {
+    padding: 0 16px;
+    max-width: 100%;
+  }
+  
+  @include tablet {
+    padding: 0 40px;
+    max-width: 90%;
+  }
+  
+  @include desktop {
+    padding: 0;
+    max-width: 1080px;
+  }
+}
+
+// 隐藏/显示工具类
+.hide-mobile {
+  @include mobile {
+    display: none !important;
+  }
+}
+
+.hide-tablet {
+  @include tablet {
+    display: none !important;
+  }
+}
+
+.hide-desktop {
+  @include desktop {
+    display: none !important;
+  }
+}
+
+.show-mobile {
+  display: none !important;
+  
+  @include mobile {
+    display: block !important;
+  }
+}
+
+.show-tablet {
+  display: none !important;
+  
+  @include tablet {
+    display: block !important;
+  }
+}
+
+.show-desktop {
+  display: none !important;
+  
+  @include desktop {
+    display: block !important;
+  }
+}
+
+// 响应式文本大小
+.responsive-text {
+  font-size: 16px;
+  
+  @include mobile {
+    font-size: 14px;
+  }
+  
+  @include tablet {
+    font-size: 15px;
+  }
+  
+  @include desktop {
+    font-size: 16px;
+  }
+}
+
+// 响应式间距
+.responsive-spacing {
+  padding: 20px;
+  
+  @include mobile {
+    padding: 16px;
+  }
+  
+  @include tablet {
+    padding: 24px;
+  }
+  
+  @include desktop {
+    padding: 32px;
+  }
+}
+
+// 响应式网格
+.responsive-grid {
+  display: grid;
+  gap: 20px;
+  
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  
+  @include desktop {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+} 

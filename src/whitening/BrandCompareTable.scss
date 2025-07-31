@@ -1,0 +1,179 @@
+.brand-compare-table {
+  width: 100%;
+  background: #fff;
+  font-family: 'PingFang SC', 'PingFang TC', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+
+  .compare-container {
+    width: 100%;
+    max-width: 1080px;
+    margin: 35px auto 0 auto;
+    text-align: center;
+
+    .compare-title {
+      font-size: 27px;
+      font-weight: bold;
+      margin: 0 0 24px 0;
+      letter-spacing: 1px;
+      text-align: left;
+    }
+
+    .table-wrapper {
+      margin: 0 auto;
+      margin-top: 28px;
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      display: inline-block;
+      width: 100%;
+
+      .brand-header {
+        display: flex;
+        align-items: end;
+        justify-content: end;
+
+        .empty-cell {
+          width: 80px;
+          min-width: 80px;
+        }
+
+        .brand-cell {
+          flex: 1;
+          width: 221px;
+          max-width: 221px;
+          padding: 0 8px;
+          height: 56px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #fff;
+          font-weight: bold;
+          font-size: 20px;
+          border-radius: 12px;
+          border-bottom-right-radius: 0;
+          border-bottom-left-radius: 0;
+          border: 1px solid #ededed;
+          border-bottom: none;
+
+          &.active {
+            background: #47d3cf;
+            font-weight: bold;
+            font-size: 20px;
+          }
+
+          &.inactive {
+            background: #484848;
+            font-weight: 500;
+            font-size: 18px;
+            height: 40px;
+          }
+
+          .brand-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            img {
+              width: 24px;
+              height: 24px;
+              margin-right: 8px;
+            }
+
+            span {
+              letter-spacing: 1px;
+              font-size: 14px;
+            }
+          }
+        }
+      }
+
+      .compare-table {
+        border-collapse: separate;
+        border-spacing: 0;
+        width: 100%;
+        background: #fff;
+
+        tbody {
+          tr {
+            height: 56px;
+
+            .category-cell {
+              color: #fff;
+              font-weight: bold;
+              font-size: 14px;
+              writing-mode: vertical-rl;
+              line-height: 1.5;
+              text-orientation: mixed;
+              text-align: center;
+              vertical-align: middle;
+              border-top-left-radius: 6px;
+              border-bottom-left-radius: 6px;
+              width: 60px;
+              padding: 0;
+              border-right: 2px solid #fff;
+
+              &.quality {
+                background: #78a9ee;
+                letter-spacing: 12px;
+              }
+
+              &.pricing {
+                background: #b7d257;
+                letter-spacing: 1px;
+              }
+
+              &.technology {
+                background: #f19b43;
+                letter-spacing: 12px;
+              }
+            }
+
+            .metric-cell {
+              font-weight: 500;
+              font-size: 14px;
+              padding: 0 20px;
+              background: #f9f9f9;
+              color: #555;
+              border-bottom: 3px solid #fff;
+              min-width: 110px;
+              text-align: left;
+
+              &.last-row {
+                border-bottom: none;
+              }
+            }
+
+            .brand-cell {
+              background: #fafafa;
+              border-bottom: 3px solid #fff;
+              border-left: 3px solid #fff;
+              min-width: 200px;
+              max-width: 200px;
+              text-align: center;
+              padding: 12px 16px;
+              font-size: 14px;
+              line-height: 1.4;
+              color: #333;
+              vertical-align: middle;
+
+              .cell-content {
+                word-wrap: break-word;
+                word-break: break-word;
+                white-space: pre-line;
+                text-align: center;
+                line-height: 1.4;
+                font-weight: 500;
+                font-size: 14px;
+                padding: 0 20px;
+                color: #555;
+              }
+
+              &.last-row {
+                border-bottom: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+} 

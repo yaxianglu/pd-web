@@ -1,0 +1,197 @@
+
+.content-wrapper {
+  display: flex;
+  margin-bottom: 60px;
+  align-items: flex-start;
+  flex-direction: column;
+
+  .treatment-phase {
+    flex: 1;
+    width: 100%;
+
+    .phase-box {
+      background: linear-gradient(135deg, #78a9ee 0%, #5b9bd5 100%);
+      padding: 32px 0 16px 64px;
+      color: #fff;
+      display: flex;
+      justify-content: left;
+
+      .phase-number {
+        font-size: 100px;
+        margin-bottom: 14px;
+        line-height: 1;
+        margin-right: 24px;
+      }
+
+      .phase-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .phase-title {
+        font-size: 32px;
+        margin-bottom: 8px;
+        letter-spacing: 0.5px;
+        text-align: left;
+      }
+
+      .phase-description {
+        font-size: 14px;
+        line-height: 1.6;
+        margin: 0;
+        text-align: left;
+        color: black;
+        opacity: 0.5;
+      }
+    }
+  }
+
+
+    .condition-item {
+      width: 100%;
+      padding: 32px 0 16px 64px;
+      position: relative;
+      display: flex;
+      justify-content: end;
+      flex: 1 0 160px;
+      align-items: end;
+
+      .condition-number {
+        font-size: 120px;
+        line-height: 1;
+        position: absolute;
+        right: 200px;
+        color: rgba(0, 0, 0, 0.05);
+      }
+
+      .condition-content {
+        z-index: 999;
+        width: 300px;
+        .condition-title {
+          font-size: 32px;
+          margin-bottom: 8px;
+          letter-spacing: 0.5px;
+          text-align: left;
+          display: inline-block;
+          width: 100%;
+        }
+
+        .condition-description {
+          font-size: 14px;
+          line-height: 1.6;
+          margin: 0;
+          text-align: left;
+          color: black;
+          opacity: 0.5;
+          text-align: left;
+        }
+      }
+    }
+  }
+// 响应式设计
+@media (max-width: 768px) {
+
+  .content-wrapper {
+    flex-direction: column;
+    gap: 40px;
+    flex-direction: column;
+
+    .treatment-phase {
+      flex: 1;
+      width: 100%;
+      .phase-box {
+        height: auto;
+        padding: 32px 24px;
+
+        .phase-number {
+          font-size: 36px;
+        }
+
+        .phase-title {
+          font-size: 20px;
+        }
+
+        .phase-description {
+          font-size: 14px;
+        }
+      }
+    }
+
+    .conditions-list {
+      gap: 24px;
+
+      .condition-item {
+        flex: 1;
+        width: 100%;
+        padding: 32px 0 16px 64px;
+        .condition-number {
+          width: 36px;
+          height: 36px;
+          font-size: 14px;
+        }
+
+        .condition-content {
+          .condition-title {
+            font-size: 18px;
+          }
+
+          .condition-description {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// 平板设备优化
+@media (min-width: 769px) and (max-width: 1024px) {
+  .content-wrapper {
+    gap: 40px;
+
+    .treatment-phase {
+      flex: 1;
+      width: 100%;
+
+      .phase-box {
+        padding: 32px 24px;
+        height: 240px;
+
+        .phase-number {
+          font-size: 40px;
+        }
+
+        .phase-title {
+          font-size: 20px;
+        }
+      }
+    }
+
+    .conditions-list {
+      gap: 28px;
+
+      .condition-item {
+        flex: 1;
+        width: 100%;
+        padding: 32px 0 16px 64px;
+
+        .condition-number {
+          width: 38px;
+          height: 38px;
+          font-size: 17px;
+        }
+
+        .condition-content {
+          .condition-title {
+            font-size: 18px;
+          }
+
+          .condition-description {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+} 

@@ -1,0 +1,39 @@
+.object-card {
+  flex: 1;
+  padding: 64px 24px;
+  border-radius: 14px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+
+  &.blue {
+    background: linear-gradient(135deg, #78a9ee 0%, #5b9bd5 100%);
+    color: #fff;
+  }
+
+  &.green {
+    background: linear-gradient(135deg, #b7d257 0%, #9acd32 100%);
+    color: #fff;
+  }
+
+  &.orange {
+    background: linear-gradient(135deg, #f19b43 0%, #ff8c00 100%);
+    color: #fff;
+  }
+
+  .card-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 14px;
+    letter-spacing: 0.5px;
+  }
+
+  .card-description {
+    font-size: 20px;
+    line-height: 1.6;
+    margin: 0;
+    opacity: 0.95;
+    border-top: 2px solid white;
+    padding-top: 14px;
+  }
+}

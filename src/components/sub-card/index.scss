@@ -1,0 +1,32 @@
+.sub-card-item {
+  flex: 1;
+  .icon-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 14px;
+
+    .sub-card-icon {
+      height: 24px;
+    }
+
+    .sub-card-title {
+      font-weight: bold;
+      font-size: 20px;
+      margin-left: 10px;
+    }
+  }
+
+  .sub-card-subtitle {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    text-align: left;
+  }
+
+  .sub-card-description {
+    color: #686868;
+    font-size: 14px;
+    line-height: 1.7;
+    text-align: left;
+  }
+}

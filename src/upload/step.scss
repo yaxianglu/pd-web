@@ -1,0 +1,47 @@
+.step-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  gap: 10px;
+  margin: 20px 0;
+  
+  .step-content {
+    height: 4px;
+    flex: 1;
+    background-color: rgba(255,255,255,0.5);
+    border-radius: 2px;
+    
+    &.step-content-active {
+      background-color: rgb(83, 222, 210);
+    }
+  }
+}
+
+/* 移动端响应式布局 */
+@media screen and (max-width: 768px) {
+  .step-wrapper {
+    gap: 8px;
+    margin: 14px 0;
+    width: 70%;
+    
+    .step-content {
+      height: 3px;
+      border-radius: 1.5px;
+    }
+  }
+}
+
+/* 小屏幕手机端优化 */
+@media screen and (max-width: 480px) {
+  .step-wrapper {
+    gap: 6px;
+    margin: 12px 0;
+    width: 70%;
+    
+    .step-content {
+      height: 2.5px;
+      border-radius: 1px;
+    }
+  }
+}

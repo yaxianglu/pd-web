@@ -1,0 +1,229 @@
+.plan-section {
+  width: 100%;
+  max-width: 1080px;
+  background: #fff;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+  margin: 0 auto;
+
+  .plan-container {
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding-top: 60px;
+
+    .plan-header {
+      display: flex;
+      margin-bottom: 60px;
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        margin-bottom: 40px;
+      }
+
+      .plan-title {
+        font-size: 27px;
+        font-weight: 600;
+        line-height: 1.5;
+        color: #111;
+        text-align: left;
+        letter-spacing: 1.1px;
+        margin-bottom: 24px;
+      }
+
+      .plan-description {
+        text-align: left;
+        font-size: 14px;
+        color: #666;
+        line-height: 1.5;
+        margin-left: 14px;
+
+        @media (max-width: 768px) {
+          margin-left: 0;
+          margin-top: 14px;
+        }
+      }
+    }
+
+    .plan-cards {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+      gap: 24px;
+
+      @media (max-width: 768px) {
+        gap: 14px;
+        margin-bottom: 24px;
+      }
+    }
+
+    .action-button {
+      text-align: center;
+      margin-top: 8px;
+
+      .cta-button {
+        background: #48d2ce;
+        color: #fff;
+        font-size: 20px;
+        padding: 13px 54px;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        letter-spacing: 1.5px;
+        cursor: pointer;
+        margin-top: 5px;
+        box-shadow: 0 2px 7px #e6e6e6;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: #3bb8b4;
+          box-shadow: 0 4px 12px #d0d0d0;
+        }
+
+        @media (max-width: 768px) {
+          font-size: 18px;
+          padding: 12px 40px;
+        }
+      }
+    }
+  }
+}
+
+.plan-card {
+  flex: 1;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+
+  @media (max-width: 768px) {
+    min-width: 280px;
+    max-width: 100%;
+  }
+
+  .card-header {
+    background: var(--card-color, #48d2ce);
+    width: 50%;
+    border-radius: 12px 12px 0 0;
+    color: #fff;
+    font-weight: bold;
+    font-size: 24px;
+    text-align: center;
+    padding: 8px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    margin-left: 14px;
+    position: relative;
+    z-index: 2;
+
+    .complexity-text {
+      font-size: 14px;
+      font-weight: 400;
+      margin-left: 8px;
+      letter-spacing: 1px;
+    }
+  }
+
+  .card-body {
+    padding: 25px 30px 22px 30px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1.5px solid #ededed;
+    background: #f8f8f8;
+    border-radius: 6px;
+    box-shadow: 0 2px 10px #eee;
+
+    .duration {
+      font-size: 28px;
+      color: #000;
+      padding-top: 8px;
+      font-weight: 500;
+      text-align: left;
+    }
+
+    .subtitle {
+      font-size: 17px;
+      color: #6b6b6b;
+      margin-bottom: 14px;
+      text-align: left;
+      margin-top: 14px;
+    }
+
+    .divider {
+      border-bottom: 1px solid #d8d8d8;
+      margin: 14px 0;
+    }
+
+    .price-container {
+      position: relative;
+      display: inline-block;
+      text-align: left;
+      width: 100%;
+      line-height: 2;
+
+      .price {
+        font-size: 42px;
+        margin: 7px 0 0 0;
+        color: #000;
+        font-weight: bold;
+        position: relative;
+        display: inline-block;
+
+        .badge-image {
+          position: absolute;
+          top: -20px;
+          right: -70px;
+          width: 60px;
+          height: auto;
+          z-index: 1;
+        }
+      }
+    }
+
+    .features-list {
+      padding: 0;
+      margin: 0 0 11px 0;
+      list-style: none;
+      color: #6b6b6b;
+      font-size: 14px;
+      text-align: left;
+      padding: 14px 0;
+      line-height: 1.5;
+
+      li {
+      }
+    }
+
+    .checks-list {
+      padding: 0;
+      margin: 24px 0 0 0;
+      list-style: none;
+      color: #000;
+      font-size: 14px;
+      text-align: left;
+
+      li {
+        display: flex;
+        align-items: center;
+        margin: 14px 0;
+
+        .check-icon {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: #18b166;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: 10px;
+          flex-shrink: 0;
+
+          svg {
+            width: 12px;
+            height: 12px;
+          }
+        }
+      }
+    }
+  }
+} 

@@ -1,0 +1,49 @@
+.card-wrapper {
+  width: 100%;
+  max-width: 1080px;
+  background: #fff;
+  font-family: 'PingFang SC', 'PingFang TC', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  box-sizing: border-box;
+  margin: 0 auto;
+  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+
+  @media (max-width: 768px) {
+    margin-top: 20px;
+  }
+
+  .card-wrapper-title {
+    font-size: 32px;
+    font-weight: bold;
+    line-height: 1.5;
+    color: #000;
+    text-align: left;
+    letter-spacing: 1.1px;
+    margin-bottom: 24px;
+    border-bottom: 2px solid #00beb5;
+    @media (max-width: 768px) {
+      margin-bottom: 40px;
+    }
+  }
+
+  .card-wrapper-subtitle {
+    text-align: left;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+    margin: 40px 0;
+    
+    @media (max-width: 768px) {
+      margin: 14px 0;
+      font-size: 14px;
+    }
+  }
+}
+
+.card-wrapper-content {
+  width: 100%;
+}

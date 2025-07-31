@@ -1,0 +1,72 @@
+.detail-button-wrapper {
+  text-align: center;
+  margin-top: 40px;
+
+  @media (max-width: 1024px) {
+    margin-top: 30px;
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 25px;
+  }
+
+  @media (max-width: 480px) {
+    margin-top: 20px;
+  }
+
+  .detail-button {
+    background: #48d2ce;
+    color: #fff;
+    font-size: 20px;
+    padding: 13px 54px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    box-shadow: 0 2px 7px #e6e6e6;
+    transition: all 0.3s ease;
+
+    @media (max-width: 1024px) {
+      font-size: 18px;
+      padding: 12px 48px;
+    }
+
+    @media (max-width: 768px) {
+      font-size: 16px;
+      padding: 10px 40px;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 14px;
+      padding: 8px 32px;
+      letter-spacing: 0.5px;
+    }
+
+    &:hover {
+      background: #3bb8b4;
+      box-shadow: 0 4px 12px #d0d0d0;
+    }
+  }
+
+  .detail-button-small {
+    font-size: 18px;
+    padding: 10px 30px;
+
+    @media (max-width: 1024px) {
+      font-size: 16px;
+      padding: 9px 26px;
+    }
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+      padding: 8px 22px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 12px;
+      padding: 6px 18px;
+    }
+  }
+}

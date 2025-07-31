@@ -1,0 +1,44 @@
+.correction-plan-card-section {
+  display: flex;
+  height: 300px;
+  border-radius: 14px;
+  overflow: hidden;
+
+  .correction-plan-card-section-item {
+    flex: 1 0;
+
+    &.correction-plan-card-section-item-1 {
+      background: rgba(99, 147, 241, 0.8);
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: start;
+      gap: 14px;
+      padding: 40px 20px;
+
+      .correction-plan-card-section-item-title {
+        width: 100%;
+        font-size: 24px;
+        font-weight: 600;
+        color: white;
+        text-align: left;
+        padding: 20px 30px;
+      }
+
+      .correction-plan-card-section-item-description {
+        width: 100%;
+        font-size: 14px;
+        line-height: 1.5;
+        text-align: left;
+        color: white;
+        padding: 0 30px;
+      }
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}

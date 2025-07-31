@@ -1,0 +1,325 @@
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  min-width: 1080px;
+  height: 64px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 80px;
+  box-sizing: border-box;
+  font-family: 'PingFang SC', 'PingFang TC', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  border-bottom: 1px solid #f0f0f0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.site-header.scrolled {
+  height: 52px;
+  padding: 0 60px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.08);
+}
+
+.header-left {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.scrolled .header-left {
+  flex: 0 0 auto;
+}
+
+.header-logo-img {
+  height: 32px;
+  width: auto;
+  display: block;
+  margin-right: 0;
+  transition: all 0.3s ease;
+}
+
+.scrolled .header-logo-img {
+  height: 28px;
+}
+
+.header-center {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  justify-content: center;
+  gap: 48px;
+  transition: all 0.3s ease;
+}
+
+.scrolled .header-center {
+  gap: 40px;
+}
+
+.brand-select {
+  background: #f8f9fa !important;
+  border-radius: 6px !important;
+  min-width: 140px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  transition: all 0.3s ease;
+}
+
+.scrolled .header-nav {
+  gap: 32px;
+}
+
+.header-nav a {
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s;
+  letter-spacing: 0.5px;
+  padding: 4px 12px;
+}
+
+.scrolled .header-nav a {
+  font-size: 14px;
+}
+
+.header-nav a:hover {
+  color: #00beb5;
+}
+
+.header-nav a.active {    font-weight: 600;
+  position: relative;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+.scrolled .header-nav a.active::after {
+  bottom: -6px;
+  width: 14px;
+}
+
+.test-btn {
+  margin-left: 0;
+  background: #00beb5;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 190, 181, 0.2);
+  transition: all 0.3s ease;
+}
+
+.scrolled .test-btn {
+  font-size: 14px;
+  padding: 6px 16px;
+}
+
+.test-btn .star {
+  font-size: 14px;
+  margin-left: 6px;
+  transition: all 0.3s ease;
+}
+
+.scrolled .test-btn .star {
+  font-size: 14px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-left: 0;
+  transition: all 0.3s ease;
+}
+
+.scrolled .header-right {
+  gap: 20px;
+}
+
+.lang-select {
+  background: #f8f9fa !important;
+  border-radius: 6px !important;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.login-btn {
+  background: none;
+  border: none;
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background .2s;
+}
+
+.scrolled .login-btn {
+  font-size: 14px;
+  padding: 5px 10px;
+}
+
+.login-btn:hover {
+  background: #f8f9fa;
+}
+
+/* 自定义Select组件样式 */
+.brand-select .ant-select-selector,
+.lang-select .ant-select-selector {
+  background: #f8f9fa !important;
+  border-radius: 6px !important;
+  height: 36px !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 12px !important;
+  box-shadow: none !important;
+  transition: all 0.2s ease !important;
+  border: none !important;
+}
+
+.scrolled .brand-select .ant-select-selector,
+.scrolled .lang-select .ant-select-selector {
+  height: 32px !important;
+  padding: 0 10px !important;
+}
+
+.brand-select .ant-select-selection-item,
+.lang-select .ant-select-selection-item {
+  color: #333 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  font-family: 'PingFang SC', 'PingFang TC', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+
+.scrolled .brand-select .ant-select-selection-item,
+.scrolled .lang-select .ant-select-selection-item {
+  font-size: 13px !important;
+}
+
+.brand-select .ant-select-arrow,
+.lang-select .ant-select-arrow {
+  color: #666 !important;
+  font-size: 12px !important;
+  transition: all 0.2s ease !important;
+  flex-shrink: 0 !important;
+}
+
+.scrolled .brand-select .ant-select-arrow,
+.scrolled .lang-select .ant-select-arrow {
+  font-size: 11px !important;
+}
+
+/* 移除默认的antd样式覆盖 */
+.ant-select-selector {
+  background: #f8f9fa !important;
+  border-radius: 6px !important;
+  height: 36px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.scrolled .ant-select-selector {
+  height: 32px !important;
+}
+
+.ant-select-selection-item {
+  color: #333 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;  
+  line-height: 1 !important;
+  transition: color 0.2s !important;
+  font-family: 'PingFang SC', 'PingFang TC', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+
+/* Dropdown箭头美化 */
+.ant-select-arrow {
+  color: #666 !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  flex-shrink: 0 !important;
+}
+
+@media (max-width: 1080px) {
+  .site-header { 
+    padding: 0 40px; 
+    min-width: auto;
+  }
+  .site-header.scrolled {
+    padding: 0 32px;
+  }
+  .header-center { gap: 32px; }
+  .header-nav { gap: 28px; }
+  .header-right { gap: 14px; }
+}
+
+@media (max-width: 768px) {
+  .site-header {
+    padding: 0 20px;
+    height: 56px;
+  }
+  .site-header.scrolled {
+    height: 48px;
+    padding: 0 16px;
+  }
+  .header-logo-img {
+    height: 28px;
+  }
+  .scrolled .header-logo-img {
+    height: 24px;
+  }
+  .header-center {
+    gap: 16px;
+  }
+  .scrolled .header-center {
+    gap: 12px;
+  }
+  .test-btn {
+    font-size: 13px;
+    padding: 6px 14px;
+  }
+  .scrolled .test-btn {
+    font-size: 12px;
+    padding: 5px 12px;
+  }
+  .header-right {
+    gap: 12px;
+  }
+  .scrolled .header-right {
+    gap: 10px;
+  }
+  .login-btn {
+    font-size: 13px;
+    padding: 4px 8px;
+  }
+  .scrolled .login-btn {
+    font-size: 12px;
+    padding: 3px 6px;
+  }
+}
+
+.ant-select-selector {
+  border: none !important;
+}

@@ -1,0 +1,9 @@
+.divider {
+  grid-column: 1 / 4;
+  border-bottom: 2px solid #40c8cc;
+  margin: 40px 0;
+
+  @media (max-width: 768px) {
+    grid-column: 1 / 2;
+  }
+}

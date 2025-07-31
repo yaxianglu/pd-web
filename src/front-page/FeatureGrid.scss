@@ -1,0 +1,413 @@
+@import '../common.scss';
+
+.feature-grid {
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: $margin-top;
+
+  @media (max-width: 768px) {
+    margin-top: $margin-top-little;
+  }
+
+  .grid-container {
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 35% 27% 38%;
+    grid-template-rows: 180px 180px 180px;
+    gap: 1.1%;
+    width: 100%;
+    max-width: 1080px;
+    min-width: 320px;
+    background: #fff;
+    margin: 0 auto;
+    box-sizing: border-box;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: 35% 27% 38%;
+      grid-template-rows: 160px 160px 160px;
+      width: 95%;
+      gap: 1%;
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: 35% 27% 38%;
+      grid-template-rows: 120px 120px 120px;
+      width: 98%;
+      gap: 0.8%;
+      padding: 0 10px;
+    }
+
+    @media (max-width: 480px) {
+      grid-template-columns: 35% 27% 38%;
+      grid-template-rows: 100px 100px 100px;
+      width: 100%;
+      gap: 0.5%;
+      padding: 0 5px;
+    }
+  }
+
+  .grid-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0;
+  }
+
+  .icon {
+    position: absolute;
+    
+    img {
+      max-width: 100%;
+      height: auto;
+      width: auto;
+    }
+  }
+
+  // 为不同网格项设置图标大小
+  .invisible-aligners .icon img {
+    width: 100%;
+    max-width: 240px;
+    
+    @media (max-width: 1024px) {
+      width: 20%;
+    }
+    
+    @media (max-width: 768px) {
+      width: 50%;
+    }
+  }
+
+  .orthodontics-beauty .icon img {
+    width: 100%;
+    max-width: 140px;
+    
+    @media (max-width: 1024px) {
+      width: 11%;
+    }
+    
+    @media (max-width: 768px) {
+      width: 50%;
+    }
+  }
+
+  .retainer .icon img {
+    width: 80%;
+    max-width: 150px;
+    
+    @media (max-width: 1024px) {
+      width: 50%;
+    }
+    
+    @media (max-width: 768px) {
+      width: 50%;
+    }
+  }
+
+  .smile-test img {
+    width: 50%;
+    max-width: 70px;
+    
+    @media (max-width: 1024px) {
+      width: 50%;
+    }
+    
+    @media (max-width: 768px) {
+      width: 50%;
+    }
+  }
+
+  .whitening-intro .icon img {
+    width: 90%;
+    max-width: 130px;
+    
+    @media (max-width: 1024px) {
+      width: 50%;
+    }
+    
+    @media (max-width: 768px) {
+      width: 50%;
+    }
+  }
+
+  // 隐形牙套
+  .invisible-aligners {
+    grid-column: 1/3;
+    grid-row: 1/2;
+    background: rgb(101, 141, 251);
+    padding: 12px;
+
+    @media (max-width: 1024px) {
+      padding: 3%;
+    }
+
+    @media (max-width: 768px) {
+      grid-column: 1/3;
+      grid-row: 1/2;
+      padding: 12px;
+    }
+
+    @media (max-width: 480px) {
+      padding: 1.5%;
+    }
+
+    .icon {
+      right: 4%;
+      bottom: 12%;
+      
+      @media (max-width: 1024px) {
+        right: 3%;
+        bottom: 3%;
+      }
+      
+      @media (max-width: 768px) {
+        right: 2%;
+        bottom: 12%;
+      }
+      
+      @media (max-width: 480px) {
+        right: 1%;
+        bottom: 1%;
+      }
+    }
+  }
+
+  // 正畸與美
+  .orthodontics-beauty {
+    grid-column: 3/4;
+    grid-row: 1/3;
+    background: #fd5b19;
+    padding: 12px;
+
+    @media (max-width: 1024px) {
+      padding: 3%;
+    }
+
+    @media (max-width: 768px) {
+      grid-column: 3/4;
+      grid-row: 1/3;
+      padding: 12px;
+    }
+
+    @media (max-width: 480px) {
+      padding: 1.5%;
+    }
+
+    .icon {
+      right: 4%;
+      top: 49%;
+      transform: translateY(-50%);
+      
+      @media (max-width: 1024px) {
+        right: 3%;
+      }
+      
+      @media (max-width: 768px) {
+        right: 2%;
+      }
+      
+      @media (max-width: 480px) {
+        right: 1%;
+      }
+    }
+  }
+
+  // 維持器
+  .retainer {
+    grid-column: 1/2;
+    grid-row: 2/3;
+    grid-area: 2/1/4/2;
+    background: #b7de18;
+    padding: 12px;
+
+    @media (max-width: 1024px) {
+      padding: 3%;
+    }
+
+    @media (max-width: 768px) {
+      grid-column: 1/2;
+      grid-row: 2/3;
+      grid-area: 2/1/4/2;
+      padding: 12px;
+    }
+
+    @media (max-width: 480px) {
+      padding: 1.5%;
+    }
+
+    .description {
+      font-size: 14px;
+      max-width: 80%;
+      
+      @media (max-width: 1024px) {
+        max-width: 85%;
+      }
+      
+      @media (max-width: 768px) {
+        max-width: 75%;
+      }
+      
+      @media (max-width: 480px) {
+        max-width: 70%;
+      }
+    }
+
+    .icon {
+      right: 4%;
+      bottom: 12%;
+      
+      @media (max-width: 1024px) {
+        right: 3%;
+        bottom: 3%;
+      }
+      
+      @media (max-width: 768px) {
+        right: 2%;
+        bottom: 12%;
+      }
+      
+      @media (max-width: 480px) {
+        right: 1%;
+        bottom: 1%;
+      }
+    }
+  }
+
+  // 微笑測試
+  .smile-test {
+    background: #5fdbd7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+
+    @media (max-width: 1024px) {
+      padding: 3%;
+    }
+
+    @media (max-width: 768px) {
+      grid-row: 2/3;
+      padding: 12px;
+    }
+
+    @media (max-width: 480px) {
+      padding: 1.5%;
+    }
+
+    .title {
+      margin-bottom: 10px;
+    }
+  }
+
+  // 美白介紹
+  .whitening-intro {
+    grid-column: 2/4;
+    grid-row: 3/4;
+    background: #fd9112;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    @media (max-width: 1024px) {
+      padding: 3%;
+    }
+
+    @media (max-width: 768px) {
+      grid-column: 2/4;
+      grid-row: 3/4;
+      padding: 12px;
+    }
+
+    @media (max-width: 480px) {
+      padding: 1.5%;
+    }
+
+    .icon {
+      right: 4%;
+      bottom: 12%;
+      
+      @media (max-width: 1024px) {
+        right: 3%;
+        bottom: 3%;
+      }
+      
+      @media (max-width: 768px) {
+        right: 2%;
+        bottom: 12%;
+      }
+      
+      @media (max-width: 480px) {
+        right: 1%;
+        bottom: 1%;
+      }
+    }
+  }
+} 
+
+// 通用样式类
+.grid-container-title {
+  font-weight: bold;
+  margin-bottom: 4px;
+  letter-spacing: 1px;
+  font-size: 20px;
+  text-align: left;
+  color: #fff;
+  
+  @media (max-width: 1024px) {
+    font-size: 18px;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 14px;
+  }
+}
+
+.description {
+  line-height: 1.2;
+  font-size: 14px;
+  text-align: left;
+  margin-top: 12px;
+  color: #fff;
+  
+  @media (max-width: 1024px) {
+    font-size: 13px;
+    margin-top: 10px;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 12px;
+    margin-top: 8px;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 11px;
+    margin-top: 6px;
+  }
+}
+
+.grid-container-title-medium {
+  font-size: 25px;
+}
+
+.grid-container-title-small {
+  font-size: 20px;
+}
+
+// 不同尺寸的description变体
+.description-large {
+  font-size: 14px;
+}
+
+.description-medium {
+  font-size: 14px;
+}
+
+.description-small {
+  font-size: 14px;
+} 

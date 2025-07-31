@@ -1,0 +1,171 @@
+.image-compare-slider {
+  width: 100%;
+  background: #fff;
+  font-family: 'PingFang SC', 'PingFang TC', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  height: 100%;
+
+  .slider-container {
+    margin: 0 auto;
+    width: 100%;
+    height: 80%;
+    padding: 0 20px;
+    margin-top: 10%;
+
+    .compare-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: col-resize;
+      user-select: none;
+
+      .background-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: #FFF;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+          pointer-events: none;
+        }
+      }
+
+      .foreground-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: #FFF;
+        /* 使用clip-path来控制显示区域，而不是改变宽度 */
+        clip-path: polygon(0 0, var(--slider-position, 50%) 0, var(--slider-position, 50%) 100%, 0 100%);
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+          pointer-events: none;
+        }
+      }
+
+      .slider-handle {
+        position: absolute;
+        top: 0;
+        width: 4px;
+        height: 100%;
+        background: #fff;
+        cursor: col-resize;
+        z-index: 10;
+        /* 使用硬件加速 */
+        transform: translateZ(0);
+        will-change: left;
+
+        .slider-button {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%) translateZ(0);
+          width: 40px;
+          height: 40px;
+          background: #fff;
+          border-radius: 50%;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: grab;
+          /* 使用硬件加速 */
+          will-change: transform;
+
+          &:hover {
+            transform: translate(-50%, -50%) scale(1.1) translateZ(0);
+          }
+
+          &:active {
+            cursor: grabbing;
+            transform: translate(-50%, -50%) scale(0.95) translateZ(0);
+          }
+
+          .slider-arrow {
+            font-size: 12px;
+            color: #666;
+            font-weight: bold;
+
+            &.left {
+              margin-right: 2px;
+            }
+
+            &.right {
+              margin-left: 2px;
+            }
+          }
+        }
+
+        .slider-line {
+          position: absolute;
+          top: 0;
+          left: 50%;
+          transform: translateX(-50%) translateZ(0);
+          width: 2px;
+          height: 100%;
+          background: #fff;
+          box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+        }
+      }
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .image-compare-slider {
+    padding: 60px 0;
+
+    .slider-container {
+      .compare-container {
+        height: 300px;
+
+        .slider-handle {
+          .slider-button {
+            width: 36px;
+            height: 36px;
+
+            .slider-arrow {
+              font-size: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// 触摸设备优化
+@media (hover: none) and (pointer: coarse) {
+  .image-compare-slider {
+    .slider-container {
+      .compare-container {
+        .slider-handle {
+          .slider-button {
+            width: 44px;
+            height: 44px;
+
+            .slider-arrow {
+              font-size: 14px;
+            }
+          }
+        }
+      }
+    }
+  }
+} 

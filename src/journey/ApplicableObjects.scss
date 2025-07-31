@@ -1,0 +1,152 @@
+.applicable-objects {
+  width: 100%;
+  background: #fff;
+  padding: 80px 0 0;
+  font-family: 'PingFang SC', 'PingFang TC', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+
+  .objects-container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 20px;
+
+    .objects-title {
+      font-size: 27px;
+      font-weight: bold;
+      margin: 0 0 24px 0;
+      letter-spacing: 1px;
+      text-align: left;
+    }
+
+    .cards-wrapper {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 60px;
+
+      .object-card {
+        flex: 1;
+        padding: 64px 24px;
+        border-radius: 14px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+
+        &.blue {
+          background: linear-gradient(135deg, #78a9ee 0%, #5b9bd5 100%);
+          color: #fff;
+        }
+
+        &.green {
+          background: linear-gradient(135deg, #b7d257 0%, #9acd32 100%);
+          color: #fff;
+        }
+
+        &.orange {
+          background: linear-gradient(135deg, #f19b43 0%, #ff8c00 100%);
+          color: #fff;
+        }
+
+        .card-title {
+          font-size: 24px;
+          font-weight: bold;
+          margin-bottom: 14px;
+          letter-spacing: 0.5px;
+        }
+
+        .card-description {
+          font-size: 20px;
+          line-height: 1.6;
+          margin: 0;
+          opacity: 0.95;
+          border-top: 2px solid white;
+          padding-top: 14px;
+        }
+      }
+    }
+
+    .cta-section {
+      text-align: center;
+
+      .diagnosis-button {
+        background: #48d2ce;
+        color: #fff;
+        font-size: 20px;
+        padding: 13px 54px;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        letter-spacing: 1.5px;
+        cursor: pointer;
+        margin-top: 5px;
+        box-shadow: 0 2px 7px #e6e6e6;
+        transition: all 0.3s ease;
+    
+        &:hover {
+          background: #3bb8b4;
+          box-shadow: 0 4px 12px #d0d0d0;
+        }
+      }
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .applicable-objects {
+    padding: 60px 0;
+
+    .objects-container {
+      .objects-title {
+        font-size: 24px;
+        margin-bottom: 30px;
+      }
+
+      .cards-wrapper {
+        flex-direction: column;
+        gap: 20px;
+        margin-bottom: 40px;
+
+        .object-card {
+          padding: 24px 20px;
+
+          .card-title {
+            font-size: 18px;
+          }
+
+          .card-description {
+            font-size: 14px;
+          }
+        }
+      }
+
+      .cta-section {
+        .diagnosis-button {
+          padding: 14px 28px;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
+// 平板设备优化
+@media (min-width: 769px) and (max-width: 1024px) {
+  .applicable-objects {
+    .objects-container {
+      .cards-wrapper {
+        gap: 20px;
+
+        .object-card {
+          padding: 28px 20px;
+
+          .card-title {
+            font-size: 18px;
+          }
+
+          .card-description {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+} 

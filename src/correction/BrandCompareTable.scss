@@ -1,0 +1,55 @@
+
+.timing-sections {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+
+  .timing-section {
+    display: flex;
+    position: relative;
+
+    .timing-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 14px;
+      overflow: hidden;
+      img {
+        width: 100%;
+      }
+    }
+
+    .timing-content {
+      position: absolute;
+      left: 50%;
+      bottom: -110px;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      height: 110px;
+      background: white;
+      border-radius: 14px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: start;
+
+      .timing-title {
+        color: rgb(86 216 209);
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .timing-description {
+        text-align: left;
+        margin-top: 12px;
+        color: #000;
+        font-size: 12px;
+        line-height: 1.5;
+      }
+    }
+  }
+}

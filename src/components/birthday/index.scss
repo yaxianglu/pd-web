@@ -1,0 +1,256 @@
+.birthday-picker {
+  position: relative;
+  width: 100%;
+  user-select: none;
+
+  .birthday-picker-input {
+    width: 100%;
+    padding: 14px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    &.focused {
+      border-color: rgb(83, 222, 210);
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .birthday-picker-value {
+      color: rgba(255, 255, 255, 0.6);
+      
+      &:not(:empty) {
+        color: white;
+      }
+    }
+
+    .birthday-picker-arrow {
+      color: white;
+      font-size: 10px;
+      transition: transform 0.3s ease;
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 6px solid white;
+      margin-left: 8px;
+    }
+
+    &.focused .birthday-picker-arrow {
+      transform: rotate(180deg);
+    }
+  }
+
+  .birthday-picker-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #2a2a2a;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    margin-top: 4px;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    min-width: 300px;
+
+    .birthday-picker-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      background-color: rgba(255, 255, 255, 0.05);
+
+      .birthday-picker-title {
+        color: white;
+        font-size: 14px;
+        font-weight: 600;
+        flex: 1;
+        text-align: center;
+      }
+    }
+
+    .birthday-picker-content {
+      display: flex;
+      max-height: 300px;
+      overflow: hidden;
+
+      .birthday-picker-column {
+        flex: 1;
+        max-height: 300px;
+        overflow-y: auto;
+        border-right: 1px solid rgba(255, 255, 255, 0.2);
+
+        &:last-child {
+          border-right: none;
+        }
+
+        &::-webkit-scrollbar {
+          width: 4px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.1);
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.3);
+          border-radius: 2px;
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.5);
+          }
+        }
+
+        .birthday-picker-option {
+          padding: 10px 16px;
+          color: white;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+          font-size: 14px;
+          text-align: center;
+
+          &:hover {
+            background-color: rgba(83, 222, 210, 0.2);
+          }
+
+          &.selected {
+            background-color: rgb(83, 222, 210);
+            color: white;
+          }
+
+          &:active {
+            background-color: rgba(83, 222, 210, 0.3);
+          }
+        }
+      }
+    }
+
+    .birthday-picker-footer {
+      padding: 12px 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      justify-content: center;
+      background-color: rgba(255, 255, 255, 0.05);
+
+      .birthday-picker-confirm-btn {
+        background-color: #6c757d;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 24px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover:not(:disabled) {
+          background-color: #5a6268;
+        }
+
+        &:disabled {
+          background-color: #adb5bd;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}
+
+/* 移动端响应式布局 */
+@media screen and (max-width: 768px) {
+  .birthday-picker {
+    .birthday-picker-input {
+      padding: 12px 16px;
+      font-size: 14px;
+    }
+
+    .birthday-picker-dropdown {
+      min-width: 280px;
+
+      .birthday-picker-header {
+        padding: 10px 14px;
+
+        .birthday-picker-title {
+          font-size: 13px;
+        }
+      }
+
+      .birthday-picker-content {
+        max-height: 250px;
+
+        .birthday-picker-column {
+          max-height: 250px;
+
+          .birthday-picker-option {
+            padding: 8px 14px;
+            font-size: 13px;
+          }
+        }
+      }
+
+      .birthday-picker-footer {
+        padding: 10px 14px;
+
+        .birthday-picker-confirm-btn {
+          padding: 6px 20px;
+          font-size: 13px;
+        }
+      }
+    }
+  }
+}
+
+/* 小屏幕手机端优化 */
+@media screen and (max-width: 480px) {
+  .birthday-picker {
+    .birthday-picker-input {
+      padding: 10px 14px;
+      font-size: 14px;
+    }
+
+    .birthday-picker-dropdown {
+      min-width: 260px;
+
+      .birthday-picker-header {
+        padding: 8px 12px;
+
+        .birthday-picker-title {
+          font-size: 12px;
+        }
+      }
+
+      .birthday-picker-content {
+        max-height: 220px;
+
+        .birthday-picker-column {
+          max-height: 220px;
+
+          .birthday-picker-option {
+            padding: 6px 12px;
+            font-size: 12px;
+          }
+        }
+      }
+
+      .birthday-picker-footer {
+        padding: 8px 12px;
+
+        .birthday-picker-confirm-btn {
+          padding: 5px 18px;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}

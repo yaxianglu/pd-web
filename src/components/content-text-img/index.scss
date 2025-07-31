@@ -1,0 +1,132 @@
+.content-text-img-section {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  padding: 20px 80px;
+
+  @media (max-width: 1024px) {
+    padding: 18px 60px;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding: 16px 40px;
+    gap: 20px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 12px 20px;
+    gap: 16px;
+  }
+
+  .content-text-img-section-item {
+    flex: 1 0;
+
+    @media (max-width: 768px) {
+      order: 2;
+    }
+
+    &.content-text-img-section-item-1 {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: start;
+      gap: 14px;
+
+      @media (max-width: 768px) {
+        align-items: center;
+        text-align: center;
+        gap: 12px;
+      }
+
+      @media (max-width: 480px) {
+        gap: 10px;
+      }
+
+      .content-text-img-section-item-title {
+        width: 100%;
+        font-size: 24px;
+        text-align: left;
+        color: #000;
+
+        @media (max-width: 1024px) {
+          font-size: 22px;
+        }
+
+        @media (max-width: 768px) {
+          font-size: 20px;
+          text-align: center;
+        }
+
+        @media (max-width: 480px) {
+          font-size: 18px;
+        }
+      }
+
+      .content-text-img-section-item-description {
+        width: 100%;
+        font-size: 14px;
+        line-height: 2;
+        text-align: left;
+        color: #858585;
+
+        @media (max-width: 1024px) {
+          font-size: 13px;
+          line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+          font-size: 13px;
+          text-align: center;
+          line-height: 1.7;
+        }
+
+        @media (max-width: 480px) {
+          font-size: 12px;
+          line-height: 1.6;
+        }
+      }
+    }
+  }
+
+  .content-text-img-section-img {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+
+    @media (max-width: 768px) {
+      order: 1;
+      justify-content: center;
+    }
+
+    img {
+      height: 200px;
+
+      @media (max-width: 1024px) {
+        height: 180px;
+      }
+
+      @media (max-width: 768px) {
+        height: 150px;
+      }
+
+      @media (max-width: 480px) {
+        height: 120px;
+      }
+    }
+  }
+
+  // 处理图片在左侧的情况
+  &.content-text-img-section-reverse {
+    @media (max-width: 768px) {
+      .content-text-img-section-item {
+        order: 2;
+      }
+
+      .content-text-img-section-img {
+        order: 1;
+      }
+    }
+  }
+}
