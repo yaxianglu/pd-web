@@ -145,8 +145,8 @@ export default function Footer({ style }) {
             Pearl Digitalinc.<br />
             All Rights Reserved. ©2025
           </div>
-          <div className="address">123 Demo StreetNew York, NY 12345</div>
-          <div className="contact">email@example.com (555)555-5555</div>
+          <div className="address">2975 Scott Blvd,  Ste 110,  Santa Clara,  CA 95054</div>
+          <div className="contact">customer@pearl-digital.com +1-408-667-5811</div>
         </div>
       </div>
     </footer>
