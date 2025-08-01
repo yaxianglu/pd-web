@@ -1,26 +1,24 @@
 module.exports = function override(config, env) {
-  // 完全禁用SVG文件的Babel处理
+  // 修改SVG处理规则，避免Babel优化但保持文件完整性
   config.module.rules.forEach(rule => {
     if (rule.oneOf) {
-      // 找到并移除所有处理SVG的规则
-      rule.oneOf = rule.oneOf.filter(oneOfRule => {
+      rule.oneOf.forEach(oneOfRule => {
         if (oneOfRule.test && oneOfRule.test.toString().includes('svg')) {
-          return false; // 移除SVG处理规则
+          // 对于SVG文件，使用file-loader而不是url-loader，避免Babel处理
+          if (oneOfRule.use && oneOfRule.use.length > 0) {
+            oneOfRule.use.forEach(useItem => {
+              if (useItem.loader && useItem.loader.includes('url-loader')) {
+                // 将url-loader替换为file-loader
+                useItem.loader = 'file-loader';
+                useItem.options = {
+                  name: 'static/media/[name].[hash:8].[ext]',
+                };
+              }
+            });
+          }
         }
-        return true;
       });
     }
-  });
-
-  // 添加一个简单的file-loader规则来处理SVG文件，不经过Babel处理
-  config.module.rules.push({
-    test: /\.svg$/,
-    use: {
-      loader: 'file-loader',
-      options: {
-        name: 'static/media/[name].[hash:8].[ext]',
-      },
-    },
   });
 
   return config;
