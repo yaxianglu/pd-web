@@ -215,9 +215,9 @@
   // 維持器
   .retainer {
     grid-column: 1/2;
-    grid-row: 2/3;
     grid-area: 2/1/4/2;
     background: #b7de18;
+    grid-row: 2 / 4;
     padding: 12px;
 
     @media (max-width: 1024px) {
