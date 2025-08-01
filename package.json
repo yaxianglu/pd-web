@@ -18,7 +18,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "node --max-old-space-size=2048 node_modules/.bin/react-app-rewired build",
+    "build": "node --max-old-space-size=512 --optimize-for-size node_modules/.bin/react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
