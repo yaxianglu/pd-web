@@ -1,5 +1,6 @@
-const API_BASE_URL = 'http://172.31.44.33:3001/api';
+const API_BASE_URL = 'http://18.232.58.243:3001/api';
 // const API_BASE_URL = 'http://localhost:3001/api';
+// const API_BASE_URL = 'http://172.31.44.33:3001/api';
 
 export const apiService = {
   // 健康检查
