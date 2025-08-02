@@ -6,7 +6,7 @@ import DetailButton from "../components/detail-button";
 import p3 from './imgs/3.svg';
 import p4 from './imgs/4.svg';
 import p5 from './imgs/5.svg';
-import p6 from './imgs/6.svg';
+import p6 from './imgs/6.jpg';
 import p7 from './imgs/7.svg';
 // import Bezier from '../components/bezier';
 import l1 from './imgs/l1.svg';

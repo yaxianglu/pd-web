@@ -3,20 +3,22 @@ import Header from '../components/header';
 import ManufacturingSection from './ManufacturingSection';
 import Footer from '../components/footer';
 import Innovation from './innovation';
-import Top from './top';
+import Top from './top-new';
+import Header2 from './header';
 
 import PageWrapper from '../components/page-wrapper';
 import Sketch from '../components/sketch';
 import Step from '../components/step';
 import VideoList from '../components/video-list';
 import Description from './description';
-import p3 from './imgs/3.svg';
+import p3 from './imgs/3.jpg';
 import p4 from './imgs/4.svg';
 
 export default function PageCom() {
   return (
     <>
       <Header />
+      <Header2 />
       <PageWrapper>
         <Top />
         <Innovation />

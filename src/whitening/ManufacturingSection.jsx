@@ -1,5 +1,5 @@
 import React from "react";
-import logo from '../asserts/4.svg';
+import logo from '../asserts/4.jpg';
 import './ManufacturingSection.scss';
 
 export default function ManufacturingSection() {

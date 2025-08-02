@@ -34,7 +34,7 @@ export default function Header() {
   }, []);
 
   const handleLoginClick = () => {
-    navigate('/login');
+    window.open('/login', '_blank');
   };
 
   const getCurrentBrandValue = () => {

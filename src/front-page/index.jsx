@@ -1,6 +1,6 @@
 import React from 'react';
 import FeatureGrid from './FeatureGrid';
-import p5 from './imgs/5.svg';
+import p5 from './imgs/5.jpg';
 
 import Header from '../components/header';
 import Footer from '../components/footer';

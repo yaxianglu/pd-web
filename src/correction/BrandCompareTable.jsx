@@ -1,8 +1,8 @@
 import React from "react";
 import './BrandCompareTable.scss';
-import p8 from './imgs/8.svg';
+import p8 from './imgs/8.jpg';
 import p9 from './imgs/9.svg';
-import p10 from './imgs/10.svg';
+import p10 from './imgs/10.jpg';
 import GrayCard from "../components/gray-card";
 
 export default function ManufacturingSection() {

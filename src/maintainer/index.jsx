@@ -6,7 +6,7 @@ import Footer from '../components/footer';
 import FAQ from '../components/FAQ';
 import PageWrapper from '../components/page-wrapper';
 import Thumbnail from '../components/thumbnail';
-import p14 from '../asserts/14.svg';
+import p14 from '../asserts/14.jpg';
 import Sketch from '../components/sketch';
 
 export default function PageCom() {

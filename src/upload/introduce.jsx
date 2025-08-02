@@ -1,8 +1,8 @@
 import p1 from './imgs/1.svg';
 import p2 from './imgs/2.svg';
-import p8 from './imgs/8.svg';
-import p9 from './imgs/9.svg';
-import p10 from './imgs/10.svg';
+import p8 from './imgs/8.jpg';
+import p9 from './imgs/9.jpg';
+import p10 from './imgs/10.jpg';
 import './introduce.scss';
 
 export default function Introduce(props) {

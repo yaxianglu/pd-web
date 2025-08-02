@@ -6,10 +6,10 @@ import WhichPlan from './PlanCard';
 import BrandCompareTable from './BrandCompareTable';
 import Footer from '../components/footer';
 import FAQ from '../components/FAQ';
-import p17 from './imgs/1.svg';
+import p17 from './imgs/1.jpg';
 import Early from './early';
-import p7 from './imgs/7.svg';
-import p11 from './imgs/11.svg';
+import p7 from './imgs/7.jpg';
+import p11 from './imgs/11.jpg';
 import Upgrade from './upgrade';
 
 import PageWrapper from '../components/page-wrapper';

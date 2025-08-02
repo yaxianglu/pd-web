@@ -3,8 +3,8 @@ import { useResponsive } from '../components/responsive-hook';
 import './BrandCompareTable.scss';
 import GrayCard from "../components/gray-card";
 import ContentTextImg from "../components/content-text-img";
-import p12 from './imgs/12.svg';
-import p13 from './imgs/13.svg';
+import p12 from './imgs/12.jpg';
+import p13 from './imgs/13.jpg';
 
 export default function Upgrade() {
   const { isMobile, isTablet } = useResponsive();

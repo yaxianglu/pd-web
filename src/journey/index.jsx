@@ -9,7 +9,7 @@ import Footer from '../components/footer';
 import PageWrapper from '../components/page-wrapper';
 import Thumbnail from '../components/thumbnail';
 import Sketch from '../components/sketch';
-import p1 from './imgs/1.svg';
+import p1 from './imgs/1.jpg';
 
 export default function PageCom() {
   return (

@@ -1,0 +1,26 @@
+.about-about-description-section {
+  width: 100%;
+  margin-top: 80px;
+  position: relative;
+
+  .about-about-description-section-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.5;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  img {
+    width: 100%;
+  }
+}
