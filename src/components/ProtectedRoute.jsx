@@ -1,18 +1,24 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-const ProtectedRoute = ({ children, allowedUserTypes = ['patient', 'staff'] }) => {
-  const { isAuthenticated, userType } = useAuth();
+const ProtectedRoute = ({ children, requiredUserType = null }) => {
+  const { isAuthenticated, userType, userInfo } = useAuth();
+  const location = useLocation();
 
+  // 如果未登录，重定向到登录页
   if (!isAuthenticated) {
-    // 如果未登录，重定向到登录页面
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  if (allowedUserTypes && !allowedUserTypes.includes(userType)) {
-    // 如果用户类型不在允许列表中，重定向到登录页面
-    return <Navigate to="/login" replace />;
+  // 如果需要特定用户类型但当前用户类型不匹配
+  if (requiredUserType && userType !== requiredUserType) {
+    return <Navigate to="/unauthorized" replace />;
+  }
+
+  // 如果用户信息不完整，可能需要重新登录
+  if (!userInfo) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   return children;

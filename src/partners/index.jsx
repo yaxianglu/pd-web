@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './index.scss';
-import { apiService } from '../services/api';
+import apiService from '../services/api';
 import { message, Table, Input, Select, Tag, Space, Button, Modal } from 'antd';
 import { SearchOutlined, EyeOutlined, ReloadOutlined, LogoutOutlined } from '@ant-design/icons';
 
@@ -23,7 +23,7 @@ export default function Partners() {
   const fetchPartners = async () => {
     setLoading(true);
     try {
-      const result = await apiService.getPartners();
+      const result = await apiService.get('/partners');
       if (result.success) {
         setPartners(result.data || []);
       } else {

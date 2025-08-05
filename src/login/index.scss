@@ -228,6 +228,23 @@
             cursor: not-allowed;
           }
         }
+
+        .error-message {
+          color: #e74c3c;
+          font-size: 14px;
+          margin-top: 10px;
+          text-align: center;
+          padding: 8px;
+          background: #fdf2f2;
+          border: 1px solid #f5c6cb;
+          border-radius: 4px;
+
+          @media (max-width: 768px) {
+            font-size: 13px;
+            margin-top: 8px;
+            padding: 6px;
+          }
+        }
       }
     }
   }

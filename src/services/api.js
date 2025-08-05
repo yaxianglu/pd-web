@@ -1,82 +1,159 @@
-const API_BASE_URL = 'http://18.232.58.243:3001/api';
-// const API_BASE_URL = 'http://localhost:3001/api';
-// const API_BASE_URL = 'http://172.31.44.33:3001/api';
+// API基础URL
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 
-export const apiService = {
-  // 健康检查
-  async checkHealth() {
-    try {
-      const response = await fetch(`${API_BASE_URL}/health`);
-      return await response.json();
-    } catch (error) {
-      console.error('Health check failed:', error);
-      return { status: 'error', message: 'Service unavailable' };
-    }
-  },
-
-  // 获取FAQ数据
-  async getFaqData() {
-    try {
-      const response = await fetch(`${API_BASE_URL}/faq`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      return await response.json();
-    } catch (error) {
-      console.error('Failed to fetch FAQ data:', error);
-      return { success: false, message: 'Failed to fetch FAQ data' };
-    }
-  },
-
-  // 提交用户信息
-  async submitUserInfo(userData) {
-    try {
-      const response = await fetch(`${API_BASE_URL}/user-info`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
-      return await response.json();
-    } catch (error) {
-      console.error('Failed to submit user info:', error);
-      return { success: false, message: 'Failed to submit user info' };
-    }
-  },
-
-  // 提交牙医信息
-  async submitDentistInfo(dentistData) {
-    try {
-      const response = await fetch(`${API_BASE_URL}/dentist-info`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(dentistData),
-      });
-      return await response.json();
-    } catch (error) {
-      console.error('Failed to submit dentist info:', error);
-      return { success: false, message: 'Failed to submit dentist info' };
-    }
-  },
-
-  // 获取合作夥伴列表
-  async getPartners() {
-    try {
-      const response = await fetch(`${API_BASE_URL}/partners`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      return await response.json();
-    } catch (error) {
-      console.error('Failed to fetch partners:', error);
-      return { success: false, message: 'Failed to fetch partners' };
-    }
+class ApiService {
+  constructor() {
+    this.baseURL = API_BASE_URL;
   }
-}; 
+
+  // 获取请求头
+  getHeaders(includeAuth = true) {
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    if (includeAuth) {
+      const token = localStorage.getItem('auth_token');
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+    }
+
+    return headers;
+  }
+
+  // 处理响应
+  async handleResponse(response) {
+    if (response.status === 401) {
+      // Token过期，尝试刷新
+      const refreshSuccess = await this.refreshToken();
+      if (!refreshSuccess) {
+        // 刷新失败，清除登录状态
+        localStorage.removeItem('auth_token');
+        localStorage.removeItem('refresh_token');
+        localStorage.removeItem('user_info');
+        localStorage.removeItem('isAuthenticated');
+        localStorage.removeItem('userType');
+        
+        // 重定向到登录页
+        window.location.href = '/login';
+        throw new Error('認證失敗，請重新登入');
+      }
+      
+      // 刷新成功，重新发送原请求
+      const newToken = localStorage.getItem('auth_token');
+      const newHeaders = this.getHeaders();
+      newHeaders['Authorization'] = `Bearer ${newToken}`;
+      
+      // 这里需要重新发送原请求，但为了简化，我们抛出错误让调用方处理
+      throw new Error('請重新嘗試請求');
+    }
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || `HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    return response.json();
+  }
+
+  // 刷新token
+  async refreshToken() {
+    const refreshToken = localStorage.getItem('refresh_token');
+    if (!refreshToken) {
+      return false;
+    }
+
+    try {
+      const response = await fetch(`${this.baseURL}/auth/refresh`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          refresh_token: refreshToken,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        localStorage.setItem('auth_token', data.data.token);
+        localStorage.setItem('refresh_token', data.data.refresh_token);
+        localStorage.setItem('user_info', JSON.stringify(data.data.user));
+        return true;
+      }
+    } catch (error) {
+      console.error('Token refresh error:', error);
+    }
+
+    return false;
+  }
+
+  // GET请求
+  async get(endpoint, includeAuth = true) {
+    const response = await fetch(`${this.baseURL}${endpoint}`, {
+      method: 'GET',
+      headers: this.getHeaders(includeAuth),
+    });
+
+    return this.handleResponse(response);
+  }
+
+  // POST请求
+  async post(endpoint, data, includeAuth = true) {
+    const response = await fetch(`${this.baseURL}${endpoint}`, {
+      method: 'POST',
+      headers: this.getHeaders(includeAuth),
+      body: JSON.stringify(data),
+    });
+
+    return this.handleResponse(response);
+  }
+
+  // PUT请求
+  async put(endpoint, data, includeAuth = true) {
+    const response = await fetch(`${this.baseURL}${endpoint}`, {
+      method: 'PUT',
+      headers: this.getHeaders(includeAuth),
+      body: JSON.stringify(data),
+    });
+
+    return this.handleResponse(response);
+  }
+
+  // DELETE请求
+  async delete(endpoint, includeAuth = true) {
+    const response = await fetch(`${this.baseURL}${endpoint}`, {
+      method: 'DELETE',
+      headers: this.getHeaders(includeAuth),
+    });
+
+    return this.handleResponse(response);
+  }
+
+  // 文件上传
+  async upload(endpoint, formData, includeAuth = true) {
+    const headers = {};
+    
+    if (includeAuth) {
+      const token = localStorage.getItem('auth_token');
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+    }
+
+    const response = await fetch(`${this.baseURL}${endpoint}`, {
+      method: 'POST',
+      headers,
+      body: formData,
+    });
+
+    return this.handleResponse(response);
+  }
+}
+
+// 创建单例实例
+const apiService = new ApiService();
+
+export default apiService; 

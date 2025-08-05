@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useResponsive } from '../components/responsive-hook';
 import './join-info.scss';
 import DetailButton from '../components/detail-button';
-import { apiService } from '../services/api';
+import apiService from '../services/api';
 import { message } from 'antd';
 import 'antd/dist/reset.css';
 
@@ -140,7 +140,7 @@ export default function JoinInfo() {
 
       console.log('提交数据:', dentistData);
       
-      const result = await apiService.submitDentistInfo(dentistData);
+      const result = await apiService.post('/dentist-info', dentistData);
       
       if (result.success) {
         // 清空表单

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useResponsive } from '../responsive-hook';
 import "./index.scss";
 import Table from "../table";
-import { apiService } from "../../services/api";
+import apiService from "../../services/api";
 
 const faqList = [
   {
@@ -132,7 +132,7 @@ export default function FaqsSection() {
   const testApiConnection = async () => {
     setApiStatus('Testing...');
     try {
-      const result = await apiService.checkHealth();
+      const result = await apiService.get('/health');
       setApiStatus(`API Status: ${result.status} - ${result.message}`);
       console.log('API Test Result:', result);
     } catch (error) {

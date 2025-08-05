@@ -2,14 +2,10 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useResponsive } from '../components/responsive-hook';
+import apiService from '../services/api';
 import img from './imgs/1.jpg';
 import img2 from './imgs/2.svg';
 import './index.scss';
-
-const randomCredentials = {
-  username: "pearl_admin_2025",
-  password: "P@rlD1g1t@l2024!"
-}
 
 export default function PearlLogin() {
   const navigate = useNavigate();
@@ -18,6 +14,8 @@ export default function PearlLogin() {
   const [patientAccount, setPatientAccount] = useState("");
   const [staffUsername, setStaffUsername] = useState("");
   const [staffPassword, setStaffPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   // 患者登录处理
   const handlePatientLogin = () => {
@@ -26,18 +24,43 @@ export default function PearlLogin() {
       login('patient', { account: patientAccount });
       navigate('/partners');
     } else {
-      alert('請輸入帳號');
+      setErrorMessage('請輸入帳號');
     }
   };
 
   // 员工登录处理
-  const handleStaffLogin = () => {
-    if (staffUsername === randomCredentials.username && staffPassword === randomCredentials.password) {
-      // 登录成功，保存登录状态并跳转到partners页面
-      login('staff', { username: staffUsername });
-      navigate('/partners');
-    } else {
-      alert('帳號或密碼錯誤');
+  const handleStaffLogin = async () => {
+    if (!staffUsername || !staffPassword) {
+      setErrorMessage('請輸入用戶名和密碼');
+      return;
+    }
+
+    setIsLoading(true);
+    setErrorMessage("");
+
+    try {
+      const data = await apiService.post('/auth/login', {
+        username: staffUsername,
+        password: staffPassword,
+      }, false); // 登录不需要认证
+
+      if (data.success) {
+        // 登录成功，保存用户信息和token
+        login('staff', {
+          ...data.data.user,
+          token: data.data.token,
+          refresh_token: data.data.refresh_token,
+        });
+        
+        navigate('/partners');
+      } else {
+        setErrorMessage(data.message || '登入失敗');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      setErrorMessage(error.message || '網絡錯誤，請稍後再試');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -109,9 +132,16 @@ export default function PearlLogin() {
             <button 
               onClick={handleStaffLogin}
               className="login-button"
+              disabled={isLoading}
             >
-              登入
+              {isLoading ? '登入中...' : '登入'}
             </button>
+            
+            {errorMessage && (
+              <div className="error-message">
+                {errorMessage}
+              </div>
+            )}
           </div>
         </div>
       </div>
