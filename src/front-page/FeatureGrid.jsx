@@ -35,7 +35,7 @@ export default function OrthoPaletteGrid() {
           </div>
         </div>
         
-        {/* 正畸與美 */}
+        {/* 矯正與美 */}
         <div 
           className="grid-item orthodontics-beauty"
           onClick={() => handleGridItemClick('/correction')}
@@ -49,7 +49,7 @@ export default function OrthoPaletteGrid() {
             的美感，更是口腔健康的基礎
           </div>
           <div className="icon" style={{ top: '70%' }}>
-            <img src={png2} alt="正畸与美" />
+            <img src={png2} alt="矯正与美" />
           </div>
         </div>
         

@@ -20,7 +20,7 @@ export default function ManufacturingSection() {
           <div className="timing-content">
             <div className="timing-title">換牙期 (約6-12歲)</div>
             <div className="timing-description">
-              乳牙與恆牙交替階段，<br/>
+              乳牙與恆齒交替階段，<br/>
               可早期發現咬合異常，<br/>
               如反咬、深咬、開咬等
             </div>
@@ -33,7 +33,7 @@ export default function ManufacturingSection() {
             <img src={p9} alt="恒牙初期青少年" />
           </div>
           <div className="timing-content">
-            <div className="timing-title">恆牙初期 (約12-15歲)</div>
+            <div className="timing-title">恆齒初期 (約12-15歲)</div>
             <div className="timing-description">
               齒列逐步穩定，是矯正<br/>
               介入的黃金時機

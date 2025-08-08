@@ -12,7 +12,7 @@ export default function Upgrade() {
   return (
     <GrayCard
       title="矯正不只是變美，更是生活的升級"
-      description="對成年人而言，正畸往往兼具審美需求與功能改善。整齊的牙齒不僅帶來自然對稱的笑容與臉部比例，也有以下實質幫助："
+      description="對成年人而言，矯正往往兼具審美需求與功能改善。整齊的牙齒不僅帶來自然對稱的笑容與臉部比例，也有以下實質幫助："
     >
       <ContentTextImg
         image={p12}

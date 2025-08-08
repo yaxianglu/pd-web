@@ -93,7 +93,7 @@ export default function Footer({ style }) {
                 onClick={() => handleItemClick('/correction')}
                 style={{ cursor: 'pointer' }}
               >
-                正畸與美
+                矯正與美
               </div>
               <div 
                 className="column-item"

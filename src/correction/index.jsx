@@ -45,7 +45,7 @@ export default function PageCom() {
           image={p11}
           background="rgba(180,221,24, 0.8)"
           imgRight={false}
-          title={"成人正畸"}
+          title={"成人矯正"}
           description={<>
             成人也能擁有理想笑容與穩定咬合。矯正除了<br />
             改善外觀，更能降低牙周病與磨牙風險、改善<br />

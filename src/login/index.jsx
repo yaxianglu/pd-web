@@ -39,22 +39,29 @@ export default function PearlLogin() {
     setErrorMessage("");
 
     try {
-      const data = await apiService.post('/auth/login', {
+      // 对密码进行SHA256加密
+      const encoder = new TextEncoder();
+      const passwordData = encoder.encode(staffPassword);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', passwordData);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashedPassword = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      
+      const responseData = await apiService.post('/auth/login', {
         username: staffUsername,
-        password: staffPassword,
+        password: hashedPassword,
       }, false); // 登录不需要认证
 
-      if (data.success) {
+      if (responseData.success) {
         // 登录成功，保存用户信息和token
         login('staff', {
-          ...data.data.user,
-          token: data.data.token,
-          refresh_token: data.data.refresh_token,
+          ...responseData.data.user,
+          token: responseData.data.token,
+          refresh_token: responseData.data.refresh_token,
         });
         
         navigate('/partners');
       } else {
-        setErrorMessage(data.message || '登入失敗');
+        setErrorMessage(responseData.message || '登入失敗');
       }
     } catch (error) {
       console.error('Login error:', error);

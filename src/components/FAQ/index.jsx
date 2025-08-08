@@ -43,7 +43,7 @@ const faqList = [
         具備穩定配戴習慣的<br />
         **中學階段學生(約12歲以上)**<br />
         **經由牙醫師評估後,即可進行療程規劃。**<br />
-        若仍處於乳牙與恆牙交替期,將建議定期追蹤並待適齡再行矯正。
+        若仍處於乳牙與恆齒交替期,將建議定期追蹤並待適齡再行矯正。
       </>
     )
   },
@@ -179,7 +179,7 @@ export default function FaqsSection() {
       </div>
       
       {/* <div style={{ marginTop: '20px', padding: '20px', border: '1px solid #e0e0e0', borderRadius: '8px' }}>
-        <h3>API 连接测试</h3>
+        <h3>API 连接測試</h3>
         <button 
           onClick={testApiConnection}
           style={{
@@ -192,7 +192,7 @@ export default function FaqsSection() {
             marginBottom: '10px'
           }}
         >
-          测试后端连接
+          測試后端连接
         </button>
         {apiStatus && (
           <div style={{ 
