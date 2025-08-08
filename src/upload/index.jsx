@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import p2 from '../asserts/2.svg';
 import Introduce from './introduce';
 import Step from './step';
@@ -9,6 +10,31 @@ import './index.scss';
 
 export default function Upload() {
   const [step, setStep] = useState(1);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    // 生成UUID
+    const generateUUID = () => {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    };
+
+    // 检查URL中是否已经有id参数
+    const urlParams = new URLSearchParams(location.search);
+    const existingId = urlParams.get('id');
+
+    // 如果没有id参数，生成一个新的UUID并添加到URL
+    if (!existingId) {
+      const newId = generateUUID();
+      const newUrl = `${location.pathname}?id=${newId}`;
+      navigate(newUrl, { replace: true });
+    }
+  }, [navigate, location]);
+
   return (
     <div className="upload-wrapper">
       <div className="upload-top">
