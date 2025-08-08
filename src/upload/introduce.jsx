@@ -88,7 +88,7 @@ export default function Introduce(props) {
     </div>
     </div>
     <div className="introduce-button-wrapper">
-      <button className={`introduce-button`} onClick={() => setStep(4)}>
+      <button className={`introduce-button`} onClick={() => setStep(pre => pre + 1)}>
         開始微笑測試
       </button>
     </div>

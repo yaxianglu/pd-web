@@ -37,8 +37,8 @@ function App() {
           <Route path="/correction" element={<Correction />} />
           <Route path="/about" element={<About />} />
           <Route path="/join" element={<Join />} />
-          <Route path="/upload" element={<FrontPage />} />
-          {/* <Route path="/upload" element={<Upload />} /> */}
+          {/* <Route path="/upload" element={<FrontPage />} /> */}
+          <Route path="/upload" element={<Upload />} />
           <Route path="/partners" element={
             <ProtectedRoute>
               <Partners />
