@@ -166,7 +166,7 @@ export default function Header() {
         </>
         )}
         
-        <button className="test-btn" onClick={() => navigate('/upload')}>
+        <button className="test-btn" onClick={() => window.open('/upload', '_blank')}>
           微笑測試 <span className="star">✦</span>
         </button>
       </div>

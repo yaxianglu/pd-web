@@ -11,7 +11,7 @@ export default function DetailButton({ text, style, size, disabled, onClick }) {
     };
     switch (text) {
       case '微笑測試':
-        navigate('/upload');
+        window.open('/upload', '_blank');
         break;
       case '關於珍舒美':
         navigate('/about');
@@ -20,13 +20,13 @@ export default function DetailButton({ text, style, size, disabled, onClick }) {
         navigate('/join');
         break;
       case '開啟微笑旅程':
-        navigate('/upload');
+        window.open('/upload', '_blank');
         break;
       case '我需要哪種治療？':
-        navigate('/upload');
+        window.open('/upload', '_blank');
         break;
       case '了解你的牙齒狀況':
-        navigate('/upload');
+        window.open('/upload', '_blank');
         break;
       default:
         break;

@@ -11,7 +11,11 @@ export default function OrthoPaletteGrid() {
   const navigate = useNavigate();
 
   const handleGridItemClick = (path) => {
-    navigate(path);
+    if (path === '/upload') {
+      window.open('/upload', '_blank');
+    } else {
+      navigate(path);
+    }
   };
 
   return (

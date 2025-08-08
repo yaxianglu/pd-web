@@ -7,7 +7,7 @@ export default function Thumbnail(props) {
   const navigate = useNavigate();
   const handleClick = (button) => {
     if (button === '微笑測試') {
-      navigate('/upload');
+      window.open('/upload', '_blank');
     } else if (button === '關於珍舒美') {
       navigate('/about');
     }
