@@ -66,6 +66,11 @@
         transition: background 0.3s ease;
         font-size: 14px;
 
+        &.active {
+          background: rgba(255, 255, 255, 0.3);
+          font-weight: bold;
+        }
+
         &:hover {
           background: rgba(255, 255, 255, 0.2);
         }
@@ -386,6 +391,375 @@
     }
   }
 
+  // 患者列表卡片样式
+  .patient-list-card {
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+
+      h3 {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        margin: 0;
+      }
+
+      .search-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        label {
+          font-size: 14px;
+          color: #666;
+          font-weight: 500;
+        }
+
+        input {
+          padding: 8px 12px;
+          border: 1px solid #e3eaf0;
+          border-radius: 8px;
+          font-size: 14px;
+          min-width: 200px;
+
+          &:focus {
+            outline: none;
+            border-color: #48d2ce;
+          }
+        }
+      }
+    }
+
+    .patient-table {
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+
+        th {
+          background: #f8f9fa;
+          padding: 12px 8px;
+          text-align: left;
+          font-weight: 500;
+          color: #333;
+          border-bottom: 1px solid #e3eaf0;
+        }
+
+        td {
+          padding: 12px 8px;
+          border-bottom: 1px solid #f0f0f0;
+          color: #666;
+
+          &.dropdown-icon {
+            text-align: center;
+            color: #999;
+            cursor: pointer;
+          }
+        }
+
+        tr.highlighted {
+          background: rgba(72, 210, 206, 0.1);
+        }
+
+        tr:hover {
+          background: rgba(72, 210, 206, 0.05);
+        }
+      }
+    }
+  }
+
+  // 治疗记录卡片样式
+  .treatment-record-card {
+    h3 {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    // 日历样式
+    .calendar {
+      margin-bottom: 25px;
+
+      .calendar-header {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 10px;
+
+        .calendar-day {
+          min-width: 60px;
+          text-align: center;
+          padding: 10px 8px;
+          border-radius: 8px;
+          background: #f8f9fa;
+          cursor: pointer;
+          transition: all 0.3s ease;
+
+          &.active {
+            background: #ff6b35;
+            color: #fff;
+          }
+
+          &:hover:not(.active) {
+            background: #e9ecef;
+          }
+
+          .day-name {
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 4px;
+          }
+
+          .day-date {
+            font-size: 16px;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+
+    // 日程安排样式
+    .schedule {
+      margin-bottom: 25px;
+
+      .appointment-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        margin-bottom: 10px;
+
+        .appointment-time {
+          font-size: 14px;
+          font-weight: 500;
+          color: #333;
+          min-width: 120px;
+        }
+
+        .appointment-icon {
+          font-size: 20px;
+          width: 30px;
+          text-align: center;
+        }
+
+        .appointment-details {
+          flex: 1;
+
+          .appointment-type {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 4px;
+          }
+
+          .appointment-doctor {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 2px;
+          }
+
+          .appointment-clinic {
+            font-size: 12px;
+            color: #999;
+          }
+        }
+      }
+    }
+
+    // 治疗概览样式
+    .treatment-overview {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+
+      .overview-card {
+        padding: 20px;
+        border-radius: 12px;
+        color: #fff;
+        position: relative;
+
+        &.blue {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        &.yellow {
+          background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        &.red {
+          background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        &.orange {
+          background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .card-title {
+          font-size: 14px;
+          font-weight: 500;
+          margin-bottom: 8px;
+          opacity: 0.9;
+        }
+
+        .card-value {
+          font-size: 18px;
+          font-weight: bold;
+          margin-bottom: 5px;
+
+          .card-icon {
+            font-size: 24px;
+            margin-right: 8px;
+          }
+        }
+
+        .card-subtitle {
+          font-size: 12px;
+          opacity: 0.8;
+        }
+      }
+    }
+
+    // 治疗时间线样式
+    .treatment-timeline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      padding: 20px 0;
+
+      .timeline-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+        position: relative;
+
+        &:not(:last-child)::after {
+          content: '';
+          position: absolute;
+          top: 20px;
+          left: 50%;
+          width: 100%;
+          height: 2px;
+          background: #e3eaf0;
+          z-index: 1;
+        }
+
+        .step-icon {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background: #e3eaf0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 18px;
+          color: #999;
+          margin-bottom: 8px;
+          position: relative;
+          z-index: 2;
+        }
+
+        .step-name {
+          font-size: 12px;
+          color: #666;
+          text-align: center;
+          font-weight: 500;
+        }
+
+        &.completed {
+          .step-icon {
+            background: #48d2ce;
+            color: #fff;
+          }
+
+          .step-name {
+            color: #333;
+          }
+        }
+      }
+    }
+
+    // 备注区域样式
+    .notes-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-top: 1px solid #e3eaf0;
+
+      label {
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+      }
+
+      .notes-actions {
+        display: flex;
+        gap: 10px;
+
+        button {
+          padding: 8px 16px;
+          border: 1px solid #48d2ce;
+          border-radius: 6px;
+          background: #fff;
+          color: #48d2ce;
+          font-size: 14px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+
+          &:hover {
+            background: #48d2ce;
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+
+  // 底部按钮样式
+  .bottom-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+
+    .action-btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &.primary {
+        background: #48d2ce;
+        color: #fff;
+
+        &:hover {
+          background: #3bb8b4;
+        }
+      }
+
+      &.secondary {
+        background: #fff;
+        color: #48d2ce;
+        border: 1px solid #48d2ce;
+
+        &:hover {
+          background: #f0f9f8;
+        }
+      }
+    }
+  }
+
   .doctor-clinic-content {
     .content-header {
       margin-bottom: 30px;
@@ -493,6 +867,56 @@
             font-size: 14px;
           }
         }
+      }
+    }
+
+    .patient-list-card {
+      .card-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+
+        .search-container {
+          justify-content: stretch;
+
+          input {
+            flex: 1;
+          }
+        }
+      }
+
+      .patient-table {
+        overflow-x: auto;
+
+        table {
+          min-width: 800px;
+        }
+      }
+    }
+
+    .treatment-record-card {
+      .treatment-overview {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .treatment-timeline {
+        flex-direction: column;
+        gap: 20px;
+
+        .timeline-step {
+          &:not(:last-child)::after {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .bottom-actions {
+      flex-direction: column;
+      align-items: stretch;
+
+      .action-btn {
+        width: 100%;
       }
     }
   }

@@ -45,7 +45,12 @@ export const ROLE_DESCRIPTIONS = {
 };
 
 // 根据角色获取路由
-export const getRouteByRole = (role) => {
+export const getRouteByRole = (role, username = '') => {
+  // 特殊处理：sales_user 用户跳转到 sales 页面
+  if (username === 'sales_user') {
+    return '/sales';
+  }
+  
   return ROLE_ROUTES[role] || '/partners'; // 默认跳转到合作伙伴页面
 };
 

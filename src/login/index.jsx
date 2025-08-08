@@ -100,7 +100,8 @@ export default function PearlLogin() {
         
         // 根据角色跳转到对应页面
         const userRole = responseData.data.user.role;
-        const route = getRouteByRole(userRole);
+        const username = responseData.data.user.username;
+        const route = getRouteByRole(userRole, username);
         navigate(route);
       } else {
         setErrorMessage(responseData.message || '登入失敗');
