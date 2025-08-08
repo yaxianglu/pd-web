@@ -1,0 +1,499 @@
+.sales-dashboard {
+  display: flex;
+  min-height: 100vh;
+  background: #f6f6f7;
+
+  .sidebar {
+    width: 250px;
+    background: #48d2ce;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+
+    .tab-navigation {
+      margin-bottom: 30px;
+
+      .tab-item {
+        color: #fff;
+        padding: 12px 15px;
+        margin-bottom: 8px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        position: relative;
+
+        &.active {
+          background: rgba(255, 255, 255, 0.2);
+          font-weight: bold;
+
+          &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #fff;
+            border-radius: 0 2px 2px 0;
+          }
+        }
+
+        &:hover:not(.active) {
+          background: rgba(255, 255, 255, 0.1);
+        }
+      }
+    }
+
+    .account-list {
+      flex: 1;
+      margin-bottom: 20px;
+      overflow-y: auto;
+
+      .account-item {
+        color: #fff;
+        padding: 10px 15px;
+        margin-bottom: 8px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+        transition: background 0.3s ease;
+        font-size: 14px;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.2);
+        }
+      }
+    }
+
+    .create-account-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.3s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+    }
+  }
+
+  .main-content {
+    margin-left: 250px;
+    flex: 1;
+    padding: 16px;
+    box-sizing: border-box;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 25px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    .card-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #333;
+    }
+  }
+
+  .user-info-card {
+    .user-greeting {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #333;
+
+      .user-role {
+        font-size: 16px;
+        color: #666;
+        margin-left: 10px;
+        font-weight: normal;
+      }
+    }
+
+    .user-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+
+      .detail-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        .label {
+          font-size: 14px;
+          color: #666;
+          font-weight: 500;
+        }
+
+        .value {
+          font-size: 14px;
+          color: #333;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  .patient-info-card {
+    .patient-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+
+      .patient-id {
+        width: 40px;
+        height: 40px;
+        background: #48d2ce;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      .patient-name {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .patient-user-id {
+        font-size: 14px;
+        color: #666;
+      }
+    }
+
+    .patient-fields {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+
+      .field-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        label {
+          font-size: 14px;
+          color: #666;
+          font-weight: 500;
+          white-space: nowrap;
+        }
+
+        input {
+          padding: 8px 12px;
+          border: 1px solid #e3eaf0;
+          border-radius: 8px;
+          font-size: 14px;
+          min-width: 120px;
+
+          &:focus {
+            outline: none;
+            border-color: #48d2ce;
+          }
+        }
+
+        .value {
+          font-size: 14px;
+          color: #333;
+          font-weight: 600;
+        }
+
+        &.search-group {
+          .search-input-wrapper {
+            position: relative;
+
+            input {
+              padding-right: 35px;
+            }
+
+            .search-icon {
+              position: absolute;
+              right: 10px;
+              top: 50%;
+              transform: translateY(-50%);
+              font-size: 14px;
+              color: #999;
+            }
+          }
+        }
+      }
+
+      .expand-icon {
+        cursor: pointer;
+        font-size: 18px;
+        color: #666;
+        margin-left: auto;
+      }
+    }
+  }
+
+  .smile-test-table {
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+
+      .header-left {
+        .title {
+          font-size: 20px;
+          font-weight: 500;
+          color: #7d868d;
+        }
+      }
+
+      .header-right {
+        .business-id {
+          font-size: 20px;
+          font-weight: 500;
+          color: #7d868d;
+        }
+      }
+    }
+
+    .divider {
+      border: none;
+      border-top: 1.5px solid #e3eaf0;
+      margin: 6px 0 12px;
+    }
+
+    .table-container {
+      margin: 0 18px;
+
+      .data-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        font-size: 17px;
+
+        th {
+          background: #b7e3e3;
+          padding: 15px 10px;
+          text-align: left;
+          font-weight: 500;
+          color: #333;
+          border: none;
+
+          &:first-child {
+            border-top-left-radius: 8px;
+          }
+
+          &:last-child {
+            border-top-right-radius: 8px;
+          }
+        }
+
+        .table-row {
+          cursor: pointer;
+          transition: background 0.2s ease;
+
+          &.even {
+            background: #d7f2f0;
+          }
+
+          &.odd {
+            background: #b7e3e3;
+          }
+
+          &:hover {
+            background: rgba(72, 210, 206, 0.1);
+          }
+
+          &.expanded {
+            background: rgba(72, 210, 206, 0.15);
+          }
+
+          td {
+            padding: 15px 10px;
+            border: none;
+            vertical-align: middle;
+
+            &.download-link {
+              color: #156f7d;
+              font-weight: bold;
+              text-decoration: underline;
+              cursor: pointer;
+
+              &:hover {
+                color: #0d4a54;
+              }
+            }
+
+            &.status-cell {
+              &.read {
+                color: #2ca956;
+              }
+
+              &.unread {
+                color: #888;
+              }
+            }
+
+            &.expand-icon {
+              text-align: center;
+              width: 50px;
+              font-size: 19px;
+              color: #666;
+              cursor: pointer;
+            }
+          }
+        }
+
+        .detail-row {
+          background: rgba(72, 210, 206, 0.05);
+
+          .detail-content {
+            padding: 15px 20px;
+            background: rgba(72, 210, 206, 0.1);
+            border-radius: 8px;
+            margin: 10px 0;
+
+            .detail-label {
+              font-weight: bold;
+              color: #333;
+              margin-right: 10px;
+            }
+
+            .detail-text {
+              color: #666;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .doctor-clinic-content {
+    .content-header {
+      margin-bottom: 30px;
+
+      h2 {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 16px;
+        color: #666;
+      }
+    }
+
+    .content-body {
+      .info-card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+        h3 {
+          font-size: 18px;
+          font-weight: bold;
+          color: #333;
+          margin-bottom: 15px;
+        }
+
+        ul {
+          list-style: none;
+          padding: 0;
+
+          li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            color: #666;
+            font-size: 14px;
+
+            &:last-child {
+              border-bottom: none;
+            }
+
+            &::before {
+              content: '•';
+              color: #48d2ce;
+              font-weight: bold;
+              margin-right: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 1125px) {
+  .sales-dashboard {
+    .sidebar {
+      width: 200px;
+    }
+
+    .main-content {
+      margin-left: 200px;
+      padding: 12px;
+    }
+
+    .user-info-card {
+      .user-details {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+
+    .patient-info-card {
+      .patient-fields {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+
+        .field-group {
+          justify-content: space-between;
+        }
+
+        .expand-icon {
+          margin-left: 0;
+          text-align: center;
+        }
+      }
+    }
+
+    .smile-test-table {
+      .table-container {
+        margin: 0;
+        overflow-x: auto;
+
+        .data-table {
+          min-width: 800px;
+
+          th, td {
+            padding: 10px 8px;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+} 

@@ -16,6 +16,10 @@ import About from './about';
 import Join from './join';
 import Upload from './upload';
 import Partners from './partners';
+import HospitalDashboard from './hospital';
+import DoctorDashboard from './doctor';
+import SalesDashboard from './sales';
+
 function App() {
   return (
     <AuthProvider>
@@ -42,6 +46,21 @@ function App() {
           <Route path="/partners" element={
             <ProtectedRoute>
               <Partners />
+            </ProtectedRoute>
+          } />
+          <Route path="/hospital" element={
+            <ProtectedRoute>
+              <HospitalDashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/doctor" element={
+            <ProtectedRoute>
+              <DoctorDashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/sales" element={
+            <ProtectedRoute>
+              <SalesDashboard />
             </ProtectedRoute>
           } />
         </Routes>

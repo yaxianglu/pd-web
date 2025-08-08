@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import apiService from '../services/api';
+import { getRouteByRole } from '../contants/roleRoutes';
 import img from './imgs/1.jpg';
 import img2 from './imgs/2.svg';
 import './index.scss';
@@ -52,8 +53,9 @@ export default function PearlLogin() {
         // 将UUID存储到sessionStorage
         sessionStorage.setItem('patient_uuid', responseData.data.uuid);
         
-        // 跳转到patient页面，不携带URL参数
-        navigate('/patient');
+        // 使用角色路由配置跳转到患者页面
+        const route = getRouteByRole('patient');
+        navigate(route);
       } else {
         setErrorMessage(responseData.message || 'UUID驗證失敗');
       }
@@ -96,7 +98,10 @@ export default function PearlLogin() {
           refresh_token: responseData.data.refresh_token,
         });
         
-        navigate('/partners');
+        // 根据角色跳转到对应页面
+        const userRole = responseData.data.user.role;
+        const route = getRouteByRole(userRole);
+        navigate(route);
       } else {
         setErrorMessage(responseData.message || '登入失敗');
       }

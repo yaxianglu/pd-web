@@ -1,0 +1,58 @@
+.treatment-flow {
+  margin-bottom: 25px;
+
+  .flow-steps {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+
+    .flow-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 80px;
+
+      .step-icon {
+        font-size: 20px;
+        margin-bottom: 5px;
+      }
+
+      .step-name {
+        font-size: 12px;
+        color: #666;
+        text-align: center;
+        margin-bottom: 5px;
+        line-height: 1.2;
+      }
+
+      .step-indicator {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+
+        &.completed {
+          background: #4caf50;
+          color: #fff;
+        }
+
+        &.current {
+          background: #ffc107;
+          color: #666;
+        }
+
+        &.pending {
+          background: #e0e0e0;
+          color: #666;
+        }
+      }
+    }
+  }
+} 

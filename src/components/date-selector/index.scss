@@ -1,0 +1,35 @@
+.date-selector {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+
+  .date-item {
+    text-align: center;
+    padding: 8px 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 50px;
+
+    &.selected {
+      background: #f19b43;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    &:hover:not(.selected) {
+      background: rgba(241, 155, 67, 0.1);
+    }
+
+    .day {
+      font-size: 12px;
+    }
+
+    .date {
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
+} 

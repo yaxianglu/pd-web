@@ -1,0 +1,160 @@
+.data-table-container {
+  background: #fff;
+  border-radius: 18px;
+  padding: 25px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+
+    .header-left {
+      .title {
+        font-size: 20px;
+        font-weight: 500;
+        color: #7d868d;
+      }
+    }
+
+    .header-right {
+      .subtitle {
+        font-size: 20px;
+        font-weight: 500;
+        color: #7d868d;
+      }
+    }
+  }
+
+  .divider {
+    border: none;
+    border-top: 1.5px solid #e3eaf0;
+    margin: 6px 0 12px;
+  }
+
+  .table-container {
+    margin: 0 18px;
+
+    .data-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 17px;
+
+      th {
+        background: #b7e3e3;
+        padding: 15px 10px;
+        text-align: left;
+        font-weight: 500;
+        color: #333;
+        border: none;
+
+        &:first-child {
+          border-top-left-radius: 8px;
+        }
+
+        &:last-child {
+          border-top-right-radius: 8px;
+        }
+      }
+
+      .table-row {
+        cursor: pointer;
+        transition: background 0.2s ease;
+
+        &.even {
+          background: #d7f2f0;
+        }
+
+        &.odd {
+          background: #b7e3e3;
+        }
+
+        &:hover {
+          background: rgba(72, 210, 206, 0.1);
+        }
+
+        &.expanded {
+          background: rgba(72, 210, 206, 0.15);
+        }
+
+        td {
+          padding: 15px 10px;
+          border: none;
+          vertical-align: middle;
+
+          &.download-link {
+            color: #156f7d;
+            font-weight: bold;
+            text-decoration: underline;
+            cursor: pointer;
+
+            &:hover {
+              color: #0d4a54;
+            }
+          }
+
+          &.status-cell {
+            &.read {
+              color: #2ca956;
+            }
+
+            &.unread {
+              color: #888;
+            }
+          }
+
+          &.expand-icon {
+            text-align: center;
+            width: 50px;
+            font-size: 19px;
+            color: #666;
+            cursor: pointer;
+          }
+        }
+      }
+
+      .detail-row {
+        background: rgba(72, 210, 206, 0.05);
+
+        .detail-content {
+          padding: 15px 20px;
+          background: rgba(72, 210, 206, 0.1);
+          border-radius: 8px;
+          margin: 10px 0;
+
+          .detail-label {
+            font-weight: bold;
+            color: #333;
+            margin-right: 10px;
+          }
+
+          .detail-text {
+            color: #666;
+          }
+        }
+      }
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 1125px) {
+  .data-table-container {
+    .table-container {
+      margin: 0;
+      overflow-x: auto;
+
+      .data-table {
+        min-width: 800px;
+
+        th, td {
+          padding: 10px 8px;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+} 

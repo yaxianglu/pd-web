@@ -1,0 +1,61 @@
+.appointment-card {
+  background: var(--appointment-color);
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  .appointment-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .appointment-icon {
+      font-size: 24px;
+    }
+
+    .appointment-details {
+      .appointment-time {
+        font-weight: 600;
+        font-size: 16px;
+        color: #333;
+      }
+
+      .appointment-type {
+        font-size: 14px;
+        color: #666;
+        margin-top: 2px;
+      }
+
+      .appointment-doctor {
+        font-size: 12px;
+        color: #999;
+        margin-top: 2px;
+      }
+    }
+  }
+
+  .appointment-clinic {
+    font-size: 13px;
+    color: #666;
+    text-align: center;
+  }
+
+  .appointment-actions {
+    font-size: 18px;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #666;
+    }
+  }
+} 

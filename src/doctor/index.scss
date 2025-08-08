@@ -1,0 +1,671 @@
+.doctor-dashboard {
+  display: flex;
+  min-height: 100vh;
+  background: #f6f6f7;
+
+  .sidebar {
+    width: 250px;
+    background: #48d2ce;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 1000;
+
+    .system-title {
+      color: #fff;
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .account-list {
+      margin-bottom: 20px;
+
+      .account-item {
+        color: #fff;
+        padding: 10px 15px;
+        margin-bottom: 8px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+        transition: background 0.3s ease;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.2);
+        }
+      }
+    }
+
+    .create-account-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.3s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+    }
+  }
+
+  .main-content {
+    margin-left: 250px;
+    flex: 1;
+    padding: 16px;
+    box-sizing: border-box;
+
+    .content-layout {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+
+      .left-panel {
+        flex: 2;
+      }
+
+      .right-panel {
+        flex: 1;
+      }
+    }
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 25px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    .card-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #333;
+    }
+  }
+
+  .user-info-card {
+    .user-greeting {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #333;
+
+      .user-role {
+        font-size: 16px;
+        color: #666;
+        margin-left: 10px;
+        font-weight: normal;
+      }
+    }
+
+    .user-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+
+      .detail-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        .label {
+          font-size: 14px;
+          color: #666;
+          font-weight: 500;
+        }
+
+        .value {
+          font-size: 14px;
+          color: #333;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  .patient-info-card {
+    .patient-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+
+      .patient-id {
+        width: 40px;
+        height: 40px;
+        background: #48d2ce;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      .patient-name {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .patient-user-id {
+        font-size: 14px;
+        color: #666;
+      }
+    }
+
+    .patient-fields {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+
+      .field-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        label {
+          font-size: 14px;
+          color: #666;
+          font-weight: 500;
+          white-space: nowrap;
+        }
+
+        input {
+          padding: 8px 12px;
+          border: 1px solid #e3eaf0;
+          border-radius: 8px;
+          font-size: 14px;
+          min-width: 120px;
+
+          &:focus {
+            outline: none;
+            border-color: #48d2ce;
+          }
+        }
+
+        .value {
+          font-size: 14px;
+          color: #333;
+          font-weight: 600;
+        }
+
+        &.search-group {
+          .search-input-wrapper {
+            position: relative;
+
+            input {
+              padding-right: 35px;
+            }
+
+            .search-icon {
+              position: absolute;
+              right: 10px;
+              top: 50%;
+              transform: translateY(-50%);
+              font-size: 14px;
+              color: #999;
+            }
+          }
+        }
+      }
+
+      .expand-icon {
+        cursor: pointer;
+        font-size: 18px;
+        color: #666;
+        margin-left: auto;
+      }
+    }
+  }
+
+  .treatment-summary {
+    .date-selector {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+
+      .date-item {
+        text-align: center;
+        padding: 8px 12px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-width: 50px;
+
+        &.selected {
+          background: #f19b43;
+          color: #fff;
+          font-weight: bold;
+        }
+
+        .day {
+          font-size: 12px;
+        }
+
+        .date {
+          font-size: 16px;
+          font-weight: 500;
+        }
+      }
+    }
+
+    .appointment-list {
+      margin-bottom: 20px;
+
+      .appointment-item {
+        background: var(--appointment-color);
+        border-radius: 12px;
+        padding: 15px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .appointment-info {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+
+          .appointment-icon {
+            font-size: 24px;
+          }
+
+          .appointment-details {
+            .appointment-time {
+              font-weight: 600;
+              font-size: 16px;
+              color: #333;
+            }
+
+            .appointment-type {
+              font-size: 14px;
+              color: #666;
+              margin-top: 2px;
+            }
+
+            .appointment-doctor {
+              font-size: 12px;
+              color: #999;
+              margin-top: 2px;
+            }
+          }
+        }
+
+        .appointment-clinic {
+          font-size: 13px;
+          color: #666;
+          text-align: center;
+        }
+
+        .appointment-actions {
+          font-size: 18px;
+          color: #999;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .notes-section {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      .notes-label {
+        font-size: 14px;
+        color: #666;
+        font-weight: 500;
+      }
+
+      .notes-actions {
+        display: flex;
+        gap: 10px;
+
+        .action-btn {
+          padding: 8px 16px;
+          border-radius: 8px;
+          font-size: 14px;
+          cursor: pointer;
+          border: none;
+          transition: all 0.3s ease;
+
+          &.primary {
+            background: #48d2ce;
+            color: #fff;
+
+            &:hover {
+              background: #3bb8b4;
+            }
+          }
+
+          &.secondary {
+            background: #fff;
+            color: #48d2ce;
+            border: 1px solid #48d2ce;
+
+            &:hover {
+              background: #f0f9f9;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .treatment-status {
+    .status-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 25px;
+
+      .status-card {
+        padding: 15px;
+        border-radius: 12px;
+        text-align: center;
+        color: #fff;
+
+        .card-title {
+          font-size: 14px;
+          font-weight: bold;
+          margin-bottom: 8px;
+        }
+
+        .card-value {
+          font-size: 16px;
+          font-weight: bold;
+          margin-bottom: 5px;
+        }
+
+        .card-note {
+          font-size: 12px;
+          opacity: 0.8;
+        }
+
+        .card-icon {
+          font-size: 20px;
+          margin-bottom: 5px;
+        }
+
+        &.brace-type {
+          background: #2196f3;
+        }
+
+        &.current-progress {
+          background: #4caf50;
+        }
+
+        &.treatment-phase {
+          background: #ff9800;
+        }
+
+        &.create-bill {
+          background: #f44336;
+        }
+      }
+    }
+
+    .treatment-flow {
+      margin-bottom: 25px;
+
+      .flow-steps {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        overflow-x: auto;
+        padding-bottom: 10px;
+
+        .flow-step {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          min-width: 80px;
+
+          .step-icon {
+            font-size: 20px;
+            margin-bottom: 5px;
+          }
+
+          .step-name {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            margin-bottom: 5px;
+          }
+
+          .step-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+
+            &.completed {
+              background: #4caf50;
+              color: #fff;
+            }
+
+            &.current {
+              background: #ffc107;
+              color: #666;
+            }
+
+            &.pending {
+              background: #e0e0e0;
+              color: #666;
+            }
+          }
+        }
+      }
+    }
+
+    .update-btn {
+      background: #48d2ce;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.3s ease;
+
+      &:hover {
+        background: #3bb8b4;
+      }
+    }
+  }
+
+  .patient-table {
+    .table-header {
+      margin-bottom: 20px;
+    }
+
+    .table-rows {
+      .table-row {
+        display: flex;
+        align-items: center;
+        padding: 15px 0;
+        border-bottom: 1px solid #f0f0f0;
+        gap: 15px;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .row-item {
+          font-size: 14px;
+          color: #333;
+
+          &.sequence {
+            width: 40px;
+            font-weight: bold;
+          }
+
+          &.name {
+            width: 80px;
+            font-weight: 600;
+          }
+
+          &.user-id {
+            width: 150px;
+            color: #666;
+          }
+
+          &.contact {
+            width: 150px;
+            color: #666;
+          }
+
+          &.email {
+            flex: 1;
+            color: #666;
+          }
+
+          &.status {
+            .status-badge {
+              background: #4caf50;
+              color: #fff;
+              padding: 4px 8px;
+              border-radius: 6px;
+              font-size: 12px;
+            }
+          }
+
+          &.action {
+            .action-icon {
+              cursor: pointer;
+              font-size: 16px;
+              color: #999;
+            }
+          }
+        }
+      }
+    }
+
+    .table-footer {
+      margin-top: 20px;
+      text-align: center;
+
+      .create-patient-btn {
+        background: #48d2ce;
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        padding: 12px 24px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s ease;
+
+        &:hover {
+          background: #3bb8b4;
+        }
+      }
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 1125px) {
+  .doctor-dashboard {
+    .sidebar {
+      width: 200px;
+    }
+
+    .main-content {
+      margin-left: 200px;
+      padding: 12px;
+
+      .content-layout {
+        flex-direction: column;
+
+        .left-panel,
+        .right-panel {
+          flex: none;
+        }
+      }
+    }
+
+    .user-info-card {
+      .user-details {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+
+    .patient-info-card {
+      .patient-fields {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+
+        .field-group {
+          justify-content: space-between;
+        }
+
+        .expand-icon {
+          margin-left: 0;
+          text-align: center;
+        }
+      }
+    }
+
+    .treatment-summary {
+      .appointment-list {
+        .appointment-item {
+          flex-direction: column;
+          gap: 10px;
+          text-align: center;
+        }
+      }
+    }
+
+    .patient-table {
+      .table-rows {
+        .table-row {
+          flex-direction: column;
+          gap: 10px;
+          padding: 20px;
+          border: 1px solid #e3eaf0;
+          border-radius: 8px;
+          margin-bottom: 10px;
+
+          .row-item {
+            width: 100% !important;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            &::before {
+              content: attr(data-label);
+              font-weight: bold;
+              margin-right: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
