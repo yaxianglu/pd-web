@@ -67,6 +67,24 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('user_info');
     localStorage.removeItem('auth_token');
     localStorage.removeItem('refresh_token');
+    
+    // 清除sessionStorage中的患者UUID
+    sessionStorage.removeItem('patient_uuid');
+  };
+
+  // 患者专用登出函数
+  const patientLogout = () => {
+    setIsAuthenticated(false);
+    setUserType(null);
+    setUserInfo(null);
+    
+    // 清除localStorage
+    localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('userType');
+    localStorage.removeItem('user_info');
+    
+    // 清除sessionStorage中的患者UUID
+    sessionStorage.removeItem('patient_uuid');
   };
 
   // 刷新token
@@ -164,6 +182,7 @@ export const AuthProvider = ({ children }) => {
     token,
     login,
     logout,
+    patientLogout,
     refreshAuthToken,
     verifyToken
   };

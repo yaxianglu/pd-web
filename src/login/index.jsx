@@ -27,13 +27,41 @@ export default function PearlLogin() {
   }, []);
 
   // 患者登录处理
-  const handlePatientLogin = () => {
-    if (patientAccount.trim()) {
-      // 患者登录成功，保存登录状态并跳转到partners页面
-      login('patient', { account: patientAccount });
-      navigate('/partners');
-    } else {
-      setErrorMessage('請輸入帳號');
+  const handlePatientLogin = async () => {
+    if (!patientAccount.trim()) {
+      setErrorMessage('請輸入UUID');
+      return;
+    }
+
+    setIsLoading(true);
+    setErrorMessage("");
+
+    try {
+      // 验证UUID
+      const responseData = await apiService.validatePatientUuid(patientAccount.trim());
+      
+      if (responseData.success) {
+        // 登录成功，保存患者信息到sessionStorage
+        login('patient', { 
+          uuid: responseData.data.uuid,
+          test_id: responseData.data.test_id,
+          full_name: responseData.data.full_name,
+          test_status: responseData.data.test_status
+        });
+        
+        // 将UUID存储到sessionStorage
+        sessionStorage.setItem('patient_uuid', responseData.data.uuid);
+        
+        // 跳转到patient页面，不携带URL参数
+        navigate('/patient');
+      } else {
+        setErrorMessage(responseData.message || 'UUID驗證失敗');
+      }
+    } catch (error) {
+      console.error('Patient login error:', error);
+      setErrorMessage(error.message || '網絡錯誤，請稍後再試');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -107,11 +135,10 @@ export default function PearlLogin() {
               <div className="divider-line" />
             </div>
             <div className="input-label">
-              帳號
-              <span className="info-icon" title="帳號說明">ⓘ</span>
+            帳號
+              <span className="info-icon" title="請輸入您的微笑測試UUID">ⓘ</span>
             </div>
             <input
-              placeholder=""
               value={patientAccount}
               onChange={(e) => setPatientAccount(e.target.value)}
               className="form-input"
@@ -120,8 +147,9 @@ export default function PearlLogin() {
             <button 
               onClick={handlePatientLogin}
               className="login-button"
+              disabled={isLoading}
             >
-              登入
+              {isLoading ? '驗證中...' : '登入'}
             </button>
           </div>
 

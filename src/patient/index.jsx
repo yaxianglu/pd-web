@@ -1,17 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import ProgressTracker from "../components/progress";
 import { cardTitleSizeStyle, cardPaddingStyle } from "../contants";
 import ContactInfo from "../components/contact-info";
 import InfoCardComponent from "../components/info-card";
+import apiService from "../services/api";
 import png13 from "../asserts/13.png";
 
 const gapSize = 16;
 
-function InfoCard() {
+function InfoCard({ patientData }) {
   return (
     <div style={{ background: "#fff", borderRadius: "18px", padding: "30px", boxSizing: "border-box", marginBottom: gapSize }}>
-      <div style={{ ...cardTitleSizeStyle }}>將權　您好</div>
-      <ContactInfo id="32012310010" phone="13022559203" email="1004735926@qq.com" />
+      <div style={{ ...cardTitleSizeStyle }}>
+        {patientData?.full_name || '患者'}　您好
+      </div>
+      <ContactInfo 
+        id={patientData?.test_id || 'N/A'} 
+        phone={patientData?.phone || 'N/A'} 
+        email={patientData?.email || 'N/A'} 
+      />
       <hr style={{ border: "none", borderTop: "1.5px solid #e3eaf0", margin: "18px 0" }} />
       <InfoCardComponent />
     </div>
@@ -169,6 +178,88 @@ function TimeItem({ color, icon, title, doctor, org, time }) {
 }
 
 export default function Dashboard() {
+  const [patientData, setPatientData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // 从sessionStorage获取UUID
+    const uuid = sessionStorage.getItem('patient_uuid');
+    
+    if (uuid) {
+      setLoading(true);
+      apiService.getSmileTestByUuid(uuid)
+        .then(response => {
+          if (response.success) {
+            setPatientData(response.data);
+          } else {
+            setError(response.message || '获取患者数据失败');
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching patient data:", error);
+          setError('网络错误，请稍后重试');
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      setError('未找到患者信息，请重新登录');
+      setLoading(false);
+    }
+  }, []);
+
+  if (loading) {
+    return (
+      <div style={{
+        width: "100vw",
+        minHeight: "100vh",
+        background: "#f6f6f7",
+        padding: gapSize,
+        boxSizing: "border-box",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+      }}>
+        <div>加载中...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div style={{
+        width: "100vw",
+        minHeight: "100vh",
+        background: "#f6f6f7",
+        padding: gapSize,
+        boxSizing: "border-box",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column",
+        gap: "20px"
+      }}>
+        <div style={{ color: "red" }}>{error}</div>
+        <button 
+          onClick={() => window.location.href = '/login'}
+          style={{
+            background: "#48d2ce",
+            color: "#fff",
+            border: "none",
+            borderRadius: "8px",
+            padding: "10px 20px",
+            cursor: "pointer"
+          }}
+        >
+          返回登录页面
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div style={{
       width: "100vw",
@@ -180,7 +271,7 @@ export default function Dashboard() {
       <div style={{ display: "flex", gap: gapSize, alignItems: "flex-start" }}>
         <div style={{ flex: 2 }}>
           <div style={{ display: "flex", gap: gapSize }}>
-            <InfoCard />
+            <InfoCard patientData={patientData} />
             <PlanConfirmCard />
           </div>
           <ProgressTracker currentStep={3} title="等待確認支付" />
@@ -188,6 +279,30 @@ export default function Dashboard() {
         <div style={{ flex: 1 }}>
           <ScheduleCard />
         </div>
+      </div>
+      <div style={{
+        position: "fixed",
+        bottom: "20px",
+        left: "50%",
+        transform: "translateX(-50%)",
+        zIndex: 10,
+      }}>
+        <button
+          onClick={logout}
+          style={{
+            background: "#ff6b6b",
+            color: "#fff",
+            border: "none",
+            borderRadius: "8px",
+            padding: "10px 20px",
+            cursor: "pointer",
+            fontSize: 14,
+            fontWeight: 600,
+            letterSpacing: 1.1,
+          }}
+        >
+          登出
+        </button>
       </div>
     </div>
   );

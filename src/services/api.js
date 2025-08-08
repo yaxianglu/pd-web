@@ -167,6 +167,38 @@ class ApiService {
       return { success: false, message: 'Failed to fetch partners' };
     }
   }
+
+  // 验证患者UUID
+  async validatePatientUuid(uuid) {
+    try {
+      const response = await fetch(`${this.baseURL}/api/smile-test/validate-uuid/${uuid}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      return await response.json();
+    } catch (error) {
+      console.error('Failed to validate UUID:', error);
+      return { success: false, message: '验证失败，请检查网络连接' };
+    }
+  }
+
+  // 根据UUID获取smile test数据
+  async getSmileTestByUuid(uuid) {
+    try {
+      const response = await fetch(`${this.baseURL}/api/smile-test/uuid/${uuid}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      return await response.json();
+    } catch (error) {
+      console.error('Failed to get smile test data:', error);
+      return { success: false, message: '获取数据失败，请检查网络连接' };
+    }
+  }
 }
 
 // 创建单例实例
