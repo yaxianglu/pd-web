@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import "./index.css";
 import logo from '../../asserts/2.svg';
+import open from './imgs/1.svg';
 import { Select } from 'antd';
 import 'antd/dist/reset.css';
 
@@ -10,6 +11,7 @@ export default function Header() {
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [showCover, setShowCover] = useState(false); // 是否顯示遮罩
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,13 +20,12 @@ export default function Header() {
     };
 
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
+      setIsMobile(window.innerWidth <= 1125);
     };
 
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('resize', handleResize);
     
-    // 初始化时检查屏幕尺寸
     handleResize();
     
     return () => {
@@ -113,20 +114,23 @@ export default function Header() {
         />
       </div>
       <div className="header-center">
-        <Select
-          defaultValue={getCurrentBrandValue()}
-          size="small"
-          style={{ width: 160, height: 36 }}
-          className="brand-select"
-          options={[
-            { value: 'PEARL DIGITAL', label: 'PEARL DIGITAL' },
-            { value: '關於我們', label: '關於我們' },
-            { value: '合作夥伴', label: '合作夥伴' },
-          ]}
-          onChange={handleBrandSelectChange}
-        />
+        {
+          isMobile ? null : (
+            <Select
+            defaultValue={getCurrentBrandValue()}
+            size="small"
+            style={{ width: 160, height: 36 }}
+            className="brand-select"
+            options={[
+              { value: 'PEARL DIGITAL', label: 'PEARL DIGITAL' },
+              { value: '關於我們', label: '關於我們' },
+              { value: '合作夥伴', label: '合作夥伴' },
+            ]}
+            onChange={handleBrandSelectChange}
+          />
+          )
+        }
         
-        {/* 桌面端导航 */}
         {!isMobile && (
           <>
           <nav className="header-nav">
@@ -159,45 +163,47 @@ export default function Header() {
               矯正與美
             </a>
           </nav>
-            <button className="test-btn" onClick={() => navigate('/upload')}>
-              微笑測試 <span className="star">✦</span>
-            </button>
         </>
         )}
         
-        {/* 移动端导航下拉框 */}
-        {isMobile && (
-          <Select
-            defaultValue={getCurrentNavValue()}
-            size="small"
-            style={{ width: 120, height: 36 }}
-            className="nav-select"
-            options={[
-              { value: '/invisible-braces', label: '隱形牙套' },
-              { value: '/maintainer', label: '維持器' },
-              { value: '/journey', label: '珍舒美旅程' },
-              { value: '/correction', label: '矯正與美' },
-              { value: '/upload', label: '微笑測試' },
-            ]}
-            onChange={handleNavSelectChange}
-          />
-        )}
-        
+        <button className="test-btn" onClick={() => navigate('/upload')}>
+          微笑測試 <span className="star">✦</span>
+        </button>
       </div>
       <div className="header-right">
-        <Select
-          defaultValue="台灣(繁中)"
-          size="small"
-          style={{ width: 120, height: 36 }}
-          className="lang-select"
-          options={[
-            { value: '台灣(繁中)', label: '台灣(繁中)' },
-            { value: '中国(简体)', label: '中国(简体)' },
-            { value: 'EN', label: 'EN' }
-          ]}
-        />
-        <button className="login-btn" onClick={handleLoginClick}>登入</button>
+        {isMobile ? (
+          <img src={open} alt="#" style={{ width: 28, height: 28, marginLeft: 12 }} onClick={() => setShowCover(true)}/>
+        ) : (
+          <>
+          <Select
+            defaultValue="台灣(繁中)"
+            size="small"
+            style={{ width: 120, height: 36 }}
+            className="lang-select"
+            options={[
+              { value: '台灣(繁中)', label: '台灣(繁中)' },
+              { value: '中国(简体)', label: '中国(简体)' },
+              { value: 'EN', label: 'EN' }
+            ]}
+          />
+          <button className="login-btn" onClick={handleLoginClick}>登入</button>
+          </>
+        )}
       </div>
+      {showCover && (
+        <div className="header-cover" onClick={() => setShowCover(false)}>
+          <div className="header-cover-close" onClick={() => setShowCover(false)}>X</div>
+          <div className="header-cover-content">
+            <span onClick={() => navigate('/invisible-braces')}>隱形牙套</span>
+            <span onClick={() => navigate('/maintainer')}>維持器</span>
+            <span onClick={() => navigate('/journey')}>珍舒美旅程</span>
+            <span onClick={() => navigate('/correction')}>矯正與美</span>
+            <span onClick={() => navigate('/about')}>關於我們</span>
+            <span onClick={() => navigate('/join')}>合作夥伴</span>
+            <span onClick={handleLoginClick}>用户登陆</span>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

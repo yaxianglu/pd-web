@@ -178,7 +178,6 @@
   background: #f8f9fa;
 }
 
-/* 自定义Select组件样式 */
 .brand-select .ant-select-selector,
 .lang-select .ant-select-selector {
   background: #f8f9fa !important;
@@ -228,7 +227,6 @@
   font-size: 11px !important;
 }
 
-/* 移除默认的antd样式覆盖 */
 .ant-select-selector {
   background: #f8f9fa !important;
   border-radius: 6px !important;
@@ -254,7 +252,6 @@
   text-overflow: clip !important;
 }
 
-/* Dropdown箭头美化 */
 .ant-select-arrow {
   color: #666 !important;
   font-size: 12px !important;
@@ -262,7 +259,7 @@
   flex-shrink: 0 !important;
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 1125px) {
   .site-header { 
     padding: 0 40px; 
     min-width: auto;
@@ -270,56 +267,89 @@
   .site-header.scrolled {
     padding: 0 32px;
   }
-  .header-center { gap: 32px; }
+  .header-center { 
+    gap: 20px; 
+    justify-content: flex-end;
+  }
   .header-nav { gap: 28px; }
   .header-right { gap: 14px; }
-}
-
-@media (max-width: 768px) {
-  .site-header {
-    padding: 0 20px;
-    height: 56px;
-  }
-  .site-header.scrolled {
-    height: 48px;
-    padding: 0 16px;
-  }
-  .header-logo-img {
-    height: 28px;
-  }
-  .scrolled .header-logo-img {
-    height: 24px;
-  }
-  .header-center {
-    gap: 16px;
-  }
-  .scrolled .header-center {
+  
+  .mobile-nav-container {
+    display: flex;
+    align-items: center;
     gap: 12px;
   }
-  .test-btn {
-    font-size: 13px;
-    padding: 6px 14px;
+  
+  .nav-select {
+    background: #f8f9fa !important;
+    border-radius: 6px !important;
+    font-size: 14px;
+    font-weight: 500;
   }
-  .scrolled .test-btn {
-    font-size: 12px;
-    padding: 5px 12px;
+  
+  .nav-select .ant-select-selector {
+    background: #f8f9fa !important;
+    border-radius: 6px !important;
+    height: 36px !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0 12px !important;
+    box-shadow: none !important;
+    transition: all 0.2s ease !important;
+    border: none !important;
   }
-  .header-right {
-    gap: 12px;
+  
+  .nav-select .ant-select-selection-item {
+    color: #333 !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    font-family: 'PingFang SC', 'PingFang TC', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
   }
-  .scrolled .header-right {
-    gap: 10px;
-  }
-  .login-btn {
-    font-size: 13px;
-    padding: 4px 8px;
-  }
-  .scrolled .login-btn {
-    font-size: 12px;
-    padding: 3px 6px;
+  
+  .nav-select .ant-select-arrow {
+    color: #666 !important;
+    font-size: 12px !important;
+    transition: all 0.2s ease !important;
+    flex-shrink: 0 !important;
   }
 }
 
 .ant-select-selector {
   border: none !important;
+}
+
+
+.header-cover {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  .header-cover-close {
+    font-size: 40px;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 40px;
+  }
+
+  .header-cover-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 34px;
+    padding: 10% 0;
+  }
 }

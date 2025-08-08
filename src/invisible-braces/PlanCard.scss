@@ -16,7 +16,7 @@
       display: flex;
       margin-bottom: 60px;
 
-      @media (max-width: 768px) {
+      @media (max-width: 1125px) {
         flex-direction: column;
         margin-bottom: 40px;
       }
@@ -38,7 +38,7 @@
         line-height: 1.5;
         margin-left: 14px;
 
-        @media (max-width: 768px) {
+        @media (max-width: 1125px) {
           margin-left: 0;
           margin-top: 14px;
         }
@@ -69,7 +69,7 @@
           box-shadow: 0 4px 12px #d0d0d0;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1125px) {
           font-size: 18px;
           padding: 12px 40px;
         }
@@ -83,10 +83,9 @@
   align-items: stretch;
   justify-content: center;
   margin-bottom: 36px;
-  flex-wrap: wrap;
   gap: 24px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1125px) {
     gap: 14px;
     margin-bottom: 24px;
   }

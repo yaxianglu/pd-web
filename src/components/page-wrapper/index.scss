@@ -30,44 +30,15 @@
       padding: 0 40px;
     }
   }
-
-  // 移动端样式 (768px以下)
-  &.mobile {
-    .page-content {
-      max-width: 100%;
-      min-width: 320px;
-      padding: 0 16px;
-    }
-  }
 }
 
 // 媒体查询备用方案
-@media (max-width: 768px) {
+@media (max-width: 1125px) {
   .page-wrapper {
     .page-content {
       max-width: 100%;
       min-width: 320px;
-      padding: 0 16px;
-    }
-  }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  .page-wrapper {
-    .page-content {
-      max-width: 90%;
-      min-width: 768px;
       padding: 0 40px;
-    }
-  }
-}
-
-@media (min-width: 1025px) {
-  .page-wrapper {
-    .page-content {
-      max-width: 1080px;
-      min-width: 1080px;
-      padding: 0;
     }
   }
 }

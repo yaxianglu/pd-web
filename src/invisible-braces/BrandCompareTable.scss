@@ -135,6 +135,12 @@
           color: #333;
           vertical-align: middle;
 
+          @media (max-width: 1125px) {
+            min-width: auto;
+            max-width: auto;
+            padding: 2px;
+          }
+
           .cell-content {
             word-wrap: break-word;
             word-break: break-word;

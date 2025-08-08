@@ -9,27 +9,15 @@
   justify-content: flex-start;
   gap: 10px;
 
-  @media (max-width: 1024px) {
-    margin-top: $margin-top-small;
-    gap: 8px;
-  }
-
-  @media (max-width: 768px) {
-    margin-top: $margin-top-little;
-    gap: 6px;
+  @media (max-width: 1125px) {
     align-items: center;
-    text-align: center;
-  }
-
-  @media (max-width: 480px) {
-    margin-top: $margin-top-little;
-    gap: 5px;
+    justify-content: center;
   }
 
   &.sketch-bottom-text-right {
     align-items: flex-end;
 
-    @media (max-width: 768px) {
+    @media (max-width: 1125px) {
       align-items: center;
     }
   }
@@ -41,32 +29,19 @@
     color: #000;
     text-align: left;
     letter-spacing: 1.1px;
-    // border-bottom: 2px solid #00beb5;
     margin-bottom: 24px;
 
-    @media (max-width: 1024px) {
-      font-size: 28px;
-      margin-bottom: 20px;
-      letter-spacing: 1px;
-    }
-
-    @media (max-width: 768px) {
-      font-size: 20px;
-      margin-bottom: 0;
-      margin-top: $margin-top-little;
-      text-align: center;
-      letter-spacing: 0.8px;
-    }
-
-    @media (max-width: 480px) {
-      font-size: 18px;
-      letter-spacing: 0.6px;
+    @media (max-width: 1125px) {
+      text-align: left;
+      max-width: 800px;
+      width: 100%;
+      font-size: 24px;
     }
 
     &.section-title-right {
       text-align: right;
 
-      @media (max-width: 768px) {
+      @media (max-width: 1125px) {
         text-align: center;
       }
     }
@@ -80,26 +55,15 @@
     text-align: left;
     letter-spacing: 1.1px;
 
-    @media (max-width: 1024px) {
-      font-size: 15px;
-      letter-spacing: 1px;
-    }
-
-    @media (max-width: 768px) {
-      font-size: 14px;
-      text-align: center;
-      letter-spacing: 0.8px;
-    }
-
-    @media (max-width: 480px) {
-      font-size: 13px;
-      letter-spacing: 0.6px;
+    @media (max-width: 1125px) {
+      text-align: left;
+      width: 100%;
     }
 
     &.section-subtitle-right {
       text-align: right;
 
-      @media (max-width: 768px) {
+      @media (max-width: 1125px) {
         text-align: center;
       }
     }

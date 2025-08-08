@@ -1,9 +1,9 @@
 import React from "react";
 import './index.scss';
 
-export default function CardWrapper({ title, subtitle, children }) {
+export default function CardWrapper({ title, subtitle, children, style }) {
   return (
-    <div className="card-wrapper">
+    <div className="card-wrapper" style={style}>
       {title && <div className="card-wrapper-title">
         {title}
       </div>}

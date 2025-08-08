@@ -15,13 +15,10 @@ export default function Thumbnail(props) {
   return (
     <div className="thumbnail-section">
       <div className="content-wrapper">
-        {/* 横向内容：左文右图 */}
         <div className="main-content">
-          {/* 左主文案 */}
           <div className="text-content">
             <h1 className="main-title">
               {title}
-              {/* SHINE BRIGHT<br />ALIGN RIGHT */}
             </h1>
             {subtitle && <div className="subtitle">
               {subtitle}
@@ -30,7 +27,6 @@ export default function Thumbnail(props) {
               {subDescription}
             </div>}
 
-            {/* 按钮区 */}
             <div className="button-group">
               {
                 button1 && (
@@ -49,7 +45,6 @@ export default function Thumbnail(props) {
               }
             </div>
 
-            {/* 细说明 */}
             {
               description && (
                 <div className="description">
@@ -58,7 +53,6 @@ export default function Thumbnail(props) {
               )
             }
           </div>
-          {/* 右图像 */}
           <div className="image-container">
             <img
               src={image}
