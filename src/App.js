@@ -19,6 +19,7 @@ import Partners from './partners';
 import HospitalDashboard from './hospital';
 import DoctorDashboard from './doctor';
 import SalesDashboard from './sales';
+import AdminDashboard from './admin';
 
 function App() {
   return (
@@ -61,6 +62,11 @@ function App() {
           <Route path="/sales" element={
             <ProtectedRoute>
               <SalesDashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin" element={
+            <ProtectedRoute>
+              <AdminDashboard />
             </ProtectedRoute>
           } />
         </Routes>

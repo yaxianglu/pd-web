@@ -1,10 +1,10 @@
 // 角色路由映射配置
 export const ROLE_ROUTES = {
-  // 超级管理员 - 医院管理界面
-  super_admin: '/hospital',
+  // 超级管理员 - 管理员界面
+  super_admin: '/admin',
   
-  // 普通管理员 - 医院管理界面
-  admin: '/hospital',
+  // 普通管理员 - 管理员界面
+  admin: '/admin',
   
   // 经理 - 列表页面
   manager: '/list',

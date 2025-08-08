@@ -1,0 +1,790 @@
+.admin-dashboard {
+  display: flex;
+  min-height: 100vh;
+  background: #f6f6f7;
+
+  .sidebar {
+    width: 250px;
+    background: #48d2ce;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+
+    .tab-navigation {
+      margin-bottom: 30px;
+
+      .tab-item {
+        color: #fff;
+        padding: 12px 15px;
+        margin-bottom: 8px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        position: relative;
+
+        &.active {
+          background: rgba(255, 255, 255, 0.2);
+          font-weight: bold;
+
+          &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #fff;
+            border-radius: 0 2px 2px 0;
+          }
+        }
+
+        &:hover:not(.active) {
+          background: rgba(255, 255, 255, 0.1);
+        }
+      }
+    }
+
+    .account-list {
+      flex: 1;
+      margin-bottom: 20px;
+      overflow-y: auto;
+
+      .account-item {
+        color: #fff;
+        padding: 10px 15px;
+        margin-bottom: 8px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+        transition: background 0.3s ease;
+        font-size: 14px;
+
+        &.active {
+          background: rgba(255, 255, 255, 0.3);
+          font-weight: bold;
+        }
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.2);
+        }
+      }
+    }
+
+    .create-account-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.3s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+    }
+  }
+
+  .main-content {
+    margin-left: 250px;
+    flex: 1;
+    padding: 16px;
+    box-sizing: border-box;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 25px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    .card-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #333;
+    }
+  }
+
+  .user-info-card {
+    .user-greeting {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #333;
+
+      .user-role {
+        font-size: 16px;
+        color: #666;
+        margin-left: 10px;
+        font-weight: normal;
+      }
+    }
+
+    .user-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+
+      .detail-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        .label {
+          font-size: 14px;
+          color: #666;
+          font-weight: 500;
+        }
+
+        .value {
+          font-size: 14px;
+          color: #333;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  .smile-test-table {
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+
+      .header-left {
+        .title {
+          font-size: 20px;
+          font-weight: 500;
+          color: #7d868d;
+        }
+      }
+
+      .header-right {
+        .business-id {
+          font-size: 20px;
+          font-weight: 500;
+          color: #7d868d;
+        }
+      }
+    }
+
+    .divider {
+      border: none;
+      border-top: 1.5px solid #e3eaf0;
+      margin: 6px 0 12px;
+    }
+
+    .table-container {
+      margin: 0 18px;
+
+      .data-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        font-size: 17px;
+
+        th {
+          background: #b7e3e3;
+          padding: 15px 10px;
+          text-align: left;
+          font-weight: 500;
+          color: #333;
+          border: none;
+
+          &:first-child {
+            border-top-left-radius: 8px;
+          }
+
+          &:last-child {
+            border-top-right-radius: 8px;
+          }
+        }
+
+        .table-row {
+          cursor: pointer;
+          transition: background 0.2s ease;
+
+          &.even {
+            background: #d7f2f0;
+          }
+
+          &.odd {
+            background: #b7e3e3;
+          }
+
+          &:hover {
+            background: rgba(72, 210, 206, 0.1);
+          }
+
+          &.expanded {
+            background: rgba(72, 210, 206, 0.15);
+          }
+
+          td {
+            padding: 15px 10px;
+            border: none;
+            vertical-align: middle;
+
+            &.download-link {
+              color: #156f7d;
+              font-weight: bold;
+              text-decoration: underline;
+              cursor: pointer;
+
+              &:hover {
+                color: #0d4a54;
+              }
+            }
+
+            &.status-cell {
+              &.read {
+                color: #2ca956;
+              }
+
+              &.ordered {
+                color: #ff6b35;
+              }
+
+              &.unread {
+                color: #888;
+              }
+            }
+
+            &.expand-icon {
+              text-align: center;
+              width: 50px;
+              font-size: 19px;
+              color: #666;
+              cursor: pointer;
+            }
+          }
+        }
+
+        .detail-row {
+          background: rgba(72, 210, 206, 0.05);
+
+          .detail-content {
+            padding: 15px 20px;
+            background: rgba(72, 210, 206, 0.1);
+            border-radius: 8px;
+            margin: 10px 0;
+
+            .detail-label {
+              font-weight: bold;
+              color: #333;
+              margin-right: 10px;
+            }
+
+            .detail-text {
+              color: #666;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // 患者列表卡片样式
+  .patient-list-card {
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+
+      h3 {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        margin: 0;
+      }
+
+      .search-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        label {
+          font-size: 14px;
+          color: #666;
+          font-weight: 500;
+        }
+
+        input {
+          padding: 8px 12px;
+          border: 1px solid #e3eaf0;
+          border-radius: 8px;
+          font-size: 14px;
+          min-width: 200px;
+
+          &:focus {
+            outline: none;
+            border-color: #48d2ce;
+          }
+        }
+      }
+    }
+
+    .patient-table {
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+
+        th {
+          background: #f8f9fa;
+          padding: 12px 8px;
+          text-align: left;
+          font-weight: 500;
+          color: #333;
+          border-bottom: 1px solid #e3eaf0;
+        }
+
+        td {
+          padding: 12px 8px;
+          border-bottom: 1px solid #f0f0f0;
+          color: #666;
+
+          &.dropdown-icon {
+            text-align: center;
+            color: #999;
+            cursor: pointer;
+          }
+        }
+
+        tr.highlighted {
+          background: rgba(72, 210, 206, 0.1);
+        }
+
+        tr:hover {
+          background: rgba(72, 210, 206, 0.05);
+        }
+      }
+    }
+
+    .create-patient-btn {
+      margin-top: 20px;
+      text-align: center;
+
+      .action-btn {
+        background: #48d2ce;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 24px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.3s ease;
+
+        &:hover {
+          background: #3bb8b4;
+        }
+      }
+    }
+  }
+
+  // 治疗记录卡片样式
+  .treatment-record-card {
+    h3 {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    // 日历样式
+    .calendar {
+      margin-bottom: 25px;
+
+      .calendar-header {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 10px;
+
+        .calendar-day {
+          min-width: 60px;
+          text-align: center;
+          padding: 10px 8px;
+          border-radius: 8px;
+          background: #f8f9fa;
+          cursor: pointer;
+          transition: all 0.3s ease;
+
+          &.active {
+            background: #ff6b35;
+            color: #fff;
+          }
+
+          &:hover:not(.active) {
+            background: #e9ecef;
+          }
+
+          .day-name {
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 4px;
+          }
+
+          .day-date {
+            font-size: 16px;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+
+    // 日程安排样式
+    .schedule {
+      margin-bottom: 25px;
+
+      .appointment-item {
+        border-radius: 12px;
+        padding: 15px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        .appointment-time {
+          font-size: 14px;
+          font-weight: 500;
+          color: #333;
+          min-width: 120px;
+        }
+
+        .appointment-icon {
+          font-size: 20px;
+          width: 30px;
+          text-align: center;
+        }
+
+        .appointment-details {
+          flex: 1;
+
+          .appointment-type {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 4px;
+          }
+
+          .appointment-doctor {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 2px;
+          }
+
+          .appointment-clinic {
+            font-size: 12px;
+            color: #999;
+          }
+        }
+      }
+    }
+
+    // 备注区域样式
+    .notes-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-top: 1px solid #e3eaf0;
+
+      label {
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+      }
+
+      .notes-actions {
+        display: flex;
+        gap: 10px;
+
+        button {
+          padding: 8px 16px;
+          border: 1px solid #48d2ce;
+          border-radius: 6px;
+          background: #fff;
+          color: #48d2ce;
+          font-size: 14px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+
+          &:hover {
+            background: #48d2ce;
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+
+  // 治疗概览样式
+  .treatment-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+
+    .overview-card {
+      padding: 20px;
+      border-radius: 12px;
+      color: #fff;
+      position: relative;
+
+      &.blue {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+
+      &.yellow {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      }
+
+      &.red {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      }
+
+      &.orange {
+        background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      }
+
+      .card-title {
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 8px;
+        opacity: 0.9;
+      }
+
+      .card-value {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 5px;
+
+        .card-icon {
+          font-size: 24px;
+          margin-right: 8px;
+        }
+      }
+
+      .card-subtitle {
+        font-size: 12px;
+        opacity: 0.8;
+      }
+    }
+  }
+
+  // 治疗时间线样式
+  .treatment-timeline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 20px 0;
+
+    .timeline-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      position: relative;
+
+      &:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        width: 100%;
+        height: 2px;
+        background: #e3eaf0;
+        z-index: 1;
+      }
+
+      .step-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #e3eaf0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: #999;
+        margin-bottom: 8px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .step-name {
+        font-size: 12px;
+        color: #666;
+        text-align: center;
+        font-weight: 500;
+      }
+
+      &.completed {
+        .step-icon {
+          background: #48d2ce;
+          color: #fff;
+        }
+
+        .step-name {
+          color: #333;
+        }
+      }
+    }
+  }
+
+  // 底部按钮样式
+  .bottom-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+
+    .action-btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &.primary {
+        background: #48d2ce;
+        color: #fff;
+
+        &:hover {
+          background: #3bb8b4;
+        }
+      }
+
+      &.secondary {
+        background: #fff;
+        color: #48d2ce;
+        border: 1px solid #48d2ce;
+
+        &:hover {
+          background: #f0f9f8;
+        }
+      }
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 1125px) {
+  .admin-dashboard {
+    .sidebar {
+      width: 200px;
+    }
+
+    .main-content {
+      margin-left: 200px;
+      padding: 12px;
+    }
+
+    .user-info-card {
+      .user-details {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+
+    .smile-test-table {
+      .table-container {
+        margin: 0;
+        overflow-x: auto;
+
+        .data-table {
+          min-width: 800px;
+
+          th, td {
+            padding: 10px 8px;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
+    .patient-list-card {
+      .card-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+
+        .search-container {
+          justify-content: stretch;
+
+          input {
+            flex: 1;
+          }
+        }
+      }
+
+      .patient-table {
+        overflow-x: auto;
+
+        table {
+          min-width: 800px;
+        }
+      }
+    }
+
+    .treatment-record-card {
+      .calendar {
+        .calendar-header {
+          overflow-x: auto;
+          padding-bottom: 10px;
+        }
+      }
+
+      .schedule {
+        .appointment-item {
+          flex-direction: column;
+          gap: 10px;
+          text-align: center;
+        }
+      }
+    }
+
+    .treatment-overview {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .treatment-timeline {
+      flex-direction: column;
+      gap: 20px;
+
+      .timeline-step {
+        &:not(:last-child)::after {
+          display: none;
+        }
+      }
+    }
+
+    .bottom-actions {
+      flex-direction: column;
+      align-items: stretch;
+
+      .action-btn {
+        width: 100%;
+      }
+    }
+  }
+} 
