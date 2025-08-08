@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import QRCode from 'qrcode';
 import { useLocation } from 'react-router-dom';
+import { Modal, Button } from 'antd';
 import { smileTestApi } from '../services/smileTestApi';
 import './step3.scss';
 import p7 from './imgs/7.svg';
@@ -68,6 +69,7 @@ export default function Step3({ onNext, setStep, style }) {
   const [isMobile, setIsMobile] = useState(false);
   const [showQrFull, setShowQrFull] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -191,6 +193,8 @@ export default function Step3({ onNext, setStep, style }) {
       
       if (result.success) {
         console.log('Test completed successfully');
+        // 显示成功Modal
+        setShowSuccessModal(true);
         // 调用onNext回调
         onNext && onNext(photos);
       } else {
@@ -203,6 +207,12 @@ export default function Step3({ onNext, setStep, style }) {
     } finally {
       setSaving(false);
     }
+  };
+
+  // 关闭当前页面
+  const closePage = () => {
+    // 重定向到首页
+    window.location.href = '/';
   };
 
   // 从数据库加载已保存的照片
@@ -710,11 +720,11 @@ export default function Step3({ onNext, setStep, style }) {
 
             <button
               type="button"
-              className="step3-prev-button"
+              className="step3-save-button"
               onClick={handleComplete}
-              disabled={photos.length < 4}
+              disabled={photos.length < 4 || saving}
             >
-              保 存
+              {saving ? '保存中...' : '完成提交'}
             </button>
           </div>
         </div>
@@ -735,6 +745,23 @@ export default function Step3({ onNext, setStep, style }) {
             <div className="qr-fullscreen-tip">点击任意处关闭</div>
           </div>
         )}
+
+        {/* 成功提示Modal */}
+        <Modal
+          title="提交成功"
+          open={showSuccessModal}
+          onCancel={() => setShowSuccessModal(false)}
+          footer={[
+            <Button key="close" type="primary" onClick={closePage}>
+              關閉頁面
+            </Button>
+          ]}
+          closable={true}
+          maskClosable={false}
+        >
+          <p>您的微笑測試已完成並成功提交！</p>
+          <p>感謝您的參與，我們會盡快為您分析結果。</p>
+        </Modal>
       </div>
     </div>
   );

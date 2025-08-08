@@ -430,7 +430,9 @@
 }
 
 .step3-prev-button,
-.step3-next-button {
+.step3-next-button,
+.step3-save-button,
+.step3-close-button {
   padding: 12px 30px;
   border-radius: 8px;
   font-size: 14px;
@@ -465,6 +467,29 @@
   &:disabled {
     background-color: rgba(255, 255, 255, 0.3);
     cursor: not-allowed;
+  }
+}
+
+.step3-save-button {
+  background-color: rgb(83, 222, 210);
+  color: white;
+
+  &:hover:not(:disabled) {
+    background-color: rgb(72, 210, 198);
+  }
+
+  &:disabled {
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: not-allowed;
+  }
+}
+
+.step3-close-button {
+  background-color: #ff6b6b;
+  color: white;
+
+  &:hover {
+    background-color: #ff5252;
   }
 }
 
