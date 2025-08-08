@@ -151,6 +151,22 @@ class ApiService {
 
     return this.handleResponse(response);
   }
+
+  // 获取合作伙伴列表
+  async getPartners() {
+    try {
+      const response = await fetch(`${this.baseURL}/api/partners`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      return await response.json();
+    } catch (error) {
+      console.error('Failed to fetch partners:', error);
+      return { success: false, message: 'Failed to fetch partners' };
+    }
+  }
 }
 
 // 创建单例实例

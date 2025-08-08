@@ -23,7 +23,7 @@ export default function Partners() {
   const fetchPartners = async () => {
     setLoading(true);
     try {
-      const result = await apiService.get('/partners');
+      const result = await apiService.get('/api/partners');
       if (result.success) {
         setPartners(result.data || []);
       } else {

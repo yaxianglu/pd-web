@@ -6,7 +6,7 @@ import PageCom from './front-page';
 import FrontPage from './front-page';
 import PearlLogin from './login';
 import InvisibleBraces from './invisible-braces';
-import Dashboard from './user';
+import Dashboard from './patient';
 import SmileTestTable from './list';
 import Maintainer from './maintainer';
 import Whitening from './whitening';
@@ -31,7 +31,7 @@ function App() {
           <Route path="/front-page-new" element={<PageCom />} />
           <Route path="/login" element={<PearlLogin />} />
           <Route path="/invisible-braces" element={<InvisibleBraces />} />
-          <Route path="/user" element={<Dashboard />} />
+          <Route path="/patient" element={<Dashboard />} />
           <Route path="/list" element={<SmileTestTable />} />
           <Route path="/journey" element={<Journey />} />
           <Route path="/correction" element={<Correction />} />
