@@ -287,22 +287,6 @@ export default function Dashboard() {
         transform: "translateX(-50%)",
         zIndex: 10,
       }}>
-        <button
-          onClick={logout}
-          style={{
-            background: "#ff6b6b",
-            color: "#fff",
-            border: "none",
-            borderRadius: "8px",
-            padding: "10px 20px",
-            cursor: "pointer",
-            fontSize: 14,
-            fontWeight: 600,
-            letterSpacing: 1.1,
-          }}
-        >
-          登出
-        </button>
       </div>
     </div>
   );
