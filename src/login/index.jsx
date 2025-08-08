@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import apiService from '../services/api';
 import { getRouteByRole } from '../contants/roleRoutes';
+import CryptoJS from 'crypto-js';
 import img from './imgs/1.jpg';
 import img2 from './imgs/2.svg';
 import './index.scss';
@@ -78,12 +79,8 @@ export default function PearlLogin() {
     setErrorMessage("");
 
     try {
-      // 对密码进行SHA256加密
-      const encoder = new TextEncoder();
-      const passwordData = encoder.encode(staffPassword);
-      const hashBuffer = await crypto.subtle.digest('SHA-256', passwordData);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      const hashedPassword = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      // 使用 crypto-js 进行 SHA-256 加密，避免对 Web Crypto API 的依赖
+      const hashedPassword = CryptoJS.SHA256(staffPassword).toString(CryptoJS.enc.Hex);
       
       const responseData = await apiService.post('/auth/login', {
         username: staffUsername,
