@@ -4,27 +4,16 @@
   width: 100%;
   padding: 20px 80px;
 
-  @media (max-width: 1024px) {
-    padding: 18px 60px;
-  }
-
-  @media (max-width: 768px) {
+  @media (max-width: 1125px) {
     flex-direction: column;
-    padding: 16px 40px;
+    padding: 20px;
     gap: 20px;
+    align-items: flex-start;
   }
 
-  @media (max-width: 480px) {
-    padding: 12px 20px;
-    gap: 16px;
-  }
 
   .content-text-img-section-item {
     flex: 1 0;
-
-    @media (max-width: 768px) {
-      order: 2;
-    }
 
     &.content-text-img-section-item-1 {
       display: flex;
@@ -33,15 +22,6 @@
       justify-content: start;
       gap: 14px;
 
-      @media (max-width: 768px) {
-        align-items: center;
-        text-align: center;
-        gap: 12px;
-      }
-
-      @media (max-width: 480px) {
-        gap: 10px;
-      }
 
       .content-text-img-section-item-title {
         width: 100%;
@@ -49,18 +29,6 @@
         text-align: left;
         color: #000;
 
-        @media (max-width: 1024px) {
-          font-size: 22px;
-        }
-
-        @media (max-width: 768px) {
-          font-size: 20px;
-          text-align: center;
-        }
-
-        @media (max-width: 480px) {
-          font-size: 18px;
-        }
       }
 
       .content-text-img-section-item-description {
@@ -70,21 +38,6 @@
         text-align: left;
         color: #858585;
 
-        @media (max-width: 1024px) {
-          font-size: 13px;
-          line-height: 1.8;
-        }
-
-        @media (max-width: 768px) {
-          font-size: 13px;
-          text-align: center;
-          line-height: 1.7;
-        }
-
-        @media (max-width: 480px) {
-          font-size: 12px;
-          line-height: 1.6;
-        }
       }
     }
   }
@@ -95,38 +48,20 @@
     align-items: center;
     justify-content: end;
 
-    @media (max-width: 768px) {
-      order: 1;
-      justify-content: center;
-    }
 
     img {
       height: 200px;
 
-      @media (max-width: 1024px) {
-        height: 180px;
-      }
-
-      @media (max-width: 768px) {
-        height: 150px;
-      }
-
-      @media (max-width: 480px) {
-        height: 120px;
-      }
     }
   }
+}
 
-  // 处理图片在左侧的情况
-  &.content-text-img-section-reverse {
-    @media (max-width: 768px) {
-      .content-text-img-section-item {
-        order: 2;
-      }
-
-      .content-text-img-section-img {
-        order: 1;
-      }
-    }
+.content-text-img-section-reverse {
+  display: flex;
+  @media (max-width: 1125px) {
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+    align-items: flex-end;
   }
 }

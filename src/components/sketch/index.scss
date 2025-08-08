@@ -42,7 +42,7 @@
       text-align: right;
 
       @media (max-width: 1125px) {
-        text-align: center;
+        text-align: right;
       }
     }
   }
@@ -62,10 +62,6 @@
 
     &.section-subtitle-right {
       text-align: right;
-
-      @media (max-width: 1125px) {
-        text-align: center;
-      }
     }
   }
 }

@@ -23,6 +23,10 @@
     .join-join-description-section-text-title {
       font-size: 66px;
       font-weight: bold;
+
+      @media (max-width: 1125px) {
+        font-size: 40px;
+      }
     }
 
     .join-join-description-section-text-content {

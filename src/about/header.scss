@@ -15,9 +15,13 @@
     align-items: center;
     line-height: 1.5;
     color: white;
-    font-size: 40px;
+    font-size: 66px;
     font-weight: bold;
     text-align: center;
+
+    @media (max-width: 1125px) {
+      font-size: 40px;
+    }
   }
 
   img {

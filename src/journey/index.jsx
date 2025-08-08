@@ -1,7 +1,7 @@
 import React from 'react';
 import ManufacturingSection from './ManufacturingSection';
 import FAQ from '../components/FAQ';
-import SmileSteps from './process';
+import SmileSteps from '../components/step1/process';
 import ProductFeatures from './ProductFeatures';
 
 import Header from '../components/header';

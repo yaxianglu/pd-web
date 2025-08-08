@@ -1,8 +1,8 @@
 // SmileSteps.jsx
 import React from "react";
-import { useResponsive } from '../components/responsive-hook';
+import { useResponsive } from '../responsive-hook';
 import "./process.scss";
-import DetailButton from "../components/detail-button";
+import DetailButton from "../detail-button";
 import p3 from './imgs/3.svg';
 import p4 from './imgs/4.svg';
 import p5 from './imgs/5.svg';

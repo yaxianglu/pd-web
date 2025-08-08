@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/header';
 import ManufacturingSection from './ManufacturingSection';
 import Footer from '../components/footer';
 import Innovation from './innovation';
 import Top from './top-new';
 import Header2 from './header';
+import SmileSteps from '../components/step1/process';
 
 import PageWrapper from '../components/page-wrapper';
 import Sketch from '../components/sketch';
@@ -15,6 +16,23 @@ import p3 from './imgs/3.jpg';
 import p4 from './imgs/4.svg';
 
 export default function PageCom() {
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 1125);
+    };
+
+    window.addEventListener('resize', handleResize);
+    
+    handleResize();
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   return (
     <>
       <Header />
@@ -22,7 +40,13 @@ export default function PageCom() {
       <PageWrapper>
         <Top />
         <Innovation />
-        <Step />
+        {
+          isMobile ? (
+            <SmileSteps />
+          ) : (
+            <Step />
+          )
+        }
         <ManufacturingSection />
         <Sketch
           title={<>為什麼選擇珍舒美隱形牙套？</>}

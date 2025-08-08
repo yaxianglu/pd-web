@@ -5,6 +5,13 @@
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
+  @media (max-width: 1125px) {
+    flex: none;
+    width: 60%;
+    margin-top: 8px;
+    margin-left: 20%;
+  }
+
 
   &.blue {
     background: linear-gradient(135deg, #78a9ee 0%, #5b9bd5 100%);

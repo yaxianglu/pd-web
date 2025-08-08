@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { useResponsive } from '../components/responsive-hook';
 import apiService from '../services/api';
 import img from './imgs/1.jpg';
 import img2 from './imgs/2.svg';
@@ -10,12 +9,22 @@ import './index.scss';
 export default function PearlLogin() {
   const navigate = useNavigate();
   const { login } = useAuth();
-  const { isMobile, isTablet } = useResponsive();
   const [patientAccount, setPatientAccount] = useState("");
   const [staffUsername, setStaffUsername] = useState("");
   const [staffPassword, setStaffPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth <= 1125);
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 1125);
+    };
+
+    window.addEventListener('resize', handleResize);
+  }, []);
 
   // 患者登录处理
   const handlePatientLogin = () => {
@@ -117,6 +126,7 @@ export default function PearlLogin() {
           </div>
 
           {/* 员工登录 */}
+          {isMobile ? null : (
           <div className="login-section">
             <div className="section-divider">
               <div className="divider-line" />
@@ -150,6 +160,7 @@ export default function PearlLogin() {
               </div>
             )}
           </div>
+          )}
         </div>
       </div>
     </div>

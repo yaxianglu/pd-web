@@ -82,9 +82,9 @@ export default function ManufacturingSection() {
                   <div className="payment-title">分期付款</div>
                   <div className="payment-subtitle">12個月零利率</div>
                 </div>
-                <div className="price-item">$ 48,00</div>
-                <div className="price-item">$ 98,00</div>
-                <div className="price-item">$ 118,00</div>
+                <div className="price-item">$ 40,00</div>
+                <div className="price-item">$ 81,67</div>
+                <div className="price-item">$ 98,33</div>
               </div>
             </div>
           </div>
