@@ -1,5 +1,6 @@
 // API基础URL
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+// const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://18.232.58.243:3001';
 
 class ApiService {
   constructor() {
