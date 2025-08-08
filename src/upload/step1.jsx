@@ -124,9 +124,6 @@ export default function Step1({ onNext, style, setStep }) {
       
       // 调用原有的onNext回调
       onNext && onNext(formData);
-      
-      // 更新步骤
-      setStep(3);
     }
   };
 
@@ -245,6 +242,7 @@ export default function Step1({ onNext, style, setStep }) {
               type="submit" 
               className="next-button"
               disabled={!agreed}
+              onClick={() => setStep(pre => pre + 1)}
             >
               下一步
             </button>

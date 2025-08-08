@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { smileTestApi } from '../services/smileTestApi';
 import './step2.scss';
 import p3 from './imgs/3.svg';
 import p4 from './imgs/4.svg';
@@ -10,17 +12,19 @@ import p13 from './imgs/13.svg';
 import p14 from './imgs/14.svg';
 
 export default function Step2({ onNext, setStep, style }) {
+  const location = useLocation();
   const [formData, setFormData] = useState({
     teethDescription: [],
     alignerConsideration: [],
     improvement: ''
   });
+  const [loading, setLoading] = useState(false);
 
   const teethOptions = [
     { id: 'crowded', label: '齒列擁擠', image: p3 },
-    { id: 'malocclusion', label: '咬合不正', image: p4 },
-    { id: 'gap', label: '牙縫問題', image: p5 },
-    { id: 'crooked', label: '輕微歪斜', image: p6 }
+    { id: 'overbite', label: '咬合不正', image: p4 },
+    { id: 'spaced', label: '牙縫問題', image: p5 },
+    { id: 'other', label: '輕微歪斜', image: p6 }
   ];
 
   const considerationOptions = [
@@ -29,6 +33,88 @@ export default function Step2({ onNext, setStep, style }) {
     { id: 'duration', label: '療程週期', icon: <img src={p13} alt="p13" /> },
     { id: 'pain', label: '疼痛狀況', icon: <img src={p14} alt="p14" /> }
   ];
+
+  // 从URL获取UUID
+  const getTestUuid = () => {
+    const urlParams = new URLSearchParams(location.search);
+    return urlParams.get('id');
+  };
+
+  // 从API获取数据
+  const fetchData = async () => {
+    const testUuid = getTestUuid();
+    if (!testUuid) {
+      console.log('No test UUID found');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      console.log('Fetching data for UUID:', testUuid);
+      const result = await smileTestApi.getSmileTestByUuid(testUuid);
+      
+      console.log('API result:', result);
+      
+      if (result.success && result.data) {
+        const data = result.data;
+        console.log('Setting form data:', {
+          teeth_type: data.teeth_type,
+          considerations: data.considerations,
+          improvement_points: data.improvement_points
+        });
+        
+        setFormData({
+          teethDescription: data.teeth_type ? [data.teeth_type] : [],
+          alignerConsideration: data.considerations ? data.considerations.split(', ') : [],
+          improvement: data.improvement_points || ''
+        });
+      } else {
+        console.log('No data found or API failed');
+      }
+    } catch (error) {
+      console.error('Failed to fetch data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 保存数据到API
+  const saveData = async (data) => {
+    const testUuid = getTestUuid();
+    if (!testUuid) return;
+
+    try {
+      // 映射数据到数据库字段
+      let teethType = null;
+      if (data.teethDescription.length > 0) {
+        const selectedType = data.teethDescription[0];
+        // 如果选择的是"unsure"，不保存到teeth_type字段
+        if (selectedType !== 'unsure') {
+          teethType = selectedType;
+        }
+      }
+
+      const apiData = {
+        teeth_type: teethType,
+        considerations: data.alignerConsideration.length > 0 ? data.alignerConsideration.join(', ') : null,
+        improvement_points: data.improvement || null,
+        test_status: 'in_progress'
+      };
+
+      const result = await smileTestApi.saveOrUpdateSmileTestByUuid(testUuid, apiData);
+      
+      if (!result.success) {
+        console.error('Failed to save data:', result.message);
+      }
+    } catch (error) {
+      console.error('Failed to save data:', error);
+    }
+  };
+
+  // 组件加载时获取数据
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleTeethSelect = (optionId) => {
     setFormData(prev => {
@@ -93,14 +179,32 @@ export default function Step2({ onNext, setStep, style }) {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // 保存数据到API
+    await saveData(formData);
+    
+    // 调用原有的onNext回调
     onNext && onNext(formData);
+    
+    // 更新步骤到step3
+    setStep(pre => pre + 1);
   };
 
   const handlePrev = () => {
     setStep(pre => pre - 1);
   };
+
+  if (loading) {
+    return (
+      <div className="step2-wrapper" style={style}>
+        <div className="step2-content">
+          <div className="loading">載入中...</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="step2-wrapper" style={style}>
@@ -182,6 +286,7 @@ export default function Step2({ onNext, setStep, style }) {
             <button
               type="submit"
               className="step2-next-button"
+              onClick={handleSubmit}
             >
               下一步
             </button>
