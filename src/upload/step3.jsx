@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import QRCode from 'qrcode';
+import { useLocation } from 'react-router-dom';
+import { smileTestApi } from '../services/smileTestApi';
 import './step3.scss';
 import p7 from './imgs/7.svg';
 import p71 from './imgs/71.svg';
@@ -9,8 +11,6 @@ import p16 from './imgs/16.svg';
 import p161 from './imgs/161.svg';
 import p17 from './imgs/17.svg';
 import p171 from './imgs/171.svg';
-
-const url = 'http://xxxxx';
 
 const pMap = {
   1: [p7, p71],
@@ -58,7 +58,8 @@ const QRCodeComponent = ({ url, size = 120, onClick }) => {
   ) : null;
 };
 
-export default function Step3({ onNext, onPrev, style }) {
+export default function Step3({ onNext, setStep, style }) {
+  const location = useLocation();
   const [currentStep, setCurrentStep] = useState(1);
   const [photos, setPhotos] = useState([]);
   const [isCameraActive, setIsCameraActive] = useState(false);
@@ -66,10 +67,196 @@ export default function Step3({ onNext, onPrev, style }) {
   const [stream, setStream] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
   const [showQrFull, setShowQrFull] = useState(false);
+  const [saving, setSaving] = useState(false);
   
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const fileInputRef = useRef(null);
+
+  // 获取当前URL
+  const currentUrl = window.location.href;
+
+  // 从URL获取UUID
+  const getTestUuid = () => {
+    const urlParams = new URLSearchParams(location.search);
+    return urlParams.get('id');
+  };
+
+  // 保存照片到数据库
+  const savePhotoToDatabase = async (photoData) => {
+    const testUuid = getTestUuid();
+    if (!testUuid) {
+      console.error('No test UUID found for saving photo');
+      return;
+    }
+
+    console.log('Saving photo to database:', {
+      testUuid,
+      step: photoData.step,
+      photoUrlLength: photoData.url ? photoData.url.length : 0
+    });
+
+    try {
+      // 检查是否是base64数据
+      const isBase64 = photoData.url && photoData.url.startsWith('data:image/');
+      
+      if (!isBase64) {
+        console.error('Photo data is not in base64 format');
+        alert('照片格式錯誤，請重試');
+        return;
+      }
+      
+      // 根据步骤更新对应的照片字段
+      const photoField = `teeth_image_${photoData.step}`;
+      
+      const apiData = {
+        [photoField]: photoData.url, // 直接保存base64数据
+        test_status: 'in_progress'
+      };
+
+      console.log('API data to save:', {
+        ...apiData,
+        [photoField]: `${photoData.url.substring(0, 50)}...` // 只显示前50个字符用于调试
+      });
+
+      const result = await smileTestApi.saveOrUpdateSmileTestByUuid(testUuid, apiData);
+      
+      console.log('Save photo result:', result);
+      
+      if (!result.success) {
+        console.error('Failed to save photo:', result.message);
+        alert(`保存照片失敗: ${result.message}`);
+      } else {
+        console.log(`Photo for step ${photoData.step} saved successfully`);
+      }
+    } catch (error) {
+      console.error('Failed to save photo to database:', error);
+      alert('保存照片失敗，請重試');
+    }
+  };
+
+  // 删除照片从数据库
+  const deletePhotoFromDatabase = async (step) => {
+    const testUuid = getTestUuid();
+    if (!testUuid) {
+      console.error('No test UUID found for deleting photo');
+      return;
+    }
+
+    console.log('Deleting photo from database:', {
+      testUuid,
+      step
+    });
+
+    try {
+      const photoField = `teeth_image_${step}`;
+      
+      const apiData = {
+        [photoField]: null,
+        test_status: 'in_progress'
+      };
+
+      console.log('API data to delete:', apiData);
+
+      const result = await smileTestApi.saveOrUpdateSmileTestByUuid(testUuid, apiData);
+      
+      console.log('Delete photo result:', result);
+      
+      if (!result.success) {
+        console.error('Failed to delete photo:', result.message);
+        alert(`刪除照片失敗: ${result.message}`);
+      } else {
+        console.log(`Photo for step ${step} deleted successfully`);
+      }
+    } catch (error) {
+      console.error('Failed to delete photo from database:', error);
+      alert('刪除照片失敗，請重試');
+    }
+  };
+
+  // 完成提交
+  const handleComplete = async () => {
+    if (photos.length < 4) {
+      alert('請先上傳4張照片');
+      return;
+    }
+
+    setSaving(true);
+    const testUuid = getTestUuid();
+    
+    try {
+      const result = await smileTestApi.saveOrUpdateSmileTestByUuid(testUuid, {
+        test_status: 'completed'
+      });
+      
+      if (result.success) {
+        console.log('Test completed successfully');
+        // 调用onNext回调
+        onNext && onNext(photos);
+      } else {
+        console.error('Failed to complete test:', result.message);
+        alert('保存失敗，請重試');
+      }
+    } catch (error) {
+      console.error('Failed to complete test:', error);
+      alert('保存失敗，請重試');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  // 从数据库加载已保存的照片
+  const loadSavedPhotos = async () => {
+    const testUuid = getTestUuid();
+    if (!testUuid) {
+      console.error('No test UUID found for loading photos');
+      return;
+    }
+
+    console.log('Loading saved photos for UUID:', testUuid);
+
+    try {
+      const result = await smileTestApi.getSmileTestByUuid(testUuid);
+      
+      if (result.success && result.data) {
+        const data = result.data;
+        const savedPhotos = [];
+        
+        // 检查每个照片字段
+        for (let step = 1; step <= 4; step++) {
+          const photoField = `teeth_image_${step}`;
+          const photoUrl = data[photoField];
+          
+          if (photoUrl) {
+            console.log(`Found saved photo for step ${step}:`, photoUrl.substring(0, 50) + '...');
+            savedPhotos.push({
+              id: Date.now() + step, // 生成唯一ID
+              url: photoUrl,
+              step: step
+            });
+          }
+        }
+        
+        if (savedPhotos.length > 0) {
+          console.log('Loading saved photos:', savedPhotos.length);
+          setPhotos(savedPhotos);
+          
+          // 设置当前步骤为第一个未完成的步骤
+          const nextStep = [1, 2, 3, 4].find(s => !savedPhotos.find(p => p.step === s));
+          if (nextStep) {
+            setCurrentStep(nextStep);
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Failed to load saved photos:', error);
+    }
+  };
+
+  // 组件加载时获取已保存的照片
+  useEffect(() => {
+    loadSavedPhotos();
+  }, []);
 
   // 检测是否为移动设备
   useEffect(() => {
@@ -210,38 +397,38 @@ export default function Step3({ onNext, onPrev, style }) {
         canvas.toBlob((blob) => {
           if (blob) {
             try {
-              const photoUrl = URL.createObjectURL(blob);
-              const newPhoto = {
-                id: Date.now(),
-                url: photoUrl,
-                step: currentStep
-              };
-              
-              // 替换当前步骤的照片，而不是添加新照片
-              setPhotos(prev => {
-                const filteredPhotos = prev.filter(photo => photo.step !== currentStep);
-                const updated = [...filteredPhotos, newPhoto];
-                // 自动切换到下一个未完成的步骤
-                const nextStep = [1, 2, 3, 4].find(s => !updated.find(p => p.step === s));
-                if (nextStep) {
-                  setCurrentStep(nextStep);
-                }
-                return updated;
-              });
-              
-              // 拍摄完成后停止摄像头，回到案例展示状态
-              setTimeout(() => {
-                stopCamera();
-              }, 500);
-              
-              // 如果已经拍了4张照片，自动进入下一步
-              const updatedPhotosCount = photos.filter(photo => photo.step !== currentStep).length + 1;
-              if (updatedPhotosCount >= 4) {
+              // 将blob转换为base64
+              const reader = new FileReader();
+              reader.onload = () => {
+                const base64Data = reader.result;
+                const newPhoto = {
+                  id: Date.now(),
+                  url: base64Data, // 使用base64数据
+                  step: currentStep
+                };
+                
+                // 替换当前步骤的照片，而不是添加新照片
+                setPhotos(prev => {
+                  const filteredPhotos = prev.filter(photo => photo.step !== currentStep);
+                  const updated = [...filteredPhotos, newPhoto];
+                  // 自动切换到下一个未完成的步骤
+                  const nextStep = [1, 2, 3, 4].find(s => !updated.find(p => p.step === s));
+                  if (nextStep) {
+                    setCurrentStep(nextStep);
+                  }
+                  return updated;
+                });
+                
+                // 保存照片到数据库
+                console.log('Calling savePhotoToDatabase for new photo:', newPhoto);
+                savePhotoToDatabase(newPhoto);
+                
+                // 拍摄完成后停止摄像头，回到案例展示状态
                 setTimeout(() => {
-                  const finalPhotos = photos.filter(photo => photo.step !== currentStep).concat(newPhoto);
-                  onNext && onNext(finalPhotos);
-                }, 1000);
-              }
+                  stopCamera();
+                }, 500);
+              };
+              reader.readAsDataURL(blob);
             } catch (error) {
               console.error('创建图片URL失败:', error);
               alert('拍照失败，请重试');
@@ -273,33 +460,33 @@ export default function Step3({ onNext, onPrev, style }) {
       const file = files[0];
       
       try {
-        const photoUrl = URL.createObjectURL(file);
-        const newPhoto = {
-          id: Date.now(),
-          url: photoUrl,
-          step: currentStep
+        // 将文件转换为base64
+        const reader = new FileReader();
+        reader.onload = () => {
+          const base64Data = reader.result;
+          const newPhoto = {
+            id: Date.now(),
+            url: base64Data, // 使用base64数据
+            step: currentStep
+          };
+          
+          // 替换当前步骤的照片，而不是添加新照片
+          setPhotos(prev => {
+            const filteredPhotos = prev.filter(photo => photo.step !== currentStep);
+            const updated = [...filteredPhotos, newPhoto];
+            // 自动切换到下一个未完成的步骤
+            const nextStep = [1, 2, 3, 4].find(s => !updated.find(p => p.step === s));
+            if (nextStep) {
+              setCurrentStep(nextStep);
+            }
+            return updated;
+          });
+          
+          // 保存照片到数据库
+          console.log('Calling savePhotoToDatabase for new photo:', newPhoto);
+          savePhotoToDatabase(newPhoto);
         };
-        
-        // 替换当前步骤的照片，而不是添加新照片
-        setPhotos(prev => {
-          const filteredPhotos = prev.filter(photo => photo.step !== currentStep);
-          const updated = [...filteredPhotos, newPhoto];
-          // 自动切换到下一个未完成的步骤
-          const nextStep = [1, 2, 3, 4].find(s => !updated.find(p => p.step === s));
-          if (nextStep) {
-            setCurrentStep(nextStep);
-          }
-          return updated;
-        });
-        
-        // 如果已经选择了4张照片，自动进入下一步
-        const updatedPhotosCount = photos.filter(photo => photo.step !== currentStep).length + 1;
-        if (updatedPhotosCount >= 4) {
-          setTimeout(() => {
-            const finalPhotos = photos.filter(photo => photo.step !== currentStep).concat(newPhoto);
-            onNext && onNext(finalPhotos);
-          }, 1000);
-        }
+        reader.readAsDataURL(file);
       } catch (error) {
         console.error('创建文件URL失败:', error);
         alert('文件选择失败，请重试');
@@ -309,8 +496,22 @@ export default function Step3({ onNext, onPrev, style }) {
 
   // 删除照片
   const deletePhoto = (photoId) => {
+    console.log('Deleting photo:', photoId);
+    
     setPhotos(prev => {
+      const photoToDelete = prev.find(photo => photo.id === photoId);
+      console.log('Photo to delete:', photoToDelete);
+      
+      if (photoToDelete) {
+        // 从数据库删除照片
+        console.log('Calling deletePhotoFromDatabase for step:', photoToDelete.step);
+        deletePhotoFromDatabase(photoToDelete.step);
+      } else {
+        console.error('Photo not found for deletion:', photoId);
+      }
+      
       const updatedPhotos = prev.filter(photo => photo.id !== photoId);
+      console.log('Updated photos after deletion:', updatedPhotos);
       return updatedPhotos;
     });
   };
@@ -371,12 +572,6 @@ export default function Step3({ onNext, onPrev, style }) {
     }
   }, [stream, isCameraActive]);
 
-  // 移除自动启动摄像头的逻辑
-  // useEffect(() => {
-  //   startCamera();
-  // }, []);
-
-
   return (
     <div className="step3-wrapper" style={style}>
       <div className="step3-content">
@@ -391,7 +586,7 @@ export default function Step3({ onNext, onPrev, style }) {
           {!isMobile && (
             <div className="mobile-prompt" onClick={selectFromGallery}>
               <div className="mobile-icon">
-                <QRCodeComponent url={url} size={40} onClick={e => { e.stopPropagation(); setShowQrFull(true); }} />
+                <QRCodeComponent url={currentUrl} size={40} onClick={e => { e.stopPropagation(); setShowQrFull(true); }} />
               </div>
               <span>前往使用手機填寫</span>
             </div>
@@ -508,9 +703,18 @@ export default function Step3({ onNext, onPrev, style }) {
             <button
               type="button"
               className="step3-prev-button"
-              onClick={onPrev}
+              onClick={() => setStep(pre => pre - 1)}
             >
               上一步
+            </button>
+
+            <button
+              type="button"
+              className="step3-prev-button"
+              onClick={handleComplete}
+              disabled={photos.length < 4}
+            >
+              保 存
             </button>
           </div>
         </div>
@@ -527,7 +731,7 @@ export default function Step3({ onNext, onPrev, style }) {
         {/* 全屏二维码遮罩 */}
         {showQrFull && (
           <div className="qr-fullscreen-mask" onClick={() => setShowQrFull(false)}>
-            <QRCodeComponent url={url} size={280} />
+            <QRCodeComponent url={currentUrl} size={280} />
             <div className="qr-fullscreen-tip">点击任意处关闭</div>
           </div>
         )}
