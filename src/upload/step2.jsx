@@ -9,7 +9,7 @@ import p12 from './imgs/12.svg';
 import p13 from './imgs/13.svg';
 import p14 from './imgs/14.svg';
 
-export default function Step2({ onNext, onPrev, style }) {
+export default function Step2({ onNext, setStep, style }) {
   const [formData, setFormData] = useState({
     teethDescription: [],
     alignerConsideration: [],
@@ -99,7 +99,7 @@ export default function Step2({ onNext, onPrev, style }) {
   };
 
   const handlePrev = () => {
-    onPrev && onPrev();
+    setStep(pre => pre - 1);
   };
 
   return (

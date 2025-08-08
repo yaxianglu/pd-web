@@ -57,10 +57,25 @@ export default function Step1({ onNext, style, setStep }) {
     if (!testUuid) return;
 
     try {
+      // 确保birth_date是正确的格式
+      let birthDate = null;
+      if (data.birth_date) {
+        // 如果已经是YYYY-MM-DD格式，直接使用
+        if (data.birth_date.includes('-') && data.birth_date.split('-').length === 3) {
+          birthDate = data.birth_date;
+        } else {
+          // 如果是其他格式，尝试转换
+          const date = new Date(data.birth_date);
+          if (!isNaN(date.getTime())) {
+            birthDate = date.toISOString().split('T')[0];
+          }
+        }
+      }
+
       const result = await smileTestApi.saveOrUpdateSmileTestByUuid(testUuid, {
         ...data,
         test_status: 'in_progress',
-        birth_date: data.birth_date ? new Date(data.birth_date).toISOString().split('T')[0] : null
+        birth_date: birthDate
       });
       
       if (!result.success) {
