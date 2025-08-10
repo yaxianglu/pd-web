@@ -11,29 +11,35 @@ import Logout from "../components/logout";
 
 const gapSize = 16;
 
-function InfoCard({ patientData, doctor, clinic }) {
+function InfoCard({ patientData, doctor, clinic, isInput = false }) {
   return (
     <div style={{ background: "#fff", borderRadius: "18px", padding: "30px", boxSizing: "border-box", marginBottom: gapSize, flex: 3, overflow: 'hidden' }}>
-      <div style={{ ...cardTitleSizeStyle }}>
-        {patientData?.full_name || '患者'}　您好 <Logout style={{ float: 'right' }}>退出登录</Logout>
-      </div>
-      <ContactInfo 
-        list={[
-          {
-            label: '用戶ID',
-            value: patientData?.uuid || 'N/A'
-          },
-          {
-            label: '聯繫方式',
-            value: patientData?.phone || 'N/A'
-          },
-          {
-            label: '信箱',
-            value: patientData?.email || 'N/A'
-          }
-        ]}
-      />
-      <hr style={{ border: "none", borderTop: "1.5px solid #e3eaf0", margin: "18px 0" }} />
+      {
+        isInput ? null : (
+          <>
+          <div style={{ ...cardTitleSizeStyle }}>
+            {patientData?.full_name || '患者'}　您好 <Logout style={{ float: 'right' }}>退出登录</Logout>
+          </div>
+          <ContactInfo 
+            list={[
+              {
+                label: '用戶ID',
+                value: patientData?.uuid || 'N/A'
+              },
+              {
+                label: '聯繫方式',
+                value: patientData?.phone || 'N/A'
+              },
+              {
+                label: '信箱',
+                value: patientData?.email || 'N/A'
+              }
+            ]}
+          />
+          <hr style={{ border: "none", borderTop: "1.5px solid #e3eaf0", margin: "18px 0" }} />
+          </>
+        )
+      }
       <InfoCardComponent 
         doctorName={doctor?.full_name}
         clinicAddress={clinic?.address}
@@ -107,7 +113,7 @@ function ScheduleCard({ images = [] }) {
   return (
     <div style={{
       background: "#fff", borderRadius: "18px", height: "97%",
-      minWidth: 367, boxSizing: "border-box", display: "flex", flexDirection: "column", justifyContent: "space-between",
+      boxSizing: "border-box", display: "flex", flexDirection: "column", justifyContent: "space-between",
       ...cardPaddingStyle,
     }}>
       <div>
@@ -210,7 +216,6 @@ function TimeItem({ color, icon, title, doctor, org, time }) {
         marginLeft: 14,
         fontSize: 15,
         color: "#6d6e7a",
-        minWidth: 100,
         whiteSpace: "nowrap"
       }}>{time}</div>
       <div style={{
@@ -222,7 +227,7 @@ function TimeItem({ color, icon, title, doctor, org, time }) {
   );
 }
 
-export default function Dashboard() {
+export default function Dashboard({ prefetched = null }) {
   const [patientData, setPatientData] = useState(null); // smileTest
   const [patientInfo, setPatientInfo] = useState(null); // patient
   const [doctorData, setDoctorData] = useState(null);
@@ -231,6 +236,7 @@ export default function Dashboard() {
   const [error, setError] = useState(null);
   const { logout } = useAuth();
   const navigate = useNavigate();
+  const isInput = !!prefetched;
 
   // 百分比(0-100) → 步骤(1-6)
   const mapProgressToStep = (progress) => {
@@ -238,6 +244,16 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
+    // 如果外部已传入数据，直接使用
+    if (prefetched) {
+      setPatientData(prefetched.smileTest || prefetched);
+      setDoctorData(prefetched.doctor || null);
+      setClinicData(prefetched.clinic || null);
+      setPatientInfo(prefetched.patient || null);
+      setLoading(false);
+      return;
+    }
+
     // 从sessionStorage获取UUID
     const uuid = sessionStorage.getItem('patient_uuid');
     
@@ -266,13 +282,13 @@ export default function Dashboard() {
       setError('未找到患者信息，请重新登录');
       setLoading(false);
     }
-  }, []);
+  }, [prefetched]);
 
   if (loading) {
     return (
       <div style={{
-        width: "100vw",
-        minHeight: "100vh",
+        width: "100%",
+        minHeight: "200px",
         background: "#f6f6f7",
         padding: gapSize,
         boxSizing: "border-box",
@@ -288,8 +304,8 @@ export default function Dashboard() {
   if (error) {
     return (
       <div style={{
-        width: "100vw",
-        minHeight: "100vh",
+        width: "100%",
+        minHeight: "200px",
         background: "#f6f6f7",
         padding: gapSize,
         boxSizing: "border-box",
@@ -300,29 +316,15 @@ export default function Dashboard() {
         gap: "20px"
       }}>
         <div style={{ color: "red" }}>{error}</div>
-        <button 
-          onClick={() => window.location.href = '/login'}
-          style={{
-            background: "#48d2ce",
-            color: "#fff",
-            border: "none",
-            borderRadius: "8px",
-            padding: "10px 20px",
-            cursor: "pointer"
-          }}
-        >
-          返回登录页面
-        </button>
       </div>
     );
   }
 
-  const currentStepFromProgress = mapProgressToStep(patientInfo?.treatment_progress);
+  const currentStepFromProgress = mapProgressToStep((patientInfo || {}).treatment_progress);
 
   return (
     <div style={{
-      width: "100vw",
-      minHeight: "100vh",
+      width: "100%",
       background: "#f6f6f7",
       padding: gapSize,
       boxSizing: "border-box"
@@ -330,7 +332,7 @@ export default function Dashboard() {
       <div style={{ display: "flex", gap: gapSize, alignItems: "flex-start" }}>
         <div style={{ flex: 2 }}>
           <div style={{ display: "flex", gap: gapSize }}>
-            <InfoCard patientData={patientData} doctor={doctorData} clinic={clinicData} />
+            <InfoCard patientData={patientData} doctor={doctorData} clinic={clinicData} isInput={isInput} />
             <PlanConfirmCard currentStepFromProgress={currentStepFromProgress || 0} />
           </div>
           <ProgressTracker currentStep={currentStepFromProgress} />
@@ -339,13 +341,7 @@ export default function Dashboard() {
           <ScheduleCard images={[patientData?.teeth_image_1, patientData?.teeth_image_2, patientData?.teeth_image_3, patientData?.teeth_image_4]} />
         </div>
       </div>
-      <div style={{
-        position: "fixed",
-        bottom: "20px",
-        left: "50%",
-        transform: "translateX(-50%)",
-        zIndex: 10,
-      }}>
+      <div style={{ position: "fixed", bottom: "20px", left: "50%", transform: "translateX(-50%)", zIndex: 10 }}>
       </div>
     </div>
   );
