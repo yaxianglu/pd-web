@@ -58,7 +58,40 @@ function PlanConfirmCard({ currentStepFromProgress }) {
   );
 }
 
-function ScheduleCard() {
+function ScheduleCard({ images = [] }) {
+  const downloadBase64Image = (data, filename) => {
+    if (!data) return;
+    try {
+      const hasHeader = typeof data === 'string' && data.startsWith('data:');
+      const dataUrl = hasHeader ? data : `data:image/jpeg;base64,${data}`;
+      const [header, body] = dataUrl.split(',');
+      const mimeMatch = header.match(/data:(.*?);/);
+      const mime = (mimeMatch && mimeMatch[1]) || 'image/jpeg';
+      const binary = atob(body);
+      const len = binary.length;
+      const bytes = new Uint8Array(len);
+      for (let i = 0; i < len; i++) bytes[i] = binary.charCodeAt(i);
+      const blob = new Blob([bytes], { type: mime });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      console.warn('Download failed:', e);
+    }
+  };
+
+  const handleDownloadAll = () => {
+    const list = Array.isArray(images) ? images : [];
+    list.forEach((img, idx) => {
+      if (img) downloadBase64Image(img, `teeth_image_${idx + 1}.jpg`);
+    });
+  };
+
   return (
     <div style={{
       background: "#fff", borderRadius: "18px", height: "97%",
@@ -140,7 +173,7 @@ function ScheduleCard() {
             borderRadius: 12,
             padding: "7px 0",
             cursor: "pointer"
-          }}>下載</button>
+          }} onClick={handleDownloadAll}>下載</button>
         </div>
       </div>
     </div>
@@ -291,7 +324,7 @@ export default function Dashboard() {
           <ProgressTracker currentStep={currentStepFromProgress} />
         </div>
         <div style={{ flex: 1 }}>
-          <ScheduleCard />
+          <ScheduleCard images={[patientData?.teeth_image_1, patientData?.teeth_image_2, patientData?.teeth_image_3, patientData?.teeth_image_4]} />
         </div>
       </div>
       <div style={{
