@@ -49,7 +49,7 @@ export default function PearlLogin() {
           test_id: responseData.data.test_id,
           full_name: responseData.data.full_name,
           test_status: responseData.data.test_status
-        });
+        }, responseData);
         
         // 将UUID存储到sessionStorage
         sessionStorage.setItem('patient_uuid', responseData.data.uuid);
@@ -88,12 +88,14 @@ export default function PearlLogin() {
       }, false); // 登录不需要认证
 
       if (responseData.success) {
-        // 登录成功，保存用户信息和token
+        // 登录成功，保存用户信息和token（同时保存原始响应）
         login('staff', {
           ...responseData.data.user,
           token: responseData.data.token,
           refresh_token: responseData.data.refresh_token,
-        });
+          expires_in: responseData.data.expires_in,
+          clinic: responseData.data.clinic || null,
+        }, responseData);
         
         // 根据角色跳转到对应页面
         const userRole = responseData.data.user.role;

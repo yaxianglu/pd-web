@@ -1,0 +1,55 @@
+.patient-list {
+  flex: 1;
+  .list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+
+    .search-bar input {
+      padding: 10px 14px;
+      border: 1.5px solid #e3eaf0;
+      border-radius: 12px;
+      min-width: 280px;
+      outline: none;
+    }
+  }
+
+  .list-rows {
+    .list-row {
+      border-bottom: 1px solid #f0f0f0;
+      &.open { background: #fcfdfd; }
+
+      .row-main {
+        display: flex;
+        align-items: center;
+        padding: 12px 0;
+        cursor: pointer;
+        gap: 15px;
+        background: rgba(204, 246, 243, 1);
+
+        .col { font-size: 14px; color: #333; }
+        .sequence { width: 40px; font-weight: bold; }
+        .name { width: 100px; font-weight: 600; }
+        .user-id { width: 200px; color: #666; }
+        .contact { width: 180px; color: #666; }
+        .email { flex: 1; color: #666; }
+        .status .status-badge { background: #4caf50; color: #fff; padding: 4px 8px; border-radius: 6px; font-size: 12px; }
+        .action .arrow { font-size: 16px; color: #999; transform: rotate(0deg); transition: transform .2s; }
+        .action .arrow.up { transform: rotate(180deg); }
+      }
+
+      .row-expand {
+        padding: 12px 8px 16px 55px;
+        .expand-grid {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0,1fr));
+          gap: 10px 16px;
+          margin-bottom: 12px;
+          .expand-item { font-size: 13px; color: #555; .label { color: #9aa3af; margin-right: 6px; } .value { font-weight: 600; color: #5b6770; } }
+        }
+        .expand-notes { display: flex; align-items: center; gap: 12px; .label { color: #9aa3af; } .notes-actions { display: flex; gap: 10px; } .btn { padding: 6px 12px; border-radius: 8px; font-size: 13px; border: 1px solid #e3eae8; } .btn.primary { background: #48d2ce; color: #fff; border-color: #48d2ce; } }
+      }
+    }
+  }
+}

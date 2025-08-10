@@ -15,31 +15,44 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userType, setUserType] = useState(null); // 'patient' or 'staff'
   const [userInfo, setUserInfo] = useState(null);
+  const [clinicInfo, setClinicInfo] = useState(null);
   const [token, setToken] = useState(null);
   const [refreshToken, setRefreshToken] = useState(null);
   const [isInitializing, setIsInitializing] = useState(true);
 
-  const login = (type, info) => {
+  // raw 为后端接口原始响应对象（不改结构直接保存）
+  const login = (type, info, raw = null) => {
     setIsAuthenticated(true);
     setUserType(type);
     setUserInfo(info);
     
-    // 保存token信息
     if (info.token) {
       setToken(info.token);
       setRefreshToken(info.refresh_token);
       localStorage.setItem('auth_token', info.token);
       localStorage.setItem('refresh_token', info.refresh_token);
     }
+
+    if (info.clinic) {
+      setClinicInfo(info.clinic);
+      localStorage.setItem('clinic_info', JSON.stringify(info.clinic));
+    }
+
+    if (typeof info.expires_in !== 'undefined') {
+      localStorage.setItem('auth_expires_in', String(info.expires_in));
+    }
     
-    // 保存登录状态到localStorage
     localStorage.setItem('isAuthenticated', 'true');
     localStorage.setItem('userType', type);
     localStorage.setItem('user_info', JSON.stringify(info));
+
+    // 保存原始响应（结构不变）
+    if (raw) {
+      localStorage.setItem('auth_login_response', JSON.stringify(raw));
+    }
   };
 
   const logout = async () => {
-    // 如果有token，调用后端登出接口
     if (token) {
       try {
         await fetch(`${API_BASE_URL}/auth/logout`, {
@@ -57,48 +70,48 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(false);
     setUserType(null);
     setUserInfo(null);
+    setClinicInfo(null);
     setToken(null);
     setRefreshToken(null);
     
-    // 清除localStorage
     localStorage.removeItem('isAuthenticated');
     localStorage.removeItem('userType');
     localStorage.removeItem('user_info');
+    localStorage.removeItem('clinic_info');
     localStorage.removeItem('auth_token');
     localStorage.removeItem('refresh_token');
+    localStorage.removeItem('auth_expires_in');
+    localStorage.removeItem('auth_login_response');
+    localStorage.removeItem('auth_refresh_response');
     
-    // 清除sessionStorage中的患者UUID
     sessionStorage.removeItem('patient_uuid');
   };
 
-  // 患者专用登出函数
   const patientLogout = () => {
     setIsAuthenticated(false);
     setUserType(null);
     setUserInfo(null);
+    setClinicInfo(null);
     
-    // 清除localStorage
     localStorage.removeItem('isAuthenticated');
     localStorage.removeItem('userType');
     localStorage.removeItem('user_info');
+    localStorage.removeItem('clinic_info');
+    localStorage.removeItem('auth_expires_in');
+    localStorage.removeItem('auth_login_response');
+    localStorage.removeItem('auth_refresh_response');
     
-    // 清除sessionStorage中的患者UUID
     sessionStorage.removeItem('patient_uuid');
   };
 
-  // 刷新token
   const refreshAuthToken = async () => {
     if (!refreshToken) return false;
 
     try {
       const response = await fetch(`${API_BASE_URL}/auth/refresh`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          refresh_token: refreshToken,
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ refresh_token: refreshToken }),
       });
 
       const data = await response.json();
@@ -107,11 +120,18 @@ export const AuthProvider = ({ children }) => {
         setToken(data.data.token);
         setRefreshToken(data.data.refresh_token);
         setUserInfo(data.data.user);
-        
+        if (data.data.clinic) {
+          setClinicInfo(data.data.clinic);
+          localStorage.setItem('clinic_info', JSON.stringify(data.data.clinic));
+        }
         localStorage.setItem('auth_token', data.data.token);
         localStorage.setItem('refresh_token', data.data.refresh_token);
         localStorage.setItem('user_info', JSON.stringify(data.data.user));
-        
+        if (typeof data.data.expires_in !== 'undefined') {
+          localStorage.setItem('auth_expires_in', String(data.data.expires_in));
+        }
+        // 保存原始刷新响应
+        localStorage.setItem('auth_refresh_response', JSON.stringify(data));
         return true;
       }
     } catch (error) {
@@ -121,10 +141,8 @@ export const AuthProvider = ({ children }) => {
     return false;
   };
 
-  // 验证token有效性
   const verifyToken = async () => {
     if (!token) return false;
-
     try {
       const response = await fetch(`${API_BASE_URL}/auth/verify`, {
         method: 'GET',
@@ -133,50 +151,40 @@ export const AuthProvider = ({ children }) => {
           'Content-Type': 'application/json',
         },
       });
-
-      if (response.ok) {
-        return true;
-      }
+      if (response.ok) return true;
     } catch (error) {
       console.error('Token verification error:', error);
     }
-
     return false;
   };
 
-  // 初始化时检查localStorage中的登录状态
   useEffect(() => {
     const init = async () => {
       const savedAuth = localStorage.getItem('isAuthenticated');
       const savedUserType = localStorage.getItem('userType');
       const savedUserInfo = localStorage.getItem('user_info');
+      const savedClinicInfo = localStorage.getItem('clinic_info');
       const savedToken = localStorage.getItem('auth_token');
       const savedRefreshToken = localStorage.getItem('refresh_token');
       
       if (savedAuth === 'true') {
-        // 患者：无 token 也允许恢复
         if (savedUserType === 'patient') {
           setIsAuthenticated(true);
           setUserType('patient');
           setUserInfo(savedUserInfo ? JSON.parse(savedUserInfo) : null);
+          setClinicInfo(null);
           setToken(null);
           setRefreshToken(null);
           setIsInitializing(false);
           return;
         }
-        // 员工：信任本地状态，优先恢复，再在后台尝试刷新
         setIsAuthenticated(true);
         setUserType(savedUserType);
         setUserInfo(savedUserInfo ? JSON.parse(savedUserInfo) : null);
+        setClinicInfo(savedClinicInfo ? JSON.parse(savedClinicInfo) : null);
         if (savedToken) setToken(savedToken);
         if (savedRefreshToken) setRefreshToken(savedRefreshToken);
-
-        // 后台静默刷新（失败也不登出）
-        try {
-          await refreshAuthToken();
-        } catch (e) {
-          // 忽略
-        }
+        try { await refreshAuthToken(); } catch {}
       }
       setIsInitializing(false);
     };
@@ -188,6 +196,7 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated,
     userType,
     userInfo,
+    clinicInfo,
     token,
     login,
     logout,
