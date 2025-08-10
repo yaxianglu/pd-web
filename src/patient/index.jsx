@@ -193,7 +193,8 @@ export default function Dashboard() {
       apiService.getSmileTestByUuid(uuid)
         .then(response => {
           if (response.success) {
-            setPatientData(response.data);
+            const smileTestData = (response && response.data && response.data.smileTest) ? response.data.smileTest : (response && response.data ? response.data : null);
+            setPatientData(smileTestData);
           } else {
             setError(response.message || '获取患者数据失败');
           }
