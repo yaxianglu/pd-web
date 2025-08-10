@@ -9,7 +9,7 @@ import "./index.scss";
 
 
 // 用户信息卡片
-function UserInfoCard({ userInfo }) {
+function UserInfoCard({ userInfo, isDoctorDetail = false }) {
   const account = userInfo?.user_id || "—";
   const phone = userInfo?.phone || "—";
   const email = userInfo?.email || "—";
@@ -28,7 +28,7 @@ function UserInfoCard({ userInfo }) {
         <div className="pill"><span className="pill-label">信箱：</span><span className="pill-value">{email}</span></div>
         <div className="pill"><span className="pill-label">地址：</span><span className="pill-value">{address}</span></div>
       </div>
-      <Logout style={{ marginLeft: 12 }}>退出登录</Logout>
+      {isDoctorDetail ? null : <Logout style={{ marginLeft: 12 }}>退出登录</Logout>}
 
     </div>
   );
@@ -42,15 +42,40 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
   const { logout, userInfo } = useAuth();
   const navigate = useNavigate();
 
+  const isDoctorDetail = !!doctorUser;
+
   const displayUser = doctorUser || userInfo;
 
+  const normalizePatients = (list) => {
+    if (!Array.isArray(list)) return [];
+    return list.map((item, index) => {
+      const smile = item?.smileTest || {};
+      const pt = item?.patient || {};
+      const ensuredUuid = pt.uuid || smile.patient_uuid || smile.uuid || `row-${index}`;
+      return {
+        ...item,
+        patient: {
+          ...pt,
+          uuid: ensuredUuid,
+          full_name: pt.full_name || smile.full_name || pt.name,
+          phone: pt.phone || smile.phone,
+          email: pt.email || smile.email,
+          gender: pt.gender || smile.gender,
+          birth_date: pt.birth_date || smile.birth_date,
+        },
+        smileTest: smile,
+      };
+    });
+  };
+
   const load = () => {
-    const uuidFromUser = displayUser?.uuid || userInfo?.uuid || '550e8400-e29b-41d4-a716-446655440001';
+    const uuidFromUser = displayUser?.uuid || userInfo?.uuid;
     setLoading(true);
     apiService.getPatientsByDoctor({ uuid: uuidFromUser })
       .then(res => {
         if (res?.success) {
-          setPatients(Array.isArray(res.data) ? res.data : []);
+          const normalized = normalizePatients(res.data);
+          setPatients(normalized);
         } else {
           setError(res?.message || '獲取患者資料失敗');
         }
@@ -63,14 +88,15 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
   };
 
   useEffect(() => {
-    if (initialPatients && Array.isArray(initialPatients)) {
-      setPatients(initialPatients);
+    if (Array.isArray(initialPatients)) {
+      const normalized = normalizePatients(initialPatients);
+      setPatients(normalized);
       setLoading(false);
       return;
     }
     load();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [displayUser?.uuid]);
+  }, [displayUser?.uuid, initialPatients]);
 
   if (loading) {
     return (
@@ -91,16 +117,16 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
 
   return (
     <div className="doctor-dashboard">
-      <div className="main-content">
+      <div className="doctor-main-content">
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 8 }}>
         </div>
         {/* 用户信息 */}
-        <UserInfoCard userInfo={displayUser} />
+        <UserInfoCard userInfo={displayUser} isDoctorDetail={isDoctorDetail} />
         {/* 患者列表 */}
         <PatientInfoList patients={patients} />
-        <div className="footer">
+        {isDoctorDetail ? null : <div className="footer">
           <button className="btn primary" onClick={() => setModalOpen(true)}>創建患者資料卡</button>
-        </div>
+        </div>}
       </div>
       <CreatePatientModal open={modalOpen} onClose={() => setModalOpen(false)} onCreated={() => { setModalOpen(false); if (!initialPatients) { load(); } }} />
     </div>
