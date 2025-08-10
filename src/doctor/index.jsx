@@ -14,6 +14,11 @@ const gapSize = 16;
 
 // 用户信息卡片
 function UserInfoCard({ userInfo }) {
+  const account = userInfo?.user_id || "—";
+  const phone = userInfo?.phone || "—";
+  const email = userInfo?.email || "—";
+  const address = userInfo?.department || "—";
+
   return (
     <div className="card user-info-card">
       <div className="user-greeting">
@@ -25,23 +30,11 @@ function UserInfoCard({ userInfo }) {
         )}
       </div>
       
-      <div className="user-details">
-        <div className="detail-item">
-          <span className="label">账户:</span>
-          <span className="value">32012310010</span>
-        </div>
-        <div className="detail-item">
-          <span className="label">聯繫方式:</span>
-          <span className="value">13022559203</span>
-        </div>
-        <div className="detail-item">
-          <span className="label">信箱:</span>
-          <span className="value">1004735926@qq.com</span>
-        </div>
-        <div className="detail-item">
-          <span className="label">地址:</span>
-          <span className="value">台南市</span>
-        </div>
+      <div className="pill-list">
+        <div className="pill"><span className="pill-label">帳戶：</span><span className="pill-value">{account}</span></div>
+        <div className="pill"><span className="pill-label">聯繫方式：</span><span className="pill-value">{phone}</span></div>
+        <div className="pill"><span className="pill-label">信箱：</span><span className="pill-value">{email}</span></div>
+        <div className="pill"><span className="pill-label">地址：</span><span className="pill-value">{address}</span></div>
       </div>
     </div>
   );

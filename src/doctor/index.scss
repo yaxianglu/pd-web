@@ -82,10 +82,8 @@
 
   .card {
     background: #fff;
-    border-radius: 18px;
     padding: 25px;
     margin-bottom: 16px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
     .card-title {
       font-size: 18px;
@@ -108,6 +106,29 @@
         margin-left: 10px;
         font-weight: normal;
       }
+    }
+
+    .pill-list {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 18px;
+      border: 1.5px solid #e3eaf0;
+      border-radius: 999px;
+      background: #fff;
+      color: #666;
+    }
+    .pill-label {
+      margin-right: 6px;
+      color: #9aa3af;
+    }
+    .pill-value {
+      color: #5b6770;
+      font-weight: 600;
     }
 
     .user-details {
@@ -609,6 +630,10 @@
 
     .user-info-card {
       .user-details {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .pill-list {
         flex-direction: column;
         gap: 10px;
       }
