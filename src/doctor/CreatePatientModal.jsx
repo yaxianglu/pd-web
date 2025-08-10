@@ -12,6 +12,7 @@ export default function CreatePatientModal({ open, onClose, onCreated }) {
   const [form, setForm] = useState({
     full_name: '',
     birth_date: '',
+    gender: '',
     phone: '',
     email: '',
     line_id: '',
@@ -69,6 +70,14 @@ export default function CreatePatientModal({ open, onClose, onCreated }) {
               value={form.birth_date}
               onChange={(v) => setField('birth_date', v)}
             />
+          </div>
+          <div className="form-group">
+            <select className="input" value={form.gender} onChange={(e) => setField('gender', e.target.value)}>
+              <option value="">性別</option>
+              <option value="male">男</option>
+              <option value="female">女</option>
+              <option value="other">其他</option>
+            </select>
           </div>
           <div className="form-group">
             <input
