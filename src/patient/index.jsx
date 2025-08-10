@@ -27,6 +27,7 @@ function InfoCard({ patientData, doctor, clinic }) {
         clinicAddress={clinic?.address}
         contact={doctor?.phone || clinic?.phone || patientData?.phone}
         treatmentProgress={patientData?.treatment_progress || 0}
+        hobbies={patientData?.hobbies || ''}
       />
     </div>
   );

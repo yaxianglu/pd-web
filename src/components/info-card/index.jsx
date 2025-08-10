@@ -1,5 +1,19 @@
 const l = ['等待預約', '等待確認治療方案', '等待確認付款', '等待生產', '治療中', '治療完成'];
-export default function InfoCardComponent({ doctorName, clinicAddress, contact, treatmentProgress }) {
+const m = {
+  1: {
+    title: '輕度',
+    subtitle: '平均週期3~9個月',
+  },
+  2: {
+    title: '中度',
+    subtitle: '平均週期9~15個月',
+  },
+  3: {
+    title: '重度',
+    subtitle: '平均週期15~22個月',
+  },
+}
+export default function InfoCardComponent({ doctorName, clinicAddress, contact, treatmentProgress, hobbies }) {
   return (
     <div style={{ display: "flex", gap: 22 }}>
       <div style={{
@@ -17,8 +31,8 @@ export default function InfoCardComponent({ doctorName, clinicAddress, contact, 
         color: "#fff", padding: 12, textAlign: "center", fontSize: 20
       }}>
         <div style={{ marginBottom: 12, borderBottom: "1px solid #fff", fontSize: 18, paddingBottom: 12 }}>治療方案</div>
-        <div style={{ fontSize: 29, fontWeight: "bold", margin: "12px 0 5px" }}>輕度</div>
-        <div style={{ fontSize: 16, color: "#e8f8b0" }}>(平均治療週期3~9個月)</div>
+        <div style={{ fontSize: 29, fontWeight: "bold", margin: "12px 0 5px" }}>{m[hobbies]?.title}</div>
+        <div style={{ fontSize: 16, color: "#e8f8b0" }}>{m[hobbies]?.subtitle}</div>
       </div>
       {/* 目前進度 */}
       <div style={{
