@@ -1,4 +1,5 @@
-export default function InfoCardComponent({ doctorName, clinicAddress, contact }) {
+const l = ['等待預約', '等待確認治療方案', '等待確認付款', '等待生產', '治療中', '治療完成'];
+export default function InfoCardComponent({ doctorName, clinicAddress, contact, treatmentProgress }) {
   return (
     <div style={{ display: "flex", gap: 22 }}>
       <div style={{
@@ -25,7 +26,7 @@ export default function InfoCardComponent({ doctorName, clinicAddress, contact }
         color: "#fff", padding: 12, textAlign: "center", fontSize: 20
       }}>
         <div style={{ marginBottom: 12, borderBottom: "1px solid #fff", fontSize: 18, paddingBottom: 12 }}>目前進度</div>
-        <div style={{ fontSize: 29, fontWeight: "bold", margin: "24px 0 2px" }}>等待支付</div>
+        <div style={{ fontSize: 29, fontWeight: "bold", margin: "24px 0 2px" }}>{l[treatmentProgress]}</div>
       </div>
     </div>
   )
