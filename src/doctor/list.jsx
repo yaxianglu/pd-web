@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import './list.scss';
+import ContactInfo from '../components/contact-info';
 
 export default function PatientInfoList({ patients = [] }) {
   const [keyword, setKeyword] = useState('');
@@ -24,6 +25,16 @@ export default function PatientInfoList({ patients = [] }) {
     });
   }, [patients, keyword]);
 
+  const mapStatusToText = (status) => {
+    switch (status) {
+      case 'pending': return '待處理';
+      case 'in_progress': return '處理中';
+      case 'completed': return '已完成';
+      case 'cancelled': return '已取消';
+      default: return status || '—';
+    }
+  };
+
   return (
     <div className="card patient-list">
       <div className="list-header">
@@ -43,18 +54,43 @@ export default function PatientInfoList({ patients = [] }) {
           const st = item?.smileTest || {};
           const id = pt.uuid || `row-${index}`;
           const isOpen = !!expanded[id];
+          const userId = pt.patient_id || pt.uuid || '—';
+          const statusText = mapStatusToText(st.test_status);
           return (
             <div key={id} className={`list-row ${isOpen ? 'open' : ''}`}>
               <div className="row-main" onClick={() => onToggle(id)}>
                 <div className="col sequence">{String(index + 1).padStart(2, '0')}</div>
-                <div className="col name">{pt.full_name || '—'}</div>
-                <div className="col user-id">用戶ID: {pt.uuid || '—'}</div>
-                <div className="col contact">聯繫方式: {pt.phone || '—'}</div>
-                <div className="col email">{pt.email || '—'}</div>
-                <div className="col status">
-                  <span className={`status-badge ${st.test_status || ''}`}>{st.test_status || '—'}</span>
+                <div className="col name">{st.full_name || '—'}</div>
+                <div className="col info" style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
+                  <ContactInfo list={[
+                    {
+                      label: '用戶ID',
+                      value: pt.uuid || 'N/A'
+                    },
+                    {
+                      label: '性别',
+                      value: pt.gender || 'N/A'
+                    },
+                    {
+                      label: '生日',
+                      value: pt.birth_date || 'N/A'
+                    },
+                    {
+                      label: '聯繫方式',
+                      value: pt.phone || 'N/A'
+                    },
+                    {
+                      label: '信箱',
+                      value: pt.email || 'N/A'
+                    }
+                  ]} 
+                  style={{ marginBottom: 0 }}
+                  />
                 </div>
-                <div className="col action">
+                {/* <div className="col status">
+                  <span className={`status-badge ${st.test_status || ''}`}>{statusText}</span>
+                </div> */}
+                <div className="col action" style={{ marginRight: 12 }}>
                   <span className={`arrow ${isOpen ? 'up' : 'down'}`}>▾</span>
                 </div>
               </div>
@@ -72,8 +108,8 @@ export default function PatientInfoList({ patients = [] }) {
                   <div className="expand-notes">
                     <span className="label">備註：</span>
                     <div className="notes-actions">
-                      <button className="btn primary">上傳</button>
-                      <button className="btn secondary">下載</button>
+                      <button className="btn primary" onClick={(e)=>e.stopPropagation()}>上傳</button>
+                      <button className="btn secondary" onClick={(e)=>e.stopPropagation()}>下載</button>
                     </div>
                   </div>
                 </div>

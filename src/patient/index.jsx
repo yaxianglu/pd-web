@@ -7,6 +7,7 @@ import ContactInfo from "../components/contact-info";
 import InfoCardComponent from "../components/info-card";
 import apiService from "../services/api";
 import png13 from "../asserts/13.png";
+import Logout from "../components/logout";
 
 const gapSize = 16;
 
@@ -14,12 +15,23 @@ function InfoCard({ patientData, doctor, clinic }) {
   return (
     <div style={{ background: "#fff", borderRadius: "18px", padding: "30px", boxSizing: "border-box", marginBottom: gapSize, flex: 3, overflow: 'hidden' }}>
       <div style={{ ...cardTitleSizeStyle }}>
-        {patientData?.full_name || '患者'}　您好
+        {patientData?.full_name || '患者'}　您好 <Logout style={{ float: 'right' }}>退出登录</Logout>
       </div>
       <ContactInfo 
-        id={patientData?.uuid || 'N/A'} 
-        phone={patientData?.phone || 'N/A'} 
-        email={patientData?.email || 'N/A'} 
+        list={[
+          {
+            label: '用戶ID',
+            value: patientData?.uuid || 'N/A'
+          },
+          {
+            label: '聯繫方式',
+            value: patientData?.phone || 'N/A'
+          },
+          {
+            label: '信箱',
+            value: patientData?.email || 'N/A'
+          }
+        ]}
       />
       <hr style={{ border: "none", borderTop: "1.5px solid #e3eaf0", margin: "18px 0" }} />
       <InfoCardComponent 

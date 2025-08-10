@@ -39,6 +39,7 @@ export const contactInfoStyle = {
   verticalAlign: "middle",
   wordBreak: "break-all",
   cursor: "pointer",
+  background: "#fff",
   '@media (max-width: 768px)': {
     fontSize: 12,
   }

@@ -1,10 +1,10 @@
 import { contactInfoStyle } from "../../contants";
 import { message, Tooltip } from "antd";
 
+
 export default function ContactInfo({
-  id,
-  phone,
-  email,
+  list = [],
+  style = {}
 }) {
   const handleCopy = async (text) => {
     if (!text || text === 'N/A') return;
@@ -29,21 +29,18 @@ export default function ContactInfo({
   };
 
   return (
-    <div style={{ display: "flex", gap: 12, marginBottom: 16 }}>
-      <Tooltip title={id || ''}>
-        <div
-          style={{ ...contactInfoStyle, cursor: id && id !== 'N/A' ? 'pointer' : 'default' }}
-          onClick={() => handleCopy(id)}
-        >
-          用戶ID：{id}
-        </div>
-      </Tooltip>
-      <Tooltip title={phone || ''}>
-        <div style={contactInfoStyle} onClick={() => handleCopy(phone)}>聯繫方式：{phone}</div>
-      </Tooltip>
-      <Tooltip title={email || ''}>
-        <div style={contactInfoStyle} onClick={() => handleCopy(email)}>信箱：{email}</div>
-      </Tooltip>
+    <div style={{ display: "flex", gap: 12, marginBottom: 16, ...style }}>
+      {
+        list.map((item, index) => {
+          return (
+            <Tooltip title={item.value || ''}>
+              <div style={{ ...contactInfoStyle, cursor: item.value && item.value !== 'N/A' ? 'pointer' : 'default' }} onClick={() => handleCopy(item.value)}>
+                {item.label}：{item.value}
+              </div>
+            </Tooltip>
+          )
+        })
+      }
     </div>
   )
 }
