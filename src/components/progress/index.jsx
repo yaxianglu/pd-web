@@ -6,7 +6,35 @@ import png4 from './imgs/4.png'
 import png5 from './imgs/5.png'
 import png6 from './imgs/6.png'
 import { cardPaddingStyle, cardTitleSizeStyle } from "../../contants";
-const l = ['等待預約', '預約完成', '確認治療方案', '付款完成', '生產完成', '治療中', '治療完成'];
+export const l = [
+  {
+    title: '等待預約',
+  },
+  {
+    title: '預約完成',
+    icon: png1,
+  },
+  {
+    title: '確認治療方案',
+    icon: png2,
+  },
+  {
+    title: '付款完成',
+    icon: png3,
+  },
+  {
+    title: '生產完成',
+    icon: png4,
+  },
+  {
+    title: '治療中',
+    icon: png5,
+  },
+  {
+    title: '治療完成',
+    icon: png6,
+  }
+];
 // 进度状态枚举
 export const ProgressStatus = {
   COMPLETED: 'completed',    // 已完成
@@ -81,7 +109,7 @@ export default function ProgressTracker({
       <div style={{ 
         ...cardTitleSizeStyle,
       }}>
-        {l[currentStep]}
+        {l[currentStep]?.title}
       </div>
       <div style={{ 
         display: "flex", 

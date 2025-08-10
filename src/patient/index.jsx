@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import ProgressTracker from "../components/progress";
+import ProgressTracker, { l } from "../components/progress";
 import { cardTitleSizeStyle, cardPaddingStyle } from "../contants";
 import ContactInfo from "../components/contact-info";
 import InfoCardComponent from "../components/info-card";
@@ -34,7 +34,8 @@ function InfoCard({ patientData, doctor, clinic }) {
 }
 
 
-function PlanConfirmCard() {
+function PlanConfirmCard({ currentStepFromProgress }) {
+  const ddd = l[currentStepFromProgress] || {};
   return (
     <div style={{
       background: "#fff", borderRadius: "18px",
@@ -42,14 +43,7 @@ function PlanConfirmCard() {
       flexDirection: "column", marginBottom: gapSize,
       flex: 1,
     }}>
-      <svg width="108" height="108" fill="none">
-        <rect x="14" y="20" width="80" height="62" rx="16" stroke="#48d2ce" strokeWidth="4" fill="#fff"/>
-        <rect x="27" y="27" width="54" height="7" rx="3.5" fill="#aef4ec"/>
-        <rect x="27" y="39" width="54" height="7" rx="3.5" fill="#aef4ec"/>
-        <rect x="27" y="51" width="33" height="7" rx="3.5" fill="#aef4ec"/>
-        <circle cx="80" cy="69" r="15" stroke="#48d2ce" strokeWidth="3" fill="#fff"/>
-        <path d="M73 69l5 5 10-10" stroke="#48d2ce" strokeWidth="2.5" fill="none"/>
-      </svg>
+      {ddd.icon && <img src={ddd.icon} alt="icon" style={{ width: 108 }} />}
       <div style={{ marginTop: 20 }}>
         <button style={{
           background: "#48d2ce", color: "#fff",
@@ -57,7 +51,7 @@ function PlanConfirmCard() {
           padding: "13px 44px", fontSize: 14,
           fontWeight: 600, letterSpacing: 1.1, cursor: "pointer"
         }}>
-          已確認治療方案
+          {ddd.title}
         </button>
       </div>
     </div>
@@ -292,7 +286,7 @@ export default function Dashboard() {
         <div style={{ flex: 2 }}>
           <div style={{ display: "flex", gap: gapSize }}>
             <InfoCard patientData={patientData} doctor={doctorData} clinic={clinicData} />
-            <PlanConfirmCard />
+            <PlanConfirmCard currentStepFromProgress={currentStepFromProgress || 0} />
           </div>
           <ProgressTracker currentStep={currentStepFromProgress} />
         </div>
