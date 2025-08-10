@@ -1,5 +1,4 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://54.161.135.238:3001';
-// const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+import { API_BASE_URL } from '../contants';
 
 export const smileTestApi = {
   // 通过UUID获取微笑测试数据

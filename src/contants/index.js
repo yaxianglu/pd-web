@@ -1,3 +1,9 @@
+
+// API基础URL
+// export const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://54.161.135.238:3001';
+export const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+
+
 export const wrapperStyle = {
   width: "100%",
   maxWidth: "1080px",
