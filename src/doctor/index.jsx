@@ -93,6 +93,9 @@ export default function DoctorDashboard() {
         <UserInfoCard userInfo={userInfo} />
         {/* 患者列表 */}
         <PatientInfoList patients={patients} />
+        <div className="footer">
+          <button className="btn primary">創建患者資料卡</button>
+        </div>
       </div>
     </div>
   );
