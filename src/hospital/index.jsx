@@ -137,6 +137,7 @@ export default function HospitalDashboard() {
               onChange={(v) => setForm({ ...form, clinic_uuid: v })}
               options={(clinics || []).map(c => ({ value: c.uuid, label: c.clinic_name }))}
               allowClear
+              style={{ width: '100%' }}
             />
           </div>
         </div>
