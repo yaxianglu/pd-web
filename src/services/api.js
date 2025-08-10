@@ -247,6 +247,35 @@ class ApiService {
       return { success: false, message: '獲取醫師列表失敗' };
     }
   }
+
+  // 获取诊所列表
+  async getClinics() {
+    try {
+      const response = await fetch(`${this.baseURL}/auth/clinics`, {
+        method: 'GET',
+        headers: this.getHeaders(true),
+      });
+      return await this.handleResponse(response);
+    } catch (error) {
+      console.error('Failed to fetch clinics:', error);
+      return { success: false, message: '獲取診所列表失敗' };
+    }
+  }
+
+  // 创建管理员账号（默认医生角色）
+  async createAdminUser(data) {
+    try {
+      const response = await fetch(`${this.baseURL}/auth/users`, {
+        method: 'POST',
+        headers: this.getHeaders(true),
+        body: JSON.stringify(data),
+      });
+      return await this.handleResponse(response);
+    } catch (error) {
+      console.error('Failed to create admin user:', error);
+      return { success: false, message: '創建帳戶失敗' };
+    }
+  }
 }
 
 // 创建单例实例
