@@ -197,22 +197,6 @@ class ApiService {
       return { success: false, message: '获取数据失败，请检查网络连接' };
     }
   }
-
-  // 根据UUID获取smile test数据（包含医生和诊所信息）
-  async getSmileTestByUuidWithRelations(uuid) {
-    try {
-      const response = await fetch(`${this.baseURL}/api/smile-test/uuid/${uuid}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      return await response.json();
-    } catch (error) {
-      console.error('Failed to get smile test data with relations:', error);
-      return { success: false, message: '获取关联数据失败，请检查网络连接' };
-    }
-  }
 }
 
 // 创建单例实例
