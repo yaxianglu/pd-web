@@ -6,7 +6,7 @@ import png4 from './imgs/4.png'
 import png5 from './imgs/5.png'
 import png6 from './imgs/6.png'
 import { cardPaddingStyle, cardTitleSizeStyle } from "../../contants";
-
+const l = ['等待預約', '預約完成', '確認治療方案', '付款完成', '生產完成', '治療中', '治療完成'];
 // 进度状态枚举
 export const ProgressStatus = {
   COMPLETED: 'completed',    // 已完成
@@ -62,14 +62,12 @@ const steps = [
 
 // 进度组件
 export default function ProgressTracker({ 
-  currentStep = 3, 
-  title = "等待確認支付",
+  currentStep = 0, 
   steps: customSteps = steps 
 }) {
   // 更新步骤状态
   const getStepStatus = (stepId) => {
-    if (stepId < currentStep) return ProgressStatus.COMPLETED;
-    if (stepId === currentStep) return ProgressStatus.CURRENT;
+    if (stepId <= currentStep) return ProgressStatus.COMPLETED;
     return ProgressStatus.PENDING;
   };
 
@@ -83,7 +81,7 @@ export default function ProgressTracker({
       <div style={{ 
         ...cardTitleSizeStyle,
       }}>
-        {title}
+        {l[currentStep]}
       </div>
       <div style={{ 
         display: "flex", 
@@ -156,25 +154,6 @@ function StepCheck({ status }) {
           textAlign: "center"
         }}>
           ✓
-        </span>
-      );
-    case ProgressStatus.CURRENT:
-      return (
-        <span style={{
-          display: "inline-block", 
-          width: 25, 
-          height: 25, 
-          borderRadius: "50%",
-          background: "#fff6dc", 
-          color: "#ffce41", 
-          fontWeight: "bold",
-          fontSize: 18, 
-          verticalAlign: "middle", 
-          lineHeight: "25px",
-          textAlign: "center",
-          border: "2px solid #ffe8b0"
-        }}>
-          L
         </span>
       );
     default:

@@ -182,13 +182,19 @@ function TimeItem({ color, icon, title, doctor, org, time }) {
 }
 
 export default function Dashboard() {
-  const [patientData, setPatientData] = useState(null);
+  const [patientData, setPatientData] = useState(null); // smileTest
+  const [patientInfo, setPatientInfo] = useState(null); // patient
   const [doctorData, setDoctorData] = useState(null);
   const [clinicData, setClinicData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { logout } = useAuth();
   const navigate = useNavigate();
+
+  // 百分比(0-100) → 步骤(1-6)
+  const mapProgressToStep = (progress) => {
+    return progress || 0;
+  };
 
   useEffect(() => {
     // 从sessionStorage获取UUID
@@ -203,6 +209,7 @@ export default function Dashboard() {
             setPatientData(smileTestData);
             setDoctorData(response && response.data ? response.data.doctor || null : null);
             setClinicData(response && response.data ? response.data.clinic || null : null);
+            setPatientInfo(response && response.data ? response.data.patient || null : null);
           } else {
             setError(response.message || '获取患者数据失败');
           }
@@ -269,6 +276,8 @@ export default function Dashboard() {
     );
   }
 
+  const currentStepFromProgress = mapProgressToStep(patientInfo?.treatment_progress);
+
   return (
     <div style={{
       width: "100vw",
@@ -283,7 +292,7 @@ export default function Dashboard() {
             <InfoCard patientData={patientData} doctor={doctorData} clinic={clinicData} />
             <PlanConfirmCard />
           </div>
-          <ProgressTracker currentStep={3} title="等待確認支付" />
+          <ProgressTracker currentStep={currentStepFromProgress} />
         </div>
         <div style={{ flex: 1 }}>
           <ScheduleCard />
