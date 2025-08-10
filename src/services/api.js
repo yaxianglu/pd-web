@@ -233,6 +233,20 @@ class ApiService {
       return { success: false, message: '创建失败，请检查网络连接' };
     }
   }
+
+  // 获取所有医生（去除敏感字段）
+  async getDoctors() {
+    try {
+      const response = await fetch(`${this.baseURL}/auth/doctors`, {
+        method: 'GET',
+        headers: this.getHeaders(true),
+      });
+      return await this.handleResponse(response);
+    } catch (error) {
+      console.error('Failed to fetch doctors:', error);
+      return { success: false, message: '獲取醫師列表失敗' };
+    }
+  }
 }
 
 // 创建单例实例

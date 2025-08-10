@@ -11,26 +11,21 @@ import "./index.scss";
 const gapSize = 16;
 
 // 左侧导航栏组件
-function Sidebar() {
+function Sidebar({ doctors = [] }) {
   return (
     <div className="sidebar">
       <div>
         <div className="system-title">巧醫系統</div>
-        
         {/* 账户列表 */}
         <div className="account-list">
-          {[1, 2, 3, 4, 5].map((item, index) => (
-            <div key={index} className="account-item">
-              账户: 郭博士
+          {doctors.map((doc, index) => (
+            <div key={doc.uuid || index} className="account-item">
+              醫師: {doc.full_name || doc.username}
             </div>
           ))}
         </div>
       </div>
-      
-      {/* 创建账户按钮 */}
-      <button className="create-account-btn">
-        創建帳戶
-      </button>
+      <button className="create-account-btn">創建帳戶</button>
     </div>
   );
 }
@@ -50,7 +45,6 @@ function PatientInfoCard({ patientData }) {
           </div>
         </div>
       </div>
-      
       <div className="patient-meta">
         <div>性别: {patientData?.gender || ''}</div>
         <div>生日: {patientData?.birth_date || ''}</div>
@@ -269,13 +263,20 @@ export default function HospitalDashboard() {
   const [patientData, setPatientData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [doctors, setDoctors] = useState([]);
   const { logout, userInfo } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
+    // 获取医生列表
+    apiService.getDoctors().then(res => {
+      if (res?.success) setDoctors(res.data || []);
+    });
+  }, []);
+
+  useEffect(() => {
     // 模拟获取患者数据
     setLoading(true);
-    // 这里可以调用API获取患者数据
     setTimeout(() => {
       setPatientData({
         full_name: '蒋权',
@@ -286,19 +287,12 @@ export default function HospitalDashboard() {
         birth_date: ''
       });
       setLoading(false);
-    }, 1000);
+    }, 500);
   }, []);
 
   if (loading) {
     return (
-      <div style={{
-        width: "100vw",
-        height: "100vh",
-        background: "#f6f6f7",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-      }}>
+      <div style={{ width: "100vw", height: "100vh", background: "#f6f6f7", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <div>加载中...</div>
       </div>
     );
@@ -306,66 +300,33 @@ export default function HospitalDashboard() {
 
   if (error) {
     return (
-      <div style={{
-        width: "100vw",
-        height: "100vh",
-        background: "#f6f6f7",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        flexDirection: "column",
-        gap: "20px"
-      }}>
+      <div style={{ width: "100vw", height: "100vh", background: "#f6f6f7", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: "20px" }}>
         <div style={{ color: "red" }}>{error}</div>
-        <button 
-          onClick={() => window.location.href = '/login'}
-          style={{
-            background: "#48d2ce",
-            color: "#fff",
-            border: "none",
-            borderRadius: "8px",
-            padding: "10px 20px",
-            cursor: "pointer"
-          }}
-        >
-          返回登录页面
-        </button>
+        <button onClick={() => window.location.href = '/login'} style={{ background: "#48d2ce", color: "#fff", border: "none", borderRadius: "8px", padding: "10px 20px", cursor: "pointer" }}>返回登录页面</button>
       </div>
     );
   }
 
-  // 模拟患者列表数据
   const patients = [patientData, patientData, patientData];
 
   return (
     <div className="hospital-dashboard">
-      <Sidebar />
+      <Sidebar doctors={doctors} />
       <div className="main-content">
-        {/* 顶部问候 */}
         <div className="greeting">
           巧醫 你好
           {userInfo && (
-            <span style={{ 
-              fontSize: "16px", 
-              color: "#666", 
-              marginLeft: "10px",
-              fontWeight: "normal"
-            }}>
+            <span style={{ fontSize: "16px", color: "#666", marginLeft: "10px", fontWeight: "normal" }}>
               ({getRoleName(userInfo.role)} - {userInfo.full_name || userInfo.username})
             </span>
           )}
         </div>
-
-        {/* 主要内容区域 */}
         <div className="content-layout">
-          {/* 左侧内容 */}
           <div className="left-panel">
             <PatientInfoCard patientData={patientData} />
             <TreatmentSummary />
             <PatientTable patients={patients} />
           </div>
-          
-          {/* 右侧状态面板 */}
           <div className="right-panel">
             <TreatmentStatus />
           </div>
