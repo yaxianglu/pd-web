@@ -218,6 +218,21 @@ class ApiService {
       return { success: false, message: '获取数据失败，请检查网络连接' };
     }
   }
+
+  // 同时创建患者与smile_test
+  async createPatientWithSmileTest(data) {
+    try {
+      const response = await fetch(`${this.baseURL}/api/smile-test/with-patient`, {
+        method: 'POST',
+        headers: this.getHeaders(true),
+        body: JSON.stringify(data),
+      });
+      return await this.handleResponse(response);
+    } catch (error) {
+      console.error('Failed to create patient with smile test:', error);
+      return { success: false, message: '创建失败，请检查网络连接' };
+    }
+  }
 }
 
 // 创建单例实例

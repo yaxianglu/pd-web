@@ -60,14 +60,14 @@ export default function PatientInfoList({ patients = [] }) {
               <div className="row-main" onClick={() => onToggle(id)}>
                 <div className="col sequence">{String(index + 1).padStart(2, '0')}</div>
                 <div className="col name">{st.full_name || '—'}</div>
-                <div className="col info" style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
+                <div className="col info" style={{ flex: 1, display: 'flex', alignItems: 'center', marginRight: 12 }}>
                   <ContactInfo list={[
                     { label: '用戶ID', value: pt.uuid || 'N/A' },
                     { label: '性别', value: pt.gender || 'N/A' },
                     { label: '生日', value: pt.birth_date || 'N/A' },
                     { label: '聯繫方式', value: pt.phone || 'N/A' },
                     { label: '信箱', value: pt.email || 'N/A' },
-                  ]} style={{ marginBottom: 0 }} />
+                  ]} style={{ marginBottom: 0, width: '100%' }} />
                 </div>
                 <div className="col action" style={{ marginRight: 12 }}>
                   <span className={`arrow ${isOpen ? 'up' : 'down'}`}>▾</span>

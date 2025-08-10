@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import apiService from '../services/api';
 import BirthdayPicker from '../components/birthday';
+import { useAuth } from '../context/AuthContext';
 
 const CITIES = [
   '台北市','新北市','桃園市','台中市','台南市','高雄市','基隆市','新竹市','嘉義市','新竹縣','苗栗縣','彰化縣','南投縣','雲林縣','嘉義縣','屏東縣','宜蘭縣','花蓮縣','台東縣','澎湖縣','金門縣','連江縣'
 ];
 
 export default function CreatePatientModal({ open, onClose, onCreated }) {
+  const { userInfo } = useAuth();
   const [form, setForm] = useState({
     full_name: '',
     birth_date: '',
@@ -14,7 +16,6 @@ export default function CreatePatientModal({ open, onClose, onCreated }) {
     email: '',
     line_id: '',
     city: '',
-    agree: false,
   });
   const [submitting, setSubmitting] = useState(false);
 
@@ -25,19 +26,14 @@ export default function CreatePatientModal({ open, onClose, onCreated }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.full_name) return alert('請輸入名字');
-    if (!form.agree) return alert('請勾選同意條款');
 
     setSubmitting(true);
     try {
       const payload = {
-        full_name: form.full_name,
-        birth_date: form.birth_date || null,
-        phone: form.phone || null,
-        email: form.email || null,
-        line_id: form.line_id || null,
-        city: form.city || null,
+        ...form,
+        assigned_doctor_uuid: userInfo?.uuid,
       };
-      const res = await apiService.post('/api/s mile-test', payload, true);
+      const res = await apiService.createPatientWithSmileTest(payload);
       if (res?.success) {
         alert('創建成功');
         onCreated && onCreated(res.data);
