@@ -30,4 +30,16 @@ export const contactInfoStyle = {
   fontSize: 14, color: "#888",
   flex: 1,
   textAlign: "left",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
+  maxWidth: "100%",
+  width: "100%",
+  display: "inline-block",
+  verticalAlign: "middle",
+  wordBreak: "break-all",
+  cursor: "pointer",
+  '@media (max-width: 768px)': {
+    fontSize: 12,
+  }
 }

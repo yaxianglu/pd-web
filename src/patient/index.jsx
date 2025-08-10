@@ -10,19 +10,23 @@ import png13 from "../asserts/13.png";
 
 const gapSize = 16;
 
-function InfoCard({ patientData }) {
+function InfoCard({ patientData, doctor, clinic }) {
   return (
-    <div style={{ background: "#fff", borderRadius: "18px", padding: "30px", boxSizing: "border-box", marginBottom: gapSize }}>
+    <div style={{ background: "#fff", borderRadius: "18px", padding: "30px", boxSizing: "border-box", marginBottom: gapSize, flex: 3, overflow: 'hidden' }}>
       <div style={{ ...cardTitleSizeStyle }}>
         {patientData?.full_name || '患者'}　您好
       </div>
       <ContactInfo 
-        id={patientData?.test_id || 'N/A'} 
+        id={patientData?.uuid || 'N/A'} 
         phone={patientData?.phone || 'N/A'} 
         email={patientData?.email || 'N/A'} 
       />
       <hr style={{ border: "none", borderTop: "1.5px solid #e3eaf0", margin: "18px 0" }} />
-      <InfoCardComponent />
+      <InfoCardComponent 
+        doctorName={doctor?.full_name}
+        clinicAddress={clinic?.address}
+        contact={doctor?.phone || clinic?.phone || patientData?.phone}
+      />
     </div>
   );
 }
@@ -179,6 +183,8 @@ function TimeItem({ color, icon, title, doctor, org, time }) {
 
 export default function Dashboard() {
   const [patientData, setPatientData] = useState(null);
+  const [doctorData, setDoctorData] = useState(null);
+  const [clinicData, setClinicData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { logout } = useAuth();
@@ -195,6 +201,8 @@ export default function Dashboard() {
           if (response.success) {
             const smileTestData = (response && response.data && response.data.smileTest) ? response.data.smileTest : (response && response.data ? response.data : null);
             setPatientData(smileTestData);
+            setDoctorData(response && response.data ? response.data.doctor || null : null);
+            setClinicData(response && response.data ? response.data.clinic || null : null);
           } else {
             setError(response.message || '获取患者数据失败');
           }
@@ -272,7 +280,7 @@ export default function Dashboard() {
       <div style={{ display: "flex", gap: gapSize, alignItems: "flex-start" }}>
         <div style={{ flex: 2 }}>
           <div style={{ display: "flex", gap: gapSize }}>
-            <InfoCard patientData={patientData} />
+            <InfoCard patientData={patientData} doctor={doctorData} clinic={clinicData} />
             <PlanConfirmCard />
           </div>
           <ProgressTracker currentStep={3} title="等待確認支付" />

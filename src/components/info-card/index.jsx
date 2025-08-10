@@ -1,4 +1,4 @@
-export default function InfoCardComponent() {
+export default function InfoCardComponent({ doctorName, clinicAddress, contact }) {
   return (
     <div style={{ display: "flex", gap: 22 }}>
       <div style={{
@@ -6,9 +6,9 @@ export default function InfoCardComponent() {
         color: "#fff", padding: 12, fontSize: 20
       }}>
         <div style={{ marginBottom: 12, borderBottom: "1px solid #fff", fontSize: 18, paddingBottom: 8 }}>主治醫師</div>
-        <div style={{ fontSize: 14, margin: "10px 0 8px", textAlign: "left" }}>姓名：</div>
-        <div style={{ fontSize: 14, margin: "8px 0", textAlign: "left" }}>診所地址：</div>
-        <div style={{ fontSize: 14, margin: "8px 0", textAlign: "left" }}>聯繫方式：</div>
+        <div style={{ fontSize: 14, margin: "10px 0 8px", textAlign: "left" }}>姓名：{doctorName || 'N/A'}</div>
+        <div style={{ fontSize: 14, margin: "8px 0", textAlign: "left" }}>診所地址：{clinicAddress || 'N/A'}</div>
+        <div style={{ fontSize: 14, margin: "8px 0", textAlign: "left" }}>聯繫方式：{contact || 'N/A'}</div>
       </div>
       {/* 治療方案 */}
       <div style={{
