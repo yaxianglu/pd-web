@@ -9,10 +9,10 @@ import TreatmentFlow from "../components/treatment-flow";
 import apiService from "../services/api";
 import PatientInfoList from "./list";
 import Logout from "../components/logout/index";
+import CreatePatientModal from "./CreatePatientModal";
 import "./index.scss";
 
 const gapSize = 16;
-
 
 // 用户信息卡片
 function UserInfoCard({ userInfo }) {
@@ -40,16 +40,15 @@ function UserInfoCard({ userInfo }) {
   );
 }
 
-
-
 export default function DoctorDashboard() {
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
   const { logout, userInfo } = useAuth();
   const navigate = useNavigate();
 
-  useEffect(() => {
+  const load = () => {
     const uuidFromUser = userInfo?.uuid || '550e8400-e29b-41d4-a716-446655440001';
     setLoading(true);
     apiService.getPatientsByDoctor({ uuid: uuidFromUser })
@@ -65,7 +64,9 @@ export default function DoctorDashboard() {
         setError('網路錯誤，請稍後再試');
       })
       .finally(() => setLoading(false));
-  }, [userInfo]);
+  };
+
+  useEffect(() => { load(); }, [userInfo]);
 
   if (loading) {
     return (
@@ -94,9 +95,10 @@ export default function DoctorDashboard() {
         {/* 患者列表 */}
         <PatientInfoList patients={patients} />
         <div className="footer">
-          <button className="btn primary">創建患者資料卡</button>
+          <button className="btn primary" onClick={() => setModalOpen(true)}>創建患者資料卡</button>
         </div>
       </div>
+      <CreatePatientModal open={modalOpen} onClose={() => setModalOpen(false)} onCreated={() => { setModalOpen(false); load(); }} />
     </div>
   );
 }

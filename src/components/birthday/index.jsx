@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './index.scss';
 
-const BirthdayPicker = ({ value, onChange, placeholder = "生日" }) => {
+const BirthdayPicker = ({ value, onChange, placeholder = "生日", style = {}, valueStyle = {} }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedYear, setSelectedYear] = useState('');
   const [selectedMonth, setSelectedMonth] = useState('');
@@ -135,8 +135,9 @@ const BirthdayPicker = ({ value, onChange, placeholder = "生日" }) => {
       <div 
         className={`birthday-picker-input ${isOpen ? 'focused' : ''}`}
         onClick={toggleDropdown}
+        style={{ ...style }}
       >
-        <span className="birthday-picker-value">
+        <span className="birthday-picker-value" style={{ ...valueStyle }}>
           {displayValue}
         </span>
         <span className="birthday-picker-arrow"></span>
