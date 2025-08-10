@@ -18,6 +18,9 @@ export const ROLE_ROUTES = {
   // 医生 - 医生/诊所页面
   doctor: '/doctor',
   
+  // 医院 - 医院页面
+  hospital: '/hospital',
+  
   // 销售 - 业务端页面
   sales: '/sales'
 };
@@ -30,6 +33,7 @@ export const ROLE_NAMES = {
   operator: '操作员',
   patient: '患者',
   doctor: '医生',
+  hospital: '医院',
   sales: '销售'
 };
 
@@ -41,6 +45,7 @@ export const ROLE_DESCRIPTIONS = {
   operator: '拥有基本操作权限，可以查看合作伙伴信息',
   patient: '患者用户，可以查看自己的治疗信息',
   doctor: '医生用户，可以管理患者信息和治疗进度',
+  hospital: '医院用户，可以管理医院信息与医生/患者数据',
   sales: '销售用户，可以管理业务端数据和医生/诊所信息'
 };
 
@@ -54,10 +59,11 @@ export const getRouteByRole = (role, username = '') => {
   return ROLE_ROUTES[role] || '/partners'; // 默认跳转到合作伙伴页面
 };
 
-// 根据角色获取显示名称
-export const getRoleName = (role) => {
+// 返回角色显示名称（兼容旧方法名）
+export const getRouteName = (role) => {
   return ROLE_NAMES[role] || '未知角色';
 };
+export const getRoleName = (role) => getRouteName(role);
 
 // 根据角色获取描述
 export const getRoleDescription = (role) => {
