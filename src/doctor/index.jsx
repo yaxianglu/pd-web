@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { getRoleName } from "../contants/roleRoutes";
-import DateSelector from "../components/date-selector";
-import AppointmentCard from "../components/appointment-card";
-import StatusCard from "../components/status-card";
-import TreatmentFlow from "../components/treatment-flow";
 import apiService from "../services/api";
 import PatientInfoList from "./list";
 import Logout from "../components/logout/index";
 import CreatePatientModal from "./CreatePatientModal";
 import "./index.scss";
 
-const gapSize = 16;
 
 // 用户信息卡片
 function UserInfoCard({ userInfo }) {
@@ -40,7 +34,7 @@ function UserInfoCard({ userInfo }) {
   );
 }
 
-export default function DoctorDashboard() {
+export default function DoctorDashboard({ initialPatients = null, doctorUser = null }) {
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -48,8 +42,10 @@ export default function DoctorDashboard() {
   const { logout, userInfo } = useAuth();
   const navigate = useNavigate();
 
+  const displayUser = doctorUser || userInfo;
+
   const load = () => {
-    const uuidFromUser = userInfo?.uuid || '550e8400-e29b-41d4-a716-446655440001';
+    const uuidFromUser = displayUser?.uuid || userInfo?.uuid || '550e8400-e29b-41d4-a716-446655440001';
     setLoading(true);
     apiService.getPatientsByDoctor({ uuid: uuidFromUser })
       .then(res => {
@@ -66,7 +62,15 @@ export default function DoctorDashboard() {
       .finally(() => setLoading(false));
   };
 
-  useEffect(() => { load(); }, [userInfo]);
+  useEffect(() => {
+    if (initialPatients && Array.isArray(initialPatients)) {
+      setPatients(initialPatients);
+      setLoading(false);
+      return;
+    }
+    load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [displayUser?.uuid]);
 
   if (loading) {
     return (
@@ -91,14 +95,14 @@ export default function DoctorDashboard() {
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 8 }}>
         </div>
         {/* 用户信息 */}
-        <UserInfoCard userInfo={userInfo} />
+        <UserInfoCard userInfo={displayUser} />
         {/* 患者列表 */}
         <PatientInfoList patients={patients} />
         <div className="footer">
           <button className="btn primary" onClick={() => setModalOpen(true)}>創建患者資料卡</button>
         </div>
       </div>
-      <CreatePatientModal open={modalOpen} onClose={() => setModalOpen(false)} onCreated={() => { setModalOpen(false); load(); }} />
+      <CreatePatientModal open={modalOpen} onClose={() => setModalOpen(false)} onCreated={() => { setModalOpen(false); if (!initialPatients) { load(); } }} />
     </div>
   );
 }
