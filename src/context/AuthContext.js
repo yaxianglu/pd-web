@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null);
   const [token, setToken] = useState(null);
   const [refreshToken, setRefreshToken] = useState(null);
+  const [isInitializing, setIsInitializing] = useState(true);
 
   const login = (type, info) => {
     setIsAuthenticated(true);
@@ -145,32 +146,42 @@ export const AuthProvider = ({ children }) => {
 
   // 初始化时检查localStorage中的登录状态
   useEffect(() => {
-    const savedAuth = localStorage.getItem('isAuthenticated');
-    const savedUserType = localStorage.getItem('userType');
-    const savedUserInfo = localStorage.getItem('user_info');
-    const savedToken = localStorage.getItem('auth_token');
-    const savedRefreshToken = localStorage.getItem('refresh_token');
-    
-    if (savedAuth === 'true' && savedToken) {
-      setIsAuthenticated(true);
-      setUserType(savedUserType);
-      setUserInfo(savedUserInfo ? JSON.parse(savedUserInfo) : null);
-      setToken(savedToken);
-      setRefreshToken(savedRefreshToken);
+    const init = async () => {
+      const savedAuth = localStorage.getItem('isAuthenticated');
+      const savedUserType = localStorage.getItem('userType');
+      const savedUserInfo = localStorage.getItem('user_info');
+      const savedToken = localStorage.getItem('auth_token');
+      const savedRefreshToken = localStorage.getItem('refresh_token');
       
-      // 验证token有效性
-      verifyToken().then(isValid => {
-        if (!isValid) {
-          // 如果token无效，尝试刷新
-          refreshAuthToken().then(refreshSuccess => {
-            if (!refreshSuccess) {
-              // 如果刷新也失败，清除登录状态
-              logout();
-            }
-          });
+      if (savedAuth === 'true') {
+        // 患者：无 token 也允许恢复
+        if (savedUserType === 'patient') {
+          setIsAuthenticated(true);
+          setUserType('patient');
+          setUserInfo(savedUserInfo ? JSON.parse(savedUserInfo) : null);
+          setToken(null);
+          setRefreshToken(null);
+          setIsInitializing(false);
+          return;
         }
-      });
-    }
+        // 员工：信任本地状态，优先恢复，再在后台尝试刷新
+        setIsAuthenticated(true);
+        setUserType(savedUserType);
+        setUserInfo(savedUserInfo ? JSON.parse(savedUserInfo) : null);
+        if (savedToken) setToken(savedToken);
+        if (savedRefreshToken) setRefreshToken(savedRefreshToken);
+
+        // 后台静默刷新（失败也不登出）
+        try {
+          await refreshAuthToken();
+        } catch (e) {
+          // 忽略
+        }
+      }
+      setIsInitializing(false);
+    };
+
+    init();
   }, []);
 
   const value = {
@@ -182,7 +193,8 @@ export const AuthProvider = ({ children }) => {
     logout,
     patientLogout,
     refreshAuthToken,
-    verifyToken
+    verifyToken,
+    isInitializing
   };
 
   return (

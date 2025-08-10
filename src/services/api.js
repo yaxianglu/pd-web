@@ -197,6 +197,27 @@ class ApiService {
       return { success: false, message: '获取数据失败，请检查网络连接' };
     }
   }
+
+  // 根据医生信息获取患者列表（与 uuid 接口结构一致的数组）
+  async getPatientsByDoctor({ uuid, email, username }) {
+    const params = new URLSearchParams();
+    if (uuid) params.append('uuid', uuid);
+    if (!uuid && email) params.append('email', email);
+    if (!uuid && !email && username) params.append('username', username);
+
+    try {
+      const response = await fetch(`${this.baseURL}/api/smile-test/by-doctor?${params.toString()}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      return await response.json();
+    } catch (error) {
+      console.error('Failed to get patients by doctor:', error);
+      return { success: false, message: '获取数据失败，请检查网络连接' };
+    }
+  }
 }
 
 // 创建单例实例
