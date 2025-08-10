@@ -21,10 +21,95 @@ function InfoCard({ patientData }) {
         phone={patientData?.phone || 'N/A'} 
         email={patientData?.email || 'N/A'} 
       />
+      
+      {/* 医生信息展示 */}
+      {patientData?.doctor && (
+        <div style={{ marginTop: "20px" }}>
+          <hr style={{ border: "none", borderTop: "1.5px solid #e3eaf0", margin: "18px 0" }} />
+          <div style={{ fontSize: "16px", fontWeight: "600", color: "#333", marginBottom: "12px" }}>
+            👨‍⚕️ 主治医师
+          </div>
+          <div style={{ 
+            background: "#f8f9fa", 
+            borderRadius: "12px", 
+            padding: "16px",
+            border: "1px solid #e9ecef"
+          }}>
+            <div style={{ fontSize: "18px", fontWeight: "600", color: "#2c3e50", marginBottom: "8px" }}>
+              {patientData.doctor.full_name}
+            </div>
+            <div style={{ fontSize: "14px", color: "#6c757d", marginBottom: "6px" }}>
+              {patientData.doctor.position || '主治医师'}
+            </div>
+            {patientData.doctor.phone && (
+              <div style={{ fontSize: "14px", color: "#6c757d", marginBottom: "6px" }}>
+                📞 {patientData.doctor.phone}
+              </div>
+            )}
+            {patientData.doctor.email && (
+              <div style={{ fontSize: "14px", color: "#6c757d" }}>
+                ✉️ {patientData.doctor.email}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* 诊所信息展示 */}
+      {patientData?.clinic && (
+        <div style={{ marginTop: "20px" }}>
+          <hr style={{ border: "none", borderTop: "1.5px solid #e3eaf0", margin: "18px 0" }} />
+          <div style={{ fontSize: "16px", fontWeight: "600", color: "#333", marginBottom: "12px" }}>
+            🏥 就诊诊所
+          </div>
+          <div style={{ 
+            background: "#f8f9fa", 
+            borderRadius: "12px", 
+            padding: "16px",
+            border: "1px solid #e9ecef"
+          }}>
+            <div style={{ fontSize: "18px", fontWeight: "600", color: "#2c3e50", marginBottom: "8px" }}>
+              {patientData.clinic.clinic_name}
+            </div>
+            <div style={{ fontSize: "14px", color: "#6c757d", marginBottom: "6px" }}>
+              📍 {patientData.clinic.city} {patientData.clinic.district}
+            </div>
+            {patientData.clinic.address && (
+              <div style={{ fontSize: "14px", color: "#6c757d", marginBottom: "6px" }}>
+                🏠 {patientData.clinic.address}
+              </div>
+            )}
+            {patientData.clinic.phone && (
+              <div style={{ fontSize: "14px", color: "#6c757d", marginBottom: "6px" }}>
+                📞 {patientData.clinic.phone}
+              </div>
+            )}
+            {patientData.clinic.clinic_type && (
+              <div style={{ fontSize: "14px", color: "#6c757d" }}>
+                🏷️ {getClinicTypeText(patientData.clinic.clinic_type)}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       <hr style={{ border: "none", borderTop: "1.5px solid #e3eaf0", margin: "18px 0" }} />
       <InfoCardComponent />
     </div>
   );
+}
+
+// 诊所类型中文映射
+function getClinicTypeText(type) {
+  const typeMap = {
+    'general': '综合牙科',
+    'specialized': '专科牙科',
+    'cosmetic': '美容牙科',
+    'orthodontIC': '正畸专科',
+    'pediatric': '儿童牙科',
+    'other': '其他'
+  };
+  return typeMap[type] || type;
 }
 
 
@@ -58,7 +143,79 @@ function PlanConfirmCard() {
   );
 }
 
-function ScheduleCard() {
+function ScheduleCard({ patientData }) {
+  // 生成模拟的日程数据，基于真实的医生和诊所信息
+  const generateScheduleItems = () => {
+    const items = [];
+    
+    if (patientData?.doctor) {
+      items.push({
+        color: "#ffe7cf",
+        icon: "🦷",
+        title: "牙科检查",
+        doctor: `Dr. ${patientData.doctor.full_name}`,
+        org: patientData.clinic?.clinic_name || "诊所",
+        time: "8:00 - 8:30"
+      });
+    }
+    
+    if (patientData?.clinic?.clinic_type === 'orthodontIC') {
+      items.push({
+        color: "#dbf6f6",
+        icon: "🦷",
+        title: "正畸咨询",
+        doctor: `Dr. ${patientData.doctor?.full_name || '专家'}`,
+        org: patientData.clinic.clinic_name,
+        time: "9:00 - 9:30"
+      });
+    }
+    
+    if (patientData?.clinic?.facility_level === 'premium' || patientData?.clinic?.facility_level === 'luxury') {
+      items.push({
+        color: "#fdebf3",
+        icon: "💻",
+        title: "数字化X光",
+        doctor: `Dr. ${patientData.doctor?.full_name || '技师'}`,
+        org: patientData.clinic.clinic_name,
+        time: "18:00 - 18:30"
+      });
+    }
+    
+    // 如果没有真实数据，使用默认数据
+    if (items.length === 0) {
+      items.push(
+        {
+          color: "#ffe7cf",
+          icon: "🦷",
+          title: "牙科检查",
+          doctor: "Dr. 张美华",
+          org: "台北微笑牙医诊所",
+          time: "8:00 - 8:30"
+        },
+        {
+          color: "#dbf6f6",
+          icon: "🦷",
+          title: "正畸咨询",
+          doctor: "Dr. 李正畸",
+          org: "高雄正畸专科诊所",
+          time: "9:00 - 9:30"
+        },
+        {
+          color: "#fdebf3",
+          icon: "💻",
+          title: "数字化X光",
+          doctor: "Dr. 王小明",
+          org: "台中儿童牙医诊所",
+          time: "18:00 - 18:30"
+        }
+      );
+    }
+    
+    return items;
+  };
+
+  const scheduleItems = generateScheduleItems();
+
   return (
     <div style={{
       background: "#fff", borderRadius: "18px", height: "97%",
@@ -84,30 +241,17 @@ function ScheduleCard() {
         </div>
         {/* 日程列表 */}
         <div style={{margin:"8px 0 20px 0"}}>
-          <TimeItem
-            color="#ffe7cf"
-            icon="🦷"
-            title="Dentist"
-            doctor="Dr. Dianne Fisher"
-            org="CityMed Clinic"
-            time="8:00 - 8:30"
-          />
-          <TimeItem
-            color="#dbf6f6"
-            icon="🧠"
-            title="Neurologist"
-            doctor="Dr. Paul Collins"
-            org="Huston Hospital"
-            time="9:00 - 9:30"
-          />
-          <TimeItem
-            color="#fdebf3"
-            icon="💻"
-            title="Digital X-Ray"
-            doctor="Dr. Betty Woods"
-            org="CityMed Clinic"
-            time="18:00 - 18:30"
-          />
+          {scheduleItems.map((item, index) => (
+            <TimeItem
+              key={index}
+              color={item.color}
+              icon={item.icon}
+              title={item.title}
+              doctor={item.doctor}
+              org={item.org}
+              time={item.time}
+            />
+          ))}
         </div>
       </div>
       {/* 二维码、上传下载 */}
@@ -190,10 +334,15 @@ export default function Dashboard() {
     
     if (uuid) {
       setLoading(true);
-      apiService.getSmileTestByUuid(uuid)
+      // 使用新的API接口获取包含医生和诊所信息的完整数据
+      apiService.getSmileTestByUuidWithRelations(uuid)
         .then(response => {
           if (response.success) {
             setPatientData(response.data);
+            // 调试信息
+            console.log('API返回的完整数据:', response.data);
+            console.log('医生信息:', response.data.doctor);
+            console.log('诊所信息:', response.data.clinic);
           } else {
             setError(response.message || '获取患者数据失败');
           }
@@ -277,7 +426,7 @@ export default function Dashboard() {
           <ProgressTracker currentStep={3} title="等待確認支付" />
         </div>
         <div style={{ flex: 1 }}>
-          <ScheduleCard />
+          <ScheduleCard patientData={patientData} />
         </div>
       </div>
       <div style={{
