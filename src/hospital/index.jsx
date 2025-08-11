@@ -15,7 +15,11 @@ function Sidebar({ doctors = [], onSelect, activeUuid, onCreate }) {
       <div>
         <div className="account-list">
           {doctors.map((doc) => (
-            <div key={doc.uuid} className="account-item" onClick={() => onSelect(doc)} style={{ background: activeUuid === doc.uuid ? 'rgba(255,255,255,.2)' : undefined }}>
+            <div
+              key={doc.uuid}
+              className={`account-item ${activeUuid === doc.uuid ? 'active' : ''}`}
+              onClick={() => onSelect(doc)}
+            >
               {doc.full_name || doc.username}
             </div>
           ))}
