@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+// import { useNavigate } from 'react-router-dom';
+// import { useAuth } from '../context/AuthContext';
+import Logout from '../components/logout';
 import './index.scss';
 import apiService from '../services/api';
-import { message, Table, Input, Select, Tag, Space, Button, Modal } from 'antd';
-import { SearchOutlined, EyeOutlined, ReloadOutlined, LogoutOutlined } from '@ant-design/icons';
+import { message, Input, Select, Tag, Button, Modal } from 'antd';
+import { SearchOutlined, EyeOutlined, ReloadOutlined } from '@ant-design/icons';
 
 const { Search } = Input;
 const { Option } = Select;
 
 export default function Partners() {
-  const navigate = useNavigate();
-  const { logout, userType, userInfo } = useAuth();
+  // const navigate = useNavigate();
+  // const { logout, userType, userInfo } = useAuth();
   const [partners, setPartners] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [selectedPartner, setSelectedPartner] = useState(null);
   const [detailModalVisible, setDetailModalVisible] = useState(false);
+  const [expanded, setExpanded] = useState({});
 
   // 获取合作夥伴列表
   const fetchPartners = async () => {
@@ -79,95 +81,9 @@ export default function Partners() {
     }
   };
 
-  // 处理登出
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-    message.success('已成功登出');
-  };
+  const onToggle = (id) => setExpanded(prev => ({ ...prev, [id]: !prev[id] }));
 
-  // 表格列定义
-  const columns = [
-    {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id',
-      width: 80,
-    },
-    {
-      title: '姓名',
-      dataIndex: 'full_name',
-      key: 'full_name',
-      width: 120,
-    },
-    {
-      title: '诊所名称',
-      dataIndex: 'clinic_name',
-      key: 'clinic_name',
-      width: 150,
-    },
-    {
-      title: '电话',
-      dataIndex: 'phone',
-      key: 'phone',
-      width: 130,
-    },
-    {
-      title: '邮箱',
-      dataIndex: 'email',
-      key: 'email',
-      width: 180,
-    },
-    {
-      title: '经验年数',
-      dataIndex: 'years_experience',
-      key: 'years_experience',
-      width: 100,
-      render: (text) => text ? `${text}年` : '-',
-    },
-    {
-      title: '治疗数量',
-      dataIndex: 'treatment_count',
-      key: 'treatment_count',
-      width: 100,
-      render: (text) => text || '-',
-    },
-    {
-      title: '状态',
-      dataIndex: 'status',
-      key: 'status',
-      width: 100,
-      render: (status) => (
-        <Tag color={getStatusColor(status)}>
-          {getStatusText(status)}
-        </Tag>
-      ),
-    },
-    {
-      title: '注册时间',
-      dataIndex: 'created_at',
-      key: 'created_at',
-      width: 150,
-      render: (text) => text ? new Date(text).toLocaleString('zh-TW') : '-',
-    },
-    {
-      title: '操作',
-      key: 'action',
-      width: 100,
-      render: (_, record) => (
-        <Space size="middle">
-          <Button
-            type="link"
-            icon={<EyeOutlined />}
-            onClick={() => showDetail(record)}
-            size="small"
-          >
-            查看
-          </Button>
-        </Space>
-      ),
-    },
-  ];
+  // 表格列改为 market 风格的表头网格在样式中定义
 
   // 过滤数据
   const filteredPartners = partners.filter(partner => {
@@ -183,80 +99,48 @@ export default function Partners() {
   });
 
   return (
-    <div className="partners-page">
-      {/* 用户信息栏 */}
-      <div className="user-info-bar" style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: '12px 20px',
-        backgroundColor: '#f5f5f5',
-        borderBottom: '1px solid #e8e8e8',
-        marginBottom: '20px'
-      }}>
-        <div style={{ fontSize: '14px', color: '#666' }}>
-          欢迎，{userType === 'staff' ? '工作人员' : '患者'} 
-          {userInfo && (userInfo.username || userInfo.account)}
+    <div className="partners-dashboard">
+      <div className="card">
+        <div className="market-header">
+          <div className="title">合作夥伴</div>
+          <div className="biz-id"><Logout /></div>
         </div>
-        <Button
-          type="primary"
-          danger
-          icon={<LogoutOutlined />}
-          onClick={handleLogout}
-          size="small"
-        >
-          登出
-        </Button>
-      </div>
+        <div className="table">
+          <div className="thead">
+            <div className="th id">ID</div>
+            <div className="th name">姓名</div>
+            <div className="th clinic">诊所名称</div>
+            <div className="th phone">电话</div>
+            <div className="th email">邮箱</div>
+            <div className="th status">状态</div>
+            <div className="th created">注册时间</div>
+            <div className="th action">操作</div>
+            <div className="th caret" />
+          </div>
 
-      <div className="partners-filters">
-        <div className="filters-left">
-          <Search
-            placeholder="搜索姓名、诊所名称、电话或邮箱"
-            allowClear
-            style={{ width: 300 }}
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            onSearch={setSearchText}
-          />
-          <Select
-            value={statusFilter}
-            onChange={setStatusFilter}
-            style={{ width: 120, marginLeft: 16 }}
-          >
-            <Option value="all">全部状态</Option>
-            <Option value="active">活跃</Option>
-            <Option value="pending">待审核</Option>
-            <Option value="inactive">非活跃</Option>
-            <Option value="suspended">已暂停</Option>
-          </Select>
-        </div>
-        <div className="filters-right">
-          <Button
-            icon={<ReloadOutlined />}
-            onClick={fetchPartners}
-            loading={loading}
-          >
-            刷新
-          </Button>
-        </div>
-      </div>
+          <div className="tbody">
+            {filteredPartners.map((p) => {
+              const isOpen = !!expanded[p.id];
+              return (
+                <div key={p.id} className={`tr ${isOpen ? 'open' : ''}`}>
+                  <div className="row-main">
+                    <div className="td id">{p.id}</div>
+                    <div className="td name">{p.full_name || '-'}</div>
+                    <div className="td clinic">{p.clinic_name || '-'}</div>
+                    <div className="td phone">{p.phone || '-'}</div>
+                    <div className="td email">{p.email || '-'}</div>
+                    <div className="td status"><Tag color={getStatusColor(p.status)}>{getStatusText(p.status)}</Tag></div>
+                    <div className="td created">{p.created_at ? new Date(p.created_at).toLocaleString('zh-TW') : '-'}</div>
+                    <div className="td action">
+                      <Button type="link" icon={<EyeOutlined />} size="small" onClick={() => showDetail(p)}>查看</Button>
+                    </div>
+                  </div>
 
-      <div className="partners-table">
-        <Table
-          columns={columns}
-          dataSource={filteredPartners}
-          rowKey="id"
-          loading={loading}
-          pagination={{
-            showSizeChanger: true,
-            showQuickJumper: true,
-            showTotal: (total, range) => `第 ${range[0]}-${range[1]} 条，共 ${total} 条`,
-            pageSize: 10,
-            pageSizeOptions: ['10', '20', '50', '100'],
-          }}
-          scroll={{ x: 1200 }}
-        />
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
       {/* 详情模态框 */}
@@ -325,20 +209,6 @@ export default function Partners() {
                 </div>
               </div>
             )}
-
-            <div className="detail-section">
-              <h3>时间信息</h3>
-              <div className="detail-grid">
-                <div className="detail-item">
-                  <label>注册时间：</label>
-                  <span>{selectedPartner.created_at ? new Date(selectedPartner.created_at).toLocaleString('zh-TW') : '-'}</span>
-                </div>
-                <div className="detail-item">
-                  <label>更新时间：</label>
-                  <span>{selectedPartner.updated_at ? new Date(selectedPartner.updated_at).toLocaleString('zh-TW') : '-'}</span>
-                </div>
-              </div>
-            </div>
           </div>
         )}
       </Modal>
