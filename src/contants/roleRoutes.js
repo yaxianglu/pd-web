@@ -22,7 +22,10 @@ export const ROLE_ROUTES = {
   hospital: '/hospital',
   
   // 销售 - 业务端页面
-  sales: '/sales'
+  sales: '/sales',
+
+  // 市场 - 市场端页面
+  market: '/market'
 };
 
 // 角色显示名称
@@ -34,7 +37,8 @@ export const ROLE_NAMES = {
   patient: '患者',
   doctor: '医生',
   hospital: '医院',
-  sales: '销售'
+  sales: '销售',
+  market: '市场'
 };
 
 // 角色权限描述
@@ -46,7 +50,8 @@ export const ROLE_DESCRIPTIONS = {
   patient: '患者用户，可以查看自己的治疗信息',
   doctor: '医生用户，可以管理患者信息和治疗进度',
   hospital: '医院用户，可以管理医院信息与医生/患者数据',
-  sales: '销售用户，可以管理业务端数据和医生/诊所信息'
+  sales: '销售用户，可以管理业务端数据和医生/诊所信息',
+  market: '市场用户，可以查看并管理市场相关数据'
 };
 
 // 根据角色获取路由
@@ -54,6 +59,9 @@ export const getRouteByRole = (role, username = '') => {
   // 特殊处理：sales_user 用户跳转到 sales 页面
   if (username === 'sales_user') {
     return '/sales';
+  }
+  if (role === 'market') {
+    return '/market';
   }
   
   return ROLE_ROUTES[role] || '/partners'; // 默认跳转到合作伙伴页面

@@ -20,6 +20,7 @@ import HospitalDashboard from './hospital';
 import DoctorDashboard from './doctor';
 import SalesDashboard from './sales';
 import AdminDashboard from './admin';
+import MarketDashboard from './market';
 
 function App() {
   return (
@@ -62,6 +63,11 @@ function App() {
           <Route path="/sales" element={
             <ProtectedRoute>
               <SalesDashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/market" element={
+            <ProtectedRoute>
+              <MarketDashboard />
             </ProtectedRoute>
           } />
           <Route path="/admin" element={
