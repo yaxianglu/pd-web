@@ -198,6 +198,21 @@ class ApiService {
     }
   }
 
+  // 更新 smile_test 的備註(bio)
+  async updateSmileTestBio(uuid, bio) {
+    try {
+      const response = await fetch(`${this.baseURL}/api/smile-test/uuid/${uuid}/bio`, {
+        method: 'PUT',
+        headers: this.getHeaders(true),
+        body: JSON.stringify({ bio }),
+      });
+      return await this.handleResponse(response);
+    } catch (error) {
+      console.error('Failed to update smile test bio:', error);
+      return { success: false, message: '更新失敗' };
+    }
+  }
+
   // 獲取所有微笑測試（僅未刪除）
   async getAllSmileTests() {
     try {
@@ -247,6 +262,21 @@ class ApiService {
     } catch (error) {
       console.error('Failed to create patient with smile test:', error);
       return { success: false, message: '创建失败，请检查网络连接' };
+    }
+  }
+
+  // 仅创建患者并把现有 smile_test 记录的 patient_uuid 指向它
+  async bindExistingSmileTest({ smile_uuid, assigned_doctor_uuid }) {
+    try {
+      const response = await fetch(`${this.baseURL}/api/smile-test/bind-existing`, {
+        method: 'POST',
+        headers: this.getHeaders(true),
+        body: JSON.stringify({ smile_uuid, assigned_doctor_uuid }),
+      });
+      return await this.handleResponse(response);
+    } catch (error) {
+      console.error('Failed to bind existing smile test:', error);
+      return { success: false, message: '綁定失敗' };
     }
   }
 

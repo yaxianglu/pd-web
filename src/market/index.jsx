@@ -40,8 +40,9 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
             patientName: s.full_name || '—',
             region: s.city || '—',
             downloadUrl: '#',
-            note: '',
+            considerations: s.considerations || '',
             statusText: s?.patient_uuid || '創建患者信息',
+            smileUuid: s.uuid,
           }));
           setItems(mapped);
         } else {
@@ -113,7 +114,24 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
 
                   {isOpen && (
                     <div className="row-expand" onClick={(e) => e.stopPropagation()}>
-                      <div className="note">{row.note || '—'}</div>
+                      <textarea
+                        className="note-input"
+                        placeholder="備註"
+                        defaultValue={row.considerations || ''}
+                        onBlur={async (e) => {
+                          const text = e.target.value || '';
+                          if (!row.smileUuid) return;
+                          const r = await apiService.updateSmileTestBio(row.smileUuid, text);
+                          if (r?.success) {
+                            message.success('已保存');
+                            setItems((prev) => prev.map(it => it.id === row.id ? { ...it, considerations: text } : it));
+                          } else {
+                            message.error(r?.message || '保存失敗');
+                          }
+                        }}
+                        rows={3}
+                        style={{ width: '100%' }}
+                      />
                     </div>
                   )}
                 </div>
@@ -153,15 +171,9 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
             city: s.city,
             assigned_doctor_uuid: selectedDoctorUuid,
           };
-          const res = await apiService.createPatientWithSmileTest(payload);
+          const res = await apiService.bindExistingSmileTest({ smile_uuid: targetSmileUuid, assigned_doctor_uuid: selectedDoctorUuid });
           if (res?.success) {
             message.success('創建成功');
-            // 将当条 smile_test 的 patient_uuid 标记为新创建患者
-            try {
-              if (res.data?.smileTest?.uuid && res.data?.patient?.uuid) {
-                await apiService.put(`/api/smile-test/uuid/${res.data.smileTest.uuid}`, { patient_uuid: res.data.patient.uuid });
-              }
-            } catch {}
             setCreateOpen(false);
             setSelectedDoctorUuid('');
             // 重新拉取列表
