@@ -2,12 +2,22 @@ import React, { useState, useCallback, useEffect } from 'react';
 import Logout from '../components/logout';
 import './index.scss';
 import apiService from '../services/api';
-import { Modal, Select, message } from 'antd';
+import { Modal, Select, message, Tabs } from 'antd';
+import Partners from '../partners';
 
-function MarketHeader() {
+function MarketHeader({ activeTab, onTabChange }) {
   return (
     <div className="market-header">
-      <div className="title">微笑測試</div>
+      <div className="title" style={{ width: '100%' }}>
+        <Tabs
+          items={[
+            { key: 'smile', label: '微笑測試' },
+            { key: 'partners', label: '合作夥伴' },
+          ]}
+          activeKey={activeTab}
+          onChange={onTabChange}
+        />
+      </div>
       <div className="biz-id">
         <Logout />
       </div>
@@ -22,6 +32,7 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
   const [doctors, setDoctors] = useState([]);
   const [selectedDoctorUuid, setSelectedDoctorUuid] = useState('');
   const [targetSmileUuid, setTargetSmileUuid] = useState('');
+  const [activeTab, setActiveTab] = useState('smile');
 
   // 首次进入或依赖变化时，从后端获取 smile_test 列表
   useEffect(() => {
@@ -101,8 +112,9 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
   return (
     <div className="market-dashboard">
       <div className="card">
-        <MarketHeader bizId={bizId} />
+        <MarketHeader bizId={bizId} activeTab={activeTab} onTabChange={setActiveTab} />
 
+        {activeTab === 'smile' ? (
         <div className="table">
           <div className="thead">
             <div className="th seq">編號</div>
@@ -175,6 +187,9 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
             })}
           </div>
         </div>
+        ) : (
+          <Partners />
+        )}
       </div>
 
       <Modal

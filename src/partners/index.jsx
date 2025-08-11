@@ -101,11 +101,7 @@ export default function Partners() {
 
   return (
     <div className="partners-dashboard">
-      <div className="card">
-        <div className="market-header">
-          <div className="title">合作夥伴</div>
-          <div className="biz-id"><Logout /></div>
-        </div>
+      <div className="partners-card">
         <div className="table">
           <div className="thead">
             <div className="th id">ID</div>
