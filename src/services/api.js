@@ -4,6 +4,15 @@ class ApiService {
     this.baseURL = API_BASE_URL;
   }
 
+  // 审批合作伙伴申请：创建診所并激活
+  async approvePartner(id) {
+    const response = await fetch(`${this.baseURL}/api/partners/${id}/approve`, {
+      method: 'POST',
+      headers: this.getHeaders(true),
+    });
+    return this.handleResponse(response);
+  }
+
   // 下載微笑測試 4 張照片的ZIP
   async downloadSmilePhotosZip(uuid) {
     const response = await fetch(`${this.baseURL}/api/smile-test/uuid/${uuid}/photos.zip`, {

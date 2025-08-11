@@ -4,22 +4,23 @@ import React, { useState, useEffect } from 'react';
 import Logout from '../components/logout';
 import './index.scss';
 import apiService from '../services/api';
-import { message, Input, Select, Tag, Button, Modal } from 'antd';
-import { SearchOutlined, EyeOutlined, ReloadOutlined } from '@ant-design/icons';
+import { message, Tag, Button, Modal } from 'antd';
+import { EyeOutlined } from '@ant-design/icons';
 
-const { Search } = Input;
-const { Option } = Select;
+// const { Search } = Input;
+// const { Option } = Select;
 
 export default function Partners() {
   // const navigate = useNavigate();
   // const { logout, userType, userInfo } = useAuth();
   const [partners, setPartners] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [searchText, setSearchText] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
+  const [searchText] = useState('');
+  const [statusFilter] = useState('all');
   const [selectedPartner, setSelectedPartner] = useState(null);
   const [detailModalVisible, setDetailModalVisible] = useState(false);
-  const [expanded, setExpanded] = useState({});
+  // 展开交互已移除
+  // const [expanded, setExpanded] = useState({});
 
   // 获取合作夥伴列表
   const fetchPartners = async () => {
@@ -81,7 +82,7 @@ export default function Partners() {
     }
   };
 
-  const onToggle = (id) => setExpanded(prev => ({ ...prev, [id]: !prev[id] }));
+  // const onToggle = (id) => setExpanded(prev => ({ ...prev, [id]: !prev[id] }));
 
   // 表格列改为 market 风格的表头网格在样式中定义
 
@@ -120,9 +121,8 @@ export default function Partners() {
 
           <div className="tbody">
             {filteredPartners.map((p) => {
-              const isOpen = !!expanded[p.id];
               return (
-                <div key={p.id} className={`tr ${isOpen ? 'open' : ''}`}>
+                <div key={p.id} className="tr">
                   <div className="row-main">
                     <div className="td id">{p.id}</div>
                     <div className="td name">{p.full_name || '-'}</div>
@@ -131,11 +131,32 @@ export default function Partners() {
                     <div className="td email">{p.email || '-'}</div>
                     <div className="td status"><Tag color={getStatusColor(p.status)}>{getStatusText(p.status)}</Tag></div>
                     <div className="td created">{p.created_at ? new Date(p.created_at).toLocaleString('zh-TW') : '-'}</div>
-                    <div className="td action">
+                    <div className="td action" style={{ display: 'flex', gap: 8 }}>
                       <Button type="link" icon={<EyeOutlined />} size="small" onClick={() => showDetail(p)}>查看</Button>
+                      {p.status === 'pending' && (
+                        <Button
+                          type="primary"
+                          size="small"
+                          loading={loading}
+                          onClick={async (e) => {
+                            e.stopPropagation();
+                            try {
+                              const r = await apiService.approvePartner(p.id);
+                              if (r?.success) {
+                                message.success('已建立診所並激活');
+                                fetchPartners();
+                              } else {
+                                message.error(r?.message || '操作失敗');
+                              }
+                            } catch (err) {
+                              message.error(err?.message || '操作失敗');
+                            }
+                          }}
+                        >確定添加</Button>
+                      )}
                     </div>
                   </div>
-
+                  
                 </div>
               );
             })}
