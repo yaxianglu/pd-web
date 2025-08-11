@@ -13,6 +13,15 @@ class ApiService {
     return this.handleResponse(response);
   }
 
+  // 拒絕合作夥伴申請
+  async rejectPartner(id) {
+    const response = await fetch(`${this.baseURL}/api/partners/${id}/reject`, {
+      method: 'POST',
+      headers: this.getHeaders(true),
+    });
+    return this.handleResponse(response);
+  }
+
   // 下載微笑測試 4 張照片的ZIP
   async downloadSmilePhotosZip(uuid) {
     const response = await fetch(`${this.baseURL}/api/smile-test/uuid/${uuid}/photos.zip`, {

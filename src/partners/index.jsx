@@ -134,25 +134,46 @@ export default function Partners() {
                     <div className="td action" style={{ display: 'flex', gap: 8 }}>
                       <Button type="link" icon={<EyeOutlined />} size="small" onClick={() => showDetail(p)}>查看</Button>
                       {p.status === 'pending' && (
-                        <Button
-                          type="primary"
-                          size="small"
-                          loading={loading}
-                          onClick={async (e) => {
-                            e.stopPropagation();
-                            try {
-                              const r = await apiService.approvePartner(p.id);
-                              if (r?.success) {
-                                message.success('已建立診所並激活');
-                                fetchPartners();
-                              } else {
-                                message.error(r?.message || '操作失敗');
+                        <>
+                          <Button
+                            type="primary"
+                            size="small"
+                            loading={loading}
+                            onClick={async (e) => {
+                              e.stopPropagation();
+                              try {
+                                const r = await apiService.approvePartner(p.id);
+                                if (r?.success) {
+                                  message.success('已建立診所並激活');
+                                  fetchPartners();
+                                } else {
+                                  message.error(r?.message || '操作失敗');
+                                }
+                              } catch (err) {
+                                message.error(err?.message || '操作失敗');
                               }
-                            } catch (err) {
-                              message.error(err?.message || '操作失敗');
-                            }
-                          }}
-                        >確定添加</Button>
+                            }}
+                          >確定添加</Button>
+                          <Button
+                            danger
+                            size="small"
+                            loading={loading}
+                            onClick={async (e) => {
+                              e.stopPropagation();
+                              try {
+                                const r = await apiService.rejectPartner(p.id);
+                                if (r?.success) {
+                                  message.success('已拒絕該申請');
+                                  fetchPartners();
+                                } else {
+                                  message.error(r?.message || '操作失敗');
+                                }
+                              } catch (err) {
+                                message.error(err?.message || '操作失敗');
+                              }
+                            }}
+                          >拒絕</Button>
+                        </>
                       )}
                     </div>
                   </div>
