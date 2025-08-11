@@ -4,6 +4,20 @@ class ApiService {
     this.baseURL = API_BASE_URL;
   }
 
+  // 下載微笑測試 4 張照片的ZIP
+  async downloadSmilePhotosZip(uuid) {
+    const response = await fetch(`${this.baseURL}/api/smile-test/uuid/${uuid}/photos.zip`, {
+      method: 'GET',
+      headers: this.getHeaders(true),
+    });
+    if (response.ok) {
+      const blob = await response.blob();
+      return blob;
+    }
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err?.message || '下載失敗');
+  }
+
   // 获取请求头
   getHeaders(includeAuth = true) {
     const headers = {

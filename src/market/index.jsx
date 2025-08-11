@@ -74,6 +74,30 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
     setExpanded((prev) => ({ ...prev, [rowId]: !prev[rowId] }));
   }, []);
 
+  const handleDownload = useCallback(async (smileUuid) => {
+    try {
+      if (!smileUuid) {
+        message.error('缺少記錄標識');
+        return;
+      }
+      const key = 'zip-download';
+      message.loading({ content: '正在生成壓縮包…', key, duration: 0 });
+      const blob = await apiService.downloadSmilePhotosZip(smileUuid);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `smile_photos_${smileUuid.slice(0, 8)}.zip`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+      message.success({ content: '下載已開始', key, duration: 1.5 });
+    } catch (err) {
+      console.error(err);
+      message.error('下載失敗');
+    }
+  }, []);
+
   return (
     <div className="market-dashboard">
       <div className="card">
@@ -105,9 +129,12 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
                     <div className="td line_id">{row.lineId || '—'}</div>
                     <div className="td region">{row.region || '—'}</div>
                     <div className="td download">
-                      {row.downloadUrl ? (
-                        <a href={row.downloadUrl} onClick={(e) => e.stopPropagation()} className="link">壓縮包</a>
-                      ) : '—'}
+                      <button
+                        type="button"
+                        onClick={(e) => { e.stopPropagation(); handleDownload(row.smileUuid); }}
+                        className="link"
+                        style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+                      >壓縮包</button>
                     </div>
                     <div className="td status">
                       {row.statusText === '創建患者信息' ? (
