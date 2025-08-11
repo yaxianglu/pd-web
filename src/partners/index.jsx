@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Logout from '../components/logout';
 import './index.scss';
 import apiService from '../services/api';
-import { message, Tag, Button, Modal } from 'antd';
+import { message, Tag, Button, Modal, Popconfirm } from 'antd';
 import { EyeOutlined } from '@ant-design/icons';
 
 // const { Search } = Input;
@@ -135,12 +135,12 @@ export default function Partners() {
                       <Button type="link" icon={<EyeOutlined />} size="small" onClick={() => showDetail(p)}>查看</Button>
                       {p.status === 'pending' && (
                         <>
-                          <Button
-                            type="primary"
-                            size="small"
-                            loading={loading}
-                            onClick={async (e) => {
-                              e.stopPropagation();
+                          <Popconfirm
+                            title="確定添加？"
+                            description="將建立診所資料並不可撤銷，確定繼續？"
+                            okText="確認"
+                            cancelText="取消"
+                            onConfirm={async () => {
                               try {
                                 const r = await apiService.approvePartner(p.id);
                                 if (r?.success) {
@@ -153,13 +153,16 @@ export default function Partners() {
                                 message.error(err?.message || '操作失敗');
                               }
                             }}
-                          >確定添加</Button>
-                          <Button
-                            danger
-                            size="small"
-                            loading={loading}
-                            onClick={async (e) => {
-                              e.stopPropagation();
+                          >
+                            <Button type="primary" size="small" disabled={loading}>確定添加</Button>
+                          </Popconfirm>
+
+                          <Popconfirm
+                            title="拒絕該申請？"
+                            description="拒絕申請後不可撤銷，確定繼續？"
+                            okText="確認"
+                            cancelText="取消"
+                            onConfirm={async () => {
                               try {
                                 const r = await apiService.rejectPartner(p.id);
                                 if (r?.success) {
@@ -172,7 +175,9 @@ export default function Partners() {
                                 message.error(err?.message || '操作失敗');
                               }
                             }}
-                          >拒絕</Button>
+                          >
+                            <Button danger size="small" disabled={loading}>拒絕</Button>
+                          </Popconfirm>
                         </>
                       )}
                     </div>
