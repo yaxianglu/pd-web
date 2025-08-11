@@ -395,7 +395,7 @@ function TreatmentOverview() {
 function TreatmentTimeline() {
   const steps = [
     { name: "口掃完成", completed: true },
-    { name: "確認治療方案", completed: true },
+    { name: "確認方案", completed: true },
     { name: "付款完成", completed: true },
     { name: "生產完成", completed: false },
     { name: "治療中", completed: false },

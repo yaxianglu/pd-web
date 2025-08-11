@@ -15,7 +15,7 @@ export const l = [
     icon: png1,
   },
   {
-    title: '確認治療方案',
+    title: '確認方案',
     icon: png2,
   },
   {
@@ -53,7 +53,7 @@ const steps = [
   },
   {
     id: 2,
-    title: "確認治療方案",
+    title: "確認方案",
     // icon: ClipBoardIcon,
     icon: () => <img src={png2} alt="2" style={{ width: 50 }} />,
     status: ProgressStatus.COMPLETED

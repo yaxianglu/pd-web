@@ -1,161 +1,248 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import { getRoleName } from "../contants/roleRoutes";
-import DataTable from "../components/data-table";
-import "./index.scss";
+import React, { useState, useEffect, useCallback } from "react";
+import { Tabs, Modal, Select, message } from "antd";
+import Logout from "../components/logout";
+import Partners from "../partners";
+import HospitalDashboard from "../hospital";
+import apiService from "../services/api";
+import "../market/index.scss";
 
-const gapSize = 16;
+// const gapSize = 16;
 
-// 左侧导航栏组件
-function Sidebar({ activeTab, onTabChange }) {
+// 顶部 Tab 与市场页面统一风格
+function HeaderTabs({ activeKey, onChange }) {
   return (
-    <div className="sidebar">
-      <div className="tab-navigation">
-        <div 
-          className={`tab-item ${activeTab === 'business' ? 'active' : ''}`}
-          onClick={() => onTabChange('business')}
-        >
-          業務端
+    <div className="market-header">
+      <div className="title" style={{ width: '100%' }}>
+        <Tabs
+          items={[{ key: 'smile', label: '微笑測試' }, { key: 'partners', label: '成為夥伴' }, { key: 'doctors', label: '醫生' }]}
+          activeKey={activeKey}
+          onChange={onChange}
+        />
+      </div>
+      <div className="biz-id"><Logout /></div>
+    </div>
+  );
+}
+
+// Admin 内的微笑測試視圖（與 market 一致的資料與交互，僅移除內部頁面 Tab）
+function AdminSmileView() {
+  const [expanded, setExpanded] = useState({});
+  const [items, setItems] = useState([]);
+  const [createOpen, setCreateOpen] = useState(false);
+  const [doctors, setDoctors] = useState([]);
+  const [selectedDoctorUuid, setSelectedDoctorUuid] = useState('');
+  const [targetSmileUuid, setTargetSmileUuid] = useState('');
+
+  useEffect(() => {
+    let isMounted = true;
+    const load = async () => {
+      const res = await apiService.getAllSmileTests();
+      if (isMounted) {
+        if (res?.success && Array.isArray(res.data)) {
+          const mapped = res.data.map((s, idx) => ({
+            id: String(idx + 1).padStart(2, '0'),
+            patientName: s.full_name || '—',
+            phone: s.phone || '—',
+            email: s.email || '—',
+            lineId: s.line_id || '—',
+            region: s.city || '—',
+            downloadUrl: '#',
+            considerations: s.considerations || '',
+            statusText: s?.patient_uuid || '創建患者信息',
+            smileUuid: s.uuid,
+          }));
+          setItems(mapped);
+        } else {
+          setItems([]);
+        }
+      }
+    };
+    load();
+    return () => { isMounted = false; };
+  }, []);
+
+  useEffect(() => {
+    apiService.getDoctorsWithClinic().then((res) => {
+      if (res?.success) setDoctors(res.data || []);
+    });
+  }, []);
+
+  const openBindPatientModal = (smileTestUuid) => {
+    setTargetSmileUuid(smileTestUuid);
+    setCreateOpen(true);
+  };
+
+  const onToggle = useCallback((rowId) => {
+    setExpanded((prev) => ({ ...prev, [rowId]: !prev[rowId] }));
+  }, []);
+
+  const handleDownload = useCallback(async (smileUuid) => {
+    try {
+      if (!smileUuid) { message.error('缺少記錄標識'); return; }
+      const key = 'zip-download';
+      message.loading({ content: '正在生成壓縮包…', key, duration: 0 });
+      const blob = await apiService.downloadSmilePhotosZip(smileUuid);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `smile_photos_${smileUuid.slice(0, 8)}.zip`;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+      message.success({ content: '下載已開始', key, duration: 1.5 });
+    } catch (err) {
+      console.error(err); message.error('下載失敗');
+    }
+  }, []);
+
+  return (
+    <>
+      <div className="table">
+        <div className="thead">
+          <div className="th seq">編號</div>
+          <div className="th name">患者名稱</div>
+          <div className="th phone">手機號碼</div>
+          <div className="th email">電子信箱</div>
+          <div className="th line_id">Line ID</div>
+          <div className="th region">地址</div>
+          <div className="th download">資料下載</div>
+          <div className="th status">患者卡</div>
+          <div className="th caret" />
         </div>
-        <div 
-          className={`tab-item ${activeTab === 'doctor' ? 'active' : ''}`}
-          onClick={() => onTabChange('doctor')}
-        >
-          醫生/診所
+
+        <div className="tbody">
+          {items.map((row) => {
+            const isOpen = !!expanded[row.id];
+            return (
+              <div key={row.id} className={`tr ${isOpen ? 'open' : ''}`}>
+                <div className="row-main">
+                  <div className="td seq">{row.id}</div>
+                  <div className="td name">{row.patientName || '—'}</div>
+                  <div className="td phone">{row.phone || '—'}</div>
+                  <div className="td email">{row.email || '—'}</div>
+                  <div className="td line_id">{row.lineId || '—'}</div>
+                  <div className="td region">{row.region || '—'}</div>
+                  <div className="td download">
+                    <button type="button" onClick={(e) => { e.stopPropagation(); handleDownload(row.smileUuid); }} className="link" style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}>壓縮包</button>
+                  </div>
+                  <div className="td status">
+                    {row.statusText === '創建患者信息' ? (
+                      <button className="create-patient-info-button" onClick={(e) => { e.stopPropagation(); openBindPatientModal(row.smileUuid); }}>創建患者信息</button>
+                    ) : (
+                      row.statusText
+                    )}
+                  </div>
+                  <div className="td caret" onClick={() => onToggle(row.id)}>
+                    <span className={`arrow ${isOpen ? 'up' : 'down'}`}>▾</span>
+                  </div>
+                </div>
+                {isOpen && (
+                  <div className="row-expand" onClick={(e) => e.stopPropagation()}>
+                    <textarea
+                      className="note-input"
+                      placeholder="備註"
+                      defaultValue={row.considerations || ''}
+                      onBlur={async (e) => {
+                        const text = e.target.value || '';
+                        if (!row.smileUuid) return;
+                        const r = await apiService.updateSmileTestBio(row.smileUuid, text);
+                        if (r?.success) {
+                          message.success('已保存');
+                          setItems((prev) => prev.map(it => it.id === row.id ? { ...it, considerations: text } : it));
+                        } else {
+                          message.error(r?.message || '保存失敗');
+                        }
+                      }}
+                      rows={3}
+                      style={{ width: '100%' }}
+                    />
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
-      
-      {/* 账户列表 */}
-      <div className="account-list">
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => (
-          <div key={index} className={`account-item ${index === 0 ? 'active' : ''}`}>
-            業務ID: 32012310010
+
+      <Modal
+        title="綁定醫師並創建患者"
+        open={createOpen}
+        onCancel={() => setCreateOpen(false)}
+        onOk={async () => {
+          if (!selectedDoctorUuid) { message.error('請選擇醫師'); return; }
+          if (!targetSmileUuid) { message.error('未選擇目標記錄'); return; }
+          const detail = await apiService.getSmileTestByUuid(targetSmileUuid);
+          if (!detail?.success || !detail.data?.smileTest) { message.error('獲取記錄失敗'); return; }
+          const res = await apiService.bindExistingSmileTest({ smile_uuid: targetSmileUuid, assigned_doctor_uuid: selectedDoctorUuid });
+          if (res?.success) {
+            message.success('創建成功');
+            setCreateOpen(false); setSelectedDoctorUuid('');
+            const again = await apiService.getAllSmileTests();
+            if (again?.success && Array.isArray(again.data)) {
+              const mapped = again.data.map((s, idx) => ({
+                id: String(idx + 1).padStart(2, '0'),
+                patientName: s.full_name || '—',
+                phone: s.phone || '—',
+                email: s.email || '—',
+                lineId: s.line_id || '—',
+                region: s.city || '—',
+                downloadUrl: '#',
+                note: '',
+                statusText: s?.patient_uuid || '創建患者信息',
+                smileUuid: s.uuid,
+              }));
+              setItems(mapped);
+            }
+          } else {
+            message.error(res?.message || '創建失敗');
+          }
+        }}
+        okText="保存"
+        cancelText="取消"
+      >
+        <div>
+          <div style={{ marginBottom: 8 }}>選擇醫師</div>
+          <Select
+            style={{ width: '100%' }}
+            placeholder="選擇醫師"
+            value={selectedDoctorUuid || undefined}
+            onChange={(v) => setSelectedDoctorUuid(v)}
+            options={(doctors || []).map(d => ({ value: d.uuid, label: `${d.full_name || d.username || '—'}${d.clinic ? `（${d.clinic.clinic_name}）` : ''}` }))}
+          />
+        </div>
+      </Modal>
+    </>
+  );
+}
+// 用户信息卡片
+// 旧信息卡片暂不展示，改为顶部登出
+
+// 微笑测试表格组件（未使用）
+function SmileTestTable() {
+  return (
+    <div className="table">
+      <div className="thead">
+        <div className="th seq">編號</div>
+        <div className="th name">患者名稱</div>
+        <div className="th phone">IP</div>
+        <div className="th status">狀態</div>
+      </div>
+      <div className="tbody">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <div className="tr" key={i}>
+            <div className="row-main">
+              <div className="td seq">0{i + 1}</div>
+              <div className="td name">蒋权</div>
+              <div className="td phone">台南</div>
+              <div className="td status">—</div>
+            </div>
           </div>
         ))}
       </div>
-      
-      {/* 创建账户按钮 */}
-      <button className="create-account-btn">
-        創建帳戶
-      </button>
     </div>
   );
 }
 
-// 用户信息卡片
-function UserInfoCard({ userInfo }) {
-  return (
-    <div className="card user-info-card">
-      <div className="user-greeting">
-        郭博士 你好
-        {userInfo && (
-          <span className="user-role">
-            ({getRoleName(userInfo.role)} - {userInfo.full_name || userInfo.username})
-          </span>
-        )}
-      </div>
-      
-      <div className="user-details">
-        <div className="detail-item">
-          <span className="label">账户:</span>
-          <span className="value">32012310010</span>
-        </div>
-        <div className="detail-item">
-          <span className="label">聯繫方式:</span>
-          <span className="value">13022559203</span>
-        </div>
-        <div className="detail-item">
-          <span className="label">信箱:</span>
-          <span className="value">1004735926@qq.com</span>
-        </div>
-        <div className="detail-item">
-          <span className="label">地址:</span>
-          <span className="value">台南市</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// 微笑测试表格组件
-function SmileTestTable() {
-  const tableData = [
-    {
-      id: "01",
-      name: "蒋权",
-      location: "台南",
-      download: "壓縮包",
-      status: "創建患者信息",
-      subStatus: "已下單",
-      detail: "詳細備註: 於2025.06.30日測試,於06.30下午已聯繫患者。"
-    },
-    {
-      id: "02",
-      name: "蒋权",
-      location: "台南",
-      download: "壓縮包",
-      status: "創建患者信息",
-      subStatus: "已閱",
-      detail: ""
-    },
-    ...Array.from({ length: 6 }).map((_, i) => ({
-      id: `0${i + 3}`,
-      name: "蒋权",
-      location: "台南",
-      download: "壓縮包",
-      status: "創建患者信息",
-      subStatus: "未讀",
-      detail: ""
-    }))
-  ];
-
-  const columns = [
-    {
-      title: "編號",
-      key: "id"
-    },
-    {
-      title: "患者名稱",
-      key: "name"
-    },
-    {
-      title: "IP",
-      key: "location"
-    },
-    {
-      title: "資料下載",
-      key: "download",
-      className: "download-link",
-      render: (value) => (
-        <span className="download-link">{value}</span>
-      )
-    },
-    {
-      title: "狀態",
-      key: "subStatus",
-      className: "status-cell",
-      render: (value) => (
-        <span className={`status-cell ${value === '已閱' ? 'read' : value === '已下單' ? 'ordered' : 'unread'}`}>
-          {value} {value === '已閱' ? '▾' : '▸'}
-        </span>
-      )
-    }
-  ];
-
-  return (
-    <DataTable
-      title="微笑測試"
-      subtitle="業務ID：32012310010"
-      columns={columns}
-      data={tableData}
-      expandable={true}
-      className="smile-test-table"
-    />
-  );
-}
-
-// 患者列表组件
+/* eslint-disable @typescript-eslint/no-unused-vars */
 function PatientList() {
   const patients = [
     {
@@ -240,7 +327,7 @@ function PatientList() {
   );
 }
 
-// 日历组件
+// 日历组件（未使用）
 function Calendar() {
   const days = [
     { day: 'Mon', date: '3' },
@@ -269,7 +356,7 @@ function Calendar() {
   );
 }
 
-// 日程安排组件
+// 日程安排组件（未使用）
 function Schedule() {
   const appointments = [
     {
@@ -315,7 +402,7 @@ function Schedule() {
   );
 }
 
-// 治疗概览卡片
+// 治疗概览卡片（未使用）
 function TreatmentOverview() {
   const cards = [
     {
@@ -358,11 +445,11 @@ function TreatmentOverview() {
   );
 }
 
-// 治疗进度时间线
+// 治疗进度时间线（未使用）
 function TreatmentTimeline() {
   const steps = [
     { name: "預約完成", completed: true },
-    { name: "確認治療方案", completed: true },
+    { name: "確認方案", completed: true },
     { name: "付款完成", completed: true },
     { name: "生產完成", completed: true },
     { name: "治療中", completed: true },
@@ -383,147 +470,22 @@ function TreatmentTimeline() {
   );
 }
 
-// 业务端内容组件
-function BusinessContent() {
-  return (
-    <div className="business-content">
-      {/* 微笑测试表格 */}
-      <SmileTestTable />
-    </div>
-  );
-}
+// 业务端内容组件（未使用）
+function BusinessContent() { return null; }
 
 // 医生/诊所内容组件
-function DoctorClinicContent() {
+// 旧医生内容不再使用
+
+export default function AdminDashboard() {
+  const [active, setActive] = useState('smile');
   return (
-    <div className="doctor-clinic-content">
-      {/* 患者列表 */}
-      <PatientList />
-      
-      {/* 治疗记录 */}
-      <div className="card treatment-record-card">
-        <h3>治療紀要</h3>
-        
-        {/* 日历 */}
-        <Calendar />
-        
-        {/* 日程安排 */}
-        <Schedule />
-        
-        {/* 备注区域 */}
-        <div className="notes-section">
-          <label>备注:</label>
-          <div className="notes-actions">
-            <button className="upload-btn">上傳</button>
-            <button className="download-btn">下載</button>
-          </div>
-        </div>
-      </div>
-      
-      {/* 治疗概览和时间线 */}
-      <div className="treatment-section">
-        {/* 治疗概览 */}
-        <TreatmentOverview />
-        
-        {/* 治疗进度时间线 */}
-        <TreatmentTimeline />
-        
-        {/* 底部按钮 */}
-        <div className="bottom-actions">
-          <button className="action-btn primary">更新并发送患者资料卡</button>
-        </div>
+    <div className="market-dashboard" style={{ minHeight: '100vh' }}>
+      <div className="card">
+        <HeaderTabs activeKey={active} onChange={setActive} />
+        {active === 'smile' && <AdminSmileView />}
+        {active === 'partners' && <Partners />}
+        {active === 'doctors' && <HospitalDashboard />}
       </div>
     </div>
   );
 }
-
-export default function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState('business');
-  const [patientData, setPatientData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const { logout, userInfo } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    // 模拟获取患者数据
-    setLoading(true);
-    setTimeout(() => {
-      setPatientData({
-        full_name: '蒋权',
-        test_id: '32012310010',
-        phone: '13022559203',
-        email: '1004735926@qq.com',
-        gender: '',
-        birth_date: ''
-      });
-      setLoading(false);
-    }, 1000);
-  }, []);
-
-  const handleTabChange = (tab) => {
-    setActiveTab(tab);
-  };
-
-  if (loading) {
-    return (
-      <div style={{
-        width: "100vw",
-        height: "100vh",
-        background: "#f6f6f7",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-      }}>
-        <div>加载中...</div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div style={{
-        width: "100vw",
-        height: "100vh",
-        background: "#f6f6f7",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        flexDirection: "column",
-        gap: "20px"
-      }}>
-        <div style={{ color: "red" }}>{error}</div>
-        <button 
-          onClick={() => window.location.href = '/login'}
-          style={{
-            background: "#48d2ce",
-            color: "#fff",
-            border: "none",
-            borderRadius: "8px",
-            padding: "10px 20px",
-            cursor: "pointer"
-          }}
-        >
-          返回登录页面
-        </button>
-      </div>
-    );
-  }
-
-  return (
-    <div className="admin-dashboard">
-      <Sidebar activeTab={activeTab} onTabChange={handleTabChange} />
-      <div className="main-content">
-        {/* 用户信息 */}
-        <UserInfoCard userInfo={userInfo} />
-        
-        {/* 根据选中的tab显示不同内容 */}
-        {activeTab === 'business' ? (
-          <BusinessContent />
-        ) : (
-          <DoctorClinicContent />
-        )}
-      </div>
-    </div>
-  );
-} 
