@@ -13,7 +13,6 @@ function Sidebar({ doctors = [], onSelect, activeUuid, onCreate }) {
   return (
     <div className="sidebar">
       <div>
-        <div className="system-title">巧醫系統</div>
         <div className="account-list">
           {doctors.map((doc) => (
             <div key={doc.uuid} className="account-item" onClick={() => onSelect(doc)} style={{ background: activeUuid === doc.uuid ? 'rgba(255,255,255,.2)' : undefined }}>
