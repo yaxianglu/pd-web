@@ -484,7 +484,7 @@ export default function AdminDashboard() {
         <HeaderTabs activeKey={active} onChange={setActive} />
         {active === 'smile' && <AdminSmileView />}
         {active === 'partners' && <Partners />}
-        {active === 'doctors' && <HospitalDashboard />}
+        {active === 'doctors' && <HospitalDashboard isSub={true}/>}
       </div>
     </div>
   );

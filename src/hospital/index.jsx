@@ -26,7 +26,7 @@ function Sidebar({ doctors = [], onSelect, activeUuid, onCreate }) {
   );
 }
 
-export default function HospitalDashboard() {
+export default function HospitalDashboard({ isSub }) {
   const [doctors, setDoctors] = useState([]);
   const [activeDoctor, setActiveDoctor] = useState(null);
   const [patientsByDoctor, setPatientsByDoctor] = useState([]);
@@ -65,9 +65,11 @@ export default function HospitalDashboard() {
     <div className="hospital-dashboard">
       <Sidebar doctors={doctors} onSelect={setActiveDoctor} activeUuid={activeDoctor?.uuid} onCreate={() => setCreateOpen(true)} />
       <div className="hospital-main-content">
-        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Logout />
-        </div>
+        {isSub ? null : (
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Logout />
+          </div>
+        )}
         {activeDoctor ? (
           <DoctorDashboard style={{ height: 'calc(100vh - 40px)' }} initialPatients={patientsByDoctor} doctorUser={activeDoctor} />
         ) : (
