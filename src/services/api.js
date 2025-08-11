@@ -264,6 +264,20 @@ class ApiService {
     }
   }
 
+  // 获取医生及其诊所信息
+  async getDoctorsWithClinic() {
+    try {
+      const response = await fetch(`${this.baseURL}/auth/doctors-with-clinic`, {
+        method: 'GET',
+        headers: this.getHeaders(true),
+      });
+      return await this.handleResponse(response);
+    } catch (error) {
+      console.error('Failed to fetch doctors with clinic:', error);
+      return { success: false, message: '獲取醫師/診所列表失敗' };
+    }
+  }
+
   // 获取诊所列表
   async getClinics() {
     try {
