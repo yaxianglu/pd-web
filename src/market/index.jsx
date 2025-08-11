@@ -1,6 +1,7 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useMemo, useState, useCallback, useEffect } from 'react';
 import Logout from '../components/logout';
 import './index.scss';
+import apiService from '../services/api';
 
 function MarketHeader() {
   return (
@@ -15,18 +16,37 @@ function MarketHeader() {
 
 export default function MarketDashboard({ items: inputItems = null, bizId = '320123010010' }) {
   const [expanded, setExpanded] = useState({});
+  const [items, setItems] = useState([]);
 
-  const items = useMemo(() => {
-    if (Array.isArray(inputItems) && inputItems.length > 0) return inputItems;
-    return new Array(8).fill(null).map((_, i) => ({
-      id: String(i + 1).padStart(2, '0'),
-      patientName: '蒋权',
-      region: '台南',
-      downloadUrl: '#',
-      note: i === 0 ? '詳細備註：於2025.06.30日測試，於06.30下午已聯繫患者。' : '',
-      statusText: '創建患者信息',
-      readStatus: i === 0 ? '已閱' : '未讀',
-    }));
+  // 首次进入或依赖变化时，从后端获取 smile_test 列表
+  useEffect(() => {
+    let isMounted = true;
+    const load = async () => {
+      if (Array.isArray(inputItems) && inputItems.length > 0) {
+        if (isMounted) setItems(inputItems);
+        return;
+      }
+      const res = await apiService.getAllSmileTests();
+      if (isMounted) {
+        if (res?.success && Array.isArray(res.data)) {
+          // 适配表格字段
+          const mapped = res.data.map((s, idx) => ({
+            id: String(idx + 1).padStart(2, '0'),
+            patientName: s.full_name || '—',
+            region: s.city || '—',
+            downloadUrl: '#',
+            note: '',
+            statusText: s?.patient_uuid || '創建患者信息',
+          }));
+          setItems(mapped);
+        } else {
+          // 失败时给出空数组
+          setItems([]);
+        }
+      }
+    };
+    load();
+    return () => { isMounted = false; };
   }, [inputItems]);
 
   const onToggle = useCallback((rowId) => {
@@ -42,9 +62,9 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
           <div className="thead">
             <div className="th seq">編號</div>
             <div className="th name">患者名稱</div>
-            <div className="th region">IP</div>
+            <div className="th region">地址</div>
             <div className="th download">資料下載</div>
-            <div className="th status">狀態</div>
+            <div className="th status">患者卡</div>
             <div className="th caret" />
           </div>
 
@@ -63,8 +83,13 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
                       ) : '—'}
                     </div>
                     <div className="td status">
-                      <span className="action">{row.statusText}</span>
-                      <span className={`read ${row.readStatus === '已閱' ? 'readed' : 'unread'}`}>{row.readStatus}</span>
+                      {
+                        row.statusText === '創建患者信息' ? (
+                          <button className="create-patient-info-button">創建患者信息</button>
+                        ) : (
+                          row.statusText
+                        )
+                      }
                     </div>
                     <div className="td caret">
                       <span className={`arrow ${isOpen ? 'up' : 'down'}`}>▾</span>

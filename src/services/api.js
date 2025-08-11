@@ -198,6 +198,22 @@ class ApiService {
     }
   }
 
+  // 獲取所有微笑測試（僅未刪除）
+  async getAllSmileTests() {
+    try {
+      const response = await fetch(`${this.baseURL}/api/smile-test`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      return await response.json();
+    } catch (error) {
+      console.error('Failed to get all smile tests:', error);
+      return { success: false, message: '获取数据失败，请检查网络连接' };
+    }
+  }
+
   // 根据医生信息获取患者列表（与 uuid 接口结构一致的数组）
   async getPatientsByDoctor({ uuid, email, username }) {
     const params = new URLSearchParams();
