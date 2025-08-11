@@ -46,32 +46,32 @@ function App() {
           {/* <Route path="/upload" element={<FrontPage />} /> */}
           <Route path="/upload" element={<Upload />} />
           <Route path="/partners" element={
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="operator">
               <Partners />
             </ProtectedRoute>
           } />
           <Route path="/hospital" element={
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="hospital">
               <HospitalDashboard />
             </ProtectedRoute>
           } />
           <Route path="/doctor" element={
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="doctor">
               <DoctorDashboard />
             </ProtectedRoute>
           } />
           <Route path="/sales" element={
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="sales">
               <SalesDashboard />
             </ProtectedRoute>
           } />
           <Route path="/market" element={
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="market">
               <MarketDashboard />
             </ProtectedRoute>
           } />
           <Route path="/admin" element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["admin","super_admin"]}>
               <AdminDashboard />
             </ProtectedRoute>
           } />
