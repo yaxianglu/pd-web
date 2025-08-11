@@ -34,7 +34,7 @@ function UserInfoCard({ userInfo, isDoctorDetail = false }) {
   );
 }
 
-export default function DoctorDashboard({ initialPatients = null, doctorUser = null }) {
+export default function DoctorDashboard({ initialPatients = null, doctorUser = null, style = {} }) {
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -116,7 +116,7 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
   }
 
   return (
-    <div className="doctor-dashboard">
+    <div className="doctor-dashboard" style={style}>
       <div className="doctor-main-content">
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 8 }}>
         </div>

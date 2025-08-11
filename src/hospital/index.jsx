@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { cardTitleSizeStyle, cardPaddingStyle } from "../contants";
-import { getRoleName } from "../contants/roleRoutes";
-import ContactInfo from "../components/contact-info";
-import InfoCardComponent from "../components/info-card";
 import apiService from "../services/api";
 import DoctorDashboard from "../doctor";
 import "./index.scss";
 import { Modal, Select, Input, message } from 'antd';
 import CryptoJS from 'crypto-js';
-
-const gapSize = 16;
+import Logout from "../components/logout";
 
 // 左侧导航栏组件
 function Sidebar({ doctors = [], onSelect, activeUuid, onCreate }) {
@@ -22,7 +17,7 @@ function Sidebar({ doctors = [], onSelect, activeUuid, onCreate }) {
         <div className="account-list">
           {doctors.map((doc) => (
             <div key={doc.uuid} className="account-item" onClick={() => onSelect(doc)} style={{ background: activeUuid === doc.uuid ? 'rgba(255,255,255,.2)' : undefined }}>
-              醫師: {doc.full_name || doc.username}
+              {doc.full_name || doc.username}
             </div>
           ))}
         </div>
@@ -71,8 +66,11 @@ export default function HospitalDashboard() {
     <div className="hospital-dashboard">
       <Sidebar doctors={doctors} onSelect={setActiveDoctor} activeUuid={activeDoctor?.uuid} onCreate={() => setCreateOpen(true)} />
       <div className="hospital-main-content">
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Logout />
+        </div>
         {activeDoctor ? (
-          <DoctorDashboard initialPatients={patientsByDoctor} doctorUser={activeDoctor} />
+          <DoctorDashboard style={{ height: 'calc(100vh - 40px)' }} initialPatients={patientsByDoctor} doctorUser={activeDoctor} />
         ) : (
           <div>正在載入醫師資料...</div>
         )}
