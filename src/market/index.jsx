@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Logout from '../components/logout';
 import './index.scss';
 import apiService from '../services/api';
@@ -38,6 +38,9 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
           const mapped = res.data.map((s, idx) => ({
             id: String(idx + 1).padStart(2, '0'),
             patientName: s.full_name || '—',
+            phone: s.phone || '—',
+            email: s.email || '—',
+            lineId: s.line_id || '—',
             region: s.city || '—',
             downloadUrl: '#',
             considerations: s.considerations || '',
@@ -80,6 +83,9 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
           <div className="thead">
             <div className="th seq">編號</div>
             <div className="th name">患者名稱</div>
+            <div className="th phone">手機號碼</div>
+            <div className="th email">電子信箱</div>
+            <div className="th line_id">Line ID</div>
             <div className="th region">地址</div>
             <div className="th download">資料下載</div>
             <div className="th status">患者卡</div>
@@ -91,9 +97,12 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
               const isOpen = !!expanded[row.id];
               return (
                 <div key={row.id} className={`tr ${isOpen ? 'open' : ''}`}>
-                  <div className="row-main" onClick={() => onToggle(row.id)}>
+                  <div className="row-main">
                     <div className="td seq">{row.id}</div>
                     <div className="td name">{row.patientName || '—'}</div>
+                    <div className="td phone">{row.phone || '—'}</div>
+                    <div className="td email">{row.email || '—'}</div>
+                    <div className="td line_id">{row.lineId || '—'}</div>
                     <div className="td region">{row.region || '—'}</div>
                     <div className="td download">
                       {row.downloadUrl ? (
@@ -107,7 +116,7 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
                         row.statusText
                       )}
                     </div>
-                    <div className="td caret">
+                    <div className="td caret" onClick={() => onToggle(row.id)}>
                       <span className={`arrow ${isOpen ? 'up' : 'down'}`}>▾</span>
                     </div>
                   </div>
@@ -160,17 +169,7 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
             message.error('獲取記錄失敗');
             return;
           }
-          const s = detail.data.smileTest;
-          const payload = {
-            full_name: s.full_name,
-            birth_date: s.birth_date,
-            gender: s.gender,
-            phone: s.phone,
-            email: s.email,
-            line_id: s.line_id,
-            city: s.city,
-            assigned_doctor_uuid: selectedDoctorUuid,
-          };
+          // const s = detail.data.smileTest;
           const res = await apiService.bindExistingSmileTest({ smile_uuid: targetSmileUuid, assigned_doctor_uuid: selectedDoctorUuid });
           if (res?.success) {
             message.success('創建成功');
@@ -182,6 +181,9 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
               const mapped = again.data.map((s, idx) => ({
                 id: String(idx + 1).padStart(2, '0'),
                 patientName: s.full_name || '—',
+                phone: s.phone || '—',
+                email: s.email || '—',
+                lineId: s.line_id || '—',
                 region: s.city || '—',
                 downloadUrl: '#',
                 note: '',

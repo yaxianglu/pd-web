@@ -25,7 +25,8 @@
   .table {
     .thead {
       display: grid;
-      grid-template-columns: 100px 1fr 1fr 1fr 2fr 60px;
+      /* seq | name | phone | email | lineId | region | download | status | caret */
+      grid-template-columns: 100px 1.2fr 1fr 1.6fr 1fr 1fr .9fr 1.1fr 60px;
       gap: 0;
       background: #06cbc5;
       color: #fff;
@@ -42,7 +43,8 @@
 
         .row-main {
           display: grid;
-          grid-template-columns: 100px 1fr 1fr 1fr 2fr 60px;
+          /* seq | name | phone | email | lineId | region | download | status | caret */
+          grid-template-columns: 100px 1.2fr 1fr 1.6fr 1fr 1fr .9fr 1.1fr 60px;
           align-items: center;
           background: #cceff0;
           padding: 12px 0;
