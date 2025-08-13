@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Badge, Button, Calendar, DatePicker, Modal, Select, Space, TimePicker, Tooltip, Input, Form, message } from "antd";
+import { Button, Calendar, DatePicker, Modal, Select, Space, TimePicker, Tooltip, Input, Form, message, Table, Tag } from "antd";
 import dayjs from "dayjs";
 import "antd/dist/reset.css";
 import "./index.scss";
@@ -61,10 +61,12 @@ export default function ScheduleCard({
           title: a.note || "预约",
           note: a.note || "",
           doctor_uuid: a.doctor_uuid || null,
+          doctor_name: a.doctor_name || null,
           patient_uuid: a.patient_uuid || null,
+          patient_name: a.patient_name || null,
           start_time: a.start_time || null,
           end_time: a.end_time || null,
-          status: a.status === "cancelled" ? "error" : "success",
+          status: a.status === "取消" ? "失敗" : "預約成功",
         }));
         setEvents((initial) => {
           // Replace sample with server data; if initial was real, merge unique by id
@@ -152,7 +154,10 @@ export default function ScheduleCard({
         title: payload.note || "预约",
         note: payload.note || "",
         doctor_uuid: payload.doctor_uuid,
+        doctor_name:
+          doctors.find((d) => d.uuid === payload.doctor_uuid || d.id === payload.doctor_uuid)?.username || null,
         patient_uuid: payload.patient_uuid,
+        patient_name: currentPatient?.full_name || null,
         start_time: payload.start_time,
         end_time: payload.end_time,
         status: "success",
@@ -178,7 +183,7 @@ export default function ScheduleCard({
       }
     }
     setModalOpen(false);
-  }, [modalMode, activeDate, activeEvent, onCreate, onUpdate, form, currentPatient?.uuid]);
+  }, [modalMode, activeDate, activeEvent, onCreate, onUpdate, form, currentPatient?.uuid, currentPatient?.full_name, doctors]);
 
   const headerRender = useCallback(
     ({ value: headerValue, onChange }) => {
@@ -228,19 +233,53 @@ export default function ScheduleCard({
     if (modalMode === "day") {
       const key = activeDate?.format("YYYY-MM-DD");
       const list = (key && dateToEvents.get(key)) || [];
+      const columns = [
+        {
+          title: "时间",
+          dataIndex: "start_time",
+          key: "time",
+          render: (_, r) => `${formatHm(r.start_time) || "--"} ~ ${formatHm(r.end_time) || "--"}`,
+          width: 160,
+        },
+        {
+          title: "医生",
+          dataIndex: "doctor_name",
+          key: "doctor",
+          render: (_, r) => r.doctor_name || getDoctorName(doctors, r.doctor_uuid) || "-",
+          width: 160,
+        },
+        {
+          title: "患者",
+          dataIndex: "patient_name",
+          key: "patient",
+          render: (_, r) => r.patient_name || currentPatient?.full_name || "-",
+          width: 160,
+        },
+        {
+          title: "备注",
+          dataIndex: "note",
+          key: "note",
+          ellipsis: true,
+        },
+        {
+          title: "状态",
+          dataIndex: "status",
+          key: "status",
+          render: (v) => <Tag color={v === 'cancelled' ? 'red' : v === 'completed' ? 'green' : 'blue'}>{v || '-'}</Tag>,
+          width: 120,
+        },
+      ];
       return (
         <div className="schedule-modal">
-          {list.length === 0 ? (
-            <p>暂无数据</p>
-          ) : (
-            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-              {list.map((ev) => (
-                <li key={ev.id} style={{ marginBottom: 8, cursor: "pointer" }} onClick={() => openViewForEvent(ev)}>
-                  <Badge color={statusToColor(ev.status)} text={ev.title} />
-                </li>
-              ))}
-            </ul>
-          )}
+          <Table
+            rowKey={(r) => r.id}
+            size="small"
+            pagination={false}
+            columns={columns}
+            dataSource={list}
+            scroll={{ y: 360, x: true }}
+            onRow={(record) => ({ onClick: () => openViewForEvent(record) })}
+          />
         </div>
       );
     }
@@ -290,15 +329,15 @@ export default function ScheduleCard({
       <div className="schedule-modal">
         <div style={{ display: "grid", gridTemplateColumns: "96px 1fr", rowGap: 8, columnGap: 8 }}>
           <div>医生</div>
-          <div>{getDoctorName(doctors, activeEvent?.doctor_uuid) || "-"}</div>
+          <div>{activeEvent?.doctor_name || getDoctorName(doctors, activeEvent?.doctor_uuid) || "-"}</div>
           <div>患者</div>
           <div>{activeEvent?.patient_name || currentPatient?.full_name || "-"}</div>
           <div>日期</div>
           <div>{activeEvent?.date ? dayjs(activeEvent.date).format("YYYY-MM-DD") : activeDate?.format("YYYY-MM-DD")}</div>
           <div>开始时间</div>
-          <div>{activeEvent?.start_time || "-"}</div>
+          <div>{formatHm(activeEvent?.start_time) || "-"}</div>
           <div>结束时间</div>
-          <div>{activeEvent?.end_time || "-"}</div>
+          <div>{formatHm(activeEvent?.end_time) || "-"}</div>
           <div>备注</div>
           <div>{activeEvent?.note || activeEvent?.title || "-"}</div>
         </div>
@@ -335,6 +374,9 @@ export default function ScheduleCard({
         okText={modalMode === "view" ? "关闭" : "确定"}
         cancelText="取消"
         title={modalTitle(modalMode)}
+        width={modalMode === 'day' ? 900 : 560}
+        centered
+        bodyStyle={{ maxHeight: modalMode === 'day' ? 560 : 440, overflowY: 'auto' }}
         footer={
           modalMode === "view" ? (
             <Space>
@@ -363,18 +405,7 @@ function groupByDate(items) {
   return map;
 }
 
-function statusToColor(status) {
-  switch (status) {
-    case "success":
-      return "#52c41a"; // green
-    case "warning":
-      return "#faad14"; // yellow
-    case "error":
-      return "#ff4d4f"; // red
-    default:
-      return "#1677ff"; // blue
-  }
-}
+// status colors reserved for future use
 
 // removed local truncation util; we show full text in modal
 
@@ -397,6 +428,21 @@ function getDoctorName(doctors, uuid) {
   if (!uuid) return null;
   const found = (doctors || []).find((d) => d.uuid === uuid || d.id === uuid);
   return found ? (found.full_name || found.username || found.email) : null;
+}
+
+function formatHm(value) {
+  if (!value) return null;
+  // accept 'HH:mm:ss' or Date/Dayjs
+  if (typeof value === 'string') {
+    const [h, m] = value.split(':');
+    if (!h || !m) return value;
+    return `${h.padStart(2, '0')}:${m.padStart(2, '0')}`;
+  }
+  try {
+    return dayjs(value).format('HH:mm');
+  } catch {
+    return String(value);
+  }
 }
 
 function modalTitle(mode) {

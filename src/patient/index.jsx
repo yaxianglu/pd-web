@@ -201,7 +201,12 @@ export default function Dashboard({ prefetched = null }) {
           <ProgressTracker currentStep={currentStepFromProgress} />
         </div>
         <div style={{ flex: 1 }}>
-          <ScheduleCard title="治療日誌" initialEvents={mockEvents} defaultMonth={dayjs().startOf('month')} />
+          <ScheduleCard
+            title="治療日誌"
+            initialEvents={mockEvents}
+            defaultMonth={dayjs().startOf('month')}
+            currentPatient={{ uuid: patientData?.uuid, full_name: patientData?.full_name }}
+          />
         </div>
       </div>
       <div style={{ position: "fixed", bottom: "20px", left: "50%", transform: "translateX(-50%)", zIndex: 10 }}>
