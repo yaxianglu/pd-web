@@ -278,7 +278,7 @@ export default function ScheduleCard({
             columns={columns}
             dataSource={list}
             scroll={{ y: 360, x: true }}
-            onRow={(record) => ({ onClick: () => openViewForEvent(record) })}
+            // onRow={(record) => ({ onClick: () => openViewForEvent(record) })}
           />
         </div>
       );
