@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Badge, Button, Calendar, DatePicker, Modal, Select, Space, TimePicker, Tooltip, Input, Form, message } from "antd";
 import dayjs from "dayjs";
 import "antd/dist/reset.css";
@@ -46,6 +46,34 @@ export default function ScheduleCard({
   // const clickTimerRef = useRef(null);
 
   const dateToEvents = useMemo(() => groupByDate(events), [events]);
+
+  const loadAppointmentsForMonth = useCallback(async (d) => {
+    try {
+      const api = (await import("../../services/api")).default;
+      const y = d.year();
+      const m = d.month() + 1; // 0-based to 1-based
+      const res = await api.getAppointmentsByMonth(y, m);
+      if (res && Array.isArray(res)) {
+        const mapped = res.map((a) => ({
+          id: a.id || a.uuid || Math.random().toString(36).slice(2, 8),
+          date: dayjs(a.date).toISOString(),
+          title: a.note || "预约",
+          status: a.status === "cancelled" ? "error" : "success",
+        }));
+        setEvents((initial) => {
+          // Replace sample with server data; if initial was real, merge unique by id
+          const base = Array.isArray(initialEvents) && initialEvents.length > 0 ? initialEvents : [];
+          return mapped.length > 0 ? mapped : base;
+        });
+      }
+    } catch (e) {
+      // fail silently; keep existing events (可能是本地样例)
+    }
+  }, [initialEvents]);
+
+  useEffect(() => {
+    loadAppointmentsForMonth(value);
+  }, [loadAppointmentsForMonth, value]);
 
   const handleSelect = useCallback((d) => {
     setValue(d);
@@ -270,6 +298,7 @@ export default function ScheduleCard({
       <Calendar
         fullscreen={false}
         value={value}
+        onChange={(d) => setValue(d)}
         onSelect={handleSelect}
         headerRender={headerRender}
         dateFullCellRender={dateFullCellRender}
