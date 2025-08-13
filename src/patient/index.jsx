@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import ProgressTracker, { l } from "../components/progress";
@@ -174,6 +175,16 @@ export default function Dashboard({ prefetched = null }) {
 
   const currentStepFromProgress = mapProgressToStep((patientInfo || {}).treatment_progress);
 
+  // Mock events for calendar — 模拟与截图类似的两天多条记录（8号、15号）
+  const monthBase = dayjs().startOf('month');
+  const mockEvents = [
+    { id: "w8", date: monthBase.date(8).toISOString(), title: "This is warning.", status: "warning" },
+    { id: "s8", date: monthBase.date(8).toISOString(), title: "This is usual.", status: "success" },
+    { id: "w15", date: monthBase.date(15).toISOString(), title: "This is warning.", status: "warning" },
+    { id: "v15", date: monthBase.date(15).toISOString(), title: "This is very usual.", status: "success" },
+    { id: "e15", date: monthBase.date(15).toISOString(), title: "This is error.", status: "error" },
+  ];
+
   return (
     <div style={{
       width: "100%",
@@ -190,7 +201,7 @@ export default function Dashboard({ prefetched = null }) {
           <ProgressTracker currentStep={currentStepFromProgress} />
         </div>
         <div style={{ flex: 1 }}>
-          <ScheduleCard title="治療日誌" />
+          <ScheduleCard title="治療日誌" initialEvents={mockEvents} defaultMonth={dayjs().startOf('month')} />
         </div>
       </div>
       <div style={{ position: "fixed", bottom: "20px", left: "50%", transform: "translateX(-50%)", zIndex: 10 }}>

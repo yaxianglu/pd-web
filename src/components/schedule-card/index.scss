@@ -37,7 +37,7 @@
     bottom: 8px;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 4px;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -49,6 +49,19 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  // highlight day cell when it has events
+  .has-events {
+    background: #e6f4ff; // light fill
+    border: 1px solid #91caff;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+    .ant-picker-calendar-date-value { font-weight: 600; }
+  }
+
+  .has-events:hover {
+    background: #d6ecff;
   }
 
   .schedule-modal {

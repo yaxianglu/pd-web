@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { Badge, Button, Calendar, Modal, Space, Tag, Tooltip } from "antd";
 import dayjs from "dayjs";
 import "antd/dist/reset.css";
@@ -15,16 +15,17 @@ export default function ScheduleCard({
   onCreate, // (draft) => Promise | void
   onUpdate, // (event) => Promise | void
   onView, // (event) => void
+  defaultMonth, // string | Dayjs, e.g. '2025-08-01'
 }) {
-  const [value, setValue] = useState(dayjs());
+  const [value, setValue] = useState(defaultMonth ? dayjs(defaultMonth) : dayjs());
   const [events, setEvents] = useState(() => ensureSample(initialEvents));
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [modalMode, setModalMode] = useState("view"); // view | edit | create
+  const [modalMode, setModalMode] = useState("view"); // view | edit | create | day
   const [activeDate, setActiveDate] = useState(null); // dayjs
   const [activeEvent, setActiveEvent] = useState(null);
 
-  const clickTimerRef = useRef(null);
+  // const clickTimerRef = useRef(null);
 
   const dateToEvents = useMemo(() => groupByDate(events), [events]);
 
@@ -47,20 +48,15 @@ export default function ScheduleCard({
     onView && onView(event);
   }, [onView]);
 
-  const handleItemClick = useCallback((event) => {
-    // Distinguish single vs double click using timer
-    if (clickTimerRef.current) {
-      window.clearTimeout(clickTimerRef.current);
-      clickTimerRef.current = null;
-      openViewForEvent(event); // treat as double click -> open detail
-      return;
-    }
-    clickTimerRef.current = window.setTimeout(() => {
-      clickTimerRef.current = null;
-      setActiveEvent(event);
-      setActiveDate(dayjs(event.date));
-    }, 200);
-  }, [openViewForEvent]);
+  const openDayDetails = useCallback((d) => {
+    setActiveEvent(null);
+    setActiveDate(d.startOf("day"));
+    setModalMode("day");
+    setModalOpen(true);
+  }, []);
+
+  // open event detail when click in day modal list
+  // removed: list items are only shown in day modal; click there directly opens detail
 
   const handleContextMenuDate = useCallback((e, d) => {
     e.preventDefault();
@@ -115,33 +111,48 @@ export default function ScheduleCard({
       const isSameMonth = current.isSame(value, "month");
       return (
         <div
-          className="ant-picker-calendar-date schedule-date"
+          className={`ant-picker-calendar-date schedule-date ${isSameMonth && list.length > 0 ? "has-events" : ""}`}
           onContextMenu={(e) => handleContextMenuDate(e, current)}
           onDoubleClick={() => openCreateForDate(current)}
         >
-          <div className="ant-picker-calendar-date-value">{current.date()}</div>
+          <div
+            className="ant-picker-calendar-date-value"
+            onClick={(e) => {
+              if (isSameMonth && list.length > 0) {
+                e.stopPropagation();
+                openDayDetails(current);
+              }
+            }}
+          >
+            {current.date()}
+          </div>
           <div className="ant-picker-calendar-date-content" />
-          {isSameMonth && list.length > 0 && (
-            <ul className="schedule-card-events">
-              {list.map((item) => (
-                <li
-                  key={item.id}
-                  className="schedule-card-event"
-                  onClick={() => handleItemClick(item)}
-                  onDoubleClick={() => openViewForEvent(item)}
-                >
-                  <Badge color={statusToColor(item.status)} text={shortText(item.title)} />
+        </div>
+      );
+    },
+    [dateToEvents, handleContextMenuDate, openCreateForDate, openDayDetails, value]
+  );
+
+  const renderModalContent = () => {
+    if (modalMode === "day") {
+      const key = activeDate?.format("YYYY-MM-DD");
+      const list = (key && dateToEvents.get(key)) || [];
+      return (
+        <div className="schedule-modal">
+          {list.length === 0 ? (
+            <p>暂无数据</p>
+          ) : (
+            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+              {list.map((ev) => (
+                <li key={ev.id} style={{ marginBottom: 8, cursor: "pointer" }} onClick={() => openViewForEvent(ev)}>
+                  <Badge color={statusToColor(ev.status)} text={ev.title} />
                 </li>
               ))}
             </ul>
           )}
         </div>
       );
-    },
-    [dateToEvents, handleContextMenuDate, openCreateForDate, handleItemClick, openViewForEvent, value]
-  );
-
-  const renderModalContent = () => {
+    }
     if (modalMode === "create") {
       return (
         <div className="schedule-modal">
@@ -236,10 +247,7 @@ function statusToColor(status) {
   }
 }
 
-function shortText(text, max = 12) {
-  if (!text) return "";
-  return text.length > max ? `${text.slice(0, max)}...` : text;
-}
+// removed local truncation util; we show full text in modal
 
 function ensureSample(initial) {
   if (Array.isArray(initial) && initial.length > 0) return initial;
