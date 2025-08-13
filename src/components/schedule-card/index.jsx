@@ -16,6 +16,7 @@ export default function ScheduleCard({
   onUpdate, // (event) => Promise | void
   onView, // (event) => void
   defaultMonth, // string | Dayjs, e.g. '2025-08-01'
+  currentPatient, // { uuid, full_name } 可选，用于详情展示与创建默认归属
 }) {
   const [value, setValue] = useState(defaultMonth ? dayjs(defaultMonth) : dayjs());
   const [events, setEvents] = useState(() => ensureSample(initialEvents));
@@ -58,6 +59,11 @@ export default function ScheduleCard({
           id: a.id || a.uuid || Math.random().toString(36).slice(2, 8),
           date: dayjs(a.date).toISOString(),
           title: a.note || "预约",
+          note: a.note || "",
+          doctor_uuid: a.doctor_uuid || null,
+          patient_uuid: a.patient_uuid || null,
+          start_time: a.start_time || null,
+          end_time: a.end_time || null,
           status: a.status === "cancelled" ? "error" : "success",
         }));
         setEvents((initial) => {
@@ -130,6 +136,7 @@ export default function ScheduleCard({
         start_time: values.start_time ? values.start_time.format("HH:mm:ss") : null,
         end_time: values.end_time ? values.end_time.format("HH:mm:ss") : null,
         doctor_uuid: values.doctor_uuid || null,
+        patient_uuid: currentPatient?.uuid || null,
         note: values.note || "",
         status: "scheduled",
       };
@@ -143,6 +150,11 @@ export default function ScheduleCard({
         id: `local-${Math.random().toString(36).slice(2, 8)}`,
         date: dayjs(payload.date).toISOString(),
         title: payload.note || "预约",
+        note: payload.note || "",
+        doctor_uuid: payload.doctor_uuid,
+        patient_uuid: payload.patient_uuid,
+        start_time: payload.start_time,
+        end_time: payload.end_time,
         status: "success",
       };
       let created = draft;
@@ -166,7 +178,7 @@ export default function ScheduleCard({
       }
     }
     setModalOpen(false);
-  }, [modalMode, activeDate, activeEvent, onCreate, onUpdate, form]);
+  }, [modalMode, activeDate, activeEvent, onCreate, onUpdate, form, currentPatient?.uuid]);
 
   const headerRender = useCallback(
     ({ value: headerValue, onChange }) => {
@@ -276,8 +288,20 @@ export default function ScheduleCard({
     // view
     return (
       <div className="schedule-modal">
-        <p>查看详情（内容待定）</p>
-        <pre>{JSON.stringify(activeEvent, null, 2)}</pre>
+        <div style={{ display: "grid", gridTemplateColumns: "96px 1fr", rowGap: 8, columnGap: 8 }}>
+          <div>医生</div>
+          <div>{getDoctorName(doctors, activeEvent?.doctor_uuid) || "-"}</div>
+          <div>患者</div>
+          <div>{activeEvent?.patient_name || currentPatient?.full_name || "-"}</div>
+          <div>日期</div>
+          <div>{activeEvent?.date ? dayjs(activeEvent.date).format("YYYY-MM-DD") : activeDate?.format("YYYY-MM-DD")}</div>
+          <div>开始时间</div>
+          <div>{activeEvent?.start_time || "-"}</div>
+          <div>结束时间</div>
+          <div>{activeEvent?.end_time || "-"}</div>
+          <div>备注</div>
+          <div>{activeEvent?.note || activeEvent?.title || "-"}</div>
+        </div>
       </div>
     );
   };
@@ -368,7 +392,12 @@ function ensureSample(initial) {
   ];
 }
 
-// buildDraft removed – replaced by inline draft construction after API create
+// helpers
+function getDoctorName(doctors, uuid) {
+  if (!uuid) return null;
+  const found = (doctors || []).find((d) => d.uuid === uuid || d.id === uuid);
+  return found ? (found.full_name || found.username || found.email) : null;
+}
 
 function modalTitle(mode) {
   if (mode === "create") return "新增";
