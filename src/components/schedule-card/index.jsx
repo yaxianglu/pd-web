@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { Badge, Button, Calendar, Modal, Space, Tag, Tooltip } from "antd";
+import { Badge, Button, Calendar, DatePicker, Modal, Select, Space, TimePicker, Tooltip, Input, Form } from "antd";
 import dayjs from "dayjs";
 import "antd/dist/reset.css";
 import "./index.scss";
@@ -24,6 +24,23 @@ export default function ScheduleCard({
   const [modalMode, setModalMode] = useState("view"); // view | edit | create | day
   const [activeDate, setActiveDate] = useState(null); // dayjs
   const [activeEvent, setActiveEvent] = useState(null);
+  const [loadingDoctors, setLoadingDoctors] = useState(false);
+  const [doctors, setDoctors] = useState([]);
+
+  // lazy load doctors when opening create/edit modal
+  const loadDoctors = useCallback(async () => {
+    if (doctors.length > 0 || loadingDoctors) return;
+    try {
+      setLoadingDoctors(true);
+      const api = (await import("../../services/api")).default;
+      const res = await api.getDoctors();
+      if (res && res.success) setDoctors(res.data || []);
+    } catch (e) {
+      // silent
+    } finally {
+      setLoadingDoctors(false);
+    }
+  }, [doctors.length, loadingDoctors]);
 
   // const clickTimerRef = useRef(null);
 
@@ -38,7 +55,8 @@ export default function ScheduleCard({
     setActiveDate(d.startOf("day"));
     setModalMode("create");
     setModalOpen(true);
-  }, []);
+    loadDoctors();
+  }, [loadDoctors]);
 
   const openViewForEvent = useCallback((event) => {
     setActiveEvent(event);
@@ -156,8 +174,27 @@ export default function ScheduleCard({
     if (modalMode === "create") {
       return (
         <div className="schedule-modal">
-          <p>新增条目（内容待定）</p>
-          <Tag color="blue">{activeDate?.format("YYYY-MM-DD")}</Tag>
+          <Form layout="vertical">
+            <Form.Item label="日期">
+              <DatePicker style={{ width: "100%" }} value={activeDate} onChange={(d) => setActiveDate(d)} />
+            </Form.Item>
+            <Form.Item label="开始时间">
+              <TimePicker style={{ width: "100%" }} format="HH:mm" />
+            </Form.Item>
+            <Form.Item label="结束时间">
+              <TimePicker style={{ width: "100%" }} format="HH:mm" defaultValue={dayjs("18:00", "HH:mm")} />
+            </Form.Item>
+            <Form.Item label="医生">
+              <Select
+                placeholder="选择医生"
+                loading={loadingDoctors}
+                options={doctors.map((d) => ({ label: d.full_name || d.username || d.email, value: d.uuid || d.id }))}
+              />
+            </Form.Item>
+            <Form.Item label="备注">
+              <Input.TextArea rows={3} placeholder="备注信息" />
+            </Form.Item>
+          </Form>
         </div>
       );
     }
