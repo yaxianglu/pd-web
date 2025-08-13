@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { Badge, Button, Calendar, DatePicker, Modal, Select, Space, TimePicker, Tooltip, Input, Form } from "antd";
+import { Badge, Button, Calendar, DatePicker, Modal, Select, Space, TimePicker, Tooltip, Input, Form, message } from "antd";
 import dayjs from "dayjs";
 import "antd/dist/reset.css";
 import "./index.scss";
@@ -26,6 +26,7 @@ export default function ScheduleCard({
   const [activeEvent, setActiveEvent] = useState(null);
   const [loadingDoctors, setLoadingDoctors] = useState(false);
   const [doctors, setDoctors] = useState([]);
+  const [form] = Form.useForm();
 
   // lazy load doctors when opening create/edit modal
   const loadDoctors = useCallback(async () => {
@@ -56,7 +57,17 @@ export default function ScheduleCard({
     setModalMode("create");
     setModalOpen(true);
     loadDoctors();
-  }, [loadDoctors]);
+    try {
+      form.resetFields();
+      form.setFieldsValue({
+        date: d.startOf("day"),
+        doctor_uuid: undefined,
+        start_time: null,
+        end_time: dayjs("18:00", "HH:mm"),
+        note: "",
+      });
+    } catch {}
+  }, [loadDoctors, form]);
 
   const openViewForEvent = useCallback((event) => {
     setActiveEvent(event);
@@ -83,7 +94,29 @@ export default function ScheduleCard({
 
   const handleOk = useCallback(async () => {
     if (modalMode === "create") {
-      const draft = buildDraft(activeDate);
+      const api = (await import("../../services/api")).default;
+      const values = await form.validateFields().catch(() => null);
+      if (!values) return;
+      const payload = {
+        date: (values.date || activeDate)?.format("YYYY-MM-DD"),
+        start_time: values.start_time ? values.start_time.format("HH:mm:ss") : null,
+        end_time: values.end_time ? values.end_time.format("HH:mm:ss") : null,
+        doctor_uuid: values.doctor_uuid || null,
+        note: values.note || "",
+        status: "scheduled",
+      };
+      try {
+        await api.createAppointment(payload);
+        message.success("已创建预约");
+      } catch (e) {
+        message.error(e?.message || "创建失败");
+      }
+      const draft = {
+        id: `local-${Math.random().toString(36).slice(2, 8)}`,
+        date: dayjs(payload.date).toISOString(),
+        title: payload.note || "预约",
+        status: "success",
+      };
       let created = draft;
       try {
         if (onCreate) {
@@ -105,7 +138,7 @@ export default function ScheduleCard({
       }
     }
     setModalOpen(false);
-  }, [modalMode, activeDate, activeEvent, onCreate, onUpdate]);
+  }, [modalMode, activeDate, activeEvent, onCreate, onUpdate, form]);
 
   const headerRender = useCallback(
     ({ value: headerValue, onChange }) => {
@@ -174,24 +207,30 @@ export default function ScheduleCard({
     if (modalMode === "create") {
       return (
         <div className="schedule-modal">
-          <Form layout="vertical">
-            <Form.Item label="日期">
-              <DatePicker style={{ width: "100%" }} value={activeDate} onChange={(d) => setActiveDate(d)} />
+          <Form form={form} layout="vertical" initialValues={{
+            date: activeDate,
+            start_time: null,
+            end_time: dayjs("18:00", "HH:mm"),
+            doctor_uuid: undefined,
+            note: "",
+          }}>
+            <Form.Item name="date" label="日期" rules={[{ required: true, message: "请选择日期" }]}>
+              <DatePicker style={{ width: "100%" }} />
             </Form.Item>
-            <Form.Item label="开始时间">
-              <TimePicker style={{ width: "100%" }} format="HH:mm" />
-            </Form.Item>
-            <Form.Item label="结束时间">
-              <TimePicker style={{ width: "100%" }} format="HH:mm" defaultValue={dayjs("18:00", "HH:mm")} />
-            </Form.Item>
-            <Form.Item label="医生">
+            <Form.Item name="doctor_uuid" label="医生">
               <Select
                 placeholder="选择医生"
                 loading={loadingDoctors}
                 options={doctors.map((d) => ({ label: d.full_name || d.username || d.email, value: d.uuid || d.id }))}
               />
             </Form.Item>
-            <Form.Item label="备注">
+            <Form.Item name="start_time" label="开始时间">
+              <TimePicker style={{ width: "100%" }} format="HH:mm" />
+            </Form.Item>
+            <Form.Item name="end_time" label="结束时间">
+              <TimePicker style={{ width: "100%" }} format="HH:mm" />
+            </Form.Item>
+            <Form.Item name="note" label="备注">
               <Input.TextArea rows={3} placeholder="备注信息" />
             </Form.Item>
           </Form>
@@ -300,14 +339,7 @@ function ensureSample(initial) {
   ];
 }
 
-function buildDraft(d) {
-  return {
-    id: `draft-${Math.random().toString(36).slice(2, 8)}`,
-    date: d.startOf("day").toISOString(),
-    title: "新建事项（待完善）",
-    status: "default",
-  };
-}
+// buildDraft removed – replaced by inline draft construction after API create
 
 function modalTitle(mode) {
   if (mode === "create") return "新增";

@@ -340,6 +340,16 @@ class ApiService {
     }
   }
 
+  // 创建预约
+  async createAppointment(data) {
+    return this.post('/api/appointments', data, true);
+  }
+
+  // 按月份获取预约
+  async getAppointmentsByMonth(year, month) {
+    return this.get(`/api/appointments/by-month?year=${year}&month=${month}`, true);
+  }
+
   // 获取诊所列表
   async getClinics() {
     try {
