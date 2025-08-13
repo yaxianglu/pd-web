@@ -206,6 +206,12 @@ export default function Dashboard({ prefetched = null }) {
             initialEvents={mockEvents}
             defaultMonth={dayjs().startOf('month')}
             currentPatient={{ uuid: patientData?.uuid, full_name: patientData?.full_name }}
+            onAppointmentCreated={() => {
+              // 预约创建成功后，将“等待預約”切换为“預約完成”
+              // ProgressTracker 的 currentStep 显示由 mapProgressToStep 控制；
+              // 这里简单把本地 patientInfo 的 progress 推到至少 1
+              setPatientInfo((prev) => ({ ...(prev || {}), treatment_progress: Math.max(1, (prev?.treatment_progress || 0)) }));
+            }}
           />
         </div>
       </div>

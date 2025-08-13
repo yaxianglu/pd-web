@@ -17,6 +17,7 @@ export default function ScheduleCard({
   onView, // (event) => void
   defaultMonth, // string | Dayjs, e.g. '2025-08-01'
   currentPatient, // { uuid, full_name } 可选，用于详情展示与创建默认归属
+  onAppointmentCreated, // () => void 可选：创建成功后的回调
 }) {
   const [value, setValue] = useState(defaultMonth ? dayjs(defaultMonth) : dayjs());
   const [events, setEvents] = useState(() => ensureSample(initialEvents));
@@ -145,6 +146,7 @@ export default function ScheduleCard({
       try {
         await api.createAppointment(payload);
         message.success("已创建预约");
+        if (onAppointmentCreated) onAppointmentCreated();
       } catch (e) {
         message.error(e?.message || "创建失败");
       }
@@ -183,7 +185,7 @@ export default function ScheduleCard({
       }
     }
     setModalOpen(false);
-  }, [modalMode, activeDate, activeEvent, onCreate, onUpdate, form, currentPatient?.uuid, currentPatient?.full_name, doctors]);
+  }, [modalMode, activeDate, activeEvent, onCreate, onUpdate, form, currentPatient?.uuid, currentPatient?.full_name, doctors, onAppointmentCreated]);
 
   const headerRender = useCallback(
     ({ value: headerValue, onChange }) => {
@@ -278,7 +280,7 @@ export default function ScheduleCard({
             columns={columns}
             dataSource={list}
             scroll={{ y: 360, x: true }}
-            // onRow={(record) => ({ onClick: () => openViewForEvent(record) })}
+            onRow={(record) => ({ onDoubleClick: () => openViewForEvent(record) })}
           />
         </div>
       );
