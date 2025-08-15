@@ -70,7 +70,10 @@ export default function PearlLogin() {
 
   // 员工登录处理
   const handleStaffLogin = async () => {
-    if (!staffUsername || !staffPassword) {
+    const username = staffUsername.trim();
+    const password = staffPassword.trim();
+
+    if (!username || !password) {
       setErrorMessage('請輸入用戶名和密碼');
       return;
     }
@@ -80,10 +83,10 @@ export default function PearlLogin() {
 
     try {
       // 使用 crypto-js 进行 SHA-256 加密，避免对 Web Crypto API 的依赖
-      const hashedPassword = CryptoJS.SHA256(staffPassword).toString(CryptoJS.enc.Hex);
+      const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
       
       const responseData = await apiService.post('/auth/login', {
-        username: staffUsername,
+        username,
         password: hashedPassword,
       }, false); // 登录不需要认证
 
