@@ -51,7 +51,7 @@ const steps = [
       <>
         報告兩週內回特約診所審核<br/>並同意您的專屬美齒計畫
         <br />
-        <span className="price">$48,000-$118,00(此費用為診所收取)</span>
+        <span className="price">$48,000-$118,00</span>
       </>
     ),
   },
