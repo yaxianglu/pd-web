@@ -41,7 +41,7 @@ export default function ManufacturingSection() {
             容自信。療效、舒適與價格三者兼顧，是我們一貫的堅持。
             </div>
           </div>
-          <div className="card-content-title">
+          {/* <div className="card-content-title">
             <div className="card-content-title-title">
             彈性付款方式
             </div>
@@ -51,12 +51,12 @@ export default function ManufacturingSection() {
               支援信用卡、轉帳、行動支付等多種方式<br/>
               我們的目標是讓療程不影響您生活節奏，彈性規畫預算、變美更輕鬆。
             </div>
-          </div>
+          </div> */}
           <div className="card-content-price">
             <div className="pricing-table">
               {/* 左侧复杂度列 */}
               <div className="complexity-column">
-                <div className="complexity-header"></div>
+                {/* <div className="complexity-header"></div> */}
                 <div className="complexity-item">輕度<span>/複雜程度</span></div>
                 <div className="complexity-item">中度<span>/複雜程度</span></div>
                 <div className="complexity-item">重度<span>/複雜程度</span></div>
@@ -64,20 +64,20 @@ export default function ManufacturingSection() {
               
               {/* 一次性付款列 */}
               <div className="payment-column">
-                <div className="payment-header">
+                {/* <div className="payment-header">
                   <div className="payment-title">一次付款</div>
                   <div className="payment-subtitle">一次拿到所有牙套</div>
                   <div className="limited-badge">
                     <img src={p12} alt="#" />
                   </div>
-                </div>
+                </div> */}
                 <div className="price-item">$ 48,000</div>
                 <div className="price-item">$ 98,000</div>
                 <div className="price-item">$ 118,000</div>
               </div>
               
               {/* 分期付款列 */}
-              <div className="payment-column installment">
+              {/* <div className="payment-column installment">
                 <div className="payment-header">
                   <div className="payment-title">分期付款</div>
                   <div className="payment-subtitle">12個月零利率</div>
@@ -85,7 +85,7 @@ export default function ManufacturingSection() {
                 <div className="price-item">$ 40,00</div>
                 <div className="price-item">$ 81,67</div>
                 <div className="price-item">$ 98,33</div>
-              </div>
+              </div> */}
             </div>
           </div>
 
