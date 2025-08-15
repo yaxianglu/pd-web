@@ -23,4 +23,8 @@
   text-align: left;
   line-height: 2;
   margin-top: 40px;
+
+  @media (max-width: 1125px) {
+    font-size: 12px;
+  }
 }

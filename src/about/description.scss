@@ -18,6 +18,10 @@
     font-size: 40px;
     font-weight: bold;
     text-align: center;
+
+    @media (max-width: 1125px) {
+      font-size: 12px;
+    }
   }
 
   img {

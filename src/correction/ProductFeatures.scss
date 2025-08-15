@@ -15,6 +15,10 @@ background-color: #F5F5F5;
   font-size: 20px;
   line-height: 1.5;
   text-align: left;
+
+  @media (max-width: 1125px) {
+    font-size: 12px;
+  }
 }
 
 img {
@@ -45,12 +49,20 @@ img {
       font-size: 24px;
       font-weight: 600;
       color: white;
+
+      @media (max-width: 1125px) {
+        font-size: 12px;
+      }
     }
     
     .correction-dkfjsl-wrapper-item-description {
       font-size: 20px;
       line-height: 1.5;
       color: white;
+
+      @media (max-width: 1125px) {
+        font-size: 12px;
+      }
     }
   }
 }

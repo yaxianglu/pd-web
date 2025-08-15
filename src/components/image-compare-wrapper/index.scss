@@ -5,6 +5,10 @@
   align-items: center;
   position: relative;
 
+  @media (max-width: 1125px) {
+    flex-direction: column;
+  }
+
 
   .image-compare-wrapper-title {
     font-size: 20px;
@@ -35,6 +39,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 1125px) {
+    width: 100%;
+  }
 
   .aligner {
     position: absolute;

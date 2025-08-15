@@ -23,6 +23,11 @@
         color: white;
         text-align: left;
         padding: 20px 30px;
+
+        @media (max-width: 1125px) {
+          font-size: 12px;
+          font-weight: 400;
+        }
       }
 
       .correction-plan-card-section-item-description {

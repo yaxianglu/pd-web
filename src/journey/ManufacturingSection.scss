@@ -164,12 +164,21 @@
                 }
               }
 
+              @media (max-width: 1125px) {
+                font-size: 12px;
+              }
+
               span {
                 font-size: 14px;
                 display: inline-block;
                 color: rgba(0, 0, 0, 0.5);
+
+                @media (max-width: 1125px) {
+                  font-size: 12px;
+                }
+              
               }
-            }
+}
           }
 
           .payment-column {
@@ -191,6 +200,10 @@
               .price-item {
                 color: #fff;
                 font-size: 24px;
+
+                @media (max-width: 1125px) {
+                  font-size: 12px;
+                }
 
                 &::after {
                   content: '';
@@ -258,6 +271,11 @@
               font-weight: bold;
               color: #333;
               position: relative;
+
+              @media (max-width: 1125px) {
+                font-size: 12px;
+              }
+
 
               &::after {
                 content: '';
