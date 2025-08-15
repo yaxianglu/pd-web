@@ -5,8 +5,10 @@ import p9 from './imgs/9.svg';
 import p10 from './imgs/10.svg';
 import CardWrapper from '../components/card-wrapper';
 import Grid from '../components/grid';
+import useMobile from '../hooks/mobile.tsx';
 
 export default function ProductFeatures() {
+  const [isMobile] = useMobile();
   return (
     <CardWrapper title="微笑旅程中會有什麼額外費用嗎？">
       <div className="product-features-content">
@@ -17,7 +19,7 @@ export default function ProductFeatures() {
         <div className="product-features-item product-features-item-2">
           以下是在微笑旅程中，可能會遇到的額外費用：
         </div>
-        <Grid style={{ flexDirection: 'column', width: '60%', marginLeft: '20%' }}>
+        <Grid style={ isMobile ? { flexDirection: 'column', width: '60%', marginLeft: '20%' } : {}}>
           <div className="product-features-item-3-wrapper-item">
             <div className="product-features-item-3-wrapper-item-content">
               <div className="product-features-item-3-wrapper-item-content-title">牙醫諮詢費用</div>

@@ -75,6 +75,10 @@
     align-items: center;
     justify-content: center;
     color: white;
+
+    @media (max-width: 1125px) {
+      font-size: 14px;
+    }
   }
 
   &__item-divider {
@@ -91,6 +95,10 @@
     line-height: 1.8;
     flex: 1 1 auto;
     text-align: left;
+
+    @media (max-width: 1125px) {
+      font-size: 12px;
+    }
   }
 
   &__item-icon {
