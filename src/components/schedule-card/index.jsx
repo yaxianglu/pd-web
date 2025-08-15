@@ -5,7 +5,7 @@ import "antd/dist/reset.css";
 import "./index.scss";
 
 export default function ScheduleCard({
-  title = "日历",
+  title = "日曆",
   subtitle,
   style,
   /**
@@ -59,7 +59,7 @@ export default function ScheduleCard({
         const mapped = res.map((a) => ({
           id: a.id || a.uuid || Math.random().toString(36).slice(2, 8),
           date: dayjs(a.date).toISOString(),
-          title: a.note || "预约",
+          title: a.note || "預約",
           note: a.note || "",
           doctor_uuid: a.doctor_uuid || null,
           doctor_name: a.doctor_name || null,
@@ -145,15 +145,15 @@ export default function ScheduleCard({
       };
       try {
         await api.createAppointment(payload);
-        message.success("已创建预约");
+        message.success("已創建預約");
         if (onAppointmentCreated) onAppointmentCreated();
       } catch (e) {
-        message.error(e?.message || "创建失败");
+        message.error(e?.message || "創建失敗");
       }
       const draft = {
         id: `local-${Math.random().toString(36).slice(2, 8)}`,
         date: dayjs(payload.date).toISOString(),
-        title: payload.note || "预约",
+        title: payload.note || "預約",
         note: payload.note || "",
         doctor_uuid: payload.doctor_uuid,
         doctor_name:
@@ -237,14 +237,14 @@ export default function ScheduleCard({
       const list = (key && dateToEvents.get(key)) || [];
       const columns = [
         {
-          title: "时间",
+          title: "時間",
           dataIndex: "start_time",
           key: "time",
           render: (_, r) => `${formatHm(r.start_time) || "--"} ~ ${formatHm(r.end_time) || "--"}`,
           width: 160,
         },
         {
-          title: "医生",
+          title: "醫生",
           dataIndex: "doctor_name",
           key: "doctor",
           render: (_, r) => r.doctor_name || getDoctorName(doctors, r.doctor_uuid) || "-",
@@ -258,13 +258,13 @@ export default function ScheduleCard({
           width: 160,
         },
         {
-          title: "备注",
+          title: "備註",
           dataIndex: "note",
           key: "note",
           ellipsis: true,
         },
         {
-          title: "状态",
+          title: "狀態",
           dataIndex: "status",
           key: "status",
           render: (v) => <Tag color={v === 'cancelled' ? 'red' : v === 'completed' ? 'green' : 'blue'}>{v || '-'}</Tag>,
@@ -295,24 +295,24 @@ export default function ScheduleCard({
             doctor_uuid: undefined,
             note: "",
           }}>
-            <Form.Item name="date" label="日期" rules={[{ required: true, message: "请选择日期" }]}>
+            <Form.Item name="date" label="日期" rules={[{ required: true, message: "請選擇日期" }]}>
               <DatePicker style={{ width: "100%" }} />
             </Form.Item>
-            <Form.Item name="doctor_uuid" label="医生">
+            <Form.Item name="doctor_uuid" label="醫生">
               <Select
-                placeholder="选择医生"
+                placeholder="選擇醫生"
                 loading={loadingDoctors}
                 options={doctors.map((d) => ({ label: d.full_name || d.username || d.email, value: d.uuid || d.id }))}
               />
             </Form.Item>
-            <Form.Item name="start_time" label="开始时间">
+            <Form.Item name="start_time" label="開始時間">
               <TimePicker style={{ width: "100%" }} format="HH:mm" />
             </Form.Item>
-            <Form.Item name="end_time" label="结束时间">
+            <Form.Item name="end_time" label="結束時間">
               <TimePicker style={{ width: "100%" }} format="HH:mm" />
             </Form.Item>
-            <Form.Item name="note" label="备注">
-              <Input.TextArea rows={3} placeholder="备注信息" />
+            <Form.Item name="note" label="備註">
+              <Input.TextArea rows={3} placeholder="備註資訊" />
             </Form.Item>
           </Form>
         </div>
@@ -321,7 +321,7 @@ export default function ScheduleCard({
     if (modalMode === "edit") {
       return (
         <div className="schedule-modal">
-          <p>编辑条目（内容待定）</p>
+          <p>編輯條目（內容待定）</p>
           <pre>{JSON.stringify(activeEvent, null, 2)}</pre>
         </div>
       );
@@ -330,17 +330,17 @@ export default function ScheduleCard({
     return (
       <div className="schedule-modal">
         <div style={{ display: "grid", gridTemplateColumns: "96px 1fr", rowGap: 8, columnGap: 8 }}>
-          <div>医生</div>
+          <div>醫生</div>
           <div>{activeEvent?.doctor_name || getDoctorName(doctors, activeEvent?.doctor_uuid) || "-"}</div>
           <div>患者</div>
           <div>{activeEvent?.patient_name || currentPatient?.full_name || "-"}</div>
           <div>日期</div>
           <div>{activeEvent?.date ? dayjs(activeEvent.date).format("YYYY-MM-DD") : activeDate?.format("YYYY-MM-DD")}</div>
-          <div>开始时间</div>
+          <div>開始時間</div>
           <div>{formatHm(activeEvent?.start_time) || "-"}</div>
-          <div>结束时间</div>
+          <div>結束時間</div>
           <div>{formatHm(activeEvent?.end_time) || "-"}</div>
-          <div>备注</div>
+          <div>備註</div>
           <div>{activeEvent?.note || activeEvent?.title || "-"}</div>
         </div>
       </div>
@@ -353,7 +353,7 @@ export default function ScheduleCard({
         <div className="schedule-card-title">{title}</div>
         {subtitle && <div className="schedule-card-subtitle">{subtitle}</div>}
         <Space>
-          <Tooltip title="当天新增">
+          <Tooltip title="當天新增">
             <Button size="small" type="primary" onClick={() => openCreateForDate(dayjs())}>
               新增
             </Button>
@@ -373,7 +373,7 @@ export default function ScheduleCard({
         open={modalOpen}
         onCancel={() => setModalOpen(false)}
         onOk={handleOk}
-        okText={modalMode === "view" ? "关闭" : "确定"}
+        okText={modalMode === "view" ? "關閉" : "確定"}
         cancelText="取消"
         title={modalTitle(modalMode)}
         width={modalMode === 'day' ? 900 : 560}
@@ -382,9 +382,9 @@ export default function ScheduleCard({
         footer={
           modalMode === "view" ? (
             <Space>
-              <Button onClick={() => setModalOpen(false)}>关闭</Button>
+              <Button onClick={() => setModalOpen(false)}>關閉</Button>
               <Button type="primary" onClick={() => setModalMode("edit")}>
-                编辑
+                編輯
               </Button>
             </Space>
           ) : undefined
@@ -449,8 +449,8 @@ function formatHm(value) {
 
 function modalTitle(mode) {
   if (mode === "create") return "新增";
-  if (mode === "edit") return "编辑";
-  return "详情";
+  if (mode === "edit") return "編輯";
+  return "詳情";
 }
 
 
