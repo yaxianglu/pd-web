@@ -449,7 +449,7 @@ export default function ScheduleCard({
           <div className="schedule-card-footer-tools-buttons">
             <button
               type="button"
-              style={{ background: '#fff', border: '1.2px solid #e3eae8', color: '#666', fontWeight: 600, fontSize: 14, borderRadius: 10, padding: '6px 12px', cursor: 'pointer' }}
+              style={{ background: '#fff', border: '1.2px solid #e3eae8', color: '#666', fontWeight: 600, fontSize: 14, borderRadius: 10, padding: '6px 24px', cursor: 'pointer' }}
               onClick={() => {
                 const url = currentPatient?.uuid ? `/upload?id=${encodeURIComponent(currentPatient.uuid)}` : '/upload';
                 window.open(url, '_blank');
@@ -459,7 +459,7 @@ export default function ScheduleCard({
             </button>
             <button
               type="button"
-              style={{ background: '#fff', border: '1.2px solid #e3eae8', color: '#666', fontWeight: 600, fontSize: 14, borderRadius: 10, padding: '6px 12px', cursor: 'pointer' }}
+              style={{ background: '#fff', border: '1.2px solid #e3eae8', color: '#666', fontWeight: 600, fontSize: 14, borderRadius: 10, padding: '6px 24px', cursor: 'pointer' }}
               onClick={handleDownloadAll}
             >
               下載
