@@ -352,13 +352,15 @@ export default function ScheduleCard({
       <div className="schedule-card-header">
         <div className="schedule-card-title">{title}</div>
         {subtitle && <div className="schedule-card-subtitle">{subtitle}</div>}
-        <Space>
-          <Tooltip title="當天新增">
-            <Button size="small" type="primary" onClick={() => openCreateForDate(dayjs())}>
-              新增
-            </Button>
-          </Tooltip>
-        </Space>
+        {!currentPatient && (
+          <Space>
+            <Tooltip title="當天新增">
+              <Button size="small" type="primary" onClick={() => openCreateForDate(dayjs())}>
+                新增
+              </Button>
+            </Tooltip>
+          </Space>
+        )}
       </div>
       <Calendar
         fullscreen={false}
