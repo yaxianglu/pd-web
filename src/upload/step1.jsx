@@ -32,16 +32,16 @@ export default function Step1({ onNext, style, setStep }) {
     try {
       setLoading(true);
       const result = await smileTestApi.getSmileTestByUuid(testUuid);
-      
+
       if (result.success && result.data) {
-        const data = result.data;
+        const data = (result.data && result.data.smileTest) ? result.data.smileTest : result.data;
         setFormData({
-          full_name: data.full_name || '',
-          birth_date: data.birth_date ? new Date(data.birth_date).toISOString().split('T')[0] : '',
-          phone: data.phone || '',
-          email: data.email || '',
-          line_id: data.line_id || '',
-          city: data.city || ''
+          full_name: data?.full_name || '',
+          birth_date: data?.birth_date ? new Date(data.birth_date).toISOString().split('T')[0] : '',
+          phone: data?.phone || '',
+          email: data?.email || '',
+          line_id: data?.line_id || '',
+          city: data?.city || ''
         });
       }
     } catch (error) {

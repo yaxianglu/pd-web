@@ -56,7 +56,7 @@ export default function Step2({ onNext, setStep, style }) {
       console.log('API result:', result);
       
       if (result.success && result.data) {
-        const data = result.data;
+        const data = (result.data && result.data.smileTest) ? result.data.smileTest : result.data;
         console.log('Setting form data:', {
           teeth_type: data.teeth_type,
           considerations: data.considerations,
@@ -64,9 +64,9 @@ export default function Step2({ onNext, setStep, style }) {
         });
         
         setFormData({
-          teethDescription: data.teeth_type ? [data.teeth_type] : [],
-          alignerConsideration: data.considerations ? data.considerations.split(', ') : [],
-          improvement: data.improvement_points || ''
+          teethDescription: data?.teeth_type ? [data.teeth_type] : [],
+          alignerConsideration: data?.considerations ? data.considerations.split(', ') : [],
+          improvement: data?.improvement_points || ''
         });
       } else {
         console.log('No data found or API failed');

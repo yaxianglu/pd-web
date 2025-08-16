@@ -227,15 +227,15 @@ export default function Step3({ onNext, setStep, style }) {
 
     try {
       const result = await smileTestApi.getSmileTestByUuid(testUuid);
-      
+
       if (result.success && result.data) {
-        const data = result.data;
+        const data = (result.data && result.data.smileTest) ? result.data.smileTest : result.data;
         const savedPhotos = [];
         
         // 检查每个照片字段
         for (let step = 1; step <= 4; step++) {
           const photoField = `teeth_image_${step}`;
-          const photoUrl = data[photoField];
+          const photoUrl = data && data[photoField];
           
           if (photoUrl) {
             console.log(`Found saved photo for step ${step}:`, photoUrl.substring(0, 50) + '...');
