@@ -57,7 +57,7 @@ export default function PatientInfoList({ patients = [] }) {
           const isOpen = !!expanded[id];
           return (
             <div key={id} className={`list-row ${isOpen ? 'open' : ''}`}>
-              <div className="row-main" onClick={() => onToggle(id)}>
+              <div className="row-main">
                 <div className="col sequence">{String(index + 1).padStart(2, '0')}</div>
                 <div className="col name">{st.full_name || '—'}</div>
                 <div className="col info" style={{ flex: 1, display: 'flex', alignItems: 'center', marginRight: 12, overflow: 'hidden' }}>
@@ -69,7 +69,7 @@ export default function PatientInfoList({ patients = [] }) {
                     { label: '信箱', value: pt.email || 'N/A' },
                   ]} style={{ marginBottom: 0, width: '100%' }} />
                 </div>
-                <div className="col action" style={{ marginRight: 12 }}>
+                <div className="col action" style={{ marginRight: 12 }} onClick={() => onToggle(id)}>
                   <span className={`arrow ${isOpen ? 'up' : 'down'}`}>▾</span>
                 </div>
               </div>
