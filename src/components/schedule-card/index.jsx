@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Button, Calendar, DatePicker, Modal, Select, Space, TimePicker, Tooltip, Input, Form, message, Table, Tag } from "antd";
 import dayjs from "dayjs";
 import "antd/dist/reset.css";
@@ -34,6 +34,8 @@ export default function ScheduleCard({
   const [loadingDoctors, setLoadingDoctors] = useState(false);
   const [doctors, setDoctors] = useState([]);
   const [form] = Form.useForm();
+  const fileInputRef = useRef(null);
+  const [messageApi, messageCtx] = message.useMessage();
 
   // lazy load doctors when opening create/edit modal
   const loadDoctors = useCallback(async () => {
@@ -90,7 +92,7 @@ export default function ScheduleCard({
     if (currentPatient?.uuid) {
       const key = 'zip-download';
       try {
-        message.loading({ content: '正在準備下載...', key });
+        messageApi.loading({ content: '正在準備下載...', key });
         const api = (await import("../../services/api")).default;
         const blob = await api.downloadSmilePhotosZip(currentPatient.uuid);
         const url = URL.createObjectURL(blob);
@@ -101,14 +103,93 @@ export default function ScheduleCard({
         a.click();
         a.remove();
         URL.revokeObjectURL(url);
-        message.success({ content: '下載已開始', key, duration: 1.5 });
+        messageApi.success({ content: '下載已開始', key, duration: 1.5 });
       } catch (err) {
-        message.error({ content: '下載失敗', key });
+        messageApi.error({ content: '下載失敗', key });
       }
       return;
     }
-    message.warn('無可下載的資料');
+    messageApi.warn('無可下載的資料');
   }, [images, currentPatient?.uuid]);
+
+  // ============ Staff generic file upload/download using smile_test.allergies ============
+  const staffUploadAnyFile = useCallback(() => {
+    if (!currentPatient?.uuid) {
+      messageApi.warn('缺少患者資料');
+      return;
+    }
+    try {
+      fileInputRef.current?.click();
+    } catch {}
+  }, [currentPatient?.uuid]);
+
+  const onSelectStaffFile = useCallback(async (e) => {
+    const file = e?.target?.files?.[0];
+    if (!file || !currentPatient?.uuid) return;
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const dataUrl = reader.result; // data:*/*;base64,xxx
+      const payload = {
+        allergies: JSON.stringify({ name: file.name, type: file.type, data: dataUrl }),
+      };
+      try {
+        const api = (await import("../../services/api")).default;
+        await api.put(`/api/smile-test/uuid/${currentPatient.uuid}`, payload, true);
+        messageApi.success('文件已上傳');
+        try { Modal.success({ title: '提示', content: '文件已上傳', centered: true }); } catch {}
+      } catch (err) {
+        messageApi.error(err?.message || '上傳失敗');
+      } finally {
+        try { e.target.value = ''; } catch {}
+      }
+    };
+    reader.readAsDataURL(file);
+  }, [currentPatient?.uuid]);
+
+  const staffDownloadAnyFile = useCallback(async () => {
+    if (!currentPatient?.uuid) {
+      messageApi.warn('缺少患者資料');
+      return;
+    }
+    try {
+      const api = (await import("../../services/api")).default;
+      const res = await api.getSmileTestByUuid(currentPatient.uuid);
+      const data = res && res.data ? (res.data.smileTest || res.data) : null;
+      const raw = data?.allergies;
+      if (!raw) {
+        messageApi.warn('沒有可下載的文件');
+        return;
+      }
+      let meta;
+      try { meta = JSON.parse(raw); } catch { meta = null; }
+      const name = meta?.name || 'attachment';
+      const dataUrl = meta?.data || raw;
+      if (typeof dataUrl !== 'string') {
+        messageApi.error('文件格式錯誤');
+        return;
+      }
+      if (dataUrl.startsWith('data:')) {
+        const a = document.createElement('a');
+        a.href = dataUrl;
+        a.download = name;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        messageApi.success('下載已開始');
+        return;
+      }
+      // treat as URL
+      const a = document.createElement('a');
+      a.href = dataUrl;
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      messageApi.success('下載已開始');
+    } catch (err) {
+      messageApi.error(err?.message || '下載失敗');
+    }
+  }, [currentPatient?.uuid]);
 
   const loadAppointmentsForMonth = useCallback(async (d) => {
     try {
@@ -453,8 +534,12 @@ export default function ScheduleCard({
               type="button"
               style={{ background: '#fff', border: '1.2px solid #e3eae8', color: '#666', fontWeight: 600, fontSize: 14, borderRadius: 10, padding: '6px 24px', cursor: 'pointer' }}
               onClick={() => {
-                const url = currentPatient?.uuid ? `/upload?id=${encodeURIComponent(currentPatient.uuid)}` : '/upload';
-                window.open(url, '_blank');
+                if (userType === 'patient') {
+                  const url = currentPatient?.uuid ? `/upload?id=${encodeURIComponent(currentPatient.uuid)}` : '/upload';
+                  window.open(url, '_blank');
+                } else {
+                  staffUploadAnyFile();
+                }
               }}
             >
               上傳
@@ -462,13 +547,23 @@ export default function ScheduleCard({
             <button
               type="button"
               style={{ background: '#fff', border: '1.2px solid #e3eae8', color: '#666', fontWeight: 600, fontSize: 14, borderRadius: 10, padding: '6px 24px', cursor: 'pointer' }}
-              onClick={handleDownloadAll}
+              onClick={() => {
+                if (userType === 'patient') {
+                  handleDownloadAll();
+                } else {
+                  staffDownloadAnyFile();
+                }
+              }}
             >
               下載
             </button>
           </div>
         </div>
       )}
+
+      {/* hidden input for staff file upload */}
+      <input ref={fileInputRef} type="file" style={{ display: 'none' }} onChange={onSelectStaffFile} />
+      {messageCtx}
 
       {/* legacy tools moved to header for visibility */}
 
