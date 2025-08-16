@@ -450,7 +450,10 @@ export default function ScheduleCard({
             <button
               type="button"
               style={{ background: '#fff', border: '1.2px solid #e3eae8', color: '#666', fontWeight: 600, fontSize: 14, borderRadius: 10, padding: '6px 12px', cursor: 'pointer' }}
-              onClick={() => window.open('/upload', '_blank')}
+              onClick={() => {
+                const url = currentPatient?.uuid ? `/upload?id=${encodeURIComponent(currentPatient.uuid)}` : '/upload';
+                window.open(url, '_blank');
+              }}
             >
               上傳
             </button>
