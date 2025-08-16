@@ -3,6 +3,7 @@ import { Tabs, Modal, Select, message } from "antd";
 import Logout from "../components/logout";
 import Partners from "../partners";
 import HospitalDashboard from "../hospital";
+import ClinicDashboard from "../clinic";
 import apiService from "../services/api";
 import "../market/index.scss";
 
@@ -485,7 +486,7 @@ export default function AdminDashboard() {
         {active === 'smile' && <AdminSmileView />}
         {active === 'partners' && <Partners />}
         {active === 'doctors' && <HospitalDashboard isSub={true}/>}
-        {active === 'clinics' && <HospitalDashboard isSub={true}/>}
+        {active === 'clinics' && <ClinicDashboard />}
       </div>
     </div>
   );
