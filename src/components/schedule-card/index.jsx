@@ -267,6 +267,24 @@ export default function ScheduleCard({
     onView && onView(event);
   }, [onView]);
 
+  const openEditForEvent = useCallback((event) => {
+    setActiveEvent(event);
+    setActiveDate(dayjs(event.date));
+    setModalMode("edit");
+    setModalOpen(true);
+    loadDoctors();
+    try {
+      form.resetFields();
+      form.setFieldsValue({
+        date: dayjs(event.date),
+        doctor_uuid: event.doctor_uuid,
+        start_time: event.start_time ? dayjs(event.start_time, 'HH:mm') : null,
+        end_time: event.end_time ? dayjs(event.end_time, 'HH:mm') : null,
+        note: event.note || event.title || '',
+      });
+    } catch {}
+  }, [form, loadDoctors]);
+
   const openDayDetails = useCallback((d) => {
     setActiveEvent(null);
     setActiveDate(d.startOf("day"));
@@ -327,14 +345,24 @@ export default function ScheduleCard({
         setEvents((prev) => [...prev, created]);
       }
     } else if (modalMode === "edit" && activeEvent) {
-      const updated = { ...activeEvent };
+      const api = (await import("../../services/api")).default;
+      const values = await form.validateFields().catch(() => null);
+      if (!values) return;
+      const updated = {
+        ...activeEvent,
+        date: (values.date || activeDate)?.format("YYYY-MM-DD"),
+        start_time: values.start_time ? values.start_time.format("HH:mm:ss") : null,
+        end_time: values.end_time ? values.end_time.format("HH:mm:ss") : null,
+        doctor_uuid: values.doctor_uuid || null,
+        note: values.note || "",
+      };
       try {
-        if (onUpdate) {
-          const ret = await onUpdate(updated);
-          if (ret) Object.assign(updated, ret);
-        }
+        await api.updateAppointment(activeEvent.id || activeEvent.uuid, updated);
+        message.success('已更新');
+      } catch (e) {
+        message.error(e?.message || '更新失敗');
       } finally {
-        setEvents((prev) => prev.map((ev) => (ev.id === updated.id ? updated : ev)));
+        setEvents((prev) => prev.map((ev) => (ev.id === activeEvent.id ? updated : ev)));
       }
     }
     setModalOpen(false);
@@ -390,6 +418,13 @@ export default function ScheduleCard({
       const list = (key && dateToEvents.get(key)) || [];
       const columns = [
         {
+          title: "日期",
+          dataIndex: "date",
+          key: "date",
+          render: (_, r) => dayjs(r.date).format("YYYY-MM-DD"),
+          width: 160,
+        },
+        {
           title: "時間",
           dataIndex: "start_time",
           key: "time",
@@ -423,6 +458,13 @@ export default function ScheduleCard({
           render: (v) => <Tag color={v === 'cancelled' ? 'red' : v === 'completed' ? 'green' : 'blue'}>{v || '-'}</Tag>,
           width: 120,
         },
+        {
+          title: "操作",
+          dataIndex: "action",
+          key: "action",
+          render: (_, r) => (userType !== 'patient' ? <a onClick={() => openEditForEvent(r)}>編輯</a> : null),
+          width: 120,
+        },
       ];
       return (
         <div className="schedule-modal">
@@ -438,15 +480,15 @@ export default function ScheduleCard({
         </div>
       );
     }
-    if (modalMode === "create") {
+    if (modalMode === "create" || (modalMode === 'edit' && userType !== 'patient')) {
       return (
         <div className="schedule-modal">
           <Form form={form} layout="vertical" initialValues={{
             date: activeDate,
-            start_time: null,
-            end_time: dayjs("18:00", "HH:mm"),
-            doctor_uuid: undefined,
-            note: "",
+            start_time: modalMode === 'edit' ? (activeEvent?.start_time ? dayjs(activeEvent.start_time, 'HH:mm') : null) : null,
+            end_time: modalMode === 'edit' ? (activeEvent?.end_time ? dayjs(activeEvent.end_time, 'HH:mm') : dayjs("18:00", "HH:mm")) : dayjs("18:00", "HH:mm"),
+            doctor_uuid: activeEvent?.doctor_uuid,
+            note: activeEvent?.note || "",
           }}>
             <Form.Item name="date" label="日期" rules={[{ required: true, message: "請選擇日期" }]}>
               <DatePicker style={{ width: "100%" }} />
@@ -495,6 +537,13 @@ export default function ScheduleCard({
           <div>{formatHm(activeEvent?.end_time) || "-"}</div>
           <div>備註</div>
           <div>{activeEvent?.note || activeEvent?.title || "-"}</div>
+          <div>狀態</div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <span>{activeEvent?.status || '-'}</span>
+            {userType !== 'patient' && (
+              <Button size="small" style={{ marginLeft: 12 }} onClick={() => setModalMode('edit')}>編輯</Button>
+            )}
+          </div>
         </div>
       </div>
     );
@@ -570,22 +619,18 @@ export default function ScheduleCard({
       <Modal
         open={modalOpen}
         onCancel={() => setModalOpen(false)}
-        onOk={handleOk}
-        okText={modalMode === "view" ? "關閉" : "確定"}
-        cancelText="取消"
         title={modalTitle(modalMode)}
         width={modalMode === 'day' ? 900 : 560}
         centered
         bodyStyle={{ maxHeight: modalMode === 'day' ? 560 : 440, overflowY: 'auto' }}
         footer={
-          modalMode === "view" ? (
-            <Space>
-              <Button onClick={() => setModalOpen(false)}>關閉</Button>
-              <Button type="primary" onClick={() => setModalMode("edit")}>
-                編輯
-              </Button>
-            </Space>
-          ) : undefined
+          <Space>
+            <Button onClick={() => setModalOpen(false)}>取消</Button>
+            {modalMode === 'view' && userType !== 'patient' && (
+              <Button onClick={() => setModalMode('edit')}>編輯</Button>
+            )}
+            <Button type="primary" onClick={handleOk}>{modalMode === 'view' ? '關閉' : '確定'}</Button>
+          </Space>
         }
       >
         {renderModalContent()}

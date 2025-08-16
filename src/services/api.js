@@ -345,6 +345,14 @@ class ApiService {
     return this.post('/api/appointments', data, true);
   }
 
+  // 更新预约
+  async updateAppointment(idOrUuid, data) {
+    const endpoint = isNaN(Number(idOrUuid))
+      ? `/api/appointments/${encodeURIComponent(idOrUuid)}`
+      : `/api/appointments/${Number(idOrUuid)}`;
+    return this.put(endpoint, data, true);
+  }
+
   // 按月份获取预约
   async getAppointmentsByMonth(year, month) {
     return this.get(`/api/appointments/by-month?year=${year}&month=${month}`, true);
