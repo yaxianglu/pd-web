@@ -1,4 +1,4 @@
-const l = ['等待預約', '等待確認方案', '等待確認付款', '等待生產', '治療中', '治療完成'];
+import { l as progressTitles } from "../progress";
 const m = {
   1: {
     title: '輕度',
@@ -14,6 +14,7 @@ const m = {
   },
 }
 export default function InfoCardComponent({ doctorName, clinicAddress, contact, treatmentProgress, hobbies }) {
+  console.info('treatmentProgress', treatmentProgress);
   return (
     <div style={{ display: "flex", gap: 22 }}>
       <div style={{
@@ -40,7 +41,7 @@ export default function InfoCardComponent({ doctorName, clinicAddress, contact, 
         color: "#fff", padding: 12, textAlign: "center", fontSize: 20
       }}>
         <div style={{ marginBottom: 12, borderBottom: "1px solid #fff", fontSize: 18, paddingBottom: 12 }}>目前進度</div>
-        <div style={{ fontSize: 29, fontWeight: "bold", margin: "24px 0 2px" }}>{l[treatmentProgress]}</div>
+        <div style={{ fontSize: 29, fontWeight: "bold", margin: "24px 0 2px" }}>{progressTitles[Number(treatmentProgress) || 0]?.title || progressTitles[0]?.title}</div>
       </div>
     </div>
   )

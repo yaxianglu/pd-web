@@ -13,7 +13,7 @@ import Logout from "../components/logout";
 
 const gapSize = 16;
 
-function InfoCard({ patientData, doctor, clinic, isInput = false }) {
+function InfoCard({ patientData, doctor, clinic, isInput = false, currentStepFromProgress }) {
   return (
     <div style={{ background: "#fff", borderRadius: "18px", padding: "30px", boxSizing: "border-box", marginBottom: gapSize, flex: 3, overflow: 'hidden' }}>
       {
@@ -46,7 +46,7 @@ function InfoCard({ patientData, doctor, clinic, isInput = false }) {
         doctorName={doctor?.full_name}
         clinicAddress={clinic?.address}
         contact={doctor?.phone || clinic?.phone || patientData?.phone}
-        treatmentProgress={patientData?.treatment_progress || 0}
+        treatmentProgress={currentStepFromProgress}
         hobbies={patientData?.hobbies || ''}
       />
     </div>
@@ -196,7 +196,7 @@ export default function Dashboard({ prefetched = null }) {
       <div style={{ display: "flex", gap: gapSize, alignItems: "flex-start" }}>
         <div style={{ flex: 2 }}>
           <div style={{ display: "flex", gap: gapSize }}>
-            <InfoCard patientData={patientData} doctor={doctorData} clinic={clinicData} isInput={isInput} />
+            <InfoCard patientData={patientData} doctor={doctorData} clinic={clinicData} isInput={isInput} currentStepFromProgress={currentStepFromProgress} />
             <PlanConfirmCard currentStepFromProgress={currentStepFromProgress || 0} />
           </div>
           <ProgressTracker currentStep={currentStepFromProgress} />
@@ -207,11 +207,18 @@ export default function Dashboard({ prefetched = null }) {
             initialEvents={mockEvents}
             defaultMonth={dayjs().startOf('month')}
             currentPatient={{ uuid: (patientInfo || {}).uuid, full_name: (patientInfo || {}).full_name }}
-            onAppointmentCreated={() => {
+            onAppointmentCreated={async () => {
               // 预约创建成功后，将“等待預約”切换为“預約完成”
               // ProgressTracker 的 currentStep 显示由 mapProgressToStep 控制；
               // 这里简单把本地 patientInfo 的 progress 推到至少 1
               setPatientInfo((prev) => ({ ...(prev || {}), treatment_progress: Math.max(1, (prev?.treatment_progress || 0)) }));
+              // 同步落庫，刷新後也保持“預約完成”
+              try {
+                const puid = (patientInfo || {}).uuid;
+                if (puid) {
+                  await apiService.updatePatientProgress(puid, 1);
+                }
+              } catch {}
             }}
           />
         </div>
