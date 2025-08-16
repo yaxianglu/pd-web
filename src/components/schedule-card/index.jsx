@@ -316,10 +316,10 @@ export default function ScheduleCard({
       };
       try {
         await api.createAppointment(payload);
-        message.success("已創建預約");
+        messageApi.success("已創建預約");
         if (onAppointmentCreated) onAppointmentCreated();
       } catch (e) {
-        message.error(e?.message || "創建失敗");
+        messageApi.error(e?.message || "創建失敗");
       }
       const draft = {
         id: `local-${Math.random().toString(36).slice(2, 8)}`,
@@ -348,8 +348,10 @@ export default function ScheduleCard({
       const api = (await import("../../services/api")).default;
       const values = await form.validateFields().catch(() => null);
       if (!values) return;
+      // 僅提交允許更新的欄位，避免把中文狀態傳到後端（ENUM）
       const updated = {
-        ...activeEvent,
+        id: activeEvent.id,
+        uuid: activeEvent.uuid,
         date: (values.date || activeDate)?.format("YYYY-MM-DD"),
         start_time: values.start_time ? values.start_time.format("HH:mm:ss") : null,
         end_time: values.end_time ? values.end_time.format("HH:mm:ss") : null,
@@ -357,12 +359,21 @@ export default function ScheduleCard({
         note: values.note || "",
       };
       try {
-        await api.updateAppointment(activeEvent.id || activeEvent.uuid, updated);
-        message.success('已更新');
+        await api.updateAppointment(activeEvent.id || activeEvent.uuid, {
+          date: updated.date,
+          start_time: updated.start_time,
+          end_time: updated.end_time,
+          doctor_uuid: updated.doctor_uuid,
+          note: updated.note,
+        });
+        messageApi.success('已更新');
+        setActiveEvent(updated);
+        // 強制刷新當月數據，避免 id/uuid 類型不一致導致本地替換失敗
+        await loadAppointmentsForMonth(value);
       } catch (e) {
-        message.error(e?.message || '更新失敗');
+        messageApi.error(e?.message || '更新失敗');
       } finally {
-        setEvents((prev) => prev.map((ev) => (ev.id === activeEvent.id ? updated : ev)));
+        setEvents((prev) => prev.map((ev) => ((ev.id === activeEvent.id || ev.uuid === activeEvent.uuid) ? { ...ev, ...updated } : ev)));
       }
     }
     setModalOpen(false);
@@ -392,7 +403,7 @@ export default function ScheduleCard({
         <div
           className={`ant-picker-calendar-date schedule-date ${isSameMonth && list.length > 0 ? "has-events" : ""}`}
           onContextMenu={(e) => handleContextMenuDate(e, current)}
-          onDoubleClick={() => openCreateForDate(current)}
+          
         >
           <div
             className="ant-picker-calendar-date-value"
@@ -421,6 +432,7 @@ export default function ScheduleCard({
           title: "日期",
           dataIndex: "date",
           key: "date",
+          className: 'col-date',
           render: (_, r) => dayjs(r.date).format("YYYY-MM-DD"),
           width: 160,
         },
@@ -428,6 +440,7 @@ export default function ScheduleCard({
           title: "時間",
           dataIndex: "start_time",
           key: "time",
+          className: 'col-time',
           render: (_, r) => `${formatHm(r.start_time) || "--"} ~ ${formatHm(r.end_time) || "--"}`,
           width: 160,
         },
@@ -435,6 +448,7 @@ export default function ScheduleCard({
           title: "醫生",
           dataIndex: "doctor_name",
           key: "doctor",
+          className: 'col-doctor',
           render: (_, r) => r.doctor_name || getDoctorName(doctors, r.doctor_uuid) || "-",
           width: 160,
         },
@@ -442,6 +456,7 @@ export default function ScheduleCard({
           title: "患者",
           dataIndex: "patient_name",
           key: "patient",
+          className: 'col-patient',
           render: (_, r) => r.patient_name || currentPatient?.full_name || "-",
           width: 160,
         },
@@ -449,12 +464,14 @@ export default function ScheduleCard({
           title: "備註",
           dataIndex: "note",
           key: "note",
+          className: 'col-note',
           ellipsis: true,
         },
         {
           title: "狀態",
           dataIndex: "status",
           key: "status",
+          className: 'col-status',
           render: (v) => <Tag color={v === 'cancelled' ? 'red' : v === 'completed' ? 'green' : 'blue'}>{v || '-'}</Tag>,
           width: 120,
         },
@@ -462,6 +479,7 @@ export default function ScheduleCard({
           title: "操作",
           dataIndex: "action",
           key: "action",
+          className: 'col-action',
           render: (_, r) => (userType !== 'patient' ? <a onClick={() => openEditForEvent(r)}>編輯</a> : null),
           width: 120,
         },
@@ -475,7 +493,7 @@ export default function ScheduleCard({
             columns={columns}
             dataSource={list}
             scroll={{ y: 360, x: true }}
-            onRow={(record) => ({ onDoubleClick: () => openViewForEvent(record) })}
+            
           />
         </div>
       );

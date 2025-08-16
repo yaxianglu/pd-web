@@ -104,6 +104,20 @@
     // tighten table paddings for compact modal
     :global(.ant-table) .ant-table-tbody > tr > td { padding: 10px 12px; }
     :global(.ant-table) .ant-table-thead > tr > th { padding: 10px 12px; }
+
+    // columns fine-tune
+    .col-date { white-space: nowrap; }
+    .col-time { white-space: nowrap; }
+    .col-doctor { white-space: nowrap; }
+    .col-patient { white-space: nowrap; }
+    .col-note {
+      max-width: 280px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .col-status { text-align: center; }
+    .col-action { text-align: right; }
   }
 
   // Compact calendar visual
