@@ -1,5 +1,6 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
+import { ConfigProvider } from 'antd';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import PageCom from './front-page';
@@ -24,7 +25,8 @@ import MarketDashboard from './market';
 
 function App() {
   return (
-    <AuthProvider>
+    <ConfigProvider message={{ top: 80, duration: 1.8 }} notification={{ placement: 'topRight' }}>
+      <AuthProvider>
       <div className="App">
         {/* <nav>
           <Link to="/front-page">FrontPage</Link> | <Link to="/login">Login</Link>
@@ -77,7 +79,8 @@ function App() {
           } />
         </Routes>
       </div>
-    </AuthProvider>
+      </AuthProvider>
+    </ConfigProvider>
   );
 }
 
