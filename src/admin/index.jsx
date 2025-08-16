@@ -14,7 +14,7 @@ function HeaderTabs({ activeKey, onChange }) {
     <div className="market-header">
       <div className="title" style={{ width: '100%' }}>
         <Tabs
-          items={[{ key: 'smile', label: '微笑測試' }, { key: 'partners', label: '成為夥伴' }, { key: 'doctors', label: '醫生' }]}
+          items={[{ key: 'smile', label: '微笑測試' }, { key: 'partners', label: '成為夥伴' }, { key: 'doctors', label: '醫生' }, { key: 'clinics', label: '診所' }]}
           activeKey={activeKey}
           onChange={onChange}
         />
@@ -485,6 +485,7 @@ export default function AdminDashboard() {
         {active === 'smile' && <AdminSmileView />}
         {active === 'partners' && <Partners />}
         {active === 'doctors' && <HospitalDashboard isSub={true}/>}
+        {active === 'clinics' && <HospitalDashboard isSub={true}/>}
       </div>
     </div>
   );
