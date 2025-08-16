@@ -212,16 +212,8 @@ export default function ScheduleCard({
           // 顯示中文狀態：新增後顯示「預約完成」
           status: a.status === "取消" ? "失敗" : "預約完成",
         }));
-        let filtered = mapped;
-        if (currentPatient) {
-          const puid = currentPatient.uuid;
-          const pname = currentPatient.full_name;
-          filtered = filtered.filter((ev) => (puid ? ev.patient_uuid === puid : true) || (pname ? ev.patient_name === pname : false));
-        } else if (currentDoctor) {
-          const duid = currentDoctor.uuid;
-          const dname = currentDoctor.full_name;
-          filtered = filtered.filter((ev) => (duid ? ev.doctor_uuid === duid : true) || (dname ? ev.doctor_name === dname : false));
-        }
+        // 顯示全部（暫時關閉過濾，先恢復數據可見）
+        const filtered = mapped;
         setEvents(() => {
           // 在患者模式下不回退到本地樣例，避免顯示與自己無關的資料
           if (currentPatient || currentDoctor) return filtered;
