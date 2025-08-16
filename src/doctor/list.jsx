@@ -3,18 +3,30 @@ import './list.scss';
 import ContactInfo from '../components/contact-info';
 import Dashboard from '../patient';
 
-export default function PatientInfoList({ patients = [] }) {
+export default function PatientInfoList({ patients = [], onCreate }) {
   const [keyword, setKeyword] = useState('');
   const [expanded, setExpanded] = useState({}); // key: patient.uuid -> boolean
+  const [statusFilter, setStatusFilter] = useState('all');
 
   const onToggle = useCallback((uuid) => {
     setExpanded((prev) => ({ ...prev, [uuid]: !prev[uuid] }));
   }, []);
 
+  const mapProgressToTitle = (progress) => {
+    const idx = Math.max(0, Math.min(6, Number(progress) || 0));
+    const titles = ['等待預約', '預約完成', '確認方案', '付款完成', '生產完成', '治療中', '治療完成'];
+    return titles[idx] || '';
+  };
+
   const filtered = useMemo(() => {
     const k = keyword.trim().toLowerCase();
-    if (!k) return patients;
-    return patients.filter((p) => {
+    const listByStatus = (statusFilter === 'all') ? patients : (patients || []).filter((p) => {
+      const progress = p?.patient?.treatment_progress ?? p?.smileTest?.treatment_progress ?? 0;
+      return mapProgressToTitle(progress) === statusFilter;
+    });
+
+    if (!k) return listByStatus;
+    return listByStatus.filter((p) => {
       const pt = p?.patient || {};
       return (
         (pt.full_name || '').toLowerCase().includes(k) ||
@@ -24,7 +36,7 @@ export default function PatientInfoList({ patients = [] }) {
         (pt.uuid || '').toLowerCase().includes(k)
       );
     });
-  }, [patients, keyword]);
+  }, [patients, keyword, statusFilter]);
 
   const mapStatusToText = (status) => {
     switch (status) {
@@ -40,12 +52,30 @@ export default function PatientInfoList({ patients = [] }) {
     <div className="card patient-list">
       <div className="list-header">
         <div className="card-title">患者列表</div>
-        <div className="search-bar">
-          <input
-            placeholder="搜索姓名 / 用戶ID / 手機 / 信箱"
-            value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
-          />
+        <div style={{ display: 'flex', gap: 12, alignItems: 'center', flex: 1 }}>
+          <div className="search-bar" style={{ flex: 1 }}>
+            <input
+              placeholder="搜索姓名 / 用戶ID / 手機 / 信箱"
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+            />
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <span>篩選狀態：</span>
+            <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} style={{ padding: '6px 8px', borderRadius: 6, border: '1px solid #dcdfe6' }}>
+              <option value="all">全部</option>
+              <option value="等待預約">等待預約</option>
+              <option value="預約完成">預約完成</option>
+              <option value="確認方案">確認方案</option>
+              <option value="付款完成">付款完成</option>
+              <option value="生產完成">生產完成</option>
+              <option value="治療中">治療中</option>
+              <option value="治療完成">治療完成</option>
+            </select>
+          </div>
+          {onCreate ? (
+            <button className="btn primary" onClick={onCreate}>創建患者資料卡</button>
+          ) : null}
         </div>
       </div>
 

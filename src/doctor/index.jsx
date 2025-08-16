@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import apiService from "../services/api";
 import PatientInfoList from "./list";
 import Logout from "../components/logout/index";
 import CreatePatientModal from "./CreatePatientModal";
 import "./index.scss";
+// 狀態標題由列表內部處理
 
 
 // 用户信息卡片
 function UserInfoCard({ userInfo, isDoctorDetail = false }) {
-  const account = userInfo?.user_id || "—";
+  // const account = userInfo?.user_id || "—";
   const phone = userInfo?.phone || "—";
   const email = userInfo?.email || "—";
   const address = userInfo?.clinic?.address || "—";
@@ -39,8 +40,8 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
-  const { logout, userInfo } = useAuth();
-  const navigate = useNavigate();
+  const { userInfo } = useAuth();
+  // const navigate = useNavigate();
 
   const isDoctorDetail = !!doctorUser;
 
@@ -98,6 +99,8 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [displayUser?.uuid, initialPatients]);
 
+  // 狀態篩選移至列表內處理
+
   if (loading) {
     return (
       <div style={{ width: "100vw", height: "100vh", background: "#f6f6f7", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -118,15 +121,10 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
   return (
     <div className="doctor-dashboard" style={style}>
       <div className="doctor-main-content">
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 8 }}>
-        </div>
         {/* 用户信息 */}
         <UserInfoCard userInfo={displayUser} isDoctorDetail={isDoctorDetail} />
         {/* 患者列表 */}
-        <PatientInfoList patients={patients} />
-        {isDoctorDetail ? null : <div className="footer">
-          <button className="btn primary" onClick={() => setModalOpen(true)}>創建患者資料卡</button>
-        </div>}
+        <PatientInfoList patients={patients} onCreate={() => setModalOpen(true)} />
       </div>
       <CreatePatientModal open={modalOpen} onClose={() => setModalOpen(false)} onCreated={() => { setModalOpen(false); if (!initialPatients) { load(); } }} />
     </div>
