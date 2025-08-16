@@ -13,6 +13,31 @@
     margin-bottom: 12px;
   }
 
+  .schedule-card-footer-tools {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    .qr-box {
+      width: 56px;
+      height: 56px;
+      background: #fff;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #e3eae8;
+      img { width: 44px; height: 44px; }
+    }
+
+    .schedule-card-footer-tools-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+  }
+
   .schedule-card-title {
     font-size: 20px;
     font-weight: 600;

@@ -3,6 +3,7 @@ import { Button, Calendar, DatePicker, Modal, Select, Space, TimePicker, Tooltip
 import dayjs from "dayjs";
 import "antd/dist/reset.css";
 import "./index.scss";
+import png13 from "../../asserts/13.png";
 
 export default function ScheduleCard({
   title = "日曆",
@@ -18,6 +19,7 @@ export default function ScheduleCard({
   defaultMonth, // string | Dayjs, e.g. '2025-08-01'
   currentPatient, // { uuid, full_name } 可选，用于详情展示与创建默认归属
   currentDoctor, // { uuid, full_name } 可选：医生模式下仅展示与自己相关
+  images = [], // 可選：老版本上傳/下載對應的圖片數組（base64或dataURL）
   onAppointmentCreated, // () => void 可选：创建成功后的回调
 }) {
   const [value, setValue] = useState(defaultMonth ? dayjs(defaultMonth) : dayjs());
@@ -49,6 +51,62 @@ export default function ScheduleCard({
   // const clickTimerRef = useRef(null);
 
   const dateToEvents = useMemo(() => groupByDate(events), [events]);
+
+  // Legacy download helpers (base64 images) with zip fallback
+  const downloadBase64Image = useCallback((data, filename) => {
+    if (!data) return;
+    try {
+      const hasHeader = typeof data === 'string' && data.startsWith('data:');
+      const dataUrl = hasHeader ? data : `data:image/jpeg;base64,${data}`;
+      const [header, body] = dataUrl.split(',');
+      const mimeMatch = header && header.match(/data:(.*?);/);
+      const mime = (mimeMatch && mimeMatch[1]) || 'image/jpeg';
+      const binary = atob(body || '');
+      const len = binary.length;
+      const bytes = new Uint8Array(len);
+      for (let i = 0; i < len; i++) bytes[i] = binary.charCodeAt(i);
+      const blob = new Blob([bytes], { type: mime });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      // noop
+    }
+  }, []);
+
+  const handleDownloadAll = useCallback(async () => {
+    const list = Array.isArray(images) ? images.filter(Boolean) : [];
+    if (list.length > 0) {
+      list.forEach((img, idx) => downloadBase64Image(img, `teeth_image_${idx + 1}.jpg`));
+      return;
+    }
+    if (currentPatient?.uuid) {
+      const key = 'zip-download';
+      try {
+        message.loading({ content: '正在準備下載...', key });
+        const api = (await import("../../services/api")).default;
+        const blob = await api.downloadSmilePhotosZip(currentPatient.uuid);
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `smile_photos_${String(currentPatient.uuid).slice(0, 8)}.zip`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        message.success({ content: '下載已開始', key, duration: 1.5 });
+      } catch (err) {
+        message.error({ content: '下載失敗', key });
+      }
+      return;
+    }
+    message.warn('無可下載的資料');
+  }, [images, currentPatient?.uuid]);
 
   const loadAppointmentsForMonth = useCallback(async (d) => {
     try {
@@ -382,6 +440,32 @@ export default function ScheduleCard({
         headerRender={headerRender}
         dateFullCellRender={dateFullCellRender}
       />
+
+      {currentPatient && (
+        <div className="schedule-card-footer-tools">
+          <div className="qr-box">
+            <img src={png13} alt="QR" />
+          </div>
+          <div className="schedule-card-footer-tools-buttons">
+            <button
+              type="button"
+              style={{ background: '#fff', border: '1.2px solid #e3eae8', color: '#666', fontWeight: 600, fontSize: 14, borderRadius: 10, padding: '6px 12px', cursor: 'pointer' }}
+              onClick={() => window.open('/upload', '_blank')}
+            >
+              上傳
+            </button>
+            <button
+              type="button"
+              style={{ background: '#fff', border: '1.2px solid #e3eae8', color: '#666', fontWeight: 600, fontSize: 14, borderRadius: 10, padding: '6px 12px', cursor: 'pointer' }}
+              onClick={handleDownloadAll}
+            >
+              下載
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* legacy tools moved to header for visibility */}
 
       <Modal
         open={modalOpen}
