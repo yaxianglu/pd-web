@@ -91,9 +91,10 @@ export default function Dashboard({ prefetched = null }) {
   const navigate = useNavigate(); // eslint-disable-line no-unused-vars
   const isInput = !!prefetched;
 
-  // 百分比(0-100) → 步骤(1-6)
+  // 進度數字(0-6) → 步驟(0-6)
   const mapProgressToStep = (progress) => {
-    return progress || 0;
+    const p = Number(progress || 0);
+    return Math.max(0, Math.min(6, p));
   };
 
   useEffect(() => {
@@ -205,7 +206,7 @@ export default function Dashboard({ prefetched = null }) {
             title="治療日誌"
             initialEvents={mockEvents}
             defaultMonth={dayjs().startOf('month')}
-            currentPatient={{ uuid: patientData?.uuid, full_name: patientData?.full_name }}
+            currentPatient={{ uuid: (patientInfo || {}).uuid, full_name: (patientInfo || {}).full_name }}
             onAppointmentCreated={() => {
               // 预约创建成功后，将“等待預約”切换为“預約完成”
               // ProgressTracker 的 currentStep 显示由 mapProgressToStep 控制；

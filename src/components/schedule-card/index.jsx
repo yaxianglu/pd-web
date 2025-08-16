@@ -209,7 +209,8 @@ export default function ScheduleCard({
           patient_name: a.patient_name || null,
           start_time: a.start_time || null,
           end_time: a.end_time || null,
-          status: a.status === "取消" ? "失敗" : "預約成功",
+          // 顯示中文狀態：新增後顯示「預約完成」
+          status: a.status === "取消" ? "失敗" : "預約完成",
         }));
         let filtered = mapped;
         if (currentPatient) {
@@ -318,6 +319,18 @@ export default function ScheduleCard({
         await api.createAppointment(payload);
         messageApi.success("已創建預約");
         if (onAppointmentCreated) onAppointmentCreated();
+        // 後端持久化：將患者進度設置為 1（預約完成）
+        try {
+          if (currentPatient?.uuid) {
+            const api2 = (await import("../../services/api")).default;
+            await api2.updatePatientProgress(currentPatient.uuid, 1);
+          }
+        } catch {}
+        // 兼容：患者端立即把本地進度設為 1
+        try {
+          const setParentProgress = (window.__setPatientProgressStep__);
+          if (typeof setParentProgress === 'function') setParentProgress(1);
+        } catch {}
       } catch (e) {
         messageApi.error(e?.message || "創建失敗");
       }
@@ -333,7 +346,8 @@ export default function ScheduleCard({
         patient_name: currentPatient?.full_name || null,
         start_time: payload.start_time,
         end_time: payload.end_time,
-        status: "success",
+        // 直接以中文顯示
+        status: "預約完成",
       };
       let created = draft;
       try {

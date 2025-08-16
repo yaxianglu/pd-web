@@ -353,6 +353,11 @@ class ApiService {
     return this.put(endpoint, data, true);
   }
 
+  // 更新患者進度
+  async updatePatientProgress(uuid, progress) {
+    return this.put(`/api/smile-test/patient/${encodeURIComponent(uuid)}/progress`, { progress }, true);
+  }
+
   // 按月份获取预约
   async getAppointmentsByMonth(year, month) {
     return this.get(`/api/appointments/by-month?year=${year}&month=${month}`, true);
