@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import "antd/dist/reset.css";
 import "./index.scss";
 import png13 from "../../asserts/13.png";
+import { useAuth } from "../../context/AuthContext";
 
 export default function ScheduleCard({
   title = "日曆",
@@ -24,6 +25,7 @@ export default function ScheduleCard({
 }) {
   const [value, setValue] = useState(defaultMonth ? dayjs(defaultMonth) : dayjs());
   const [events, setEvents] = useState(() => (currentPatient || currentDoctor ? [] : ensureSample(initialEvents)));
+  const { userType } = useAuth();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState("view"); // view | edit | create | day
@@ -422,7 +424,7 @@ export default function ScheduleCard({
       <div className="schedule-card-header">
         <div className="schedule-card-title">{title}</div>
         {subtitle && <div className="schedule-card-subtitle">{subtitle}</div>}
-        {!currentPatient && (
+        {userType !== 'patient' && (
           <Space>
             <Tooltip title="當天新增">
               <Button size="small" type="primary" onClick={() => openCreateForDate(dayjs())}>
