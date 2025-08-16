@@ -138,6 +138,7 @@ export default function Partners() {
                             cancelText="取消"
                             onConfirm={async () => {
                               try {
+                                setLoading(true);
                                 const r = await apiService.approvePartner(p.id);
                                 if (r?.success) {
                                   message.success('已建立診所並激活');
@@ -146,7 +147,10 @@ export default function Partners() {
                                   message.error(r?.message || '操作失敗');
                                 }
                               } catch (err) {
+                                console.error('approvePartner error:', err);
                                 message.error(err?.message || '操作失敗');
+                              } finally {
+                                setLoading(false);
                               }
                             }}
                           >
