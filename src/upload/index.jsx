@@ -44,9 +44,9 @@ export default function Upload() {
       <div className="upload-content-wrapper">
         <Introduce setStep={setStep} style={{ display: step === 1 ? 'block' : 'none' }} />
         <Step step={step} />
-        <Step1 setStep={setStep} style={{ display: step === 2 ? 'block' : 'none' }} />
-        <Step2 setStep={setStep} style={{ display: step === 3 ? 'block' : 'none' }} />
-        <Step3 setStep={setStep} style={{ display: step === 4 ? 'block' : 'none' }} />
+        {step === 2 && <Step1 setStep={setStep} style={{ display: step === 2 ? 'block' : 'none' }} />}
+        {step === 3 && <Step2 setStep={setStep} style={{ display: step === 3 ? 'block' : 'none' }} />}
+        {step === 4 && <Step3 setStep={setStep} style={{ display: step === 4 ? 'block' : 'none' }} />}
       </div>
       <div className="upload-bottom">
         <div className="upload-bottom-left">
