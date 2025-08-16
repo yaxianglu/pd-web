@@ -17,10 +17,11 @@ export default function ScheduleCard({
   onView, // (event) => void
   defaultMonth, // string | Dayjs, e.g. '2025-08-01'
   currentPatient, // { uuid, full_name } 可选，用于详情展示与创建默认归属
+  currentDoctor, // { uuid, full_name } 可选：医生模式下仅展示与自己相关
   onAppointmentCreated, // () => void 可选：创建成功后的回调
 }) {
   const [value, setValue] = useState(defaultMonth ? dayjs(defaultMonth) : dayjs());
-  const [events, setEvents] = useState(() => ensureSample(initialEvents));
+  const [events, setEvents] = useState(() => (currentPatient || currentDoctor ? [] : ensureSample(initialEvents)));
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState("view"); // view | edit | create | day
@@ -69,16 +70,27 @@ export default function ScheduleCard({
           end_time: a.end_time || null,
           status: a.status === "取消" ? "失敗" : "預約成功",
         }));
-        setEvents((initial) => {
-          // Replace sample with server data; if initial was real, merge unique by id
+        let filtered = mapped;
+        if (currentPatient) {
+          const puid = currentPatient.uuid;
+          const pname = currentPatient.full_name;
+          filtered = filtered.filter((ev) => (puid ? ev.patient_uuid === puid : true) || (pname ? ev.patient_name === pname : false));
+        } else if (currentDoctor) {
+          const duid = currentDoctor.uuid;
+          const dname = currentDoctor.full_name;
+          filtered = filtered.filter((ev) => (duid ? ev.doctor_uuid === duid : true) || (dname ? ev.doctor_name === dname : false));
+        }
+        setEvents(() => {
+          // 在患者模式下不回退到本地樣例，避免顯示與自己無關的資料
+          if (currentPatient || currentDoctor) return filtered;
           const base = Array.isArray(initialEvents) && initialEvents.length > 0 ? initialEvents : [];
-          return mapped.length > 0 ? mapped : base;
+          return filtered.length > 0 ? filtered : base;
         });
       }
     } catch (e) {
       // fail silently; keep existing events (可能是本地样例)
     }
-  }, [initialEvents]);
+  }, [initialEvents, currentPatient?.uuid, currentPatient?.full_name, currentDoctor?.uuid, currentDoctor?.full_name]);
 
   useEffect(() => {
     loadAppointmentsForMonth(value);
