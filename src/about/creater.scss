@@ -1,0 +1,19 @@
+.about-creater {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 40px;
+  margin-top: 48px;
+  margin-bottom: 48px;
+  img {
+    width: 300px;
+  }
+
+  .about-creater-content {
+    font-size: 16px;
+    text-align: left;
+    color: #858585;
+    line-height: 1.3;
+  }
+}
