@@ -7,10 +7,24 @@ import { cardTitleSizeStyle } from "../contants";
 import ContactInfo from "../components/contact-info";
 import InfoCardComponent from "../components/info-card";
 import apiService from "../services/api";
+import p1 from './imgs/1.png';
+import p2 from './imgs/2.png';
+import p3 from './imgs/3.png';
+import p4 from './imgs/4.png';
+import p5 from './imgs/5.png';
+import p6 from './imgs/6.png';
 // import png13 from "../asserts/13.png";
 import ScheduleCard from "../components/schedule-card";
 import Logout from "../components/logout";
 import { message } from "antd";
+const list = {
+  1: p1,
+  2: p2,
+  3: p3,
+  4: p4,
+  5: p5,
+  6: p6,
+};
 
 const gapSize = 16;
 
@@ -64,8 +78,9 @@ function InfoCard({ patientData, doctor, clinic, isInput = false, currentStepFro
 }
 
 
-function PlanConfirmCard({ currentStepFromProgress }) {
-  const ddd = l[currentStepFromProgress] || {};
+function PlanConfirmCard({ currentStepFromProgress, patientData }) {
+  // const ddd = l[currentStepFromProgress] || {};
+  const hobbies = patientData?.hobbies || '';
   return (
     <div style={{
       background: "#fff", borderRadius: "18px",
@@ -73,7 +88,14 @@ function PlanConfirmCard({ currentStepFromProgress }) {
       flexDirection: "column", marginBottom: gapSize,
       flex: 1,
     }}>
-      {ddd.icon && <img src={ddd.icon} alt="icon" style={{ width: 108 }} />}
+      {
+        hobbies ? (
+          <div style={{ width: '100%', height: '100%' }}>
+            <img style={{ width: '100%', borderRadius: 20 }} src={list[Number(hobbies)]} alt=""/>
+          </div>
+        ) : <span style={{ lineHeight: 1.3 }}>請選擇<br/>治療方案</span>
+      }
+      {/* {ddd.icon && <img src={ddd.icon} alt="icon" style={{ width: 108 }} />}
       <div style={{ marginTop: 20 }}>
         <button style={{
           background: "#48d2ce", color: "#fff",
@@ -83,7 +105,7 @@ function PlanConfirmCard({ currentStepFromProgress }) {
         }}>
           {ddd.title}
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }
@@ -207,7 +229,7 @@ export default function Dashboard({ prefetched = null }) {
         <div style={{ flex: 2 }}>
           <div style={{ display: "flex", gap: gapSize }}>
             <InfoCard patientData={patientData} doctor={doctorData} clinic={clinicData} isInput={isInput} currentStepFromProgress={currentStepFromProgress} />
-            <PlanConfirmCard currentStepFromProgress={currentStepFromProgress || 0} />
+            <PlanConfirmCard currentStepFromProgress={currentStepFromProgress || 0} patientData={patientData}/>
           </div>
           <ProgressTracker
             currentStep={currentStepFromProgress} uuid={(patientInfo || {}).uuid}
