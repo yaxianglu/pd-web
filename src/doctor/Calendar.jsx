@@ -47,19 +47,49 @@ const App = () => {
       
       // 只显示当前医生的预约
       const doctorAppointments = appointmentsData.filter(apt => {
-        console.log('检查预约:', apt, '医生UUID:', apt.doctor_uuid, '当前用户:', userInfo.uuid);
-        console.log('UUID匹配结果:', apt.doctor_uuid === userInfo.uuid);
-        return apt.doctor_uuid === userInfo.uuid;
+        // 支持多种医生UUID字段名
+        const doctorUuid = apt.doctor_uuid || apt.doctorUuid || apt.doctor_id || apt.doctorId;
+        const currentUserUuid = userInfo.uuid;
+        
+        console.log('检查预约:', apt);
+        console.log('预约中的医生UUID字段:', { 
+          doctor_uuid: apt.doctor_uuid, 
+          doctorUuid: apt.doctorUuid, 
+          doctor_id: apt.doctor_id, 
+          doctorId: apt.doctorId 
+        });
+        console.log('当前用户UUID:', currentUserUuid);
+        console.log('UUID匹配结果:', doctorUuid === currentUserUuid);
+        
+        // 如果预约没有医生UUID，可能是系统预约，暂时显示
+        if (!doctorUuid) {
+          console.log('预约没有医生UUID，可能是系统预约');
+          return true; // 临时显示，用于调试
+        }
+        
+        return doctorUuid === currentUserUuid;
       });
       
       console.log('过滤后的医生预约:', doctorAppointments);
       
-      // 临时：如果没有找到匹配的医生预约，显示所有预约用于调试
-      if (doctorAppointments.length === 0) {
-        console.log('没有找到匹配的医生预约，临时显示所有预约用于调试');
-        setAppointments(appointmentsData);
-      } else {
+      // 如果找到匹配的医生预约，使用过滤后的数据
+      if (doctorAppointments.length > 0) {
         setAppointments(doctorAppointments);
+      } else {
+        // 如果没有找到匹配的医生预约，检查是否有其他问题
+        console.log('没有找到匹配的医生预约，检查可能的原因:');
+        console.log('1. 当前用户UUID:', userInfo.uuid);
+        console.log('2. 所有预约的医生UUID:', appointmentsData.map(apt => ({
+          id: apt.id,
+          doctor_uuid: apt.doctor_uuid,
+          doctorUuid: apt.doctorUuid,
+          doctor_id: apt.doctor_id,
+          doctorId: apt.doctorId
+        })));
+        
+        // 临时显示所有预约用于调试
+        console.log('临时显示所有预约用于调试');
+        setAppointments(appointmentsData);
       }
       
     } catch (error) {
