@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import './index.scss';
 
 const TreatmentSelection = (props) => {
-  const { title, onCancel, onConfirm } = props;
+  const { title, onCancel, onConfirm, style } = props;
 
   return (
-    <div className="treatment-selection-container">
+    <div className="treatment-selection-container" style={style}>
       <div className="clickable-areas">
         {title}
       </div>

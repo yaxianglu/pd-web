@@ -15,7 +15,7 @@ const gapSize = 16;
 
 function InfoCard({ patientData, doctor, clinic, isInput = false, currentStepFromProgress }) {
   return (
-    <div style={{ background: "#fff", borderRadius: "18px", padding: "30px", boxSizing: "border-box", marginBottom: gapSize, flex: 3, overflow: 'hidden' }}>
+    <div style={{ background: "#fff", borderRadius: "18px", padding: "30px", boxSizing: "border-box", marginBottom: gapSize, flex: 3 }}>
       {
         isInput ? null : (
           <>
