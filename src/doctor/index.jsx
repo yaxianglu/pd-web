@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { Routes, Route, NavLink } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import apiService from "../services/api";
 import PatientInfoList from "./list";
+import PersonalSettings from "./PersonalSettings";
+import Help from "./Help";
+import Calendar from "./Calendar";
 import Logout from "../components/logout/index";
 import CreatePatientModal from "./CreatePatientModal";
 import "./index.scss";
@@ -159,7 +163,7 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
       </div>
 
       <div className="doctor-main-content">
-        <UserInfoCard userInfo={displayUser} isDoctorDetail={true} />
+        {/* <UserInfoCard userInfo={displayUser} isDoctorDetail={true} /> */}
         {activeView === 'patients' && (
           <PatientInfoList
             patients={patients}
@@ -169,13 +173,13 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
           />
         )}
         {activeView === 'calendar' && (
-          <div className="card"><div className="card-title">日曆看板</div><div>此頁面功能待實現。</div></div>
+          <Calendar />
         )}
         {activeView === 'settings' && (
-          <div className="card"><div className="card-title">個人設置</div><div>功能待實現。</div></div>
+          <PersonalSettings />
         )}
         {activeView === 'help' && (
-          <div className="card"><div className="card-title">尋找幫助</div><div>功能待辦。</div></div>
+          <Help />
         )}
       </div>
       <CreatePatientModal open={modalOpen} onClose={() => setModalOpen(false)} onCreated={() => { setModalOpen(false); if (!initialPatients) { load(); } }} />

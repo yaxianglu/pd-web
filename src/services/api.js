@@ -391,6 +391,21 @@ class ApiService {
       return { success: false, message: '創建帳戶失敗' };
     }
   }
+
+  // 修改密码
+  async changePassword(data) {
+    try {
+      const response = await fetch(`${this.baseURL}/auth/change-password`, {
+        method: 'POST',
+        headers: this.getHeaders(true),
+        body: JSON.stringify(data),
+      });
+      return await this.handleResponse(response);
+    } catch (error) {
+      console.error('Failed to change password:', error);
+      return { success: false, message: '修改密碼失敗' };
+    }
+  }
 }
 
 // 创建单例实例
