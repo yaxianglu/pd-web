@@ -90,16 +90,16 @@ export default function ScheduleCard({
       list.forEach((img, idx) => downloadBase64Image(img, `teeth_image_${idx + 1}.jpg`));
       return;
     }
-    if (currentPatient?.uuid) {
+    if (smileTestUuid) {
       const key = 'zip-download';
       try {
         messageApi.loading({ content: '正在準備下載...', key });
         const api = (await import("../../services/api")).default;
-        const blob = await api.downloadSmilePhotosZip(currentPatient.uuid);
+        const blob = await api.downloadSmilePhotosZip(smileTestUuid);
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `smile_photos_${String(currentPatient.uuid).slice(0, 8)}.zip`;
+        a.download = `smile_photos_${String(smileTestUuid).slice(0, 8)}.zip`;
         document.body.appendChild(a);
         a.click();
         a.remove();
@@ -110,23 +110,23 @@ export default function ScheduleCard({
       }
       return;
     }
-    messageApi.warn('無可下載的資料');
-  }, [images, currentPatient?.uuid]);
+    messageApi.warn('缺少微笑測試ID，無法下載');
+  }, [images, smileTestUuid]);
 
   // ============ Staff generic file upload/download using smile_test.allergies ============
   const staffUploadAnyFile = useCallback(() => {
-    if (!currentPatient?.uuid) {
-      messageApi.warn('缺少患者資料');
+    if (!smileTestUuid) {
+      messageApi.warn('缺少微笑測試ID');
       return;
     }
     try {
       fileInputRef.current?.click();
     } catch {}
-  }, [currentPatient?.uuid]);
+  }, [smileTestUuid]);
 
   const onSelectStaffFile = useCallback(async (e) => {
     const file = e?.target?.files?.[0];
-    if (!file || !currentPatient?.uuid) return;
+    if (!file || !smileTestUuid) return;
     const reader = new FileReader();
     reader.onload = async () => {
       const dataUrl = reader.result; // data:*/*;base64,xxx
@@ -135,7 +135,7 @@ export default function ScheduleCard({
       };
       try {
         const api = (await import("../../services/api")).default;
-        await api.put(`/api/smile-test/uuid/${currentPatient.uuid}`, payload, true);
+        await api.put(`/api/smile-test/uuid/${smileTestUuid}`, payload, true);
         messageApi.success('文件已上傳');
         try { Modal.success({ title: '提示', content: '文件已上傳', centered: true }); } catch {}
       } catch (err) {
@@ -145,16 +145,16 @@ export default function ScheduleCard({
       }
     };
     reader.readAsDataURL(file);
-  }, [currentPatient?.uuid]);
+  }, [smileTestUuid]);
 
   const staffDownloadAnyFile = useCallback(async () => {
-    if (!currentPatient?.uuid) {
-      messageApi.warn('缺少患者資料');
+    if (!smileTestUuid) {
+      messageApi.warn('缺少微笑測試ID');
       return;
     }
     try {
       const api = (await import("../../services/api")).default;
-      const res = await api.getSmileTestByUuid(currentPatient.uuid);
+      const res = await api.getSmileTestByUuid(smileTestUuid);
       const data = res && res.data ? (res.data.smileTest || res.data) : null;
       const raw = data?.allergies;
       if (!raw) {
@@ -190,7 +190,7 @@ export default function ScheduleCard({
     } catch (err) {
       messageApi.error(err?.message || '下載失敗');
     }
-  }, [currentPatient?.uuid]);
+  }, [smileTestUuid]);
 
   const loadAppointmentsForMonth = useCallback(async (d) => {
     try {
