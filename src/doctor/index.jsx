@@ -12,7 +12,7 @@ import "./index.scss";
 // 狀態標題由列表內部處理
 
 
-// 用户信息卡片
+// 用戶信息卡片
 function UserInfoCard({ userInfo, isDoctorDetail = false }) {
   // const account = userInfo?.user_id || "—";
   const phone = userInfo?.phone || "—";
@@ -32,7 +32,7 @@ function UserInfoCard({ userInfo, isDoctorDetail = false }) {
         <div className="pill"><span className="pill-label">信箱：</span><span className="pill-value">{email}</span></div>
         <div className="pill"><span className="pill-label">地址：</span><span className="pill-value">{address}</span></div>
       </div>
-      {isDoctorDetail ? null : <Logout style={{ marginLeft: 12 }}>退出登录</Logout>}
+      {isDoctorDetail ? null : <Logout style={{ marginLeft: 12 }}>退出登錄</Logout>}
 
     </div>
   );
@@ -109,7 +109,7 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
   if (loading) {
     return (
       <div style={{ width: "100vw", height: "100vh", background: "#f6f6f7", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <div>加载中...</div>
+        <div>載入中...</div>
       </div>
     );
   }
@@ -118,7 +118,7 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
     return (
       <div style={{ width: "100vw", height: "100vh", background: "#f6f6f7", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: "20px" }}>
         <div style={{ color: "red" }}>{error}</div>
-        <button onClick={() => window.location.href = '/login'} style={{ background: "#48d2ce", color: "#fff", border: "none", borderRadius: "8px", padding: "10px 20px", cursor: "pointer" }}>返回登录页面</button>
+        <button onClick={() => window.location.href = '/login'} style={{ background: "#48d2ce", color: "#fff", border: "none", borderRadius: "8px", padding: "10px 20px", cursor: "pointer" }}>返回登錄頁面</button>
       </div>
     );
   }
@@ -148,9 +148,9 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
               </div>
             ))}
           </div>
-          <div style={{ color: '#fff', fontSize: 14, margin: '30px 0 16px' }}>日历看板</div>
+          <div style={{ color: '#fff', fontSize: 14, margin: '30px 0 16px' }}>日曆看板</div>
           <div className="account-list">
-            <div className={`account-item ${activeView==='calendar' ? 'active' : ''}`} onClick={() => setActiveView('calendar')}>日历看板</div>
+            <div className={`account-item ${activeView==='calendar' ? 'active' : ''}`} onClick={() => setActiveView('calendar')}>日曆看板</div>
           </div>
         </div>
         <div>
@@ -158,7 +158,7 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
             <div className={`account-item ${activeView==='settings' ? 'active' : ''}`} onClick={() => setActiveView('settings')}>個人設置</div>
             <div className={`account-item ${activeView==='help' ? 'active' : ''}`} onClick={() => setActiveView('help')}>尋找幫助</div>
           </div>
-          <Logout style={{ width: '100%' }}>退出登录</Logout>
+          <Logout style={{ width: '100%' }}>退出登錄</Logout>
         </div>
       </div>
 

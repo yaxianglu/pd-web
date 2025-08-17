@@ -51,7 +51,7 @@ export default function PersonalSettings() {
     setMessage({ type: '', text: '' });
 
     try {
-      // 使用 Web Crypto API 对密码进行 SHA-256 加密
+      // 使用 Web Crypto API 對密碼進行 SHA-256 加密
       const hashPassword = async (password) => {
         const encoder = new TextEncoder();
         const data = encoder.encode(password);
@@ -91,7 +91,7 @@ export default function PersonalSettings() {
 
   return (
     <div className="personal-settings">
-      {/* 用户信息展示 */}
+      {/* 用戶信息展示 */}
       <div className="card user-info-section">
         <div className="card-title">個人信息</div>
         <div className="info-grid">
@@ -118,7 +118,7 @@ export default function PersonalSettings() {
         </div>
       </div>
 
-      {/* 诊所信息展示 */}
+      {/* 診所信息展示 */}
       {userInfo?.clinic && (
         <div className="card clinic-info-section">
           <div className="card-title">診所信息</div>
@@ -139,17 +139,17 @@ export default function PersonalSettings() {
               <label>診所信箱：</label>
               <span>{userInfo.clinic.email || '—'}</span>
             </div>
-            {/* <div className="info-item">
+            <div className="info-item">
               <label>診所狀態：</label>
               <span className={`status-badge ${userInfo.clinic.status === 'active' ? 'active' : 'inactive'}`}>
                 {userInfo.clinic.status === 'active' ? '啟用' : '停用'}
               </span>
-            </div> */}
+            </div>
           </div>
         </div>
       )}
 
-      {/* 密码修改 */}
+      {/* 密碼修改 */}
       <div className="card password-section">
         <div className="card-title">修改密碼</div>
         <form onSubmit={handlePasswordSubmit} className="password-form">

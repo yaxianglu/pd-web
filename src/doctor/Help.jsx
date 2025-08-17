@@ -22,37 +22,6 @@ export default function Help() {
               <p>點擊左側菜單的「個人設置」，在該頁面可以查看和修改個人信息及密碼。</p>
             </div>
           </div>
-
-          <div className="help-section">
-            <h3>聯繫支持</h3>
-            <div className="contact-info">
-              <p><strong>技術支持：</strong>support@pearl.com</p>
-              <p><strong>客服電話：</strong>0800-123-456</p>
-              <p><strong>服務時間：</strong>週一至週五 9:00-18:00</p>
-            </div>
-          </div>
-
-          <div className="help-section">
-            <h3>系統功能</h3>
-            <div className="feature-list">
-              <div className="feature-item">
-                <span className="feature-icon">👥</span>
-                <span>患者管理</span>
-              </div>
-              <div className="feature-item">
-                <span className="feature-icon">📅</span>
-                <span>日曆看板</span>
-              </div>
-              <div className="feature-item">
-                <span className="feature-icon">⚙️</span>
-                <span>個人設置</span>
-              </div>
-              <div className="feature-item">
-                <span className="feature-icon">📊</span>
-                <span>進度追蹤</span>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
