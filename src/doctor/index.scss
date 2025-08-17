@@ -31,6 +31,7 @@
 
       .account-item {
         color: #fff;
+        font-size: 14px;
         padding: 10px 15px;
         margin-bottom: 8px;
         border-radius: 8px;
@@ -40,6 +41,12 @@
 
         &:hover {
           background: rgba(255, 255, 255, 0.2);
+        }
+
+        &.active {
+          background: rgba(255, 255, 255, 0.35);
+          color: #004d4b;
+          font-weight: 600;
         }
       }
     }

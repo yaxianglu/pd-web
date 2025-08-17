@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import apiService from "../services/api";
 import PatientInfoList from "./list";
@@ -40,8 +39,10 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const SIDEBAR_WIDTH = 140;
+  const [selectedStatus, setSelectedStatus] = useState('all');
+  const [activeView, setActiveView] = useState('patients'); // patients | calendar | settings | help
   const { userInfo } = useAuth();
-  const location = useLocation();
 
   const isDoctorDetail = !!doctorUser;
 
@@ -118,45 +119,40 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
     );
   }
 
-  const statusFromPath = (() => {
-    const match = location.pathname.match(/\/doctor\/patients\/(.+)$/);
-    if (match && match[1]) {
-      const seg = decodeURIComponent(match[1]);
-      return seg === 'all' ? 'all' : seg;
-    }
-    return 'all';
-  })();
-
-  const SIDEBAR_WIDTH = 140;
-
   return (
     <div className="doctor-dashboard" style={style}>
       <div className="sidebar" style={{ position: 'sticky', top: 0, width: SIDEBAR_WIDTH }}>
         <div>
-          <div className="system-title">系統菜單</div>
+          <div style={{ color: '#fff', fontSize: 16, marginBottom: 10 }} onClick={() => setActiveView('patients')}>患者列表</div>
           <div className="account-list">
-            <div className="account-item" style={{ fontWeight: 700 }}>醫師工作台</div>
+            {[
+              { key: 'all', label: '全部' },
+              { key: '等待預約', label: '等待預約' },
+              { key: '預約完成', label: '預約完成' },
+              { key: '確認方案', label: '確認方案' },
+              { key: '付款完成', label: '付款完成' },
+              { key: '生產完成', label: '生產完成' },
+              { key: '治療中', label: '治療中' },
+              { key: '治療完成', label: '治療完成' },
+            ].map(item => (
+              <div
+                key={item.key}
+                className={`account-item ${selectedStatus === item.key ? 'active' : ''}`}
+                onClick={() => { setActiveView('patients'); setSelectedStatus(item.key); }}
+              >
+                {item.label}
+              </div>
+            ))}
           </div>
-          <div style={{ color: '#fff', fontSize: 14, marginBottom: 10 }}>患者列表</div>
+          <div style={{ color: '#fff', fontSize: 14, margin: '30px 0 16px' }}>日历看板</div>
           <div className="account-list">
-            <NavLink className="account-item" to="/doctor/patients/all">全部</NavLink>
-            <NavLink className="account-item" to={encodeURI('/doctor/patients/等待預約')}>等待預約</NavLink>
-            <NavLink className="account-item" to={encodeURI('/doctor/patients/預約完成')}>預約完成</NavLink>
-            <NavLink className="account-item" to={encodeURI('/doctor/patients/確認方案')}>確認方案</NavLink>
-            <NavLink className="account-item" to={encodeURI('/doctor/patients/付款完成')}>付款完成</NavLink>
-            <NavLink className="account-item" to={encodeURI('/doctor/patients/生產完成')}>生產完成</NavLink>
-            <NavLink className="account-item" to={encodeURI('/doctor/patients/治療中')}>治療中</NavLink>
-            <NavLink className="account-item" to={encodeURI('/doctor/patients/治療完成')}>治療完成</NavLink>
-          </div>
-          <div style={{ color: '#fff', fontSize: 14, margin: '16px 0 10px' }}>日历看板</div>
-          <div className="account-list">
-            <NavLink className="account-item" to="/doctor/calendar">日历看板</NavLink>
+            <div className={`account-item ${activeView==='calendar' ? 'active' : ''}`} onClick={() => setActiveView('calendar')}>日历看板</div>
           </div>
         </div>
         <div>
           <div className="account-list">
-            <NavLink className="account-item" to="/doctor/settings">個人設置</NavLink>
-            <NavLink className="account-item" to="/doctor/help">尋找幫助</NavLink>
+            <div className={`account-item ${activeView==='settings' ? 'active' : ''}`} onClick={() => setActiveView('settings')}>個人設置</div>
+            <div className={`account-item ${activeView==='help' ? 'active' : ''}`} onClick={() => setActiveView('help')}>尋找幫助</div>
           </div>
           <Logout style={{ width: '100%' }}>退出登录</Logout>
         </div>
@@ -164,15 +160,23 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
 
       <div className="doctor-main-content">
         <UserInfoCard userInfo={displayUser} isDoctorDetail={true} />
-        <Routes>
-          <Route index element={<PatientInfoList patients={patients} onCreate={() => setModalOpen(true)} statusFromRoute={statusFromPath} />} />
-          <Route path="patients/:status" element={<PatientInfoList patients={patients} onCreate={() => setModalOpen(true)} statusFromRoute={statusFromPath} />} />
-          <Route path="patients" element={<PatientInfoList patients={patients} onCreate={() => setModalOpen(true)} statusFromRoute={statusFromPath} />} />
-          <Route path="calendar" element={<div className="card"><div className="card-title">日曆看板</div><div>此頁面功能待實現。</div></div>} />
-          <Route path="settings" element={<div className="card"><div className="card-title">個人設置</div><div>功能待實現。</div></div>} />
-          <Route path="help" element={<div className="card"><div className="card-title">尋找幫助</div><div>功能待辦。</div></div>} />
-          <Route path="*" element={<PatientInfoList patients={patients} onCreate={() => setModalOpen(true)} statusFromRoute={statusFromPath} />} />
-        </Routes>
+        {activeView === 'patients' && (
+          <PatientInfoList
+            patients={patients}
+            onCreate={() => setModalOpen(true)}
+            statusFromRoute={selectedStatus}
+            onStatusChange={setSelectedStatus}
+          />
+        )}
+        {activeView === 'calendar' && (
+          <div className="card"><div className="card-title">日曆看板</div><div>此頁面功能待實現。</div></div>
+        )}
+        {activeView === 'settings' && (
+          <div className="card"><div className="card-title">個人設置</div><div>功能待實現。</div></div>
+        )}
+        {activeView === 'help' && (
+          <div className="card"><div className="card-title">尋找幫助</div><div>功能待辦。</div></div>
+        )}
       </div>
       <CreatePatientModal open={modalOpen} onClose={() => setModalOpen(false)} onCreated={() => { setModalOpen(false); if (!initialPatients) { load(); } }} />
     </div>

@@ -1,16 +1,12 @@
-import React, { useMemo, useState, useCallback, useEffect } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 import './list.scss';
 import ContactInfo from '../components/contact-info';
 import Dashboard from '../patient';
 
-export default function PatientInfoList({ patients = [], onCreate, statusFromRoute = 'all' }) {
+export default function PatientInfoList({ patients = [], onCreate, statusFromRoute = 'all', onStatusChange = () => {} }) {
   const [keyword, setKeyword] = useState('');
   const [expanded, setExpanded] = useState({}); // key: patient.uuid -> boolean
-  const [statusFilter, setStatusFilter] = useState(statusFromRoute || 'all');
-
-  useEffect(() => {
-    setStatusFilter(statusFromRoute || 'all');
-  }, [statusFromRoute]);
+  const statusFilter = statusFromRoute || 'all';
 
   const onToggle = useCallback((uuid) => {
     setExpanded((prev) => ({ ...prev, [uuid]: !prev[uuid] }));
@@ -66,7 +62,7 @@ export default function PatientInfoList({ patients = [], onCreate, statusFromRou
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <span>篩選狀態：</span>
-            <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} style={{ padding: '6px 8px', borderRadius: 6, border: '1px solid #dcdfe6' }}>
+            <select value={statusFilter} onChange={(e) => onStatusChange(e.target.value)} style={{ padding: '6px 8px', borderRadius: 6, border: '1px solid #dcdfe6' }}>
               <option value="all">全部</option>
               <option value="等待預約">等待預約</option>
               <option value="預約完成">預約完成</option>
