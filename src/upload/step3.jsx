@@ -262,7 +262,7 @@ export default function Step3({ onNext, setStep, style }) {
   // 组件加载时获取已保存的照片
   useEffect(() => {
     loadSavedPhotos();
-  }, []);
+  }, [location.search]);
 
   // 检测是否为移动设备
   useEffect(() => {

@@ -58,14 +58,23 @@ export default function Step2({ onNext, setStep, style }) {
       if (result.success && result.data) {
         const data = (result.data && result.data.smileTest) ? result.data.smileTest : result.data;
         console.log('Setting form data:', {
-          teeth_type: data.teeth_type,
-          considerations: data.considerations,
-          improvement_points: data.improvement_points
+          teeth_type: data?.teeth_type,
+          considerations: data?.considerations,
+          improvement_points: data?.improvement_points
         });
-        
+
+        // 將後端存儲的考量項（可能為 'a,b'、'a, b' 或中文逗號）解析為陣列
+        const parseConsiderations = (val) => {
+          if (!val || typeof val !== 'string') return [];
+          return val
+            .split(/[,，]\s*/)
+            .map(s => s.trim())
+            .filter(Boolean);
+        };
+
         setFormData({
           teethDescription: data?.teeth_type ? [data.teeth_type] : [],
-          alignerConsideration: data?.considerations ? data.considerations.split(', ') : [],
+          alignerConsideration: parseConsiderations(data?.considerations),
           improvement: data?.improvement_points || ''
         });
       } else {
@@ -114,7 +123,7 @@ export default function Step2({ onNext, setStep, style }) {
   // 组件加载时获取数据
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [location.search]);
 
   const handleTeethSelect = (optionId) => {
     setFormData(prev => {
@@ -286,7 +295,6 @@ export default function Step2({ onNext, setStep, style }) {
             <button
               type="submit"
               className="step2-next-button"
-              onClick={handleSubmit}
             >
               下一步
             </button>

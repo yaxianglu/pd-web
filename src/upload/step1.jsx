@@ -34,15 +34,29 @@ export default function Step1({ onNext, style, setStep }) {
       const result = await smileTestApi.getSmileTestByUuid(testUuid);
 
       if (result.success && result.data) {
-        const data = (result.data && result.data.smileTest) ? result.data.smileTest : result.data;
+        const smile = (result.data && result.data.smileTest) ? result.data.smileTest : (result.data || {});
+        const patient = (result.data && result.data.patient) ? result.data.patient : {};
+
+        const birthDateRaw = smile?.birth_date || patient?.birth_date;
+        const birthDateNormalized = birthDateRaw
+          ? new Date(birthDateRaw).toISOString().split('T')[0]
+          : '';
+
         setFormData({
-          full_name: data?.full_name || '',
-          birth_date: data?.birth_date ? new Date(data.birth_date).toISOString().split('T')[0] : '',
-          phone: data?.phone || '',
-          email: data?.email || '',
-          line_id: data?.line_id || '',
-          city: data?.city || ''
+          full_name: smile?.full_name || patient?.full_name || '',
+          birth_date: birthDateNormalized,
+          phone: smile?.phone || patient?.phone || '',
+          email: smile?.email || patient?.email || '',
+          line_id: smile?.line_id || patient?.line_id || '',
+          city: smile?.city || patient?.city || ''
         });
+      } else {
+        // 若記錄不存在，先創建一筆空記錄，避免後續步驟查不到資料
+        try {
+          await smileTestApi.saveOrUpdateSmileTestByUuid(testUuid, { test_status: 'in_progress' });
+        } catch (e) {
+          console.error('Failed to initialize smile test record:', e);
+        }
       }
     } catch (error) {
       console.error('Failed to fetch data:', error);
@@ -123,7 +137,9 @@ export default function Step1({ onNext, style, setStep }) {
       // 保存数据到API
       await saveData(formData);
       
-      // 调用原有的onNext回调
+      // 保存成功後再跳下一步，避免資料尚未寫入導致下一步無法回顯
+      setStep((pre) => Math.max(2, pre + 1));
+      // 可選：通知外部
       onNext && onNext(formData);
     }
   };
@@ -243,7 +259,6 @@ export default function Step1({ onNext, style, setStep }) {
               type="submit" 
               className="next-button"
               disabled={!agreed}
-              onClick={() => setStep((pre) => Math.max(2, pre + 1))}
             >
               下一步
             </button>
