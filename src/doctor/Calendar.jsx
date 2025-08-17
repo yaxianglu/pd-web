@@ -156,9 +156,19 @@ const App = () => {
       let content = '预约';
       const startTime = appointment.start_time || appointment.startTime;
       const endTime = appointment.end_time || appointment.endTime;
-      const patientName = appointment.patient_name || appointment.patientName || appointment.name;
+      const patientName = appointment.patient_name || appointment.patientName || appointment.name || appointment.patient || appointment.user_name || appointment.userName || appointment.user_name || appointment.customer_name || appointment.customerName;
       
+      // 调试：打印所有可能的患者姓名字段
+      console.log('预约对象的所有字段:', Object.keys(appointment));
       console.log('处理预约数据:', { startTime, endTime, patientName, appointment });
+      console.log('患者姓名字段值:', {
+        patient_name: appointment.patient_name,
+        patientName: appointment.patientName,
+        name: appointment.name,
+        patient: appointment.patient,
+        user_name: appointment.user_name,
+        userName: appointment.userName
+      });
       
       if (startTime && endTime && patientName) {
         // 格式化时间，只显示小时:分钟
@@ -180,7 +190,8 @@ const App = () => {
         }
         
         content = `${formattedStartTime}-${formattedEndTime} ${patientName}`;
-        console.log('生成完整内容:', content);
+        console.log('✅ 生成完整内容（有时间+患者姓名）:', content);
+        console.log('✅ 条件满足: startTime=', !!startTime, 'endTime=', !!endTime, 'patientName=', !!patientName);
       } else if (startTime && endTime) {
         // 只有时间，没有患者姓名
         let formattedStartTime = startTime;
@@ -193,8 +204,10 @@ const App = () => {
           formattedEndTime = endTime.substring(0, 5);
         }
         
-        content = `${formattedStartTime}-${formattedEndTime}`;
-        console.log('生成时间范围内容:', content);
+        // 即使没有患者姓名，也显示"未知患者"占位符
+        content = `${formattedStartTime}-${formattedEndTime} [未知患者]`;
+        console.log('⚠️ 生成时间范围内容（只有时间，无患者姓名）:', content);
+        console.log('⚠️ 条件检查: startTime=', !!startTime, 'endTime=', !!endTime, 'patientName=', !!patientName);
       } else if (startTime && patientName) {
         // 只有开始时间和患者姓名
         let formattedStartTime = startTime;
@@ -203,6 +216,10 @@ const App = () => {
         }
         content = `${formattedStartTime} ${patientName}`;
         console.log('生成时间+患者内容:', content);
+      } else if (patientName) {
+        // 只有患者姓名
+        content = patientName;
+        console.log('生成患者内容:', content);
       } else if (startTime) {
         // 只有开始时间
         let formattedStartTime = startTime;
@@ -211,15 +228,11 @@ const App = () => {
         }
         content = formattedStartTime;
         console.log('生成时间内容:', content);
-      } else if (patientName) {
-        // 只有患者姓名
-        content = patientName;
-        console.log('生成患者内容:', content);
       }
 
-      // 限制内容长度，避免显示过长
-      if (content.length > 18) {
-        content = content.substring(0, 18) + '...';
+      // 限制内容长度，避免显示过长 - 增加长度限制以显示患者姓名
+      if (content.length > 30) {
+        content = content.substring(0, 30) + '...';
       }
 
       // 确保内容不包含"时间:"前缀
