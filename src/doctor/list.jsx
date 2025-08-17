@@ -60,19 +60,6 @@ export default function PatientInfoList({ patients = [], onCreate, statusFromRou
               onChange={(e) => setKeyword(e.target.value)}
             />
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span>篩選狀態：</span>
-            <select value={statusFilter} onChange={(e) => onStatusChange(e.target.value)} style={{ padding: '6px 8px', borderRadius: 6, border: '1px solid #dcdfe6' }}>
-              <option value="all">全部</option>
-              <option value="等待預約">等待預約</option>
-              <option value="預約完成">預約完成</option>
-              <option value="確認方案">確認方案</option>
-              <option value="付款完成">付款完成</option>
-              <option value="生產完成">生產完成</option>
-              <option value="治療中">治療中</option>
-              <option value="治療完成">治療完成</option>
-            </select>
-          </div>
           {onCreate ? (
             <button className="btn primary" onClick={onCreate}>創建患者資料卡</button>
           ) : null}
