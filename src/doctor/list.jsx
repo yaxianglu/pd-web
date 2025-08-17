@@ -52,8 +52,8 @@ export default function PatientInfoList({ patients = [], onCreate, statusFromRou
     <div className="card patient-list">
       <div className="list-header">
         <div className="card-title">患者列表</div>
-        <div style={{ display: 'flex', gap: 12, alignItems: 'center', flex: 1 }}>
-          <div className="search-bar" style={{ flex: 1 }}>
+        <div style={{ display: 'flex', gap: 12, alignItems: 'center', flex: 1, justifyContent: 'end' }}>
+          <div className="search-bar">
             <input
               placeholder="搜索姓名 / 用戶ID / 手機 / 信箱"
               value={keyword}
