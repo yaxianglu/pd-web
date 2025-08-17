@@ -22,6 +22,7 @@ export default function ScheduleCard({
   currentDoctor, // { uuid, full_name } 可选：医生模式下仅展示与自己相关
   images = [], // 可選：老版本上傳/下載對應的圖片數組（base64或dataURL）
   onAppointmentCreated, // () => void 可选：创建成功后的回调
+  smileTestUuid, // 可选：對應 smile_test 的 uuid，用於上傳鏈接
 }) {
   const [value, setValue] = useState(defaultMonth ? dayjs(defaultMonth) : dayjs());
   const [events, setEvents] = useState(() => (currentPatient || currentDoctor ? [] : ensureSample(initialEvents)));
@@ -608,7 +609,8 @@ export default function ScheduleCard({
               style={{ background: '#fff', border: '1.2px solid #e3eae8', color: '#666', fontWeight: 600, fontSize: 14, borderRadius: 10, padding: '6px 24px', cursor: 'pointer' }}
               onClick={() => {
                 if (userType === 'patient') {
-                  const url = currentPatient?.uuid ? `/upload?id=${encodeURIComponent(currentPatient.uuid)}` : '/upload';
+                  const idForUpload = smileTestUuid || currentPatient?.uuid;
+                  const url = idForUpload ? `/upload?id=${encodeURIComponent(idForUpload)}&step=4` : '/upload';
                   window.open(url, '_blank');
                 } else {
                   staffUploadAnyFile();

@@ -207,6 +207,7 @@ export default function Dashboard({ prefetched = null }) {
             initialEvents={mockEvents}
             defaultMonth={dayjs().startOf('month')}
             currentPatient={{ uuid: (patientInfo || {}).uuid, full_name: (patientInfo || {}).full_name }}
+            smileTestUuid={(patientData || {}).uuid}
             onAppointmentCreated={async () => {
               // 预约创建成功后，将“等待預約”切换为“預約完成”
               // ProgressTracker 的 currentStep 显示由 mapProgressToStep 控制；
