@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Badge, Calendar, Select, Button } from 'antd';
 import dayjs from 'dayjs';
 import { useAuth } from '../context/AuthContext';
 import apiService from '../services/api';
+import AppointmentModal from '../components/appointment-modal';
 import './Calendar.scss';
 
 const { Option } = Select;
@@ -11,6 +12,16 @@ const App = () => {
   const [appointments, setAppointments] = useState([]);
   const [currentDate, setCurrentDate] = useState(dayjs());
   const { userInfo } = useAuth();
+  
+  // 模态框相关状态
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState("day");
+  const [activeDate, setActiveDate] = useState(null);
+  const [activeEvent, setActiveEvent] = useState(null);
+  
+  // 医生列表相关状态
+  const [doctors, setDoctors] = useState([]);
+  const [loadingDoctors, setLoadingDoctors] = useState(false);
 
   // 获取当前医生的所有预约信息
   const loadAppointments = async (date) => {
@@ -140,7 +151,15 @@ const App = () => {
       return [];
     }
 
-    return dayAppointments.map(appointment => {
+    return dayAppointments.map((appointment, index) => {
+      // 将 dayAppointments 数组附加到返回对象上，以便在渲染时访问
+      const result = {
+        type: 'default',
+        content: '预约',
+        appointment: appointment,
+        dayAppointments: dayAppointments
+      };
+      
       let type = 'default';
       const status = appointment.status || appointment.appointment_status;
       
@@ -242,7 +261,9 @@ const App = () => {
       }
 
       console.log('最终生成的预约显示:', { type, content, original: appointment });
-      return { type, content };
+      result.type = type;
+      result.content = content;
+      return result;
     });
   };
 
@@ -278,8 +299,15 @@ const App = () => {
     return (
       <div className={`calendar-date ${isToday ? 'today' : ''}`}>
         <ul className="events">
-          {listData.map(item => (
-            <li key={item.content}>
+          {listData.map((item, index) => (
+            <li 
+              key={`${item.content}-${index}`}
+              onClick={() => {
+                // 传递日期，显示该日期的所有预约
+                handleAppointmentClick(value);
+              }}
+              style={{ cursor: 'pointer' }}
+            >
               <Badge status={item.type} text={item.content} />
             </li>
           ))}
@@ -315,6 +343,60 @@ const App = () => {
   const goToNextMonth = () => {
     setCurrentDate(currentDate.add(1, 'month'));
   };
+
+  // 处理预约点击 - 显示该日期的所有预约列表
+  const handleAppointmentClick = useCallback((date) => {
+    setActiveDate(date);
+    setModalMode("day");
+    setModalOpen(true);
+  }, []);
+
+  // 加载医生列表
+  const loadDoctors = useCallback(async () => {
+    if (doctors.length > 0 || loadingDoctors) return;
+    try {
+      setLoadingDoctors(true);
+      const res = await apiService.getDoctors();
+      if (res && res.success) {
+        setDoctors(res.data || []);
+      }
+    } catch (error) {
+      console.error('加载医生列表失败:', error);
+    } finally {
+      setLoadingDoctors(false);
+    }
+  }, [doctors.length, loadingDoctors]);
+
+  // 打开编辑模式
+  const openEditForEvent = useCallback((appointment) => {
+    setActiveEvent(appointment);
+    setModalMode("edit");
+    setModalOpen(true);
+    loadDoctors(); // 加载医生列表
+  }, [loadDoctors]);
+
+  // 处理预约更新
+  const handleAppointmentUpdate = useCallback(async (updated) => {
+    try {
+      // 调用API更新预约
+      await apiService.updateAppointment(updated.id || updated.uuid, updated);
+      
+      // 刷新预约数据
+      loadAppointments(currentDate);
+      
+      // 关闭编辑模式，回到列表模式
+      setModalMode("day");
+      setActiveEvent(null);
+    } catch (error) {
+      console.error('更新预约失败:', error);
+      throw error; // 让弹窗组件处理错误
+    }
+  }, [currentDate]);
+
+  // 处理编辑按钮点击
+  const handleEditClick = useCallback((appointment) => {
+    openEditForEvent(appointment);
+  }, [openEditForEvent]);
 
   // 生成年份选项（当前年份前后5年）
   const yearOptions = [];
@@ -387,6 +469,23 @@ const App = () => {
         onChange={setCurrentDate}
         headerRender={() => null} // 隐藏默认头部
       />
+
+      {/* 使用独立的预约弹窗组件 */}
+      <AppointmentModal
+        open={modalOpen}
+        onCancel={() => setModalOpen(false)}
+        mode={modalMode}
+        activeDate={activeDate}
+        activeEvent={activeEvent}
+        appointments={appointments}
+        doctors={doctors}
+        loadingDoctors={loadingDoctors}
+        onUpdate={handleAppointmentUpdate}
+        onEdit={handleEditClick}
+        userType="doctor"
+      />
+
+
     </div>
   );
 };
