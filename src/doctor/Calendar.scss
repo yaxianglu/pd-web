@@ -31,9 +31,84 @@
     list-style: none;
     margin: 0;
     padding: 0;
+    max-height: 60px; // 限制高度
+    overflow-y: auto; // 添加垂直滚动条
+    
+    // 自定义滚动条样式
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 2px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 2px;
+      
+      &:hover {
+        background: #a8a8a8;
+      }
+    }
     
     li {
       margin-bottom: 2px;
+      
+      .ant-badge {
+        .ant-badge-status-dot {
+          width: 6px;
+          height: 6px;
+        }
+        
+        .ant-badge-status-text {
+          font-size: 11px;
+          color: #333;
+          margin-left: 4px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 80px; // 增加宽度以适应"开始时间-结束时间"格式
+          display: inline-block;
+          line-height: 1.2;
+          background: #fff; // 确保背景色
+          padding: 1px 2px; // 添加内边距
+          border-radius: 2px; // 添加圆角
+        }
+      }
+    }
+  }
+
+  // 日历单元格样式优化
+  .ant-picker-calendar-date {
+    .ant-picker-calendar-date-content {
+      height: auto;
+      min-height: 80px;
+      padding: 4px;
+    }
+  }
+
+  // 确保预约信息可见
+  .calendar-date {
+    .events {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 4px;
+      padding: 2px;
+      
+      li {
+        background: #f8f9fa;
+        border-radius: 3px;
+        padding: 1px 3px;
+        margin-bottom: 1px;
+        border-left: 2px solid #48d2ce;
+        
+        // 确保Badge组件可见
+        .ant-badge {
+          display: block;
+          width: 100%;
+        }
+      }
     }
   }
 

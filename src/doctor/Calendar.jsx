@@ -14,36 +14,97 @@ const App = () => {
 
   // 获取当前医生的所有预约信息
   const loadAppointments = async (date) => {
-    if (!userInfo?.uuid) return;
+    if (!userInfo?.uuid) {
+      console.log('用户信息不存在:', userInfo);
+      return;
+    }
     
     try {
       const year = date.year();
       const month = date.month() + 1; // dayjs月份从0开始
-      const res = await apiService.getAppointmentsByMonth(year, month);
+      console.log('正在加载预约数据:', { year, month, doctorUuid: userInfo.uuid });
+      console.log('当前用户信息:', userInfo);
       
-      if (res && Array.isArray(res)) {
-        // 过滤当前医生的预约
-        const doctorAppointments = res.filter(apt => 
-          apt.doctor_uuid === userInfo.uuid
-        );
-        
+      const res = await apiService.getAppointmentsByMonth(year, month);
+      console.log('API返回数据:', res);
+      
+      // 处理API响应数据 - 可能包含在data字段中
+      let appointmentsData = [];
+      if (res && res.success && Array.isArray(res.data)) {
+        appointmentsData = res.data;
+      } else if (res && Array.isArray(res)) {
+        appointmentsData = res;
+      } else {
+        console.log('API返回数据格式不正确:', res);
+        setAppointments([]);
+        return;
+      }
+      
+      console.log('解析后的预约数据:', appointmentsData);
+      
+      // 临时：显示所有预约数据用于调试
+      console.log('所有预约数据（不过滤医生）:', appointmentsData);
+      
+      // 只显示当前医生的预约
+      const doctorAppointments = appointmentsData.filter(apt => {
+        console.log('检查预约:', apt, '医生UUID:', apt.doctor_uuid, '当前用户:', userInfo.uuid);
+        console.log('UUID匹配结果:', apt.doctor_uuid === userInfo.uuid);
+        return apt.doctor_uuid === userInfo.uuid;
+      });
+      
+      console.log('过滤后的医生预约:', doctorAppointments);
+      
+      // 临时：如果没有找到匹配的医生预约，显示所有预约用于调试
+      if (doctorAppointments.length === 0) {
+        console.log('没有找到匹配的医生预约，临时显示所有预约用于调试');
+        setAppointments(appointmentsData);
+      } else {
         setAppointments(doctorAppointments);
       }
+      
     } catch (error) {
       console.error('加载预约数据失败:', error);
+      setAppointments([]);
     }
   };
 
   useEffect(() => {
-    loadAppointments(currentDate);
+    console.log('useEffect触发:', { userInfo, currentDate });
+    if (userInfo?.uuid) {
+      loadAppointments(currentDate);
+    } else {
+      console.log('等待用户信息加载...');
+    }
   }, [userInfo?.uuid, currentDate]);
 
   const getListData = value => {
     const dateStr = value.format('YYYY-MM-DD');
+    console.log('检查日期:', dateStr, '当前预约数据:', appointments);
+    
     const dayAppointments = appointments.filter(appointment => {
-      const aptDate = dayjs(appointment.date).format('YYYY-MM-DD');
-      return aptDate === dateStr;
+      // 处理不同的日期格式和字段名
+      let aptDate;
+      
+      // 尝试不同的日期字段名
+      const dateField = appointment.date || appointment.appointment_date || appointment.scheduled_date;
+      
+      if (typeof dateField === 'string') {
+        aptDate = dayjs(dateField).format('YYYY-MM-DD');
+      } else if (dateField instanceof Date) {
+        aptDate = dayjs(dateField).format('YYYY-MM-DD');
+      } else {
+        console.log('未知的日期格式:', dateField, typeof dateField, '预约对象:', appointment);
+        return false;
+      }
+      
+      const matches = aptDate === dateStr;
+      if (matches) {
+        console.log('找到匹配的预约:', appointment);
+      }
+      return matches;
     });
+
+    console.log('该日期的预约:', dateStr, dayAppointments);
 
     if (dayAppointments.length === 0) {
       return [];
@@ -51,29 +112,105 @@ const App = () => {
 
     return dayAppointments.map(appointment => {
       let type = 'default';
-      if (appointment.status === 'confirmed' || appointment.status === '預約完成') {
+      const status = appointment.status || appointment.appointment_status;
+      
+      if (status === 'confirmed' || status === '預約完成' || status === 'success') {
         type = 'success';
-      } else if (appointment.status === 'pending' || appointment.status === '等待預約') {
+      } else if (status === 'pending' || status === '等待預約' || status === 'warning') {
         type = 'warning';
-      } else if (appointment.status === 'cancelled' || appointment.status === '取消') {
+      } else if (status === 'cancelled' || status === '取消' || status === 'error') {
         type = 'error';
       }
 
-      // 返回简短描述，类似原代码的风格
+      // 生成显示内容：开始时间-结束时间 + 患者名称
       let content = '预约';
-      if (appointment.patient_name) {
-        content = appointment.patient_name.length > 10 ? 
-          appointment.patient_name.substring(0, 10) + '...' : 
-          appointment.patient_name;
+      const startTime = appointment.start_time || appointment.startTime;
+      const endTime = appointment.end_time || appointment.endTime;
+      const patientName = appointment.patient_name || appointment.patientName || appointment.name;
+      
+      console.log('处理预约数据:', { startTime, endTime, patientName, appointment });
+      
+      if (startTime && endTime && patientName) {
+        // 格式化时间，只显示小时:分钟
+        let formattedStartTime = startTime;
+        let formattedEndTime = endTime;
+        
+        if (typeof startTime === 'string') {
+          // 如果是 "18:00:00" 格式，只取前5位 "18:00"
+          if (startTime.length >= 5) {
+            formattedStartTime = startTime.substring(0, 5);
+          }
+        }
+        
+        if (typeof endTime === 'string') {
+          // 如果是 "18:30:00" 格式，只取前5位 "18:30"
+          if (endTime.length >= 5) {
+            formattedEndTime = endTime.substring(0, 5);
+          }
+        }
+        
+        content = `${formattedStartTime}-${formattedEndTime} ${patientName}`;
+        console.log('生成完整内容:', content);
+      } else if (startTime && endTime) {
+        // 只有时间，没有患者姓名
+        let formattedStartTime = startTime;
+        let formattedEndTime = endTime;
+        
+        if (typeof startTime === 'string' && startTime.length >= 5) {
+          formattedStartTime = startTime.substring(0, 5);
+        }
+        if (typeof endTime === 'string' && endTime.length >= 5) {
+          formattedEndTime = endTime.substring(0, 5);
+        }
+        
+        content = `${formattedStartTime}-${formattedEndTime}`;
+        console.log('生成时间范围内容:', content);
+      } else if (startTime && patientName) {
+        // 只有开始时间和患者姓名
+        let formattedStartTime = startTime;
+        if (typeof startTime === 'string' && startTime.length >= 5) {
+          formattedStartTime = startTime.substring(0, 5);
+        }
+        content = `${formattedStartTime} ${patientName}`;
+        console.log('生成时间+患者内容:', content);
+      } else if (startTime) {
+        // 只有开始时间
+        let formattedStartTime = startTime;
+        if (typeof startTime === 'string' && startTime.length >= 5) {
+          formattedStartTime = startTime.substring(0, 5);
+        }
+        content = formattedStartTime;
+        console.log('生成时间内容:', content);
+      } else if (patientName) {
+        // 只有患者姓名
+        content = patientName;
+        console.log('生成患者内容:', content);
       }
 
+      // 限制内容长度，避免显示过长
+      if (content.length > 18) {
+        content = content.substring(0, 18) + '...';
+      }
+
+      // 确保内容不包含"时间:"前缀
+      if (content.includes('时间:')) {
+        content = content.replace(/^时间:\s*/, '');
+        console.log('移除时间前缀后的内容:', content);
+      }
+
+      console.log('最终生成的预约显示:', { type, content, original: appointment });
       return { type, content };
     });
   };
 
   const getMonthData = value => {
     const monthAppointments = appointments.filter(appointment => {
-      const appointmentDate = dayjs(appointment.date);
+      // 处理不同的日期字段名
+      const dateField = appointment.date || appointment.appointment_date || appointment.scheduled_date;
+      
+      if (!dateField) return false;
+      
+      const appointmentDate = dayjs(dateField);
       return appointmentDate.month() === value.month() && 
              appointmentDate.year() === value.year();
     });
