@@ -89,7 +89,8 @@ export default function Step1({ onNext, style, setStep }) {
   // 组件加载时获取数据
   useEffect(() => {
     fetchData();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.search]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -242,7 +243,7 @@ export default function Step1({ onNext, style, setStep }) {
               type="submit" 
               className="next-button"
               disabled={!agreed}
-              onClick={() => setStep(pre => pre + 1)}
+              onClick={() => setStep((pre) => Math.max(2, pre + 1))}
             >
               下一步
             </button>

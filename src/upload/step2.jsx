@@ -189,11 +189,11 @@ export default function Step2({ onNext, setStep, style }) {
     onNext && onNext(formData);
     
     // 更新步骤到step3
-    setStep(pre => pre + 1);
+    setStep((pre) => Math.max(2, pre + 1));
   };
 
   const handlePrev = () => {
-    setStep(pre => pre - 1);
+    setStep((pre) => Math.max(2, pre - 1));
   };
 
   if (loading) {
