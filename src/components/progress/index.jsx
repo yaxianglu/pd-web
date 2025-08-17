@@ -5,6 +5,12 @@ import png3 from './imgs/3.png'
 import png4 from './imgs/4.png'
 import png5 from './imgs/5.png'
 import png6 from './imgs/6.png'
+import png11 from './imgs/11.png'
+import png22 from './imgs/22.png'
+import png33 from './imgs/33.png'
+import png44 from './imgs/44.png'
+import png55 from './imgs/55.png'
+import png66 from './imgs/66.png'
 import { cardPaddingStyle, cardTitleSizeStyle } from "../../contants";
 export const l = [
   {
@@ -49,6 +55,7 @@ const steps = [
     title: "預約完成",
     // icon: CalendarIcon,
     icon: () => <img src={png1} alt="1" style={{ width: 50 }} />,
+    activeIcon: () => <img src={png11} alt="1" style={{ width: 50 }} />,
     status: ProgressStatus.COMPLETED
   },
   {
@@ -56,6 +63,7 @@ const steps = [
     title: "確認方案",
     // icon: ClipBoardIcon,
     icon: () => <img src={png2} alt="2" style={{ width: 50 }} />,
+    activeIcon: () => <img src={png22} alt="2" style={{ width: 50 }} />,
     status: ProgressStatus.COMPLETED
   },
   {
@@ -63,6 +71,7 @@ const steps = [
     title: "付款完成",
     // icon: PayIcon,
     icon: () => <img src={png3} alt="3" style={{ width: 50 }} />,
+    activeIcon: () => <img src={png33} alt="3" style={{ width: 50 }} />,
     status: ProgressStatus.CURRENT
   },
   {
@@ -70,6 +79,7 @@ const steps = [
     title: "生產完成",
     // icon: MachineIcon,
     icon: () => <img src={png4} alt="4" style={{ width: 50 }} />,
+    activeIcon: () => <img src={png44} alt="4" style={{ width: 50 }} />,
     status: ProgressStatus.PENDING
   },
   {
@@ -77,6 +87,7 @@ const steps = [
     title: "治療中",
     // icon: DoctorIcon,
     icon: () => <img src={png5} alt="5" style={{ width: 50 }} />,
+    activeIcon: () => <img src={png55} alt="5" style={{ width: 50 }} />,
     status: ProgressStatus.PENDING
   },
   {
@@ -84,6 +95,7 @@ const steps = [
     title: "治療完成",
     // icon: ToothIcon,
     icon: () => <img src={png6} alt="6" style={{ width: 50 }} />,
+    activeIcon: () => <img src={png66} alt="6" style={{ width: 50 }} />,
     status: ProgressStatus.PENDING
   }
 ];
@@ -117,25 +129,28 @@ export default function ProgressTracker({
         justifyContent: "space-between", 
         padding: "0 16px" 
       }}>
-        {customSteps.map((step, index) => (
-          <React.Fragment key={step.id}>
-            <div style={{ textAlign: "center", flex: 1 }}>
-              <step.icon status={getStepStatus(step.id)} />
-              <div style={{ 
-                fontSize: 18, 
-                color: getStepStatus(step.id) === ProgressStatus.CURRENT ? "#48d2ce" : "#999", 
-                marginTop: 12,
-                fontWeight: getStepStatus(step.id) === ProgressStatus.CURRENT ? 600 : 400
-              }}>
-                {step.title}
+        {customSteps.map((step, index) => {
+          const isCompleted = getStepStatus(step.id) === ProgressStatus.COMPLETED;
+          return (
+            <React.Fragment key={step.id}>
+              <div style={{ textAlign: "center", flex: 1 }}>
+                {isCompleted ? step.activeIcon() : step.icon()}
+                <div style={{ 
+                  fontSize: 18, 
+                  color: getStepStatus(step.id) === ProgressStatus.CURRENT ? "#48d2ce" : "#999", 
+                  marginTop: 12,
+                  fontWeight: getStepStatus(step.id) === ProgressStatus.CURRENT ? 600 : 400
+                }}>
+                  {step.title}
+                </div>
+                <div style={{ marginTop: 12 }}>
+                  <StepCheck status={getStepStatus(step.id)} />
+                </div>
               </div>
-              <div style={{ marginTop: 12 }}>
-                <StepCheck status={getStepStatus(step.id)} />
-              </div>
-            </div>
-            {index < customSteps.length - 1 && <StepDot />}
-          </React.Fragment>
-        ))}
+              {index < customSteps.length - 1 && <StepDot />}
+            </React.Fragment>
+          )
+        })}
       </div>
     </div>
   );
