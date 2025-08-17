@@ -1,0 +1,62 @@
+.treatment-selection-container {
+  position: absolute;
+  width: 200px;
+  height: 140px;
+  background-color: #f5f5f5;
+  border-radius: 16px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  .clickable-areas {
+    position: relative;
+    flex: 1;
+    padding-top: 20px;
+
+    .clickable-area {
+      position: absolute;
+      padding: 10px 20px;
+      border: 1px solid #ccc;
+      background-color: #ffffff;
+      border-radius: 5px;
+      cursor: pointer;
+      &:hover {
+        background-color: #e6e6e6;
+      }
+    }
+  }
+}
+
+.popup-actions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+
+  .cancel-button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #f44336;
+    color: #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover {
+      background-color: #d32f2f;
+    }
+  }
+
+  .confirm-button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #4caf50;
+    color: #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover {
+      background-color: #388e3c;
+    }
+  }
+}

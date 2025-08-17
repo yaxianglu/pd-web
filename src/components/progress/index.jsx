@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import png1 from './imgs/1.png'
 import png2 from './imgs/2.png'
 import png3 from './imgs/3.png'
@@ -11,6 +11,7 @@ import png33 from './imgs/33.png'
 import png44 from './imgs/44.png'
 import png55 from './imgs/55.png'
 import png66 from './imgs/66.png'
+import TreatmentSelection from '../update-model'
 import { cardPaddingStyle, cardTitleSizeStyle } from "../../contants";
 export const l = [
   {
@@ -111,6 +112,8 @@ export default function ProgressTracker({
     return ProgressStatus.PENDING;
   };
 
+  const [updateId, setUpdateId] = useState(null);
+  console.info('updateId', updateId);
   return (
     <div style={{
       background: "#fff", 
@@ -133,7 +136,12 @@ export default function ProgressTracker({
           const isCompleted = getStepStatus(step.id) === ProgressStatus.COMPLETED;
           return (
             <React.Fragment key={step.id}>
-              <div style={{ textAlign: "center", flex: 1 }}>
+              <div style={{ textAlign: "center", flex: 1, position: "relative" }}
+                onClick={() => setUpdateId(step.id)}
+              >
+                {
+                  updateId === step.id && <TreatmentSelection title={step.title} onCancel={() => setUpdateId()} onConfirm={() => setUpdateId()} />
+                }
                 {isCompleted ? step.activeIcon() : step.icon()}
                 <div style={{ 
                   fontSize: 18, 
@@ -159,23 +167,6 @@ export default function ProgressTracker({
 // 步骤连接点
 function StepDot() {
   return null;
-  return (
-    <div style={{ 
-      width: 40, 
-      flex: 0, 
-      display: "flex", 
-      justifyContent: "center", 
-      alignItems: "center", 
-      margin: "0 -2px" 
-    }}>
-      <div style={{ 
-        width: 12, 
-        height: 12, 
-        borderRadius: "50%", 
-        background: "#e4e7ed" 
-      }}></div>
-    </div>
-  );
 }
 
 // 步骤状态指示器
@@ -215,96 +206,4 @@ function StepCheck({ status }) {
         </span>
       );
   }
-}
-
-// 图标组件
-function CalendarIcon({ status }) {
-  const isActive = status === ProgressStatus.CURRENT;
-  const isCompleted = status === ProgressStatus.COMPLETED;
-  
-  return (
-    <svg width="46" height="46" fill="none" style={{ color: isActive ? "#48d2ce" : "#bbb" }}>
-      <rect x="5" y="10" width="36" height="31" rx="8" 
-        fill={isActive ? "#e8f8f8" : "#f6f7fa"} 
-        stroke={isActive ? "#48d2ce" : "#ddd"} 
-        strokeWidth={isActive ? "3" : "2"}/>
-      <rect x="14" y="5" width="4" height="9" rx="2" fill={isActive ? "#48d2ce" : "#ddd"}/>
-      <rect x="28" y="5" width="4" height="9" rx="2" fill={isActive ? "#48d2ce" : "#ddd"}/>  
-      {isCompleted && (
-        <>
-          <circle cx="28" cy="28" r="8" fill="#fff"/>
-          <path d="M32 24l-6 6m0-6l6 6" stroke="#38cf88" strokeWidth="2"/>
-        </>
-      )}
-    </svg>
-  );
-}
-
-function ClipBoardIcon({ status }) {
-  const isActive = status === ProgressStatus.CURRENT;
-  const isCompleted = status === ProgressStatus.COMPLETED;
-  
-  return (
-    <svg width="46" height="46" fill="none" style={{ color: isActive ? "#48d2ce" : "#bbb" }}>
-      <rect x="10" y="8" width="26" height="31" rx="7" 
-        fill={isActive ? "#e8f8f8" : "#f6f7fa"} 
-        stroke={isActive ? "#48d2ce" : "#ddd"} 
-        strokeWidth={isActive ? "3" : "2"}/>
-      <rect x="18" y="4" width="10" height="10" rx="5" fill={isActive ? "#48d2ce" : "#ddd"}/>
-      <rect x="16" y="20" width="14" height="2.8" rx="1.4" fill={isActive ? "#48d2ce" : "#ddd"}/>
-      {isCompleted && (
-        <>
-          <circle cx="32" cy="32" r="9" fill="#fff"/>
-          <path d="M36 30l-6 6m0-6l6 6" stroke="#38cf88" strokeWidth="2"/>
-        </>
-      )}
-    </svg>
-  );
-}
-
-function PayIcon({ status }) {
-  const isActive = status === ProgressStatus.CURRENT;
-  
-  return (
-    <svg width="46" height="46" fill="none">
-      <rect x="5" y="15" width="36" height="22" rx="6" 
-        fill={isActive ? "#e8f8f8" : "#f6f7fa"} 
-        stroke={isActive ? "#48d2ce" : "#ddd"} 
-        strokeWidth={isActive ? "3" : "2"}/>
-      <circle cx="23" cy="26" r="4" fill="#fff" stroke={isActive ? "#48d2ce" : "#ddd"} strokeWidth="2"/>
-      <rect x="18" y="18" width="10" height="2.8" rx="1.4" fill={isActive ? "#48d2ce" : "#ddd"}/>
-      <rect x="28" y="25" width="8" height="2.5" rx="1.2" fill="#ffce41" />
-    </svg>
-  );
-}
-
-function MachineIcon({ status }) {
-  return (
-    <svg width="46" height="46" fill="none">
-      <rect x="10" y="15" width="26" height="18" rx="7" fill="#f6f7fa" stroke="#ddd" strokeWidth="2"/>
-      <rect x="17" y="27" width="12" height="6" rx="2" fill="#ddd"/>
-      <rect x="14" y="13" width="8" height="5" rx="2.5" fill="#ddd"/>
-      <circle cx="36" cy="27" r="4" fill="#fff"/>
-    </svg>
-  );
-}
-
-function DoctorIcon({ status }) {
-  return (
-    <svg width="46" height="46" fill="none">
-      <rect x="7" y="13" width="32" height="22" rx="11" fill="#f6f7fa" stroke="#ddd" strokeWidth="2"/>
-      <rect x="18" y="17" width="10" height="7" rx="3.5" fill="#ddd"/>
-      <rect x="16" y="30" width="14" height="4" rx="2" fill="#ddd"/>
-      <circle cx="23" cy="21" r="5" fill="#fff"/>
-    </svg>
-  );
-}
-
-function ToothIcon({ status }) {
-  return (
-    <svg width="46" height="46" fill="none">
-      <rect x="10" y="17" width="26" height="14" rx="7" fill="#f6f7fa" stroke="#ddd" strokeWidth="2"/>
-      <ellipse cx="23" cy="23" rx="6" ry="8" fill="#ddd" />
-    </svg>
-  );
 }
