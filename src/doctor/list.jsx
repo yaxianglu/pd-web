@@ -1,12 +1,16 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useMemo, useState, useCallback, useEffect } from 'react';
 import './list.scss';
 import ContactInfo from '../components/contact-info';
 import Dashboard from '../patient';
 
-export default function PatientInfoList({ patients = [], onCreate }) {
+export default function PatientInfoList({ patients = [], onCreate, statusFromRoute = 'all' }) {
   const [keyword, setKeyword] = useState('');
   const [expanded, setExpanded] = useState({}); // key: patient.uuid -> boolean
-  const [statusFilter, setStatusFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState(statusFromRoute || 'all');
+
+  useEffect(() => {
+    setStatusFilter(statusFromRoute || 'all');
+  }, [statusFromRoute]);
 
   const onToggle = useCallback((uuid) => {
     setExpanded((prev) => ({ ...prev, [uuid]: !prev[uuid] }));

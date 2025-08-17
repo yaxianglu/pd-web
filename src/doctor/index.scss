@@ -4,7 +4,7 @@
   background: #f6f6f7;
 
   .sidebar {
-    width: 250px;
+    width: 140px;
     background: #48d2ce;
     height: 100vh;
     position: fixed;
@@ -16,6 +16,8 @@
     flex-direction: column;
     justify-content: space-between;
     z-index: 1000;
+    writing-mode: horizontal-tb;
+    * { white-space: nowrap; }
 
     .system-title {
       color: #fff;
