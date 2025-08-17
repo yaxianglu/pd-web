@@ -4,20 +4,16 @@ import { useLocation } from 'react-router-dom';
 import { Modal, Button } from 'antd';
 import { smileTestApi } from '../services/smileTestApi';
 import './step3.scss';
-import p7 from './imgs/7.svg';
-import p71 from './imgs/71.svg';
-import p15 from './imgs/15.svg';
-import p151 from './imgs/151.svg';
-import p16 from './imgs/16.svg';
-import p161 from './imgs/161.svg';
-import p17 from './imgs/17.svg';
-import p171 from './imgs/171.svg';
+import p7 from './imgs/7.png';
+import p15 from './imgs/15.png';
+import p16 from './imgs/16.png';
+import p17 from './imgs/17.png';
 
 const pMap = {
-  1: [p7, p71],
-  2: [p15, p151],
-  3: [p16, p161],
-  4: [p17, p171]
+  1: [p7, p7],
+  2: [p15, p15],
+  3: [p16, p16],
+  4: [p17, p17]
 }
 
 // 二维码组件
@@ -620,7 +616,6 @@ export default function Step3({ onNext, setStep, style }) {
                 onPlay={() => console.log('视频开始播放')}
                 onError={(e) => console.error('视频错误:', e)}
               />
-              <img className='posture-hint-tishi-img' src={pMap[currentStep][1]} alt="拍照姿势提示" />
               {/* 案例照片在左上角 */}
               <div className="example-photo-corner">
                 <div className="posture-hint-small">
