@@ -13,6 +13,8 @@ import png55 from './imgs/55.png'
 import png66 from './imgs/66.png'
 import TreatmentSelection from '../update-model'
 import { cardPaddingStyle, cardTitleSizeStyle } from "../../contants";
+import { message } from 'antd';
+import apiService from "../../services/api";
 export const l = [
   {
     title: '等待預約',
@@ -104,7 +106,9 @@ const steps = [
 // 进度组件
 export default function ProgressTracker({ 
   currentStep = 0, 
-  steps: customSteps = steps 
+  steps: customSteps = steps,
+  uuid,
+  onUpdate,
 }) {
   // 更新步骤状态
   const getStepStatus = (stepId) => {
@@ -113,7 +117,11 @@ export default function ProgressTracker({
   };
 
   const [updateId, setUpdateId] = useState(null);
-  console.info('updateId', updateId);
+  const handleConfirm = async () => {
+    await apiService.updatePatientProgress(uuid, Number(updateId));
+    onUpdate && onUpdate(Number(updateId))
+    setUpdateId(null);
+  }
   return (
     <div style={{
       background: "#fff", 
@@ -140,7 +148,7 @@ export default function ProgressTracker({
                 onClick={() => setUpdateId(step.id)}
               >
                 {
-                  updateId === step.id && <TreatmentSelection title={step.title} onCancel={() => setTimeout(() => setUpdateId(null), 0)} onConfirm={() => setTimeout(() => setUpdateId(null), 0)} />
+                  updateId === step.id && <TreatmentSelection title={step.title} onCancel={() => setTimeout(() => setUpdateId(null), 0)} onConfirm={() => setTimeout(handleConfirm, 0)} />
                 }
                 {isCompleted ? step.activeIcon() : step.icon()}
                 <div style={{ 

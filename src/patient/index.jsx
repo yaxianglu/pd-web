@@ -10,6 +10,7 @@ import apiService from "../services/api";
 // import png13 from "../asserts/13.png";
 import ScheduleCard from "../components/schedule-card";
 import Logout from "../components/logout";
+import { message } from "antd";
 
 const gapSize = 16;
 
@@ -48,6 +49,15 @@ function InfoCard({ patientData, doctor, clinic, isInput = false, currentStepFro
         contact={doctor?.phone || clinic?.phone || patientData?.phone}
         treatmentProgress={currentStepFromProgress}
         hobbies={patientData?.hobbies || ''}
+        // onUpdate={(updateId) => {
+        //   apiService.updatePatientHobbies(patientData?.uuid, updateId).then(res => {
+        //     if (res.success) {
+        //       message.success('更新成功');
+        //     } else {
+        //       message.error(res.message);
+        //     }
+        //   });
+        // }}
       />
     </div>
   );
@@ -199,7 +209,12 @@ export default function Dashboard({ prefetched = null }) {
             <InfoCard patientData={patientData} doctor={doctorData} clinic={clinicData} isInput={isInput} currentStepFromProgress={currentStepFromProgress} />
             <PlanConfirmCard currentStepFromProgress={currentStepFromProgress || 0} />
           </div>
-          <ProgressTracker currentStep={currentStepFromProgress} />
+          <ProgressTracker
+            currentStep={currentStepFromProgress} uuid={(patientInfo || {}).uuid}
+            onUpdate={(next_progress) => {
+              setPatientInfo((prev) => ({ ...(prev || {}), treatment_progress: next_progress || 0 }));
+            }}
+          />
         </div>
         <div style={{ flex: 1 }}>
           <ScheduleCard

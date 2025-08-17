@@ -1,6 +1,7 @@
 import { l as progressTitles } from "../progress";
 import { useState } from "react";
 import TreatmentSelection from "../update-model";
+import { message } from "antd";
 const m = {
   1: {
     title: '輕度',
@@ -24,10 +25,19 @@ const m = {
     title: '5組入',
   },
 }
-export default function InfoCardComponent({ doctorName, clinicAddress, contact, treatmentProgress, hobbies }) {
+export default function InfoCardComponent({ doctorName, clinicAddress, contact, treatmentProgress, hobbies, onUpdate }) {
   console.info('treatmentProgress', treatmentProgress);
   const [showUpdateModel, setShowUpdateModel] = useState(false);
   const [updateId, setUpdateId] = useState(null);
+  const handleUpdate = () => {
+    if (!updateId) {
+      message.error('請選擇治療方案');
+      return;
+    }
+    setShowUpdateModel(false);
+    setUpdateId(null);
+    onUpdate && onUpdate(updateId);
+  }
   return (
     <div style={{ display: "flex", gap: 22 }}>
       <div style={{
@@ -62,8 +72,7 @@ export default function InfoCardComponent({ doctorName, clinicAddress, contact, 
                 setUpdateId(null);
               }, 0)}
               onConfirm={() => setTimeout(() => {
-                setShowUpdateModel(false);
-                setUpdateId(null);
+                handleUpdate();
               }, 0)}
             />
           )
