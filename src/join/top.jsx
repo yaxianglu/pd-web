@@ -1,5 +1,5 @@
 import './top.scss';
-import p1 from './imgs/1.svg';
+import p1 from './imgs/1.png';
 import DetailButton from '../components/detail-button';
 
 export default function Description() {
@@ -33,7 +33,7 @@ export default function Description() {
           onClick={handleJoinClick}
         />
       </div>
-      <img src={p1} alt="#" />
+      <img src={p1} alt="#" style={{ width: '100%' }} />
     </div>
   );
 }
