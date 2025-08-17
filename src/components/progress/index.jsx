@@ -140,7 +140,7 @@ export default function ProgressTracker({
                 onClick={() => setUpdateId(step.id)}
               >
                 {
-                  updateId === step.id && <TreatmentSelection title={step.title} onCancel={() => setUpdateId()} onConfirm={() => setUpdateId()} />
+                  updateId === step.id && <TreatmentSelection title={step.title} onCancel={() => setTimeout(() => setUpdateId(null), 0)} onConfirm={() => setTimeout(() => setUpdateId(null), 0)} />
                 }
                 {isCompleted ? step.activeIcon() : step.icon()}
                 <div style={{ 
