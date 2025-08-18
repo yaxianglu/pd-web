@@ -48,6 +48,7 @@ export default function InfoCardComponent({ doctorName, clinicAddress, contact, 
       return null;
     }
   }, [userInfo])
+  console.info('updateId', updateId);
   return (
     <div style={{ display: "flex", gap: 22 }}>
       <div style={{
@@ -77,7 +78,7 @@ export default function InfoCardComponent({ doctorName, clinicAddress, contact, 
           showUpdateModel && (role === 'hospital') && (
             <TreatmentSelection
               title={<>
-                {Object.keys(m).map(item => <div style={{ marginBottom: 6, cursor: 'pointer', color: updateId === item ? '#48d2ce' : '#000' }} onClick={() => {
+                {Object.keys(m).map(item => <div style={{ marginBottom: 6, cursor: 'pointer', color: Number(updateId) === Number(item) ? '#48d2ce' : '#000' }} onClick={() => {
                   setTimeout(() => {
                     setUpdateId(item);
                   }, 0);
