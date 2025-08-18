@@ -140,7 +140,7 @@ export default function JoinInfo() {
 
       console.log('提交数据:', dentistData);
       
-      const result = await apiService.post('/dentist-info', dentistData);
+      const result = await apiService.post('/api/dentist-info', dentistData);
       
       if (result.success) {
         // 清空表单
