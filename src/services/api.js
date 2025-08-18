@@ -353,6 +353,10 @@ class ApiService {
     return this.put(endpoint, data, true);
   }
 
+  // 更新患者治疗方案
+  async updatePatientHobbies(uuid, hobbies) {
+    return this.put(`/api/smile-test/patient/${encodeURIComponent(uuid)}/hobbies`, { hobbies }, true);
+  }
   // 更新患者進度
   async updatePatientProgress(uuid, progress) {
     return this.put(`/api/smile-test/patient/${encodeURIComponent(uuid)}/progress`, { progress }, true);

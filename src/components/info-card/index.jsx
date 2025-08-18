@@ -2,7 +2,7 @@ import { l as progressTitles } from "../progress";
 import { useMemo, useState } from "react";
 import TreatmentSelection from "../update-model";
 import { useAuth } from '../../context/AuthContext';
-// import apiService from "../services/api";
+import apiService from "../../services/api";
 import { message } from "antd";
 const m = {
   1: {
@@ -28,7 +28,7 @@ const m = {
   },
 }
 export default function InfoCardComponent({ doctorName, clinicAddress, contact, treatmentProgress, hobbies, onUpdate }) {
-  console.info('treatmentProgress', treatmentProgress);
+  console.info('hobbies', hobbies);
   const [showUpdateModel, setShowUpdateModel] = useState(false);
   const [updateId, setUpdateId] = useState(null);
   const { userInfo } = useAuth();
