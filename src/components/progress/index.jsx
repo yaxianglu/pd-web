@@ -127,13 +127,23 @@ export default function ProgressTracker({
 
   const [updateId, setUpdateId] = useState(null);
   const handleConfirm = async () => {
-    await apiService.updatePatientProgress(uuid, Number(updateId));
-    onUpdate && onUpdate(Number(updateId))
+    const updateIdNum = Number(updateId);
+    let updNum = updateIdNum;
+    if (updateIdNum === currentStep) {
+      // 当前是取消
+      updNum = updateIdNum - 1;
+    }
+    await apiService.updatePatientProgress(uuid, updNum);
+    onUpdate && onUpdate(updNum)
     setUpdateId(null);
   }
 
   const handleUpdateId = (nextId) => {
     const nextIdNum = Number(nextId);
+    const changeableId = [currentStep, currentStep + 1];
+    if (!changeableId.includes(nextIdNum)) {
+      return;
+    }
     /**
       1 预约完成：自动
       2 确认方案：医生
@@ -156,8 +166,9 @@ export default function ProgressTracker({
     if (role === 'super_admin' || role === 'admin') {
       if (nextIdNum !== 3) return;
     }
-    setUpdateId(nextId);
+    setUpdateId(nextIdNum);
   }
+
   return (
     <div style={{
       background: "#fff", 
@@ -178,13 +189,14 @@ export default function ProgressTracker({
       }}>
         {customSteps.map((step, index) => {
           const isCompleted = getStepStatus(step.id) === ProgressStatus.COMPLETED;
+          const isCancel = step.id === currentStep ? '取消' : '';
           return (
             <React.Fragment key={step.id}>
               <div style={{ textAlign: "center", flex: 1, position: "relative" }}
                 onClick={() => handleUpdateId(step.id)}
               >
                 {
-                  updateId === step.id && <TreatmentSelection title={step.title} onCancel={() => setTimeout(() => setUpdateId(null), 0)} onConfirm={() => setTimeout(handleConfirm, 0)} />
+                  updateId === step.id && <TreatmentSelection title={isCancel + step.title} onCancel={() => setTimeout(() => setUpdateId(null), 0)} onConfirm={() => setTimeout(handleConfirm, 0)} />
                 }
                 {isCompleted ? step.activeIcon() : step.icon()}
                 <div style={{ 
