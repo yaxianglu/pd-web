@@ -25,7 +25,10 @@ function Sidebar({ doctors = [], onSelect, activeUuid, onCreate }) {
           ))}
         </div>
       </div>
-      <button className="create-account-btn" onClick={onCreate}>創建帳戶</button>
+      <div>
+        <button className="create-account-btn" onClick={onCreate}>創建帳戶</button>
+        <Logout />
+      </div>
     </div>
   );
 }
@@ -67,13 +70,18 @@ export default function HospitalDashboard({ isSub }) {
 
   return (
     <div className="hospital-dashboard">
-      <Sidebar doctors={doctors} onSelect={setActiveDoctor} activeUuid={activeDoctor?.uuid} onCreate={() => setCreateOpen(true)} />
+      <Sidebar
+        doctors={doctors}
+        onSelect={setActiveDoctor}
+        activeUuid={activeDoctor?.uuid}
+        onCreate={() => setCreateOpen(true)}
+      />
       <div className="hospital-main-content">
-        {isSub ? null : (
+        {/* {isSub ? null : (
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <Logout />
           </div>
-        )}
+        )} */}
         {activeDoctor ? (
           <DoctorDashboard style={{ height: 'calc(100vh - 40px)' }} initialPatients={patientsByDoctor} doctorUser={activeDoctor} />
         ) : (
