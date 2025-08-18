@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import png1 from './imgs/1.png'
 import png2 from './imgs/2.png'
 import png3 from './imgs/3.png'
@@ -13,7 +13,7 @@ import png55 from './imgs/55.png'
 import png66 from './imgs/66.png'
 import TreatmentSelection from '../update-model'
 import { cardPaddingStyle, cardTitleSizeStyle } from "../../contants";
-import { message } from 'antd';
+import { useAuth } from '../../context/AuthContext';
 import apiService from "../../services/api";
 export const l = [
   {
@@ -110,6 +110,15 @@ export default function ProgressTracker({
   uuid,
   onUpdate,
 }) {
+  const { userInfo } = useAuth();
+  const role = useMemo(() => {
+    try {
+      return userInfo?.role;
+    } catch {
+      return null;
+    }
+  }, [userInfo])
+
   // 更新步骤状态
   const getStepStatus = (stepId) => {
     if (stepId <= currentStep) return ProgressStatus.COMPLETED;
@@ -121,6 +130,33 @@ export default function ProgressTracker({
     await apiService.updatePatientProgress(uuid, Number(updateId));
     onUpdate && onUpdate(Number(updateId))
     setUpdateId(null);
+  }
+
+  const handleUpdateId = (nextId) => {
+    const nextIdNum = Number(nextId);
+    /**
+      1 预约完成：自动
+      2 确认方案：医生
+      3 付款完成：超管、管理员
+      4 生产完成：巧医
+      5 治疗中：医生
+      6 治疗完成：医生
+    */
+    if (role === 'doctor') {
+      // 当前是医生
+      if (![2, 5, 6].includes(nextIdNum)) {
+        return;
+      }
+    }
+    if (role === 'hospital') {
+      if (nextIdNum !== 4) {
+        return;
+      }
+    }
+    if (role === 'super_admin' || role === 'admin') {
+      if (nextIdNum !== 3) return;
+    }
+    setUpdateId(nextId);
   }
   return (
     <div style={{
@@ -145,7 +181,7 @@ export default function ProgressTracker({
           return (
             <React.Fragment key={step.id}>
               <div style={{ textAlign: "center", flex: 1, position: "relative" }}
-                onClick={() => setUpdateId(step.id)}
+                onClick={() => handleUpdateId(step.id)}
               >
                 {
                   updateId === step.id && <TreatmentSelection title={step.title} onCancel={() => setTimeout(() => setUpdateId(null), 0)} onConfirm={() => setTimeout(handleConfirm, 0)} />
