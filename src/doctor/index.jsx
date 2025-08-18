@@ -125,42 +125,46 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
 
   return (
     <div className="doctor-dashboard" style={style}>
-      <div className="sidebar" style={{ position: 'sticky', top: 0, width: SIDEBAR_WIDTH }}>
-        <div>
-          <div style={{ color: '#fff', fontSize: 16, marginBottom: 10 }} onClick={() => setActiveView('patients')}>患者列表</div>
-          <div className="account-list">
-            {[
-              { key: 'all', label: '全部' },
-              { key: '等待預約', label: '等待預約' },
-              { key: '預約完成', label: '預約完成' },
-              { key: '確認方案', label: '確認方案' },
-              { key: '付款完成', label: '付款完成' },
-              { key: '生產完成', label: '生產完成' },
-              { key: '治療中', label: '治療中' },
-              { key: '治療完成', label: '治療完成' },
-            ].map(item => (
-              <div
-                key={item.key}
-                className={`account-item ${selectedStatus === item.key ? 'active' : ''}`}
-                onClick={() => { setActiveView('patients'); setSelectedStatus(item.key); }}
-              >
-                {item.label}
+      {
+        isDoctorDetail ? null : (
+          <div className="sidebar" style={{ position: 'sticky', top: 0, width: SIDEBAR_WIDTH }}>
+            <div>
+              <div style={{ color: '#fff', fontSize: 16, marginBottom: 10 }} onClick={() => setActiveView('patients')}>患者列表</div>
+              <div className="account-list">
+                {[
+                  { key: 'all', label: '全部' },
+                  { key: '等待預約', label: '等待預約' },
+                  { key: '預約完成', label: '預約完成' },
+                  { key: '確認方案', label: '確認方案' },
+                  { key: '付款完成', label: '付款完成' },
+                  { key: '生產完成', label: '生產完成' },
+                  { key: '治療中', label: '治療中' },
+                  { key: '治療完成', label: '治療完成' },
+                ].map(item => (
+                  <div
+                    key={item.key}
+                    className={`account-item ${selectedStatus === item.key ? 'active' : ''}`}
+                    onClick={() => { setActiveView('patients'); setSelectedStatus(item.key); }}
+                  >
+                    {item.label}
+                  </div>
+                ))}
               </div>
-            ))}
+              <div style={{ color: '#fff', fontSize: 14, margin: '30px 0 16px' }}>日曆看板</div>
+              <div className="account-list">
+                <div className={`account-item ${activeView==='calendar' ? 'active' : ''}`} onClick={() => setActiveView('calendar')}>日曆看板</div>
+              </div>
+            </div>
+            <div>
+              <div className="account-list">
+                <div className={`account-item ${activeView==='settings' ? 'active' : ''}`} onClick={() => setActiveView('settings')}>個人設置</div>
+                <div className={`account-item ${activeView==='help' ? 'active' : ''}`} onClick={() => setActiveView('help')}>尋找幫助</div>
+              </div>
+              <Logout style={{ width: '100%' }}>退出登錄</Logout>
+            </div>
           </div>
-          <div style={{ color: '#fff', fontSize: 14, margin: '30px 0 16px' }}>日曆看板</div>
-          <div className="account-list">
-            <div className={`account-item ${activeView==='calendar' ? 'active' : ''}`} onClick={() => setActiveView('calendar')}>日曆看板</div>
-          </div>
-        </div>
-        <div>
-          <div className="account-list">
-            <div className={`account-item ${activeView==='settings' ? 'active' : ''}`} onClick={() => setActiveView('settings')}>個人設置</div>
-            <div className={`account-item ${activeView==='help' ? 'active' : ''}`} onClick={() => setActiveView('help')}>尋找幫助</div>
-          </div>
-          <Logout style={{ width: '100%' }}>退出登錄</Logout>
-        </div>
-      </div>
+        )
+      }
 
       <div className="doctor-main-content">
         {/* <UserInfoCard userInfo={displayUser} isDoctorDetail={true} /> */}

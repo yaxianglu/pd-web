@@ -1,6 +1,7 @@
 import { l as progressTitles } from "../progress";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import TreatmentSelection from "../update-model";
+import { useAuth } from '../../context/AuthContext';
 import { message } from "antd";
 const m = {
   1: {
@@ -28,6 +29,7 @@ const m = {
 export default function InfoCardComponent({ doctorName, clinicAddress, contact, treatmentProgress, hobbies, onUpdate }) {
   console.info('treatmentProgress', treatmentProgress);
   const [showUpdateModel, setShowUpdateModel] = useState(false);
+  const { userInfo } = useAuth();
   const [updateId, setUpdateId] = useState(null);
   const handleUpdate = () => {
     if (!updateId) {
@@ -38,6 +40,13 @@ export default function InfoCardComponent({ doctorName, clinicAddress, contact, 
     setUpdateId(null);
     onUpdate && onUpdate(updateId);
   }
+  const role = useMemo(() => {
+    try {
+      return userInfo?.role;
+    } catch {
+      return null;
+    }
+  }, [userInfo])
   return (
     <div style={{ display: "flex", gap: 22 }}>
       <div style={{
@@ -61,7 +70,7 @@ export default function InfoCardComponent({ doctorName, clinicAddress, contact, 
         <div style={{ fontSize: 29, fontWeight: "bold", margin: "12px 0 5px" }}>{m[hobbies]?.title}</div>
         <div style={{ fontSize: 16, color: "#e8f8b0" }}>{m[hobbies]?.subtitle}</div>
         {
-          showUpdateModel && (
+          showUpdateModel && (role === 'hospital') && (
             <TreatmentSelection
               title={<>
                 {Object.keys(m).map(item => <div style={{ marginBottom: 6, cursor: 'pointer', color: updateId === item ? '#48d2ce' : '#000' }} onClick={() => setUpdateId(item)} key={item}>{m[item].title}</div>)}

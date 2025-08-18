@@ -19,6 +19,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [refreshToken, setRefreshToken] = useState(null);
   const [isInitializing, setIsInitializing] = useState(true);
+  console.info('userInfo', userInfo);
 
   // raw 为后端接口原始响应对象（不改结构直接保存）
   const login = (type, info, raw = null) => {
