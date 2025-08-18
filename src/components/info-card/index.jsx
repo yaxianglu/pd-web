@@ -2,6 +2,7 @@ import { l as progressTitles } from "../progress";
 import { useMemo, useState } from "react";
 import TreatmentSelection from "../update-model";
 import { useAuth } from '../../context/AuthContext';
+// import apiService from "../services/api";
 import { message } from "antd";
 const m = {
   1: {
@@ -29,8 +30,8 @@ const m = {
 export default function InfoCardComponent({ doctorName, clinicAddress, contact, treatmentProgress, hobbies, onUpdate }) {
   console.info('treatmentProgress', treatmentProgress);
   const [showUpdateModel, setShowUpdateModel] = useState(false);
-  const { userInfo } = useAuth();
   const [updateId, setUpdateId] = useState(null);
+  const { userInfo } = useAuth();
   const handleUpdate = () => {
     if (!updateId) {
       message.error('請選擇治療方案');
@@ -64,7 +65,10 @@ export default function InfoCardComponent({ doctorName, clinicAddress, contact, 
         color: "#fff", padding: 12, textAlign: "center", fontSize: 20,
         position: "relative",
       }}
-      onClick={() => setShowUpdateModel(true)}
+      onClick={() => {
+        setUpdateId(hobbies);
+        setShowUpdateModel(true)
+      }}
       >
         <div style={{ marginBottom: 12, borderBottom: "1px solid #fff", fontSize: 18, paddingBottom: 12 }}>治療方案</div>
         <div style={{ fontSize: 29, fontWeight: "bold", margin: "12px 0 5px" }}>{m[hobbies]?.title}</div>
@@ -73,7 +77,11 @@ export default function InfoCardComponent({ doctorName, clinicAddress, contact, 
           showUpdateModel && (role === 'hospital') && (
             <TreatmentSelection
               title={<>
-                {Object.keys(m).map(item => <div style={{ marginBottom: 6, cursor: 'pointer', color: updateId === item ? '#48d2ce' : '#000' }} onClick={() => setUpdateId(item)} key={item}>{m[item].title}</div>)}
+                {Object.keys(m).map(item => <div style={{ marginBottom: 6, cursor: 'pointer', color: updateId === item ? '#48d2ce' : '#000' }} onClick={() => {
+                  setTimeout(() => {
+                    setUpdateId(item);
+                  }, 0);
+                }} key={item}>{m[item].title}</div>)}
               </>}
               style={{ height: 'auto' }}
               onCancel={() => setTimeout(() => {
