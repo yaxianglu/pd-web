@@ -28,7 +28,7 @@ const list = {
 
 const gapSize = 16;
 
-function InfoCard({ patientData, doctor, patientInfo, clinic, isInput = false, currentStepFromProgress }) {
+function InfoCard({ patientData, doctor, patientInfo, clinic, isInput = false, currentStepFromProgress, onUpdate }) {
   console.info("patientInfo", patientInfo)
   return (
     <div style={{ background: "#fff", borderRadius: "18px", padding: "30px", boxSizing: "border-box", marginBottom: gapSize, flex: 3 }}>
@@ -66,6 +66,7 @@ function InfoCard({ patientData, doctor, patientInfo, clinic, isInput = false, c
         hobbies={Number(patientInfo?.hobbies || '')}
         onUpdate={(updateId) => {
           apiService.updatePatientHobbies(patientInfo?.uuid, updateId).then(res => {
+            onUpdate && onUpdate(updateId)
             if (res.success) {
               message.success('更新成功');
             } else {
@@ -229,7 +230,17 @@ export default function Dashboard({ prefetched = null }) {
       <div style={{ display: "flex", gap: gapSize, alignItems: "flex-start" }}>
         <div style={{ flex: 2 }}>
           <div style={{ display: "flex", gap: gapSize }}>
-            <InfoCard patientData={patientData} patientInfo={patientInfo} doctor={doctorData} clinic={clinicData} isInput={isInput} currentStepFromProgress={currentStepFromProgress} />
+            <InfoCard
+              patientData={patientData}
+              patientInfo={patientInfo}
+              doctor={doctorData}
+              clinic={clinicData}
+              isInput={isInput}
+              currentStepFromProgress={currentStepFromProgress}
+              onUpdate={(nexthobbies) => {
+                setPatientInfo((prev) => ({ ...(prev || {}), hobbies: nexthobbies }));
+              }}
+            />
             <PlanConfirmCard currentStepFromProgress={currentStepFromProgress || 0} patientData={patientInfo}/>
           </div>
           <ProgressTracker
