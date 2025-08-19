@@ -1,6 +1,6 @@
 
 // API基础URL
-export const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://35.153.133.193:3001';
+export const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://18.234.74.63:3001';
 // export const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 
 
