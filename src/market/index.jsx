@@ -229,7 +229,7 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
                 region: s.city || '—',
                 downloadUrl: '#',
                 note: '',
-                statusText: s?.patient_uuid || '創建患者信息',
+                statusText: s?.patient_uuid ? s?.uuid : '創建患者信息',
                 smileUuid: s.uuid,
               }));
               setItems(mapped);
