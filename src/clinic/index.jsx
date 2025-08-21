@@ -31,14 +31,21 @@ function Sidebar({ clinics = [], activeUuid, onSelect, onAddClinic }) {
           onClick={onAddClinic}
           style={{
             width: '100%',
-            padding: '10px 12px',
-            background: 'rgba(255,255,255,0.2)',
-            border: '2px solid #ff6b6b',
-            borderRadius: 10,
+            padding: '12px 20px',
+            background: 'rgba(255, 255, 255, 0.2)',
+            border: 'none',
+            borderRadius: 8,
             color: '#fff',
             cursor: 'pointer',
             fontSize: '14px',
-            fontWeight: 500
+            fontWeight: 'bold',
+            transition: 'background 0.3s ease'
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.background = 'rgba(255, 255, 255, 0.3)';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.background = 'rgba(255, 255, 255, 0.2)';
           }}
         >
           新增診所
@@ -63,7 +70,7 @@ export default function ClinicDashboard() {
   const [doctors, setDoctors] = useState([]);
   const [activeClinic, setActiveClinic] = useState(null);
   const [createOpen, setCreateOpen] = useState(false);
-  const [form, setForm] = useState({ username: '', password: '', phone: '', email: '', clinic_uuid: '' });
+  const [form, setForm] = useState({ username: '', password: 'pd2025!', phone: '', email: '', clinic_uuid: '' });
   const [addClinicOpen, setAddClinicOpen] = useState(false);
   const [clinicForm, setClinicForm] = useState({ clinic_name: '', address: '', phone: '', city: '', website: '' });
 
@@ -185,7 +192,7 @@ export default function ClinicDashboard() {
           if (res?.success) {
             message.success('創建成功');
             setCreateOpen(false);
-            setForm({ username: '', password: '', phone: '', email: '' });
+            setForm({ username: '', password: 'pd2025!', phone: '', email: '' });
             // 刷新医生列表
             await refreshDoctors();
           } else {
