@@ -137,8 +137,8 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
   }, []);
 
   return (
-    <div className="market-dashboard" style={{ minHeight: '100%' }}>
-      <div className="card" style={{ height: '100%' }}>
+    <div className="market-dashboard" style={{ height: '100%' }}>
+      <div className="card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
         <MarketHeader bizId={bizId} activeTab={activeTab} onTabChange={setActiveTab} />
 
         {activeTab === 'smile' && (
