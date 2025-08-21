@@ -34,7 +34,7 @@ export default function Partners() {
       }
     } catch (error) {
       console.error('获取合作夥伴列表失败:', error);
-      message.error('获取合作夥伴列表失败：网络错误');
+              message.error('獲取合作夥伴列表失敗：網路錯誤');
     } finally {
       setLoading(false);
     }

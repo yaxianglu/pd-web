@@ -24,10 +24,10 @@ const AppointmentModal = ({
   // 获取模态框标题
   const getModalTitle = (mode) => {
     switch (mode) {
-      case "day": return "预约列表";
-      case "edit": return "编辑预约";
-      case "create": return "新增预约";
-      default: return "预约";
+      case "day": return "預約列表";
+      case "edit": return "編輯預約";
+      case "create": return "新增預約";
+      default: return "預約";
     }
   };
 
@@ -42,11 +42,11 @@ const AppointmentModal = ({
       if (res && res.success && Array.isArray(res.data)) {
         setPatients(res.data);
       } else {
-        console.log('患者列表数据格式不正确:', res);
+        console.log('患者列表數據格式不正確:', res);
         setPatients([]);
       }
     } catch (error) {
-      console.error('加载患者列表失败:', error);
+      console.error('加載患者列表失敗:', error);
       setPatients([]);
     } finally {
       setLoadingPatients(false);
@@ -78,11 +78,11 @@ const AppointmentModal = ({
 
         if (onCreate) {
           await onCreate(payload);
-          messageApi.success('预约创建成功');
+          messageApi.success('預約創建成功');
         }
       } catch (error) {
-        console.error('创建预约失败:', error);
-        messageApi.error('创建失败: ' + (error?.message || '未知错误'));
+        console.error('創建預約失敗:', error);
+        messageApi.error('創建失敗: ' + (error?.message || '未知錯誤'));
       }
     } else if (mode === "edit" && activeEvent) {
       try {
@@ -101,11 +101,11 @@ const AppointmentModal = ({
 
         if (onUpdate) {
           await onUpdate(updated);
-          messageApi.success('预约更新成功');
+          messageApi.success('預約更新成功');
         }
       } catch (error) {
-        console.error('更新预约失败:', error);
-        messageApi.error('更新失败: ' + (error?.message || '未知错误'));
+        console.error('更新預約失敗:', error);
+        messageApi.error('更新失敗: ' + (error?.message || '未知錯誤'));
       }
     }
   }, [mode, activeEvent, activeDate, form, onUpdate, onCreate, messageApi]);
@@ -262,7 +262,7 @@ const AppointmentModal = ({
         <Form.Item
           name="patient_uuid"
           label="選擇患者"
-          rules={[{ required: true, message: '请选择患者' }]}
+          rules={[{ required: true, message: '請選擇患者' }]}
         >
           <Select
             placeholder="選擇患者"
@@ -272,7 +272,7 @@ const AppointmentModal = ({
               (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
             }
             options={patients.map((p) => ({ 
-              label: `${p.full_name || p.name || '未知'} (${p.phone || '无电话'})`, 
+              label: `${p.full_name || p.name || '未知'} (${p.phone || '無電話'})`, 
               value: p.uuid 
             }))}
             onFocus={loadPatients}
@@ -283,7 +283,7 @@ const AppointmentModal = ({
         <Form.Item
           name="start_time"
           label="開始時間"
-          rules={[{ required: true, message: '请选择开始时间' }]}
+          rules={[{ required: true, message: '請選擇開始時間' }]}
         >
           <TimePicker style={{ width: "100%" }} format="HH:mm" />
         </Form.Item>
@@ -291,7 +291,7 @@ const AppointmentModal = ({
         <Form.Item
           name="end_time"
           label="結束時間"
-          rules={[{ required: true, message: '请选择结束时间' }]}
+          rules={[{ required: true, message: '請選擇結束時間' }]}
         >
           <TimePicker style={{ width: "100%" }} format="HH:mm" />
         </Form.Item>

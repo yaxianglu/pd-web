@@ -90,12 +90,12 @@ function PatientInfoCard({ patientData }) {
       
       <div className="patient-fields">
         <div className="field-group">
-          <label>性别:</label>
-          <input type="text" placeholder="请输入性别" />
+          <label>性別:</label>
+          <input type="text" placeholder="請輸入性別" />
         </div>
         <div className="field-group">
           <label>生日:</label>
-          <input type="text" placeholder="请输入生日" />
+          <input type="text" placeholder="請輸入生日" />
         </div>
         <div className="field-group search-group">
           <label>搜素:</label>

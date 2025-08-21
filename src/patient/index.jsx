@@ -158,18 +158,18 @@ export default function Dashboard({ prefetched = null }) {
             setClinicData(response && response.data ? response.data.clinic || null : null);
             setPatientInfo(response && response.data ? response.data.patient || null : null);
           } else {
-            setError(response.message || '获取患者数据失败');
+            setError(response.message || '獲取患者數據失敗');
           }
         })
         .catch(error => {
           console.error("Error fetching patient data:", error);
-          setError('网络错误，请稍后重试');
+          setError('網路錯誤，請稍後重試');
         })
         .finally(() => {
           setLoading(false);
         });
     } else {
-      setError('未找到患者信息，请重新登录');
+              setError('未找到患者信息，請重新登錄');
       setLoading(false);
     }
   }, [prefetched]);
@@ -186,7 +186,7 @@ export default function Dashboard({ prefetched = null }) {
         alignItems: "center",
         justifyContent: "center"
       }}>
-        <div>加载中...</div>
+        <div>加載中...</div>
       </div>
     );
   }

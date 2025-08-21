@@ -333,7 +333,7 @@ export default function Step3({ onNext, setStep, style }) {
       }
     } catch (error) {
       console.error('摄像头启动失败:', error);
-      alert('无法访问摄像头，请检查权限设置');
+      alert('無法訪問攝像頭，請檢查權限設置');
       setIsCameraActive(false);
       setIsVideoReady(false);
     }
@@ -366,8 +366,8 @@ export default function Step3({ onNext, setStep, style }) {
     }
 
     if (!isVideoReady) {
-      console.log('视频还未加载完成，请稍后再试');
-      alert('摄像头还未准备就绪，请稍后再试');
+      console.log('視頻還未加載完成，請稍後再試');
+      alert('攝像頭還未準備就緒，請稍後再試');
       return;
     }
 
@@ -386,8 +386,8 @@ export default function Step3({ onNext, setStep, style }) {
 
       // 检查视频是否已经加载并且可以播放
       if (video.videoWidth === 0 || video.videoHeight === 0 || video.readyState < 2) {
-        console.log('视频还未加载完成，请稍后再试');
-        alert('摄像头还未准备就绪，请稍后再试');
+        console.log('視頻還未加載完成，請稍後再試');
+        alert('攝像頭還未準備就緒，請稍後再試');
         return;
       }
 

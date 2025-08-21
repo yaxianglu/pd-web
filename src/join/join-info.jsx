@@ -154,13 +154,13 @@ export default function JoinInfo() {
           address: '',
           remarks: ''
         });
-        message.success('提交成功！我们会尽快与您联系。');
+        message.success('提交成功！我們會盡快與您聯繫。');
       } else {
-        message.error('提交失败：' + (result.message || '未知错误'));
+        message.error('提交失敗：' + (result.message || '未知錯誤'));
       }
     } catch (error) {
-      console.error('提交失败:', error);
-      message.error('提交失败：网络错误，请稍后重试');
+              console.error('提交失敗:', error);
+              message.error('提交失敗：網路錯誤，請稍後重試');
     } finally {
       setIsSubmitting(false);
     }
