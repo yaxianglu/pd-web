@@ -4,6 +4,7 @@ import './index.scss';
 import apiService from '../services/api';
 import { Modal, Select, message, Tabs } from 'antd';
 import Partners from '../partners';
+import ClinicDashboard from '../clinic';
 
 function MarketHeader({ activeTab, onTabChange }) {
   return (
@@ -13,6 +14,7 @@ function MarketHeader({ activeTab, onTabChange }) {
           items={[
             { key: 'smile', label: '微笑測試' },
             { key: 'partners', label: '合作夥伴' },
+            { key: 'clinics', label: '診所' },
           ]}
           activeKey={activeTab}
           onChange={onTabChange}
@@ -86,14 +88,14 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
     setExpanded((prev) => ({ ...prev, [rowId]: !prev[rowId] }));
   }, []);
 
-  const handleDownload = useCallback(async (smileUuid) => {
+  const handleDownloadPhotos = useCallback(async (smileUuid) => {
     try {
       if (!smileUuid) {
         message.error('缺少記錄標識');
         return;
       }
-      const key = 'zip-download';
-      message.loading({ content: '正在生成壓縮包…', key, duration: 0 });
+      const key = 'photos-download';
+      message.loading({ content: '正在生成照片壓縮包…', key, duration: 0 });
       const blob = await apiService.downloadSmilePhotosZip(smileUuid);
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -103,19 +105,43 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
       a.click();
       a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 2000);
-      message.success({ content: '下載已開始', key, duration: 1.5 });
+      message.success({ content: '照片下載已開始', key, duration: 1.5 });
     } catch (err) {
       console.error(err);
-      message.error('下載失敗');
+      message.error('照片下載失敗');
+    }
+  }, []);
+
+  const handleDownloadFiles = useCallback(async (smileUuid) => {
+    try {
+      if (!smileUuid) {
+        message.error('缺少記錄標識');
+        return;
+      }
+      const key = 'files-download';
+      message.loading({ content: '正在生成文件壓縮包…', key, duration: 0 });
+      const blob = await apiService.downloadUploadedFilesZip(smileUuid);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `uploaded_files_${smileUuid.slice(0, 8)}.zip`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+      message.success({ content: '文件下載已開始', key, duration: 1.5 });
+    } catch (err) {
+      console.error(err);
+      message.error('文件下載失敗');
     }
   }, []);
 
   return (
-    <div className="market-dashboard">
-      <div className="card">
+    <div className="market-dashboard" style={{ minHeight: '100%' }}>
+      <div className="card" style={{ height: '100%' }}>
         <MarketHeader bizId={bizId} activeTab={activeTab} onTabChange={setActiveTab} />
 
-        {activeTab === 'smile' ? (
+        {activeTab === 'smile' && (
         <div className="table">
           <div className="thead">
             <div className="th seq">編號</div>
@@ -144,12 +170,20 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
                     <div className="td region">{row.region || '—'}</div>
                     <div className="td created_at">{row.createdAt || '—'}</div>
                     <div className="td download">
-                      <button
-                        type="button"
-                        onClick={(e) => { e.stopPropagation(); handleDownload(row.smileUuid); }}
-                        className="link"
-                        style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
-                      >壓縮包</button>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                        <button
+                          type="button"
+                          onClick={(e) => { e.stopPropagation(); handleDownloadPhotos(row.smileUuid); }}
+                          className="link"
+                          style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontSize: '12px' }}
+                        >照片包</button>
+                        <button
+                          type="button"
+                          onClick={(e) => { e.stopPropagation(); handleDownloadFiles(row.smileUuid); }}
+                          className="link"
+                          style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontSize: '12px' }}
+                        >文件包</button>
+                      </div>
                     </div>
                     <div className="td status">
                       {row.statusText === '創建患者信息' ? (
@@ -190,9 +224,9 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
             })}
           </div>
         </div>
-        ) : (
-          <Partners />
         )}
+        {activeTab === 'partners' && <Partners />}
+        {activeTab === 'clinics' && <ClinicDashboard />}
       </div>
 
       <Modal

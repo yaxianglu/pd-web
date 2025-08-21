@@ -3,7 +3,7 @@ import apiService from "../services/api";
 
 function Sidebar({ clinics = [], activeUuid, onSelect }) {
   return (
-    <div style={{ width: 220, background: "#48d2ce", borderRadius: 18, padding: 12, color: "#fff", height: "calc(100vh - 40px)", boxSizing: 'border-box' }}>
+    <div style={{ width: 220, background: "#48d2ce", borderRadius: 18, padding: 12, color: "#fff", height: "100%", boxSizing: 'border-box' }}>
       <div style={{ marginBottom: 12, textAlign: 'center', fontWeight: 600 }}>診所列表</div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
         {(clinics || []).map((c) => (
@@ -62,7 +62,7 @@ export default function ClinicDashboard() {
   }, [activeClinic?.uuid, doctors]);
 
   return (
-    <div style={{ display: 'flex', gap: 16, minHeight: '100vh', alignItems: 'flex-start' }}>
+    <div style={{ display: 'flex', gap: 16, minHeight: '100%', alignItems: 'flex-start' }}>
       <Sidebar clinics={clinics} activeUuid={activeClinic?.uuid} onSelect={setActiveClinic} />
       <div style={{ flex: 1, background: '#fff', borderRadius: 18, padding: 16, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
         <div style={{ marginBottom: 12, display: 'flex', alignItems: 'center', gap: 12, width: '100%' }}>

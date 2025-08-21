@@ -484,8 +484,8 @@ function BusinessContent() { return null; }
 export default function AdminDashboard() {
   const [active, setActive] = useState('smile');
   return (
-    <div className="market-dashboard" style={{ minHeight: '100vh' }}>
-      <div className="card">
+    <div className="market-dashboard" style={{ minHeight: '100%' }}>
+      <div className="card" style={{ height: '100%' }}>
         <HeaderTabs activeKey={active} onChange={setActive} />
         {active === 'smile' && <AdminSmileView />}
         {active === 'partners' && <Partners />}
