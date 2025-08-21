@@ -51,6 +51,7 @@ function AdminSmileView() {
             considerations: s.considerations || '',
             statusText: s?.patient_uuid || '創建患者信息',
             smileUuid: s.uuid,
+            createdAt: s.created_at ? new Date(s.created_at).toLocaleString('zh-TW') : '—',
           }));
           setItems(mapped);
         } else {
@@ -105,6 +106,7 @@ function AdminSmileView() {
           <div className="th email">電子信箱</div>
           <div className="th line_id">Line ID</div>
           <div className="th region">地址</div>
+          <div className="th created_at">創建時間</div>
           <div className="th download">資料下載</div>
           <div className="th status">患者卡</div>
           <div className="th caret" />
@@ -122,6 +124,7 @@ function AdminSmileView() {
                   <div className="td email">{row.email || '—'}</div>
                   <div className="td line_id">{row.lineId || '—'}</div>
                   <div className="td region">{row.region || '—'}</div>
+                  <div className="td created_at">{row.createdAt || '—'}</div>
                   <div className="td download">
                     <button type="button" onClick={(e) => { e.stopPropagation(); handleDownload(row.smileUuid); }} className="link" style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}>壓縮包</button>
                   </div>
@@ -190,6 +193,7 @@ function AdminSmileView() {
                 note: '',
                 statusText: s?.patient_uuid || '創建患者信息',
                 smileUuid: s.uuid,
+                createdAt: s.created_at ? new Date(s.created_at).toLocaleString('zh-TW') : '—',
               }));
               setItems(mapped);
             }

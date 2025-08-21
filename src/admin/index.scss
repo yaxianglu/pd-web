@@ -157,6 +157,61 @@
     }
   }
 
+  .table {
+    .thead {
+      display: grid;
+      /* seq | name | phone | email | lineId | region | created_at | download | status | caret */
+      grid-template-columns: 100px 1.2fr 1fr 1.6fr 1fr 1fr 1.5fr .9fr 1.1fr 60px;
+      gap: 0;
+      background: #06cbc5;
+      color: #fff;
+      border-radius: 6px 6px 0 0;
+      .th { padding: 14px 18px; font-weight: 700; font-size: 14px; }
+      .th.seq { width: 100px; }
+      .th.created_at { font-size: 12px; }
+      .th.caret { text-align: right; padding-right: 20px; }
+    }
+
+    .tbody {
+      .tr {
+        border-bottom: 2px solid #e5f3f3;
+        &.open { background: #eefaf9; }
+
+        .row-main {
+          display: grid;
+          /* seq | name | phone | email | lineId | region | created_at | download | status | caret */
+          grid-template-columns: 100px 1.2fr 1fr 1.6fr 1fr 1fr 1.5fr .9fr 1.1fr 60px;
+          align-items: center;
+          background: #cceff0;
+          padding: 12px 0;
+          cursor: pointer;
+          .td { padding: 0 18px; font-size: 14px; color: #333; }
+          .td.seq { font-weight: 700; }
+          .td.created_at { font-size: 12px; color: #666; }
+          .td.download .link { color: #2b8cc8; text-decoration: underline; }
+          .td.status {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            .action { color: #0b7b7b; }
+            .read { font-size: 14px; }
+            .readed { color: #0b7b7b; }
+            .unread { color: #8c8c8c; }
+          }
+          .td.caret { text-align: right; padding-right: 20px; color: #8c8c8c; }
+          .arrow { transition: transform .2s; }
+          .arrow.up { transform: rotate(180deg); }
+        }
+
+        .row-expand {
+          padding: 16px 18px 24px 18px;
+          background: #f5f9f9;
+          .note-input { color: #333; font-size: 14px; border: 1px solid #e3eaf0; border-radius: 8px; padding: 8px 10px; }
+        }
+      }
+    }
+  }
+
   .smile-test-table {
     .table-header {
       display: flex;
