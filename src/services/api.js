@@ -378,6 +378,14 @@ class ApiService {
     return this.put(endpoint, data, true);
   }
 
+  // 取消预约
+  async cancelAppointment(idOrUuid) {
+    const endpoint = isNaN(Number(idOrUuid))
+      ? `/api/appointments/${encodeURIComponent(idOrUuid)}/cancel`
+      : `/api/appointments/${Number(idOrUuid)}/cancel`;
+    return this.put(endpoint, {}, true);
+  }
+
   // 更新患者治疗方案
   async updatePatientHobbies(uuid, hobbies) {
     return this.put(`/api/smile-test/patient/${encodeURIComponent(uuid)}/hobbies`, { hobbies }, true);

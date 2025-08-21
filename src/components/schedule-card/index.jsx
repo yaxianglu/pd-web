@@ -314,6 +314,39 @@ export default function ScheduleCard({
     openCreateForDate(d);
   }, [openCreateForDate]);
 
+  const handleCancelAppointment = useCallback(async (appointment) => {
+    console.log('取消预约被调用:', appointment);
+    
+    // 先测试简单的确认
+    const confirmed = window.confirm('確定要取消這個預約嗎？取消後無法恢復。');
+    if (!confirmed) {
+      console.log('用户取消操作');
+      return;
+    }
+    
+    console.log('用户确认取消，开始执行取消操作');
+    try {
+      const api = (await import("../../services/api")).default;
+      console.log('准备调用取消API，预约ID:', appointment.id || appointment.uuid);
+      const res = await api.cancelAppointment(appointment.id || appointment.uuid);
+      console.log('取消预约API响应:', res);
+      if (res && res.success) {
+        messageApi.success('预约已取消');
+        // 关闭当前详情模态框
+        setModalOpen(false);
+        // 重新加载当月数据
+        setTimeout(() => {
+          loadAppointmentsForMonth(value);
+        }, 100);
+      } else {
+        messageApi.error(res?.message || '取消失败');
+      }
+    } catch (e) {
+      console.error('取消预约失败:', e);
+      messageApi.error(e?.message || '取消失败');
+    }
+  }, [value, setModalOpen]);
+
   const handleOk = useCallback(async () => {
     if (modalMode === "create") {
       const api = (await import("../../services/api")).default;
@@ -507,7 +540,23 @@ export default function ScheduleCard({
           dataIndex: "action",
           key: "action",
           className: 'col-action',
-          render: (_, r) => (userType !== 'patient' ? <a onClick={() => openEditForEvent(r)}>編輯</a> : null),
+          render: (_, r) => (
+            userType !== 'patient' ? (
+              <Space>
+                <a onClick={(e) => {
+                  console.log('编辑按钮被点击:', r);
+                  e.stopPropagation();
+                  openEditForEvent(r);
+                }}>編輯</a>
+                <a onClick={(e) => {
+                  console.log('取消按钮被点击:', r);
+                  e.stopPropagation();
+                  e.preventDefault();
+                  handleCancelAppointment(r);
+                }} style={{ color: '#ff4d4f', cursor: 'pointer' }}>取消</a>
+              </Space>
+            ) : null
+          ),
           width: 120,
         },
       ];
