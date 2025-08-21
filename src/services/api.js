@@ -388,8 +388,15 @@ class ApiService {
   }
 
   // 按月份获取预约
-  async getAppointmentsByMonth(year, month) {
-    return this.get(`/api/appointments/by-month?year=${year}&month=${month}`, true);
+  async getAppointmentsByMonth(year, month, patientUuid = null, doctorUuid = null) {
+    let url = `/api/appointments/by-month?year=${year}&month=${month}`;
+    if (patientUuid) {
+      url += `&patient_uuid=${encodeURIComponent(patientUuid)}`;
+    }
+    if (doctorUuid) {
+      url += `&doctor_uuid=${encodeURIComponent(doctorUuid)}`;
+    }
+    return this.get(url, true);
   }
 
   // 获取诊所列表

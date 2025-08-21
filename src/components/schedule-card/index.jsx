@@ -10,6 +10,7 @@ export default function ScheduleCard({
   title = "日曆",
   subtitle,
   style,
+  doctorUuid,
   /**
    * initialEvents: Array of { id, date: string(YYYY-MM-DD), title, status: 'success'|'warning'|'error'|'default' }
    */
@@ -213,8 +214,27 @@ export default function ScheduleCard({
           // 顯示中文狀態：新增後顯示「預約完成」
           status: a.status === "取消" ? "失敗" : "預約完成",
         }));
-        // 顯示全部（暫時關閉過濾，先恢復數據可見）
-        const filtered = mapped;
+        
+        // 前端过滤：只显示当前患者和医生的预约
+        let filtered = mapped;
+        if (currentPatient?.uuid) {
+          console.log('过滤患者预约:', currentPatient.uuid);
+          filtered = filtered.filter(event => {
+            const matches = event.patient_uuid === currentPatient.uuid;
+            console.log('预约患者UUID:', event.patient_uuid, '当前患者UUID:', currentPatient.uuid, '匹配:', matches);
+            return matches;
+          });
+        }
+        if (currentDoctor?.uuid) {
+          console.log('过滤医生预约:', currentDoctor.uuid);
+          filtered = filtered.filter(event => {
+            const matches = event.doctor_uuid === currentDoctor.uuid;
+            console.log('预约医生UUID:', event.doctor_uuid, '当前医生UUID:', currentDoctor.uuid, '匹配:', matches);
+            return matches;
+          });
+        }
+        console.log('过滤前预约数量:', mapped.length, '过滤后预约数量:', filtered.length);
+        
         setEvents(() => {
           // 在患者模式下不回退到本地樣例，避免顯示與自己無關的資料
           if (currentPatient || currentDoctor) return filtered;

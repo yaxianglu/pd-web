@@ -247,7 +247,7 @@ export default function ScheduleCard({
       const api = (await import("../../services/api")).default;
       const y = d.year();
       const m = d.month() + 1; // 0-based to 1-based
-      const res = await api.getAppointmentsByMonth(y, m);
+      const res = await api.getAppointmentsByMonth(y, m, currentPatient?.uuid, currentDoctor?.uuid);
       if (res && Array.isArray(res)) {
         const mapped = res.map((a) => ({
           id: a.id || a.uuid || Math.random().toString(36).slice(2, 8),
@@ -263,8 +263,33 @@ export default function ScheduleCard({
           // 顯示中文狀態：新增後顯示「預約完成」
           status: a.status === "取消" ? "失敗" : "預約完成",
         }));
-        // 顯示全部（暫時關閉過濾，先恢復數據可見）
-        const filtered = mapped;
+        
+        // 根据当前患者和医生过滤预约数据
+        let filtered = mapped;
+        
+        // 如果有当前患者，只显示该患者的预约
+        if (currentPatient?.uuid) {
+          console.log('过滤患者预约:', currentPatient.uuid);
+          filtered = filtered.filter(event => {
+            const matches = event.patient_uuid === currentPatient.uuid;
+            console.log('预约患者UUID:', event.patient_uuid, '当前患者UUID:', currentPatient.uuid, '匹配:', matches);
+            return matches;
+          });
+        }
+        
+        // 如果有当前医生，只显示该医生的预约
+        if (currentDoctor?.uuid) {
+          console.log('过滤医生预约:', currentDoctor.uuid);
+          filtered = filtered.filter(event => {
+            const matches = event.doctor_uuid === currentDoctor.uuid;
+            console.log('预约医生UUID:', event.doctor_uuid, '当前医生UUID:', currentDoctor.uuid, '匹配:', matches);
+            return matches;
+          });
+        }
+        
+        console.log('过滤前预约数量:', mapped.length, '过滤后预约数量:', filtered.length);
+        
+        // 如果既没有患者也没有医生，显示所有预约（保持原有行为）
         setEvents(() => {
           // 在患者模式下不回退到本地樣例，避免顯示與自己無關的資料
           if (currentPatient || currentDoctor) return filtered;

@@ -125,6 +125,8 @@ export default function Dashboard({ prefetched = null }) {
   const navigate = useNavigate(); // eslint-disable-line no-unused-vars
   const isInput = !!prefetched;
 
+  console.info('patientData', patientData);
+  console.info('patientInfo', patientInfo);
   // 進度數字(0-6) → 步驟(0-6)
   const mapProgressToStep = (progress) => {
     const p = Number(progress || 0);
@@ -255,6 +257,8 @@ export default function Dashboard({ prefetched = null }) {
             title="治療日誌"
             initialEvents={mockEvents}
             defaultMonth={dayjs().startOf('month')}
+            doctorUuid={{ uuid: (patientInfo || {}).assigned_doctor_uuid }}
+            currentDoctor={{ uuid: (patientInfo || {}).assigned_doctor_uuid }}
             currentPatient={{ uuid: (patientInfo || {}).uuid, full_name: (patientInfo || {}).full_name }}
             smileTestUuid={(patientData || {}).uuid}
             onAppointmentCreated={async () => {
