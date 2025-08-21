@@ -215,6 +215,14 @@ const AppointmentModal = ({
         doctor_uuid: activeEvent.doctor_uuid || activeEvent.doctorUuid,
         note: activeEvent.note || '',
       });
+    } else if (mode === 'create') {
+      // 创建模式时设置默认值
+      form.setFieldsValue({
+        date: activeDate,
+        start_time: dayjs("08:00", "HH:mm"),
+        end_time: dayjs("09:00", "HH:mm"),
+        note: '',
+      });
     }
   }, [activeEvent, mode, form, activeDate]);
 
