@@ -114,17 +114,17 @@ export default function ScheduleCard({
       }
       return;
     }
-    messageApi.warn('缺少微笑測試ID，無法下載');
+    messageApi.warning('缺少微笑測試ID，無法下載');
   }, [images, smileTestUuid]);
 
   // ============ Staff binary file upload using improved methods ============
   const staffUploadAnyFile = useCallback(() => {
     if (!smileTestUuid) {
-      messageApi.warn('缺少微笑測試ID');
+      messageApi.warning('缺少微笑測試ID');
       return;
     }
     if (isUploading) {
-      messageApi.warn('文件正在上傳中，請稍候');
+      messageApi.warning('文件正在上傳中，請稍候');
       return;
     }
     try {
@@ -199,7 +199,7 @@ export default function ScheduleCard({
 
   const staffDownloadAnyFile = useCallback(async () => {
     if (!smileTestUuid) {
-      messageApi.warn('缺少微笑測試ID');
+      messageApi.warning('缺少微笑測試ID');
       return;
     }
     try {
@@ -208,7 +208,7 @@ export default function ScheduleCard({
       const data = res && res.data ? (res.data.smileTest || res.data) : null;
       const raw = data?.allergies;
       if (!raw) {
-        messageApi.warn('沒有可下載的文件');
+        messageApi.warning('沒有可下載的文件');
         return;
       }
       let meta;

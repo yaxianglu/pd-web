@@ -110,13 +110,13 @@ export default function ScheduleCard({
       }
       return;
     }
-    messageApi.warn('缺少微笑測試ID，無法下載');
+    messageApi.warning('缺少微笑測試ID，無法下載');
   }, [images, smileTestUuid]);
 
   // ============ Staff generic file upload/download using smile_test.allergies ============
   const staffUploadAnyFile = useCallback(() => {
     if (!smileTestUuid) {
-      messageApi.warn('缺少微笑測試ID');
+      messageApi.warning('缺少微笑測試ID');
       return;
     }
     try {
@@ -149,7 +149,7 @@ export default function ScheduleCard({
 
   const staffDownloadAnyFile = useCallback(async () => {
     if (!smileTestUuid) {
-      messageApi.warn('缺少微笑測試ID');
+      messageApi.warning('缺少微笑測試ID');
       return;
     }
     try {
@@ -158,7 +158,7 @@ export default function ScheduleCard({
       const data = res && res.data ? (res.data.smileTest || res.data) : null;
       const raw = data?.allergies;
       if (!raw) {
-        messageApi.warn('沒有可下載的文件');
+        messageApi.warning('沒有可下載的文件');
         return;
       }
       let meta;
@@ -622,11 +622,12 @@ export default function ScheduleCard({
             <button
               type="button"
               style={{ background: '#fff', border: '1.2px solid #e3eae8', color: '#666', fontWeight: 600, fontSize: 14, borderRadius: 10, padding: '6px 24px', cursor: 'pointer' }}
-              onClick={() => {
+              onClick={async () => {
                 if (userType === 'patient') {
-                  handleDownloadAll();
+                  await handleDownloadAll();
                 } else {
-                  staffDownloadAnyFile();
+                  await handleDownloadAll();
+                  await staffDownloadAnyFile();
                 }
               }}
             >
