@@ -36,7 +36,7 @@ const AppointmentModal = ({
     if (patients.length > 0 || loadingPatients) return;
     try {
       setLoadingPatients(true);
-      const api = (await import("../services/api")).default;
+      const api = (await import("../../services/api")).default;
       const res = await api.getAllSmileTests();
       console.log('患者列表API响应:', res);
       if (res && res.success && Array.isArray(res.data)) {
