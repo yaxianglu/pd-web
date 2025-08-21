@@ -50,6 +50,17 @@ class ApiService {
     throw new Error(err?.message || '下載失敗');
   }
 
+  // 創建診所
+  async createClinic(clinicData) {
+    const response = await fetch(`${this.baseURL}/api/clinics`, {
+      method: 'POST',
+      headers: this.getHeaders(),
+      body: JSON.stringify(clinicData),
+    });
+    const data = await response.json();
+    return data;
+  }
+
   // 获取请求头
   getHeaders(includeAuth = true) {
     const headers = {

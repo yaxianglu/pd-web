@@ -3,7 +3,7 @@ import apiService from "../services/api";
 import { Modal, Select, Input, message } from 'antd';
 import CryptoJS from 'crypto-js';
 
-function Sidebar({ clinics = [], activeUuid, onSelect }) {
+function Sidebar({ clinics = [], activeUuid, onSelect, onAddClinic }) {
   return (
     <div style={{ width: 220, background: "#48d2ce", borderRadius: 18, padding: 12, color: "#fff", height: "100%", boxSizing: 'border-box', display: 'flex', flexDirection: 'column' }}>
       <div style={{ marginBottom: 12, textAlign: 'center', fontWeight: 600 }}>診所列表</div>
@@ -26,6 +26,24 @@ function Sidebar({ clinics = [], activeUuid, onSelect }) {
           </div>
         ))}
       </div>
+      <div style={{ marginTop: 'auto', paddingTop: 12 }}>
+        <button 
+          onClick={onAddClinic}
+          style={{
+            width: '100%',
+            padding: '10px 12px',
+            background: 'rgba(255,255,255,0.2)',
+            border: '2px solid #ff6b6b',
+            borderRadius: 10,
+            color: '#fff',
+            cursor: 'pointer',
+            fontSize: '14px',
+            fontWeight: 500
+          }}
+        >
+          新增診所
+        </button>
+      </div>
     </div>
   );
 }
@@ -46,6 +64,8 @@ export default function ClinicDashboard() {
   const [activeClinic, setActiveClinic] = useState(null);
   const [createOpen, setCreateOpen] = useState(false);
   const [form, setForm] = useState({ username: '', password: '', phone: '', email: '', clinic_uuid: '' });
+  const [addClinicOpen, setAddClinicOpen] = useState(false);
+  const [clinicForm, setClinicForm] = useState({ clinic_name: '', address: '', phone: '', city: '', website: '' });
 
   useEffect(() => {
     apiService.getClinics().then((res) => {
@@ -66,6 +86,18 @@ export default function ClinicDashboard() {
     if (res?.success) setDoctors(res.data || []);
   };
 
+  // 刷新诊所列表
+  const refreshClinics = async () => {
+    const res = await apiService.getClinics();
+    if (res?.success) {
+      setClinics(res.data || []);
+      // 如果没有选中的诊所，选择第一个
+      if (!activeClinic && res.data && res.data.length > 0) {
+        setActiveClinic(res.data[0]);
+      }
+    }
+  };
+
   const doctorsOfClinic = useMemo(() => {
     if (!activeClinic?.uuid) return [];
     return (doctors || []).filter((d) => (d?.clinic?.uuid || d?.department) === activeClinic.uuid);
@@ -77,6 +109,7 @@ export default function ClinicDashboard() {
         clinics={clinics} 
         activeUuid={activeClinic?.uuid} 
         onSelect={setActiveClinic}
+        onAddClinic={() => setAddClinicOpen(true)}
       />
       <div style={{ flex: 1, background: '#fff', borderRadius: 18, padding: 16, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
         <div style={{ marginBottom: 12, display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
@@ -182,6 +215,81 @@ export default function ClinicDashboard() {
           <div style={{ padding: '8px 12px', background: '#f5f5f5', borderRadius: 6, color: '#666' }}>
             <div style={{ fontSize: '12px', marginBottom: '4px' }}>診所</div>
             <div style={{ fontWeight: 500 }}>{activeClinic?.clinic_name || '—'}</div>
+          </div>
+        </div>
+      </Modal>
+
+      {/* 新增诊所弹窗 */}
+      <Modal
+        title="新增診所"
+        open={addClinicOpen}
+        onCancel={() => setAddClinicOpen(false)}
+        onOk={async () => {
+          if (!clinicForm.clinic_name) {
+            message.error('請填寫診所名稱');
+            return;
+          }
+          const payload = {
+            clinic_name: clinicForm.clinic_name,
+            address: clinicForm.address || undefined,
+            phone: clinicForm.phone || undefined,
+            city: clinicForm.city || undefined,
+            website: clinicForm.website || undefined,
+          };
+          const res = await apiService.createClinic(payload);
+          if (res?.success) {
+            message.success('診所創建成功');
+            setAddClinicOpen(false);
+            setClinicForm({ clinic_name: '', address: '', phone: '', city: '', website: '' });
+            // 刷新诊所列表
+            await refreshClinics();
+          } else {
+            message.error(res?.message || '診所創建失敗');
+          }
+        }}
+        okText="保存"
+        cancelText="取消"
+      >
+        <div style={{ display: 'grid', gap: 12 }}>
+          <div>
+            <div>診所名稱 <span style={{ color: '#ff4d4f' }}>*</span></div>
+            <Input 
+              value={clinicForm.clinic_name} 
+              onChange={(e) => setClinicForm({ ...clinicForm, clinic_name: e.target.value })}
+              placeholder="請輸入診所名稱"
+            />
+          </div>
+          <div>
+            <div>地址</div>
+            <Input 
+              value={clinicForm.address} 
+              onChange={(e) => setClinicForm({ ...clinicForm, address: e.target.value })}
+              placeholder="請輸入診所地址"
+            />
+          </div>
+          <div>
+            <div>電話</div>
+            <Input 
+              value={clinicForm.phone} 
+              onChange={(e) => setClinicForm({ ...clinicForm, phone: e.target.value })}
+              placeholder="請輸入診所電話"
+            />
+          </div>
+          <div>
+            <div>城市</div>
+            <Input 
+              value={clinicForm.city} 
+              onChange={(e) => setClinicForm({ ...clinicForm, city: e.target.value })}
+              placeholder="請輸入診所所在城市"
+            />
+          </div>
+          <div>
+            <div>網站</div>
+            <Input 
+              value={clinicForm.website} 
+              onChange={(e) => setClinicForm({ ...clinicForm, website: e.target.value })}
+              placeholder="請輸入診所網站"
+            />
           </div>
         </div>
       </Modal>
