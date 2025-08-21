@@ -13,20 +13,45 @@ const AppointmentModal = ({
   loadingDoctors = false,
   onUpdate,
   onEdit,
+  onCreate,
   userType = 'doctor'
 }) => {
   const [form] = Form.useForm();
   const [messageApi, messageCtx] = message.useMessage();
+  const [patients, setPatients] = useState([]);
+  const [loadingPatients, setLoadingPatients] = useState(false);
 
   // 获取模态框标题
   const getModalTitle = (mode) => {
     switch (mode) {
       case "day": return "预约列表";
       case "edit": return "编辑预约";
-      case "create": return "创建预约";
+      case "create": return "新增预约";
       default: return "预约";
     }
   };
+
+  // 加载患者列表
+  const loadPatients = useCallback(async () => {
+    if (patients.length > 0 || loadingPatients) return;
+    try {
+      setLoadingPatients(true);
+      const api = (await import("../services/api")).default;
+      const res = await api.getAllSmileTests();
+      console.log('患者列表API响应:', res);
+      if (res && res.success && Array.isArray(res.data)) {
+        setPatients(res.data);
+      } else {
+        console.log('患者列表数据格式不正确:', res);
+        setPatients([]);
+      }
+    } catch (error) {
+      console.error('加载患者列表失败:', error);
+      setPatients([]);
+    } finally {
+      setLoadingPatients(false);
+    }
+  }, [patients.length, loadingPatients]);
 
   // 处理编辑
   const handleEdit = useCallback((appointment) => {
@@ -37,7 +62,29 @@ const AppointmentModal = ({
 
   // 处理模态框确认
   const handleOk = useCallback(async () => {
-    if (mode === "edit" && activeEvent) {
+    if (mode === "create") {
+      try {
+        const values = await form.validateFields();
+        
+        const payload = {
+          date: (values.date || activeDate)?.format("YYYY-MM-DD"),
+          start_time: values.start_time ? values.start_time.format("HH:mm:ss") : null,
+          end_time: values.end_time ? values.end_time.format("HH:mm:ss") : null,
+          doctor_uuid: values.doctor_uuid || null,
+          patient_uuid: values.patient_uuid || null,
+          note: values.note || "",
+          status: "scheduled",
+        };
+
+        if (onCreate) {
+          await onCreate(payload);
+          messageApi.success('预约创建成功');
+        }
+      } catch (error) {
+        console.error('创建预约失败:', error);
+        messageApi.error('创建失败: ' + (error?.message || '未知错误'));
+      }
+    } else if (mode === "edit" && activeEvent) {
       try {
         const values = await form.validateFields();
         
@@ -61,7 +108,7 @@ const AppointmentModal = ({
         messageApi.error('更新失败: ' + (error?.message || '未知错误'));
       }
     }
-  }, [mode, activeEvent, form, onUpdate, messageApi]);
+  }, [mode, activeEvent, activeDate, form, onUpdate, onCreate, messageApi]);
 
   // 渲染日期列表内容
   const renderDayContent = () => {
@@ -171,6 +218,13 @@ const AppointmentModal = ({
     }
   }, [activeEvent, mode, form, activeDate]);
 
+  // 当创建模式打开时，加载患者列表
+  useEffect(() => {
+    if (mode === 'create' && open) {
+      loadPatients();
+    }
+  }, [mode, open, loadPatients]);
+
   // 渲染编辑表单
   const renderEditForm = () => {
     return (
@@ -198,11 +252,24 @@ const AppointmentModal = ({
         </Form.Item>
         
         <Form.Item
-          name="patient_name"
-          label="患者姓名"
-          rules={[{ required: true, message: '请输入患者姓名' }]}
+          name="patient_uuid"
+          label="選擇患者"
+          rules={[{ required: true, message: '请选择患者' }]}
         >
-          <Input placeholder="请输入患者姓名" />
+          <Select
+            placeholder="選擇患者"
+            loading={loadingPatients}
+            showSearch
+            filterOption={(input, option) =>
+              (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+            }
+            options={patients.map((p) => ({ 
+              label: `${p.full_name || p.name || '未知'} (${p.phone || '无电话'})`, 
+              value: p.uuid 
+            }))}
+            onFocus={loadPatients}
+            notFoundContent={loadingPatients ? "加載中..." : "暫無患者數據"}
+          />
         </Form.Item>
         
         <Form.Item
@@ -237,6 +304,7 @@ const AppointmentModal = ({
       case "day":
         return renderDayContent();
       case "edit":
+      case "create":
         return renderEditForm();
       default:
         return null;
@@ -253,11 +321,13 @@ const AppointmentModal = ({
       );
     }
     
-    if (mode === "edit") {
+    if (mode === "edit" || mode === "create") {
       return (
         <Space>
           <Button onClick={onCancel}>取消</Button>
-          <Button type="primary" onClick={handleOk}>確定</Button>
+          <Button type="primary" onClick={handleOk}>
+            {mode === "create" ? "創建" : "確定"}
+          </Button>
         </Space>
       );
     }

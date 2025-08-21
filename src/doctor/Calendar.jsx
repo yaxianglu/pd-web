@@ -393,6 +393,23 @@ const App = () => {
     }
   }, [currentDate]);
 
+  // 处理预约创建
+  const handleAppointmentCreate = useCallback(async (payload) => {
+    try {
+      // 调用API创建预约
+      await apiService.createAppointment(payload);
+      
+      // 刷新预约数据
+      loadAppointments(currentDate);
+      
+      // 关闭创建模式
+      setModalOpen(false);
+    } catch (error) {
+      console.error('创建预约失败:', error);
+      throw error; // 让弹窗组件处理错误
+    }
+  }, [currentDate]);
+
   // 处理编辑按钮点击
   const handleEditClick = useCallback((appointment) => {
     openEditForEvent(appointment);
@@ -454,13 +471,27 @@ const App = () => {
           />
         </div>
         
-        <Button 
-          type="primary" 
-          onClick={goToToday}
-          className="today-button"
-        >
-          今天
-        </Button>
+        <div className="calendar-actions">
+          <Button 
+            type="primary" 
+            onClick={() => {
+              setActiveDate(dayjs());
+              setModalMode("create");
+              setModalOpen(true);
+              loadDoctors();
+            }}
+            className="add-appointment-button"
+          >
+            新增預約
+          </Button>
+          <Button 
+            type="primary" 
+            onClick={goToToday}
+            className="today-button"
+          >
+            今天
+          </Button>
+        </div>
       </div>
       
       <Calendar 
@@ -481,6 +512,7 @@ const App = () => {
         doctors={doctors}
         loadingDoctors={loadingDoctors}
         onUpdate={handleAppointmentUpdate}
+        onCreate={handleAppointmentCreate}
         onEdit={handleEditClick}
         userType="doctor"
       />

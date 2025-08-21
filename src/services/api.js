@@ -275,9 +275,7 @@ class ApiService {
     try {
       const response = await fetch(`${this.baseURL}/api/smile-test`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: this.getHeaders(true), // 添加认证头
       });
       return await response.json();
     } catch (error) {

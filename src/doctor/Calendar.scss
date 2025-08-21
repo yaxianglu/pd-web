@@ -7,6 +7,29 @@
     margin-bottom: 6px;
     border-bottom: 1px solid #f0f0f0;
 
+    .calendar-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+
+      .add-appointment-button {
+        background: #1890ff;
+        border-color: #1890ff;
+        border-radius: 8px;
+        padding: 8px 20px;
+        height: 40px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: #40a9ff;
+          border-color: #40a9ff;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+        }
+      }
+    }
+
 
     .today-button {
       background: #48d2ce;
