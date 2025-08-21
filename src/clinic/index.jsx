@@ -3,7 +3,7 @@ import apiService from "../services/api";
 import { Modal, Select, Input, message } from 'antd';
 import CryptoJS from 'crypto-js';
 
-function Sidebar({ clinics = [], activeUuid, onSelect, onCreate }) {
+function Sidebar({ clinics = [], activeUuid, onSelect }) {
   return (
     <div style={{ width: 220, background: "#48d2ce", borderRadius: 18, padding: 12, color: "#fff", height: "100%", boxSizing: 'border-box', display: 'flex', flexDirection: 'column' }}>
       <div style={{ marginBottom: 12, textAlign: 'center', fontWeight: 600 }}>診所列表</div>
@@ -25,24 +25,6 @@ function Sidebar({ clinics = [], activeUuid, onSelect, onCreate }) {
             {c.clinic_name || '—'}
           </div>
         ))}
-      </div>
-      <div style={{ marginTop: 'auto', paddingTop: 12 }}>
-        <button 
-          onClick={onCreate}
-          style={{
-            width: '100%',
-            padding: '10px 12px',
-            background: 'rgba(255,255,255,0.2)',
-            border: 'none',
-            borderRadius: 10,
-            color: '#fff',
-            cursor: 'pointer',
-            fontSize: '14px',
-            fontWeight: 500
-          }}
-        >
-          創建帳戶
-        </button>
       </div>
     </div>
   );
@@ -95,12 +77,32 @@ export default function ClinicDashboard() {
         clinics={clinics} 
         activeUuid={activeClinic?.uuid} 
         onSelect={setActiveClinic}
-        onCreate={() => setCreateOpen(true)}
       />
       <div style={{ flex: 1, background: '#fff', borderRadius: 18, padding: 16, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-        <div style={{ marginBottom: 12, display: 'flex', alignItems: 'center', gap: 12, width: '100%' }}>
-          <div style={{ fontSize: 18, fontWeight: 700, textAlign: 'left' }}>診所資訊</div>
-          <div style={{ color: '#666', textAlign: 'left' }}>{activeClinic?.clinic_name || '—'}</div>
+        <div style={{ marginBottom: 12, display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <div style={{ fontSize: 18, fontWeight: 700, textAlign: 'left' }}>診所資訊</div>
+            <div style={{ color: '#666', textAlign: 'left' }}>{activeClinic?.clinic_name || '—'}</div>
+          </div>
+          <button 
+            onClick={() => setCreateOpen(true)}
+            style={{
+              padding: '8px 16px',
+              background: '#48d2ce',
+              border: 'none',
+              borderRadius: 8,
+              color: '#fff',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: 500,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px'
+            }}
+          >
+            <span style={{ fontSize: '16px' }}>+</span>
+            新增醫生
+          </button>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', rowGap: 8, columnGap: 20, marginBottom: 18, width: '100%' }}>
           <div style={{ textAlign: 'left' }}>地址：{activeClinic?.address || '—'}</div>
@@ -125,12 +127,16 @@ export default function ClinicDashboard() {
 
       {/* 创建账号弹窗 */}
       <Modal
-        title="創建醫生帳戶"
+        title={`為 ${activeClinic?.clinic_name || '診所'} 創建醫生帳戶`}
         open={createOpen}
         onCancel={() => setCreateOpen(false)}
         onOk={async () => {
           if (!form.username || !form.password) {
             message.error('請填寫帳號與密碼');
+            return;
+          }
+          if (!activeClinic?.uuid) {
+            message.error('請先選擇診所');
             return;
           }
           const payload = {
@@ -140,13 +146,13 @@ export default function ClinicDashboard() {
             phone: form.phone || undefined,
             email: form.email || undefined,
             role: 'doctor',
-            department: form.clinic_uuid || undefined,
+            department: activeClinic.uuid, // 自动使用当前选中的诊所
           };
           const res = await apiService.createAdminUser(payload);
           if (res?.success) {
             message.success('創建成功');
             setCreateOpen(false);
-            setForm({ username: '', password: '', phone: '', email: '', clinic_uuid: '' });
+            setForm({ username: '', password: '', phone: '', email: '' });
             // 刷新医生列表
             await refreshDoctors();
           } else {
@@ -173,16 +179,9 @@ export default function ClinicDashboard() {
             <div>信箱</div>
             <Input value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
           </div>
-          <div>
-            <div>診所</div>
-            <Select
-              placeholder="選擇診所"
-              value={form.clinic_uuid || undefined}
-              onChange={(v) => setForm({ ...form, clinic_uuid: v })}
-              options={(clinics || []).map(c => ({ value: c.uuid, label: c.clinic_name }))}
-              allowClear
-              style={{ width: '100%' }}
-            />
+          <div style={{ padding: '8px 12px', background: '#f5f5f5', borderRadius: 6, color: '#666' }}>
+            <div style={{ fontSize: '12px', marginBottom: '4px' }}>診所</div>
+            <div style={{ fontWeight: 500 }}>{activeClinic?.clinic_name || '—'}</div>
           </div>
         </div>
       </Modal>
