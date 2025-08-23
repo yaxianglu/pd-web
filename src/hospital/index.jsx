@@ -52,6 +52,7 @@ export default function HospitalDashboard({ isSub }) {
   useEffect(() => {
     if (!activeDoctor?.uuid) return;
     apiService.getPatientsByDoctor({ uuid: activeDoctor.uuid }).then(res => {
+      console.info('res', res);
       if (res?.success) setPatientsByDoctor(res.data || []);
       else setPatientsByDoctor([]);
     });

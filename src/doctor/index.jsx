@@ -79,7 +79,8 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
     setLoading(true);
     apiService.getPatientsByDoctor({ uuid: uuidFromUser })
       .then(res => {
-        if (res?.success) {
+      console.info('res', res);
+      if (res?.success) {
           const normalized = normalizePatients(res.data);
           setPatients(normalized);
         } else {
