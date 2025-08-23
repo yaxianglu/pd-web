@@ -204,6 +204,8 @@ const AppointmentModal = ({
     );
   };
 
+  console.info('patients', patients)
+
   // 当编辑模式打开时，设置表单的初始值
   useEffect(() => {
     if (activeEvent && mode === 'edit') {
@@ -273,7 +275,7 @@ const AppointmentModal = ({
             }
             options={patients.map((p) => ({ 
               label: `${p.full_name || p.name || '未知'} (${p.phone || '無電話'})`, 
-              value: p.uuid 
+              value: p?.patient_uuid 
             }))}
             onFocus={loadPatients}
             notFoundContent={loadingPatients ? "加載中..." : "暫無患者數據"}
