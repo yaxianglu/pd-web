@@ -57,7 +57,7 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
             region: s.city || '—',
             downloadUrl: '#',
             considerations: s.considerations || '',
-            statusText: s?.patient_uuid || '創建患者信息',
+            statusText: s?.patient_uuid ? s?.uuid : '創建患者信息',
             smileUuid: s.uuid,
             createdAt: s.created_at ? new Date(s.created_at).toLocaleString('zh-TW') : '—',
           }));
