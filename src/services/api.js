@@ -36,6 +36,20 @@ class ApiService {
     throw new Error(err?.message || '下載失敗');
   }
 
+  // 专门下载存储在 allergies 字段中的文件
+  async downloadFileFromAllergies(uuid) {
+    try {
+      const response = await fetch(`${this.baseURL}/api/smile-test/uuid/${uuid}/download-file`, {
+        method: 'GET',
+        headers: this.getHeaders(true),
+      });
+      return await response.json();
+    } catch (error) {
+      console.error('Failed to download file from allergies:', error);
+      return { success: false, message: '下载文件失败，请检查网络连接' };
+    }
+  }
+
   // 下載微笑測試上傳文件的ZIP
   async downloadUploadedFilesZip(uuid) {
     const response = await fetch(`${this.baseURL}/api/smile-test/uuid/${uuid}/uploaded-files.zip`, {

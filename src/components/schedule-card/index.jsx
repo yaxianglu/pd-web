@@ -155,13 +155,19 @@ export default function ScheduleCard({
     }
     try {
       const api = (await import("../../services/api")).default;
-      const res = await api.getSmileTestByUuid(smileTestUuid);
-      const data = res && res.data ? (res.data.smileTest || res.data) : null;
-      const raw = data?.allergies;
+      // 使用专门的下载接口，只获取 allergies 字段
+      const res = await api.downloadFileFromAllergies(smileTestUuid);
+      if (!res || !res.success) {
+        messageApi.warning(res?.message || '沒有可下載的文件');
+        return;
+      }
+      
+      const raw = res.data?.allergies;
       if (!raw) {
         messageApi.warning('沒有可下載的文件');
         return;
       }
+      
       let meta;
       try { meta = JSON.parse(raw); } catch { meta = null; }
       const name = meta?.name || 'attachment';
