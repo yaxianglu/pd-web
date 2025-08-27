@@ -698,7 +698,7 @@ export default function ScheduleCard({
             >
               上傳
             </button>
-            <button
+            {/* <button
               type="button"
               style={{ background: '#fff', border: '1.2px solid #e3eae8', color: '#666', fontWeight: 600, fontSize: 14, borderRadius: 10, padding: '6px 24px', cursor: 'pointer' }}
               onClick={async () => {
@@ -711,7 +711,7 @@ export default function ScheduleCard({
               }}
             >
               下載
-            </button>
+            </button> */}
             <button
               type="button"
               style={{ background: '#fff', border: '1.2px solid #e3eae8', color: '#666', fontWeight: 600, fontSize: 14, borderRadius: 10, padding: '6px 24px', cursor: 'pointer' }}
