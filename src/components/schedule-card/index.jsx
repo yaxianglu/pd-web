@@ -5,6 +5,7 @@ import "antd/dist/reset.css";
 import "./index.scss";
 import png13 from "../../asserts/13.png";
 import { useAuth } from "../../context/AuthContext";
+import HistoryModal from "../history-modal";
 
 export default function ScheduleCard({
   title = "日曆",
@@ -38,6 +39,9 @@ export default function ScheduleCard({
   const [form] = Form.useForm();
   const fileInputRef = useRef(null);
   const [messageApi, messageCtx] = message.useMessage();
+  
+  // 历史资料弹窗状态
+  const [historyModalOpen, setHistoryModalOpen] = useState(false);
 
   // lazy load doctors when opening create/edit modal
   const loadDoctors = useCallback(async () => {
@@ -708,6 +712,13 @@ export default function ScheduleCard({
             >
               下載
             </button>
+            <button
+              type="button"
+              style={{ background: '#fff', border: '1.2px solid #e3eae8', color: '#666', fontWeight: 600, fontSize: 14, borderRadius: 10, padding: '6px 24px', cursor: 'pointer' }}
+              onClick={() => setHistoryModalOpen(true)}
+            >
+              歷史資料
+            </button>
           </div>
         </div>
       )}
@@ -737,6 +748,14 @@ export default function ScheduleCard({
       >
         {renderModalContent()}
       </Modal>
+      
+      {/* 历史资料弹窗 */}
+      <HistoryModal
+        open={historyModalOpen}
+        onCancel={() => setHistoryModalOpen(false)}
+        smileTestUuid={smileTestUuid}
+        userType={userType}
+      />
     </div>
   );
 }

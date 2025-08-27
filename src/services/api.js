@@ -462,6 +462,52 @@ class ApiService {
       return { success: false, message: '修改密碼失敗' };
     }
   }
+
+  // 获取微笑测试文件列表
+  async getSmileTestFiles(smileTestUuid) {
+    return this.get(`/api/smile-test-files/smile-test/${encodeURIComponent(smileTestUuid)}`, true);
+  }
+
+  // 下载文件
+  async downloadFile(fileUuid) {
+    try {
+      const response = await fetch(`${this.baseURL}/api/smile-test-files/download/${encodeURIComponent(fileUuid)}`, {
+        method: 'GET',
+        headers: this.getHeaders(true),
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || `HTTP ${response.status}: ${response.statusText}`);
+      }
+      
+      const blob = await response.blob();
+      return { success: true, data: blob };
+    } catch (error) {
+      console.error('Download file failed:', error);
+      return { success: false, message: error.message || '下載失敗' };
+    }
+  }
+
+  // 删除文件
+  async deleteFile(fileUuid) {
+    return this.delete(`/api/smile-test-files/${encodeURIComponent(fileUuid)}`, true);
+  }
+
+  // 上传微笑测试图片
+  async uploadSmileTestImage(smileTestUuid, imageIndex, fileData) {
+    return this.post(`/api/smile-test-files/smile-test/${encodeURIComponent(smileTestUuid)}/image/${imageIndex}`, {
+      file_data: fileData
+    }, true);
+  }
+
+  // 上传口扫文件
+  async uploadOralScanFile(smileTestUuid, fileData, fileName) {
+    return this.post(`/api/smile-test-files/smile-test/${encodeURIComponent(smileTestUuid)}/oral-scan`, {
+      file_data: fileData,
+      file_name: fileName
+    }, true);
+  }
 }
 
 // 创建单例实例
