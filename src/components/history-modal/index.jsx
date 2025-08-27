@@ -177,17 +177,15 @@ const HistoryModal = ({
           >
             下載
           </Button>
-          {userType !== 'patient' && (
-            <Button
-              type="link"
-              size="small"
-              icon={<DeleteOutlined />}
-              onClick={() => handleDelete(record.uuid, record.file_name)}
-              style={{ padding: 0, color: '#ff4d4f' }}
-            >
-              刪除
-            </Button>
-          )}
+          <Button
+            type="link"
+            size="small"
+            icon={<DeleteOutlined />}
+            onClick={() => handleDelete(record.uuid, record.file_name)}
+            style={{ padding: 0, color: '#ff4d4f' }}
+          >
+            刪除
+          </Button>
         </Space>
       ),
     },

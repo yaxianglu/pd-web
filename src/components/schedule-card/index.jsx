@@ -698,20 +698,7 @@ export default function ScheduleCard({
             >
               上傳
             </button>
-            {/* <button
-              type="button"
-              style={{ background: '#fff', border: '1.2px solid #e3eae8', color: '#666', fontWeight: 600, fontSize: 14, borderRadius: 10, padding: '6px 24px', cursor: 'pointer' }}
-              onClick={async () => {
-                if (userType === 'patient') {
-                  await handleDownloadAll();
-                } else {
-                  await handleDownloadAll();
-                  await staffDownloadAnyFile();
-                }
-              }}
-            >
-              下載
-            </button> */}
+            {/* <bue */}
             <button
               type="button"
               style={{ background: '#fff', border: '1.2px solid #e3eae8', color: '#666', fontWeight: 600, fontSize: 14, borderRadius: 10, padding: '6px 24px', cursor: 'pointer' }}
