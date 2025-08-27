@@ -497,7 +497,7 @@ class ApiService {
   // 上传微笑测试图片
   async uploadSmileTestImage(smileTestUuid, imageIndex, fileData) {
     return this.post(`/api/smile-test-files/smile-test/${encodeURIComponent(smileTestUuid)}/image/${imageIndex}`, {
-      file_data: fileData
+      image_data: fileData
     }, true);
   }
 

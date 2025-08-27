@@ -126,7 +126,7 @@ export default function Step3({ onNext, setStep, style }) {
     }
   };
 
-  // 删除照片从数据库
+  // 删除照片从数据库（现在删除整个图片组）
   const deletePhotoFromDatabase = async (step) => {
     const testUuid = getTestUuid();
     if (!testUuid) {
@@ -134,42 +134,40 @@ export default function Step3({ onNext, setStep, style }) {
       return;
     }
 
-    console.log('Deleting photo from database:', {
+    console.log('Deleting photo group from database:', {
       testUuid,
       step
     });
 
     try {
-      // 获取文件列表，找到对应的文件UUID
+      // 获取文件列表，找到微笑测试图片组
       const filesResult = await apiService.getSmileTestFiles(testUuid);
       
       if (filesResult.success) {
-        const smileTestFiles = filesResult.data.filter(file => 
+        const imageGroup = filesResult.data.find(file => 
           file.upload_type === 'smile_test' && 
-          file.file_name.includes(`teeth_image_${step}`)
+          file.file_name === '微笑测试图片组'
         );
         
-        if (smileTestFiles.length > 0) {
-          // 删除找到的文件
-          for (const file of smileTestFiles) {
-            const deleteResult = await apiService.deleteFile(file.uuid);
-            if (deleteResult.success) {
-              console.log(`Photo for step ${step} deleted successfully`);
-            } else {
-              console.error('Failed to delete photo:', deleteResult.message);
-              alert(`刪除照片失敗: ${deleteResult.message}`);
-            }
+        if (imageGroup) {
+          // 删除整个图片组
+          const deleteResult = await apiService.deleteFile(imageGroup.uuid);
+          if (deleteResult.success) {
+            console.log('Photo group deleted successfully');
+          } else {
+            console.error('Failed to delete photo group:', deleteResult.message);
+            alert(`刪除照片組失敗: ${deleteResult.message}`);
           }
         } else {
-          console.log(`No files found for step ${step}`);
+          console.log('No image group found');
         }
       } else {
         console.error('Failed to get files list:', filesResult.message);
         alert(`獲取文件列表失敗: ${filesResult.message}`);
       }
     } catch (error) {
-      console.error('Failed to delete photo from database:', error);
-      alert('刪除照片失敗，請重試');
+      console.error('Failed to delete photo group from database:', error);
+      alert('刪除照片組失敗，請重試');
     }
   };
 
@@ -212,62 +210,11 @@ export default function Step3({ onNext, setStep, style }) {
     window.location.href = '/';
   };
 
-  // 从数据库加载已保存的照片
-  const loadSavedPhotos = async () => {
-    const testUuid = getTestUuid();
-    if (!testUuid) {
-      console.error('No test UUID found for loading photos');
-      return;
-    }
-
-    console.log('Loading saved photos for UUID:', testUuid);
-
-    try {
-      // 使用新的API从smile_test_files表加载照片
-      const result = await apiService.getSmileTestFiles(testUuid);
-
-      if (result.success && result.data) {
-        const savedPhotos = [];
-        
-        // 过滤出微笑测试图片
-        const smileTestFiles = result.data.filter(file => file.upload_type === 'smile_test');
-        
-        // 处理每个文件
-        smileTestFiles.forEach(file => {
-          // 从文件名中提取步骤号
-          const fileName = file.file_name;
-          const stepMatch = fileName.match(/teeth_image_(\d+)/);
-          
-          if (stepMatch) {
-            const step = parseInt(stepMatch[1]);
-            console.log(`Found saved photo for step ${step}:`, file.file_name);
-            savedPhotos.push({
-              id: file.uuid, // 使用文件UUID作为ID
-              url: file.file_data, // 使用文件数据
-              step: step
-            });
-          }
-        });
-        
-        if (savedPhotos.length > 0) {
-          console.log('Loading saved photos:', savedPhotos.length);
-          setPhotos(savedPhotos);
-          
-          // 设置当前步骤为第一个未完成的步骤
-          const nextStep = [1, 2, 3, 4].find(s => !savedPhotos.find(p => p.step === s));
-          if (nextStep) {
-            setCurrentStep(nextStep);
-          }
-        }
-      }
-    } catch (error) {
-      console.error('Failed to load saved photos:', error);
-    }
-  };
-
-  // 组件加载时获取已保存的照片
+  // 组件加载时初始化状态
   useEffect(() => {
-    loadSavedPhotos();
+    // 重置照片状态，不加载已保存的照片
+    setPhotos([]);
+    setCurrentStep(1);
   }, [location.search]);
 
   // 检测是否为移动设备
