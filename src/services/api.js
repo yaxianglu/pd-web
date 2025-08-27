@@ -501,6 +501,13 @@ class ApiService {
     }, true);
   }
 
+  // 上传微笑测试图片组
+  async uploadSmileTestImageGroup(smileTestUuid, imageGroup) {
+    return this.post(`/api/smile-test-files/smile-test/${encodeURIComponent(smileTestUuid)}/image-group`, {
+      image_group: imageGroup
+    }, true);
+  }
+
   // 上传口扫文件
   async uploadOralScanFile(smileTestUuid, fileData, fileName) {
     return this.post(`/api/smile-test-files/smile-test/${encodeURIComponent(smileTestUuid)}/oral-scan`, {

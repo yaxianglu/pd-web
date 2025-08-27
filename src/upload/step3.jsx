@@ -181,13 +181,53 @@ export default function Step3({ onNext, setStep, style }) {
     setSaving(true);
     const testUuid = getTestUuid();
     
+    console.log('🔍 完成提交 - 使用的UUID:', testUuid);
+    console.log('🔍 完成提交 - 照片数量:', photos.length);
+    
     try {
+      // 1. 保存4张图片到smile_test_files表
+      console.log('📸 开始保存4张图片到smile_test_files表...');
+      
+      // 准备照片数据，按步骤排序
+      const sortedPhotos = photos.sort((a, b) => a.step - b.step);
+      
+      // 创建图片组数据
+      const imageGroup = {
+        images: sortedPhotos.map((photo, index) => ({
+          index: index + 1,
+          field: `teeth_image_${index + 1}`,
+          data: photo.url
+        }))
+      };
+      
+      console.log('📦 保存的图片组数据:', {
+        imageCount: imageGroup.images.length,
+        photo1Length: imageGroup.images[0]?.data?.length || 0,
+        photo2Length: imageGroup.images[1]?.data?.length || 0,
+        photo3Length: imageGroup.images[2]?.data?.length || 0,
+        photo4Length: imageGroup.images[3]?.data?.length || 0
+      });
+      
+      // 保存到smile_test_files表
+      const imageGroupResult = await apiService.uploadSmileTestImageGroup(testUuid, imageGroup);
+      
+      if (!imageGroupResult.success) {
+        console.error('Failed to save image group:', imageGroupResult.message);
+        alert(`保存图片组失敗: ${imageGroupResult.message}`);
+        return;
+      }
+      
+      console.log('✅ 图片组保存成功:', imageGroupResult.data);
+      
+      // 2. 更新smile_test表的test_status
+      console.log('📝 更新smile_test表的test_status...');
+      
       const result = await smileTestApi.saveOrUpdateSmileTestByUuid(testUuid, {
         test_status: 'completed'
       });
       
       if (result.success) {
-        console.log('Test completed successfully');
+        console.log('✅ Test completed successfully with all 4 photos saved');
         // 显示成功Modal
         setShowSuccessModal(true);
         // 调用onNext回调
