@@ -84,7 +84,21 @@ const HistoryModal = ({
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = fileName || 'file';
+        
+        // 从响应头中获取文件名，如果没有则使用默认文件名
+        let downloadFileName = fileName || 'file';
+        console.log('🔍 文件名处理:', {
+          originalFileName: fileName,
+          resultFilename: result.filename,
+          finalFileName: result.filename || fileName
+        });
+        
+        if (result.filename) {
+          downloadFileName = result.filename;
+        }
+        
+        console.log('📁 最终下载文件名:', downloadFileName);
+        a.download = downloadFileName;
         document.body.appendChild(a);
         a.click();
         a.remove();

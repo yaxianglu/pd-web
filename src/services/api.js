@@ -482,7 +482,29 @@ class ApiService {
       }
       
       const blob = await response.blob();
-      return { success: true, data: blob };
+      
+      // 从响应头中解析文件名
+      let filename = null;
+      const contentDisposition = response.headers.get('content-disposition');
+      console.log('🔍 API响应头调试:', {
+        contentDisposition: contentDisposition,
+        allHeaders: Object.fromEntries(response.headers.entries())
+      });
+      
+      if (contentDisposition) {
+        const filenameMatch = contentDisposition.match(/filename\*=UTF-8''(.+)/);
+        if (filenameMatch) {
+          filename = decodeURIComponent(filenameMatch[1]);
+          console.log('✅ 解析到文件名:', filename);
+        } else {
+          console.log('❌ 无法匹配文件名模式');
+        }
+      } else {
+        console.log('❌ 没有Content-Disposition头');
+      }
+      
+      console.log('📤 API返回结果:', { success: true, filename });
+      return { success: true, data: blob, filename };
     } catch (error) {
       console.error('Download file failed:', error);
       return { success: false, message: error.message || '下載失敗' };
