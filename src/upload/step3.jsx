@@ -3,6 +3,7 @@ import QRCode from 'qrcode';
 import { useLocation } from 'react-router-dom';
 import { Modal, Button } from 'antd';
 import { smileTestApi } from '../services/smileTestApi';
+import apiService from '../services/api';
 import './step3.scss';
 import p7 from './imgs/7.png';
 import p15 from './imgs/15.png';
@@ -104,20 +105,12 @@ export default function Step3({ onNext, setStep, style }) {
         return;
       }
       
-      // 根据步骤更新对应的照片字段
-      const photoField = `teeth_image_${photoData.step}`;
-      
-      const apiData = {
-        [photoField]: photoData.url, // 直接保存base64数据
-        test_status: 'in_progress'
-      };
-
-      console.log('API data to save:', {
-        ...apiData,
-        [photoField]: `${photoData.url.substring(0, 50)}...` // 只显示前50个字符用于调试
-      });
-
-      const result = await smileTestApi.saveOrUpdateSmileTestByUuid(testUuid, apiData);
+      // 使用新的API上传到smile_test_files表
+      const result = await apiService.uploadSmileTestImage(
+        testUuid, 
+        photoData.step, 
+        photoData.url
+      );
       
       console.log('Save photo result:', result);
       
@@ -147,24 +140,32 @@ export default function Step3({ onNext, setStep, style }) {
     });
 
     try {
-      const photoField = `teeth_image_${step}`;
+      // 获取文件列表，找到对应的文件UUID
+      const filesResult = await apiService.getSmileTestFiles(testUuid);
       
-      const apiData = {
-        [photoField]: null,
-        test_status: 'in_progress'
-      };
-
-      console.log('API data to delete:', apiData);
-
-      const result = await smileTestApi.saveOrUpdateSmileTestByUuid(testUuid, apiData);
-      
-      console.log('Delete photo result:', result);
-      
-      if (!result.success) {
-        console.error('Failed to delete photo:', result.message);
-        alert(`刪除照片失敗: ${result.message}`);
+      if (filesResult.success) {
+        const smileTestFiles = filesResult.data.filter(file => 
+          file.upload_type === 'smile_test' && 
+          file.file_name.includes(`teeth_image_${step}`)
+        );
+        
+        if (smileTestFiles.length > 0) {
+          // 删除找到的文件
+          for (const file of smileTestFiles) {
+            const deleteResult = await apiService.deleteFile(file.uuid);
+            if (deleteResult.success) {
+              console.log(`Photo for step ${step} deleted successfully`);
+            } else {
+              console.error('Failed to delete photo:', deleteResult.message);
+              alert(`刪除照片失敗: ${deleteResult.message}`);
+            }
+          }
+        } else {
+          console.log(`No files found for step ${step}`);
+        }
       } else {
-        console.log(`Photo for step ${step} deleted successfully`);
+        console.error('Failed to get files list:', filesResult.message);
+        alert(`獲取文件列表失敗: ${filesResult.message}`);
       }
     } catch (error) {
       console.error('Failed to delete photo from database:', error);
@@ -222,26 +223,31 @@ export default function Step3({ onNext, setStep, style }) {
     console.log('Loading saved photos for UUID:', testUuid);
 
     try {
-      const result = await smileTestApi.getSmileTestByUuid(testUuid);
+      // 使用新的API从smile_test_files表加载照片
+      const result = await apiService.getSmileTestFiles(testUuid);
 
       if (result.success && result.data) {
-        const data = (result.data && result.data.smileTest) ? result.data.smileTest : result.data;
         const savedPhotos = [];
         
-        // 检查每个照片字段
-        for (let step = 1; step <= 4; step++) {
-          const photoField = `teeth_image_${step}`;
-          const photoUrl = data && data[photoField];
+        // 过滤出微笑测试图片
+        const smileTestFiles = result.data.filter(file => file.upload_type === 'smile_test');
+        
+        // 处理每个文件
+        smileTestFiles.forEach(file => {
+          // 从文件名中提取步骤号
+          const fileName = file.file_name;
+          const stepMatch = fileName.match(/teeth_image_(\d+)/);
           
-          if (photoUrl) {
-            console.log(`Found saved photo for step ${step}:`, photoUrl.substring(0, 50) + '...');
+          if (stepMatch) {
+            const step = parseInt(stepMatch[1]);
+            console.log(`Found saved photo for step ${step}:`, file.file_name);
             savedPhotos.push({
-              id: Date.now() + step, // 生成唯一ID
-              url: photoUrl,
+              id: file.uuid, // 使用文件UUID作为ID
+              url: file.file_data, // 使用文件数据
               step: step
             });
           }
-        }
+        });
         
         if (savedPhotos.length > 0) {
           console.log('Loading saved photos:', savedPhotos.length);

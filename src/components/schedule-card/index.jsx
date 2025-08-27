@@ -135,14 +135,17 @@ export default function ScheduleCard({
     const reader = new FileReader();
     reader.onload = async () => {
       const dataUrl = reader.result; // data:*/*;base64,xxx
-      const payload = {
-        allergies: JSON.stringify({ name: file.name, type: file.type, data: dataUrl }),
-      };
       try {
         const api = (await import("../../services/api")).default;
-        await api.put(`/api/smile-test/uuid/${smileTestUuid}`, payload, true);
-        messageApi.success('文件已上傳');
-        try { Modal.success({ title: '提示', content: '文件已上傳', centered: true }); } catch {}
+        // 使用新的API上传到smile_test_files表
+        const result = await api.uploadOralScanFile(smileTestUuid, dataUrl, file.name);
+        
+        if (result.success) {
+          messageApi.success('文件已上傳');
+          try { Modal.success({ title: '提示', content: '文件已上傳', centered: true }); } catch {}
+        } else {
+          messageApi.error(result.message || '上傳失敗');
+        }
       } catch (err) {
         messageApi.error(err?.message || '上傳失敗');
       } finally {
@@ -159,45 +162,42 @@ export default function ScheduleCard({
     }
     try {
       const api = (await import("../../services/api")).default;
-      // 使用专门的下载接口，只获取 allergies 字段
-      const res = await api.downloadFileFromAllergies(smileTestUuid);
-      if (!res || !res.success) {
-        messageApi.warning(res?.message || '沒有可下載的文件');
+      // 获取文件列表，找到最新的口扫文件
+      const filesResult = await api.getSmileTestFiles(smileTestUuid);
+      
+      if (!filesResult.success) {
+        messageApi.warning(filesResult.message || '沒有可下載的文件');
         return;
       }
       
-      const raw = res.data?.allergies;
-      if (!raw) {
-        messageApi.warning('沒有可下載的文件');
+      // 过滤出口扫文件，按上传时间排序
+      const oralScanFiles = filesResult.data
+        .filter(file => file.upload_type === 'oral_scan' && file.status === 'normal')
+        .sort((a, b) => new Date(b.upload_time) - new Date(a.upload_time));
+      
+      if (oralScanFiles.length === 0) {
+        messageApi.warning('沒有可下載的口掃文件');
         return;
       }
       
-      let meta;
-      try { meta = JSON.parse(raw); } catch { meta = null; }
-      const name = meta?.name || 'attachment';
-      const dataUrl = meta?.data || raw;
-      if (typeof dataUrl !== 'string') {
-        messageApi.error('文件格式錯誤');
-        return;
-      }
-      if (dataUrl.startsWith('data:')) {
+      // 下载最新的口扫文件
+      const latestFile = oralScanFiles[0];
+      const downloadResult = await api.downloadFile(latestFile.uuid);
+      
+      if (downloadResult.success && downloadResult.data) {
+        const blob = downloadResult.data;
+        const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
-        a.href = dataUrl;
-        a.download = name;
+        a.href = url;
+        a.download = latestFile.file_name || 'oral_scan_file';
         document.body.appendChild(a);
         a.click();
         a.remove();
+        URL.revokeObjectURL(url);
         messageApi.success('下載已開始');
-        return;
+      } else {
+        messageApi.error(downloadResult.message || '下載失敗');
       }
-      // treat as URL
-      const a = document.createElement('a');
-      a.href = dataUrl;
-      a.download = name;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      messageApi.success('下載已開始');
     } catch (err) {
       messageApi.error(err?.message || '下載失敗');
     }

@@ -33,6 +33,15 @@ const HistoryModal = ({
         }
         // 其他用户（医生、管理员）显示所有文件
         
+        // 过滤掉UUID为null的记录
+        filteredFiles = filteredFiles.filter(file => file.uuid && file.uuid !== 'null');
+        
+        console.log(`📊 文件列表:`, filteredFiles.map(f => ({ 
+          uuid: f.uuid, 
+          fileName: f.file_name, 
+          type: f.upload_type 
+        })));
+        
         // 按最新日期排序
         filteredFiles.sort((a, b) => {
           const dateA = new Date(a.upload_time || a.created_at);
@@ -59,6 +68,13 @@ const HistoryModal = ({
   // 下载文件
   const handleDownload = useCallback(async (fileUuid, fileName) => {
     try {
+      console.log(`🔍 开始下载文件:`, { fileUuid, fileName });
+      
+      if (!fileUuid || fileUuid === 'null') {
+        messageApi.error({ content: '文件UUID无效', key: 'download' });
+        return;
+      }
+      
       messageApi.loading({ content: '正在下载...', key: 'download' });
       
       const result = await apiService.downloadFile(fileUuid);
