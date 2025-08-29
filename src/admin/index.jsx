@@ -4,18 +4,52 @@ import Logout from "../components/logout";
 import Partners from "../partners";
 import HospitalDashboard from "../hospital";
 import ClinicDashboard from "../clinic";
+import AccountManagement from "./account-management";
 import apiService from "../services/api";
 import "../market/index.scss";
 
 // const gapSize = 16;
 
 // 顶部 Tab 与市场页面统一风格
-function HeaderTabs({ activeKey, onChange }) {
+function HeaderTabs({ activeKey, onChange, userRole }) {
+  // 根据用户角色显示相应的标签页
+  const getTabItems = () => {
+    const baseTabs = [
+      { key: 'smile', label: '微笑測試' },
+      { key: 'partners', label: '成為夥伴' }
+    ];
+
+    // 管理员可以管理所有账户
+    if (userRole === 'admin' || userRole === 'super_admin') {
+      baseTabs.push(
+        { key: 'doctors', label: '醫生' },
+        { key: 'clinics', label: '診所' },
+        { key: 'accounts', label: '賬戶管理' }
+      );
+    }
+    // 业务可以管理诊所、医生、患者
+    else if (userRole === 'market') {
+      baseTabs.push(
+        { key: 'doctors', label: '醫生' },
+        { key: 'clinics', label: '診所' },
+        { key: 'accounts', label: '賬戶管理' }
+      );
+    }
+    // 医生只能管理患者
+    else if (userRole === 'doctor') {
+      baseTabs.push(
+        { key: 'accounts', label: '患者管理' }
+      );
+    }
+
+    return baseTabs;
+  };
+
   return (
     <div className="market-header">
       <div className="title" style={{ width: '100%' }}>
         <Tabs
-          items={[{ key: 'smile', label: '微笑測試' }, { key: 'partners', label: '成為夥伴' }, { key: 'doctors', label: '醫生' }, { key: 'clinics', label: '診所' }]}
+          items={getTabItems()}
           activeKey={activeKey}
           onChange={onChange}
         />
@@ -483,14 +517,28 @@ function BusinessContent() { return null; }
 
 export default function AdminDashboard() {
   const [active, setActive] = useState('smile');
+  const [userRole, setUserRole] = useState(null);
+
+  // 获取当前用户信息
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem('user_info') || '{}');
+    setUserRole(userInfo.role);
+    
+    // 根据用户角色设置默认标签页
+    if (userInfo.role === 'doctor') {
+      setActive('accounts');
+    }
+  }, []);
+
   return (
     <div className="market-dashboard" style={{ height: '100%' }}>
       <div className="card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-        <HeaderTabs activeKey={active} onChange={setActive} />
+        <HeaderTabs activeKey={active} onChange={setActive} userRole={userRole} />
         {active === 'smile' && <AdminSmileView />}
         {active === 'partners' && <Partners />}
         {active === 'doctors' && <HospitalDashboard isSub={true}/>}
         {active === 'clinics' && <ClinicDashboard />}
+        {active === 'accounts' && <AccountManagement />}
       </div>
     </div>
   );

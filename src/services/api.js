@@ -463,6 +463,154 @@ class ApiService {
     }
   }
 
+  // ========== 账户管理功能 ==========
+
+  // 获取所有用户（根据角色过滤）
+  async getUsers(role = null) {
+    try {
+      const url = role ? `${this.baseURL}/auth/users?role=${encodeURIComponent(role)}` : `${this.baseURL}/auth/users`;
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: this.getHeaders(true),
+      });
+      return await this.handleResponse(response);
+    } catch (error) {
+      console.error('Failed to fetch users:', error);
+      return { success: false, message: '獲取用戶列表失敗' };
+    }
+  }
+
+  // 获取所有患者
+  async getPatients() {
+    try {
+      const response = await fetch(`${this.baseURL}/auth/patients`, {
+        method: 'GET',
+        headers: this.getHeaders(true),
+      });
+      return await this.handleResponse(response);
+    } catch (error) {
+      console.error('Failed to fetch patients:', error);
+      return { success: false, message: '獲取患者列表失敗' };
+    }
+  }
+
+  // 创建诊所
+  async createClinic(data) {
+    try {
+      const response = await fetch(`${this.baseURL}/auth/clinics`, {
+        method: 'POST',
+        headers: this.getHeaders(true),
+        body: JSON.stringify(data),
+      });
+      return await this.handleResponse(response);
+    } catch (error) {
+      console.error('Failed to create clinic:', error);
+      return { success: false, message: '創建診所失敗' };
+    }
+  }
+
+  // 创建患者
+  async createPatient(data) {
+    try {
+      const response = await fetch(`${this.baseURL}/auth/patients`, {
+        method: 'POST',
+        headers: this.getHeaders(true),
+        body: JSON.stringify(data),
+      });
+      return await this.handleResponse(response);
+    } catch (error) {
+      console.error('Failed to create patient:', error);
+      return { success: false, message: '創建患者失敗' };
+    }
+  }
+
+  // 删除/关闭用户账户
+  async deleteUser(id) {
+    try {
+      const response = await fetch(`${this.baseURL}/auth/users/${id}`, {
+        method: 'DELETE',
+        headers: this.getHeaders(true),
+      });
+      return await this.handleResponse(response);
+    } catch (error) {
+      console.error('Failed to delete user:', error);
+      return { success: false, message: '刪除用戶失敗' };
+    }
+  }
+
+  // 删除/关闭诊所
+  async deleteClinic(id) {
+    try {
+      const response = await fetch(`${this.baseURL}/auth/clinics/${id}`, {
+        method: 'DELETE',
+        headers: this.getHeaders(true),
+      });
+      return await this.handleResponse(response);
+    } catch (error) {
+      console.error('Failed to delete clinic:', error);
+      return { success: false, message: '關閉診所失敗' };
+    }
+  }
+
+  // 删除/关闭患者
+  async deletePatient(id) {
+    try {
+      const response = await fetch(`${this.baseURL}/auth/patients/${id}`, {
+        method: 'DELETE',
+        headers: this.getHeaders(true),
+      });
+      return await this.handleResponse(response);
+    } catch (error) {
+      console.error('Failed to delete patient:', error);
+      return { success: false, message: '關閉患者失敗' };
+    }
+  }
+
+  // 更新用户状态
+  async updateUserStatus(id, status) {
+    try {
+      const response = await fetch(`${this.baseURL}/auth/users/${id}/status`, {
+        method: 'PUT',
+        headers: this.getHeaders(true),
+        body: JSON.stringify({ status }),
+      });
+      return await this.handleResponse(response);
+    } catch (error) {
+      console.error('Failed to update user status:', error);
+      return { success: false, message: '更新用戶狀態失敗' };
+    }
+  }
+
+  // 更新诊所状态
+  async updateClinicStatus(id, status) {
+    try {
+      const response = await fetch(`${this.baseURL}/auth/clinics/${id}/status`, {
+        method: 'PUT',
+        headers: this.getHeaders(true),
+        body: JSON.stringify({ status }),
+      });
+      return await this.handleResponse(response);
+    } catch (error) {
+      console.error('Failed to update clinic status:', error);
+      return { success: false, message: '更新診所狀態失敗' };
+    }
+  }
+
+  // 更新患者状态
+  async updatePatientStatus(id, status) {
+    try {
+      const response = await fetch(`${this.baseURL}/auth/patients/${id}/status`, {
+        method: 'PUT',
+        headers: this.getHeaders(true),
+        body: JSON.stringify({ status }),
+      });
+      return await this.handleResponse(response);
+    } catch (error) {
+      console.error('Failed to update patient status:', error);
+      return { success: false, message: '更新患者狀態失敗' };
+    }
+  }
+
   // 获取微笑测试文件列表
   async getSmileTestFiles(smileTestUuid) {
     return this.get(`/api/smile-test-files/smile-test/${encodeURIComponent(smileTestUuid)}`, true);
