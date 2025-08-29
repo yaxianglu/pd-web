@@ -28,12 +28,14 @@ export default function PatientInfoList({ patients = [], onCreate, statusFromRou
     if (!k) return listByStatus;
     return listByStatus.filter((p) => {
       const pt = p?.patient || {};
+      const st = p?.smileTest || {};
       return (
-        (pt.full_name || '').toLowerCase().includes(k) ||
-        (pt.phone || '').toLowerCase().includes(k) ||
-        (pt.email || '').toLowerCase().includes(k) ||
+        (pt.full_name || st.full_name || '').toLowerCase().includes(k) ||
+        (pt.phone || st.phone || '').toLowerCase().includes(k) ||
+        (pt.email || st.email || '').toLowerCase().includes(k) ||
         (pt.patient_id || '').toLowerCase().includes(k) ||
-        (pt.uuid || '').toLowerCase().includes(k)
+        (pt.uuid || '').toLowerCase().includes(k) ||
+        (st.uuid || '').toLowerCase().includes(k)
       );
     });
   }, [patients, keyword, statusFilter]);
@@ -79,11 +81,11 @@ export default function PatientInfoList({ patients = [], onCreate, statusFromRou
                 <div className="col name">{st.full_name || '—'}</div>
                 <div className="col info" style={{ flex: 1, display: 'flex', alignItems: 'center', marginRight: 12, overflow: 'hidden' }}>
                   <ContactInfo list={[
-                    { label: '用戶ID', value: pt.uuid || 'N/A' },
-                    { label: '性別', value: pt.gender || 'N/A' },
-                    { label: '生日', value: pt.birth_date || 'N/A' },
-                    { label: '聯繫方式', value: pt.phone || 'N/A' },
-                    { label: '信箱', value: pt.email || 'N/A' },
+                    { label: '用戶ID', value: st.uuid || 'N/A' },
+                    { label: '性別', value: pt.gender || st.gender || 'N/A' },
+                    { label: '生日', value: pt.birth_date || st.birth_date || 'N/A' },
+                    { label: '聯繫方式', value: pt.phone || st.phone || 'N/A' },
+                    { label: '信箱', value: pt.email || st.email || 'N/A' },
                   ]} style={{ marginBottom: 0, width: '100%' }} />
                 </div>
                 <div className="col action" style={{ marginRight: 12 }} onClick={() => onToggle(id)}>

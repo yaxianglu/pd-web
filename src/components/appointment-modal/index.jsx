@@ -115,12 +115,42 @@ const AppointmentModal = ({
     if (!activeDate) return null;
     
     const dateStr = activeDate.format('YYYY-MM-DD');
+    console.log('渲染预约列表 - 日期:', dateStr);
+    console.log('所有预约数据:', appointments);
+    
     const dayAppointments = appointments.filter(appointment => {
       const dateField = appointment.date || appointment.appointment_date || appointment.scheduled_date;
-      if (!dateField) return false;
-      const aptDate = dayjs(dateField).format('YYYY-MM-DD');
-      return aptDate === dateStr;
+      if (!dateField) {
+        console.log('预约缺少日期字段:', appointment);
+        return false;
+      }
+      
+      // 处理不同的日期格式
+      let aptDate;
+      try {
+        if (typeof dateField === 'string') {
+          // 如果是字符串，尝试解析
+          aptDate = dayjs(dateField).format('YYYY-MM-DD');
+        } else if (dateField instanceof Date) {
+          // 如果是Date对象
+          aptDate = dayjs(dateField).format('YYYY-MM-DD');
+        } else {
+          console.log('未知的日期格式:', dateField, typeof dateField);
+          return false;
+        }
+      } catch (error) {
+        console.log('日期解析失败:', dateField, error);
+        return false;
+      }
+      
+      const matches = aptDate === dateStr;
+      if (matches) {
+        console.log('找到匹配的预约:', appointment);
+      }
+      return matches;
     });
+
+    console.log('过滤后的预约:', dayAppointments);
 
     const columns = [
       {
@@ -132,45 +162,95 @@ const AppointmentModal = ({
       },
       {
         title: "時間",
-        dataIndex: "time",
         key: "time",
         width: 160,
-        render: (_, record) => `${record.start_time || '-'} ~ ${record.end_time || '-'}`,
+        render: (_, record) => {
+          const startTime = record.start_time || record.startTime || '-';
+          const endTime = record.end_time || record.endTime || '-';
+          
+          // 格式化时间显示，去掉秒数
+          const formatTime = (time) => {
+            if (!time || time === '-') return '-';
+            if (typeof time === 'string') {
+              // 如果是 "05:03:00" 格式，只显示 "05:03"
+              if (time.includes(':')) {
+                const parts = time.split(':');
+                if (parts.length >= 2) {
+                  return `${parts[0]}:${parts[1]}`;
+                }
+              }
+            }
+            return time;
+          };
+          
+          return `${formatTime(startTime)} ~ ${formatTime(endTime)}`;
+        },
       },
       {
         title: "醫生",
-        dataIndex: "doctor_name",
         key: "doctor",
         width: 120,
-        render: (_, record) => record.doctor_name || 'lyx_doctor_user',
+        render: (_, record) => {
+          const doctorName = record.doctor_name || record.doctorName || record.doctor || '-';
+          return doctorName;
+        },
       },
       {
         title: "患者",
-        dataIndex: "patient_name",
         key: "patient",
         width: 120,
-        render: (_, record) => record.patient_name || record.patientName || record.name || '-',
+        render: (_, record) => {
+          const patientName = record.patient_name || record.patientName || record.name || record.patient || '-';
+          return patientName;
+        },
       },
       {
         title: "備註",
         dataIndex: "note",
         key: "note",
         ellipsis: true,
+        render: (note) => note || '-',
       },
       {
         title: "狀態",
-        dataIndex: "status",
         key: "status",
         width: 100,
-        render: (status) => (
-          <Tag color={status === 'cancelled' ? 'red' : status === 'completed' ? 'green' : 'blue'}>
-            {status || '預約完成'}
-          </Tag>
-        ),
+        render: (_, record) => {
+          const status = record.status || 'scheduled';
+          let color = 'blue';
+          let text = '預約完成';
+          
+          switch (status) {
+            case 'cancelled':
+              color = 'red';
+              text = '已取消';
+              break;
+            case 'completed':
+              color = 'green';
+              text = '已完成';
+              break;
+            case 'scheduled':
+              color = 'blue';
+              text = '預約完成';
+              break;
+            case 'no_show':
+              color = 'orange';
+              text = '未到場';
+              break;
+            case 'rescheduled':
+              color = 'purple';
+              text = '已改期';
+              break;
+            default:
+              color = 'blue';
+              text = '預約完成';
+          }
+          
+          return <Tag color={color}>{text}</Tag>;
+        },
       },
       {
         title: "操作",
-        dataIndex: "action",
         key: "action",
         width: 80,
         render: (_, record) => (
