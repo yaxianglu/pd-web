@@ -222,6 +222,8 @@ export default function Dashboard({ prefetched = null }) {
     { id: "e15", date: monthBase.date(15).toISOString(), title: "This is error.", status: "error" },
   ];
 
+  console.info('patientInfo, ', patientInfo)
+  console.info('patientData, ', patientData)
   return (
     <div style={{
       width: "100%",
@@ -259,7 +261,7 @@ export default function Dashboard({ prefetched = null }) {
             defaultMonth={dayjs().startOf('month')}
             doctorUuid={{ uuid: (patientInfo || {}).assigned_doctor_uuid }}
             currentDoctor={{ uuid: (patientInfo || {}).assigned_doctor_uuid }}
-            currentPatient={{ uuid: (patientInfo || {}).uuid, full_name: (patientInfo || {}).full_name }}
+            currentPatient={{ uuid: (patientData || {}).uuid, full_name: (patientInfo || {}).full_name }}
             smileTestUuid={(patientData || {}).uuid}
             onAppointmentCreated={async () => {
               // 預約創建成功后，将“等待預約”切换为“預約完成”

@@ -228,6 +228,7 @@ export default function ScheduleCard({
         
         // 前端过滤：只显示当前患者和醫生的預約
         let filtered = mapped;
+        console.info("currentPatient", currentPatient);
         if (currentPatient?.uuid) {
           console.log('过滤患者預約:', currentPatient.uuid);
           filtered = filtered.filter(event => {
