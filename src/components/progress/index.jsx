@@ -196,7 +196,15 @@ export default function ProgressTracker({
                 onClick={() => handleUpdateId(step.id)}
               >
                 {
-                  updateId === step.id && <TreatmentSelection title={isCancel + step.title} onCancel={() => setTimeout(() => setUpdateId(null), 0)} onConfirm={() => setTimeout(handleConfirm, 0)} />
+                  updateId === step.id && (
+                    <TreatmentSelection
+                      title={isCancel + step.title}
+                      onCancel={() => setTimeout(() => setUpdateId(null), 0)}
+                      onConfirm={() => setTimeout(handleConfirm, 0)}
+                      confirmText="執行"
+                      cancelText="不執行"
+                    />
+                  )
                 }
                 {isCompleted ? step.activeIcon() : step.icon()}
                 <div style={{ 
