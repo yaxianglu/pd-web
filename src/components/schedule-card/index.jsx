@@ -606,10 +606,52 @@ export default function ScheduleCard({
                 options={doctors.map((d) => ({ label: d.full_name || d.username || d.email, value: d.uuid || d.id }))}
               />
             </Form.Item>
-            <Form.Item name="start_time" label="開始時間" rules={[{ required: true, message: '請選擇開始時間' }]}>
+            <Form.Item 
+              name="start_time" 
+              label="開始時間" 
+              rules={[
+                { required: true, message: '請選擇開始時間' },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value) {
+                      return Promise.resolve();
+                    }
+                    const endTime = getFieldValue('end_time');
+                    if (!endTime) {
+                      return Promise.resolve();
+                    }
+                    if (value.isAfter(endTime) || value.isSame(endTime)) {
+                      return Promise.reject(new Error('開始時間必須在結束時間之前'));
+                    }
+                    return Promise.resolve();
+                  },
+                }),
+              ]}
+            >
               <TimePicker style={{ width: "100%" }} format="HH:mm" />
             </Form.Item>
-            <Form.Item name="end_time" label="結束時間" rules={[{ required: true, message: '請選擇結束時間' }]}>
+            <Form.Item 
+              name="end_time" 
+              label="結束時間" 
+              rules={[
+                { required: true, message: '請選擇結束時間' },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value) {
+                      return Promise.resolve();
+                    }
+                    const startTime = getFieldValue('start_time');
+                    if (!startTime) {
+                      return Promise.resolve();
+                    }
+                    if (value.isBefore(startTime) || value.isSame(startTime)) {
+                      return Promise.reject(new Error('結束時間必須在開始時間之後'));
+                    }
+                    return Promise.resolve();
+                  },
+                }),
+              ]}
+            >
               <TimePicker style={{ width: "100%" }} format="HH:mm" />
             </Form.Item>
             <Form.Item name="note" label="備註">
