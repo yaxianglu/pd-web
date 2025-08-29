@@ -61,15 +61,31 @@ const AccountManagement = () => {
     const userRole = currentUser?.role;
     const tabs = [];
 
-    // 管理员可以管理所有账户
-    if (userRole === 'admin' || userRole === 'super_admin') {
+    // 超级管理员可以管理所有账户
+    if (userRole === 'super_admin') {
       tabs.push(
         { key: 'users', label: '用戶管理', icon: <UserOutlined /> },
         { key: 'clinics', label: '診所管理', icon: <BankOutlined /> },
         { key: 'patients', label: '患者管理', icon: <TeamOutlined /> }
       );
     }
-    // 业务可以管理诊所、医生、患者
+    // 普通管理员可以管理所有账户
+    else if (userRole === 'admin') {
+      tabs.push(
+        { key: 'users', label: '用戶管理', icon: <UserOutlined /> },
+        { key: 'clinics', label: '診所管理', icon: <BankOutlined /> },
+        { key: 'patients', label: '患者管理', icon: <TeamOutlined /> }
+      );
+    }
+    // 医院管理员可以管理诊所、医生、患者
+    else if (userRole === 'hospital') {
+      tabs.push(
+        { key: 'clinics', label: '診所管理', icon: <BankOutlined /> },
+        { key: 'users', label: '醫生管理', icon: <UserOutlined /> },
+        { key: 'patients', label: '患者管理', icon: <TeamOutlined /> }
+      );
+    }
+    // 销售专员可以管理诊所、医生、患者
     else if (userRole === 'market') {
       tabs.push(
         { key: 'clinics', label: '診所管理', icon: <BankOutlined /> },
@@ -416,12 +432,12 @@ const AccountManagement = () => {
             name="role"
             label="角色"
             initialValue="doctor"
+            rules={[{ required: true, message: '請選擇角色' }]}
           >
             <Select>
-              <Option value="admin">管理員</Option>
-              <Option value="market">業務</Option>
+              <Option value="admin">普通管理員</Option>
+              <Option value="market">銷售專員</Option>
               <Option value="doctor">醫生</Option>
-              <Option value="operator">操作員</Option>
             </Select>
           </Form.Item>
           <Form.Item
