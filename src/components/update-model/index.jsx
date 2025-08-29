@@ -15,7 +15,7 @@ const TreatmentSelection = (props) => {
         </button>
         <button className="confirm-button" onClick={() => {
           onConfirm();
-        }}>确认</button>
+        }}>確認</button>
       </div>
     </div>
   );
