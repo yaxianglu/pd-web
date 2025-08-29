@@ -211,22 +211,27 @@ const AppointmentModal = ({
     if (activeEvent && mode === 'edit') {
       console.log('編輯模式 - 設置表單初始值:', activeEvent);
       
-      // 检查patient_uuid是否有效（在患者列表中存在）
-      const isValidPatientUuid = activeEvent.patient_uuid && 
-        patients.some(p => p.uuid === activeEvent.patient_uuid);
-      
+      // 先设置基本字段，患者字段稍后处理
       form.setFieldsValue({
         date: activeEvent.date ? dayjs(activeEvent.date) : activeDate,
-        patient_uuid: isValidPatientUuid ? activeEvent.patient_uuid : '',
         start_time: activeEvent.start_time ? dayjs(activeEvent.start_time, 'HH:mm') : null,
         end_time: activeEvent.end_time ? dayjs(activeEvent.end_time, 'HH:mm') : dayjs("18:00", "HH:mm"),
         doctor_uuid: activeEvent.doctor_uuid || activeEvent.doctorUuid,
         note: activeEvent.note || '',
       });
       
-      // 如果patient_uuid无效，显示警告
-      if (activeEvent.patient_uuid && !isValidPatientUuid) {
-        console.warn('警告：预约的patient_uuid无效:', activeEvent.patient_uuid);
+      // 如果患者列表已加载，立即设置患者字段
+      if (patients.length > 0) {
+        const isValidPatientUuid = activeEvent.patient_uuid && 
+          patients.some(p => p.uuid === activeEvent.patient_uuid);
+        
+        form.setFieldsValue({
+          patient_uuid: isValidPatientUuid ? activeEvent.patient_uuid : ''
+        });
+        
+        if (activeEvent.patient_uuid && !isValidPatientUuid) {
+          console.warn('警告：预约的patient_uuid无效:', activeEvent.patient_uuid);
+        }
       }
     } else if (mode === 'create') {
       // 創建模式時設置默認值
@@ -237,7 +242,23 @@ const AppointmentModal = ({
         note: '',
       });
     }
-  }, [activeEvent, mode, form, activeDate, patients]);
+  }, [activeEvent, mode, form, activeDate]);
+
+  // 当患者列表加载完成后，更新编辑模式下的患者字段
+  useEffect(() => {
+    if (activeEvent && mode === 'edit' && patients.length > 0) {
+      const isValidPatientUuid = activeEvent.patient_uuid && 
+        patients.some(p => p.uuid === activeEvent.patient_uuid);
+      
+      form.setFieldsValue({
+        patient_uuid: isValidPatientUuid ? activeEvent.patient_uuid : ''
+      });
+      
+      if (activeEvent.patient_uuid && !isValidPatientUuid) {
+        console.warn('警告：预约的patient_uuid无效:', activeEvent.patient_uuid);
+      }
+    }
+  }, [patients, activeEvent, mode, form]);
 
   // 當編輯或創建模式打開時，加載患者列表
   useEffect(() => {
