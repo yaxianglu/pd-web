@@ -17,6 +17,7 @@ const AccountManagement = () => {
   const [createModalVisible, setCreateModalVisible] = useState(false);
   const [createForm] = Form.useForm();
   const [currentUser, setCurrentUser] = useState(null);
+  const [selectedRole, setSelectedRole] = useState('doctor');
 
   // 获取当前用户信息
   useEffect(() => {
@@ -32,6 +33,11 @@ const AccountManagement = () => {
         const res = await apiService.getUsers();
         if (res?.success) {
           setUsers(res.data || []);
+        }
+        // 同时加载诊所数据，用于显示医生绑定的诊所
+        const clinicRes = await apiService.getClinics();
+        if (clinicRes?.success) {
+          setClinics(clinicRes.data || []);
         }
       } else if (activeTab === 'clinics') {
         const res = await apiService.getClinics();
@@ -49,6 +55,19 @@ const AccountManagement = () => {
       message.error('加載數據失敗');
     } finally {
       setLoading(false);
+    }
+  };
+
+  // 加载诊所数据（用于医生绑定）
+  const loadClinicsForDoctor = async () => {
+    try {
+      const res = await apiService.getClinics();
+      if (res?.success) {
+        setClinics(res.data || []);
+      }
+    } catch (error) {
+      console.error('Failed to load clinics:', error);
+      message.error('加載診所數據失敗');
     }
   };
 
@@ -153,29 +172,7 @@ const AccountManagement = () => {
     }
   };
 
-  // 更新状态
-  const handleStatusChange = async (id, status) => {
-    try {
-      let res;
-      if (activeTab === 'users') {
-        res = await apiService.updateUserStatus(id, status);
-      } else if (activeTab === 'clinics') {
-        res = await apiService.updateClinicStatus(id, status);
-      } else if (activeTab === 'patients') {
-        res = await apiService.updatePatientStatus(id, status);
-      }
 
-      if (res?.success) {
-        message.success(res.message || '狀態更新成功');
-        loadData();
-      } else {
-        message.error(res?.message || '狀態更新失敗');
-      }
-    } catch (error) {
-      console.error('Failed to update status:', error);
-      message.error('狀態更新失敗');
-    }
-  };
 
   // 用户表格列
   const userColumns = [
@@ -195,29 +192,27 @@ const AccountManagement = () => {
       key: 'role',
       render: (role) => {
         const roleMap = {
-          admin: '管理員',
-          market: '業務',
+          admin: '普通管理員',
+          super_admin: '超級管理員',
+          market: '銷售專員',
           doctor: '醫生',
-          operator: '操作員'
+          hospital: '醫院管理員'
         };
         return <Tag color="blue">{roleMap[role] || role}</Tag>;
       }
     },
     {
-      title: '狀態',
-      dataIndex: 'status',
-      key: 'status',
-      render: (status, record) => (
-        <Select
-          value={status}
-          style={{ width: 100 }}
-          onChange={(value) => handleStatusChange(record.id, value)}
-        >
-          <Option value="active">啟用</Option>
-          <Option value="inactive">停用</Option>
-          <Option value="suspended">暫停</Option>
-        </Select>
-      )
+      title: '綁定診所',
+      dataIndex: 'department',
+      key: 'department',
+      render: (department, record) => {
+        if (record.role === 'doctor' && department) {
+          // 从诊所列表中查找对应的诊所名称
+          const clinic = clinics.find(c => c.uuid === department);
+          return clinic ? clinic.clinic_name : department;
+        }
+        return '-';
+      }
     },
     {
       title: '創建時間',
@@ -272,23 +267,6 @@ const AccountManagement = () => {
       key: 'phone',
     },
     {
-      title: '狀態',
-      dataIndex: 'status',
-      key: 'status',
-      render: (status, record) => (
-        <Select
-          value={status}
-          style={{ width: 100 }}
-          onChange={(value) => handleStatusChange(record.id, value)}
-        >
-          <Option value="active">啟用</Option>
-          <Option value="inactive">停用</Option>
-          <Option value="suspended">暫停</Option>
-          <Option value="closed">關閉</Option>
-        </Select>
-      )
-    },
-    {
       title: '創建時間',
       dataIndex: 'created_at',
       key: 'created_at',
@@ -339,44 +317,7 @@ const AccountManagement = () => {
         return genderMap[gender] || gender;
       }
     },
-    {
-      title: '狀態',
-      dataIndex: 'status',
-      key: 'status',
-      render: (status, record) => {
-        // 将test_status映射到显示状态
-        const statusMap = {
-          'pending': 'active',
-          'in_progress': 'active',
-          'completed': 'discharged',
-          'cancelled': 'inactive'
-        };
-        
-        const displayStatus = statusMap[status] || status;
-        
-        return (
-          <Select
-            value={displayStatus}
-            style={{ width: 100 }}
-            onChange={(value) => {
-              // 将显示状态映射回test_status
-              const reverseStatusMap = {
-                'active': 'pending',
-                'inactive': 'cancelled',
-                'suspended': 'cancelled',
-                'discharged': 'completed'
-              };
-              handleStatusChange(record.id, reverseStatusMap[value] || value);
-            }}
-          >
-            <Option value="active">啟用</Option>
-            <Option value="inactive">停用</Option>
-            <Option value="suspended">暫停</Option>
-            <Option value="discharged">出院</Option>
-          </Select>
-        );
-      }
-    },
+
     {
       title: '創建時間',
       dataIndex: 'created_at',
@@ -418,9 +359,10 @@ const AccountManagement = () => {
           <Form.Item
             name="password"
             label="密碼"
+            initialValue="pd2025!"
             rules={[{ required: true, message: '請輸入密碼' }]}
           >
-            <Input.Password />
+            <Input.Password placeholder="默認密碼: pd2025!" />
           </Form.Item>
           <Form.Item
             name="full_name"
@@ -434,12 +376,46 @@ const AccountManagement = () => {
             initialValue="doctor"
             rules={[{ required: true, message: '請選擇角色' }]}
           >
-            <Select>
+            <Select 
+              onChange={(value) => {
+                setSelectedRole(value);
+                // 如果选择医生角色，加载诊所数据
+                if (value === 'doctor') {
+                  loadClinicsForDoctor();
+                }
+                // 清除诊所选择，保持默认密码
+                createForm.setFieldsValue({ 
+                  department: undefined,
+                  password: 'pd2025!'
+                });
+              }}
+            >
               <Option value="admin">普通管理員</Option>
               <Option value="market">銷售專員</Option>
               <Option value="doctor">醫生</Option>
             </Select>
           </Form.Item>
+          {selectedRole === 'doctor' && (
+            <Form.Item
+              name="department"
+              label="綁定診所"
+              rules={[{ required: true, message: '請選擇診所' }]}
+            >
+              <Select
+                placeholder="請選擇診所"
+                showSearch
+                filterOption={(input, option) =>
+                  option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                }
+              >
+                {clinics.map(clinic => (
+                  <Option key={clinic.uuid} value={clinic.uuid}>
+                    {clinic.clinic_name}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+          )}
           <Form.Item
             name="email"
             label="郵箱"
@@ -576,7 +552,17 @@ const AccountManagement = () => {
           <Button
             type="primary"
             icon={<PlusOutlined />}
-            onClick={() => setCreateModalVisible(true)}
+            onClick={() => {
+              setCreateModalVisible(true);
+              setSelectedRole('doctor');
+              createForm.resetFields();
+              // 设置默认密码
+              createForm.setFieldsValue({ password: 'pd2025!' });
+              // 如果是用户管理，预加载诊所数据
+              if (activeTab === 'users') {
+                loadClinicsForDoctor();
+              }
+            }}
           >
             創建{activeTab === 'users' ? '用戶' : activeTab === 'clinics' ? '診所' : '患者'}
           </Button>
@@ -608,7 +594,10 @@ const AccountManagement = () => {
         open={createModalVisible}
         onCancel={() => {
           setCreateModalVisible(false);
+          setSelectedRole('doctor');
           createForm.resetFields();
+          // 重置为默认密码
+          createForm.setFieldsValue({ password: 'pd2025!' });
         }}
         footer={null}
         width={600}
@@ -626,7 +615,10 @@ const AccountManagement = () => {
               </Button>
               <Button onClick={() => {
                 setCreateModalVisible(false);
+                setSelectedRole('doctor');
                 createForm.resetFields();
+                // 重置为默认密码
+                createForm.setFieldsValue({ password: 'pd2025!' });
               }}>
                 取消
               </Button>

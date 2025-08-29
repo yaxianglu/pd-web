@@ -566,50 +566,7 @@ class ApiService {
     }
   }
 
-  // 更新用户状态
-  async updateUserStatus(id, status) {
-    try {
-      const response = await fetch(`${this.baseURL}/auth/users/${id}/status`, {
-        method: 'PUT',
-        headers: this.getHeaders(true),
-        body: JSON.stringify({ status }),
-      });
-      return await this.handleResponse(response);
-    } catch (error) {
-      console.error('Failed to update user status:', error);
-      return { success: false, message: '更新用戶狀態失敗' };
-    }
-  }
 
-  // 更新诊所状态
-  async updateClinicStatus(id, status) {
-    try {
-      const response = await fetch(`${this.baseURL}/auth/clinics/${id}/status`, {
-        method: 'PUT',
-        headers: this.getHeaders(true),
-        body: JSON.stringify({ status }),
-      });
-      return await this.handleResponse(response);
-    } catch (error) {
-      console.error('Failed to update clinic status:', error);
-      return { success: false, message: '更新診所狀態失敗' };
-    }
-  }
-
-  // 更新患者状态
-  async updatePatientStatus(id, status) {
-    try {
-      const response = await fetch(`${this.baseURL}/auth/patients/${id}/status`, {
-        method: 'PUT',
-        headers: this.getHeaders(true),
-        body: JSON.stringify({ status }),
-      });
-      return await this.handleResponse(response);
-    } catch (error) {
-      console.error('Failed to update patient status:', error);
-      return { success: false, message: '更新患者狀態失敗' };
-    }
-  }
 
   // 获取微笑测试文件列表
   async getSmileTestFiles(smileTestUuid) {
