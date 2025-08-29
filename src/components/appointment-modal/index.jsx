@@ -209,14 +209,25 @@ const AppointmentModal = ({
         // 當編輯模式打開時，設置表單的初始值
   useEffect(() => {
     if (activeEvent && mode === 'edit') {
+      console.log('編輯模式 - 設置表單初始值:', activeEvent);
+      
+      // 检查patient_uuid是否有效（在患者列表中存在）
+      const isValidPatientUuid = activeEvent.patient_uuid && 
+        patients.some(p => p.uuid === activeEvent.patient_uuid);
+      
       form.setFieldsValue({
         date: activeEvent.date ? dayjs(activeEvent.date) : activeDate,
-        patient_name: activeEvent.patient_name || activeEvent.patientName || activeEvent.name || '',
+        patient_uuid: isValidPatientUuid ? activeEvent.patient_uuid : '',
         start_time: activeEvent.start_time ? dayjs(activeEvent.start_time, 'HH:mm') : null,
         end_time: activeEvent.end_time ? dayjs(activeEvent.end_time, 'HH:mm') : dayjs("18:00", "HH:mm"),
         doctor_uuid: activeEvent.doctor_uuid || activeEvent.doctorUuid,
         note: activeEvent.note || '',
       });
+      
+      // 如果patient_uuid无效，显示警告
+      if (activeEvent.patient_uuid && !isValidPatientUuid) {
+        console.warn('警告：预约的patient_uuid无效:', activeEvent.patient_uuid);
+      }
     } else if (mode === 'create') {
       // 創建模式時設置默認值
       form.setFieldsValue({
@@ -226,11 +237,11 @@ const AppointmentModal = ({
         note: '',
       });
     }
-  }, [activeEvent, mode, form, activeDate]);
+  }, [activeEvent, mode, form, activeDate, patients]);
 
-  // 当創建模式打开时，加载患者列表
+  // 當編輯或創建模式打開時，加載患者列表
   useEffect(() => {
-    if (mode === 'create' && open) {
+    if ((mode === 'create' || mode === 'edit') && open) {
       loadPatients();
     }
   }, [mode, open, loadPatients]);
@@ -275,7 +286,7 @@ const AppointmentModal = ({
             }
             options={patients.map((p) => ({ 
               label: `${p.full_name || p.name || '未知'} (${p.phone || '無電話'})`, 
-              value: p?.patient_uuid 
+              value: p.uuid
             }))}
             onFocus={loadPatients}
             notFoundContent={loadingPatients ? "加載中..." : "暫無患者數據"}
