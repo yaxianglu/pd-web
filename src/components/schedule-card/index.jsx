@@ -39,6 +39,7 @@ export default function ScheduleCard({
   const [form] = Form.useForm();
   const fileInputRef = useRef(null);
   const [messageApi, messageCtx] = message.useMessage();
+  const { userInfo } = useAuth();
   
   // 历史资料弹窗狀態
   const [historyModalOpen, setHistoryModalOpen] = useState(false);
@@ -275,9 +276,9 @@ export default function ScheduleCard({
       form.resetFields();
       form.setFieldsValue({
         date: d.startOf("day"),
-        doctor_uuid: undefined,
-        start_time: null,
-        end_time: dayjs("18:00", "HH:mm"),
+        doctor_uuid: userInfo?.uuid || undefined,
+        start_time: dayjs("08:00", "HH:mm"),
+        end_time: dayjs("09:00", "HH:mm"),
         note: "",
       });
     } catch {}
@@ -589,25 +590,25 @@ export default function ScheduleCard({
         <div className="schedule-modal">
           <Form form={form} layout="vertical" initialValues={{
             date: activeDate,
-            start_time: modalMode === 'edit' ? (activeEvent?.start_time ? dayjs(activeEvent.start_time, 'HH:mm') : null) : null,
-            end_time: modalMode === 'edit' ? (activeEvent?.end_time ? dayjs(activeEvent.end_time, 'HH:mm') : dayjs("18:00", "HH:mm")) : dayjs("18:00", "HH:mm"),
-            doctor_uuid: activeEvent?.doctor_uuid,
+            start_time: modalMode === 'edit' ? (activeEvent?.start_time ? dayjs(activeEvent.start_time, 'HH:mm') : null) : dayjs("08:00", "HH:mm"),
+            end_time: modalMode === 'edit' ? (activeEvent?.end_time ? dayjs(activeEvent.end_time, 'HH:mm') : dayjs("09:00", "HH:mm")) : dayjs("09:00", "HH:mm"),
+            doctor_uuid: modalMode === 'edit' ? activeEvent?.doctor_uuid : (userInfo?.uuid || undefined),
             note: activeEvent?.note || "",
           }}>
             <Form.Item name="date" label="日期" rules={[{ required: true, message: "請選擇日期" }]}>
               <DatePicker style={{ width: "100%" }} />
             </Form.Item>
-            <Form.Item name="doctor_uuid" label="醫生">
+            <Form.Item name="doctor_uuid" label="醫生" rules={[{ required: true, message: '請選擇醫生' }]}>
               <Select
                 placeholder="選擇醫生"
                 loading={loadingDoctors}
                 options={doctors.map((d) => ({ label: d.full_name || d.username || d.email, value: d.uuid || d.id }))}
               />
             </Form.Item>
-            <Form.Item name="start_time" label="開始時間">
+            <Form.Item name="start_time" label="開始時間" rules={[{ required: true, message: '請選擇開始時間' }]}>
               <TimePicker style={{ width: "100%" }} format="HH:mm" />
             </Form.Item>
-            <Form.Item name="end_time" label="結束時間">
+            <Form.Item name="end_time" label="結束時間" rules={[{ required: true, message: '請選擇結束時間' }]}>
               <TimePicker style={{ width: "100%" }} format="HH:mm" />
             </Form.Item>
             <Form.Item name="note" label="備註">

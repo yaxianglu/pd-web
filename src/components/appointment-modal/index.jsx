@@ -347,6 +347,18 @@ const AppointmentModal = ({
     }
   }, [mode, open, loadPatients]);
 
+  // 當創建模式打開時，設置表單的初始值
+  useEffect(() => {
+    if (mode === 'create' && open) {
+      form.setFieldsValue({
+        date: activeDate,
+        start_time: dayjs("08:00", "HH:mm"),
+        end_time: dayjs("09:00", "HH:mm"),
+        note: '',
+      });
+    }
+  }, [mode, open, activeDate, form]);
+
   // 渲染编辑表单
   const renderEditForm = () => {
     return (
@@ -362,6 +374,7 @@ const AppointmentModal = ({
         <Form.Item
           name="doctor_uuid"
           label="醫生"
+          rules={[{ required: true, message: '請選擇醫生' }]}
         >
           <Select
             placeholder="選擇醫生"
