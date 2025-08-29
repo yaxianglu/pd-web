@@ -44,13 +44,13 @@ export default function Partners() {
     fetchPartners();
   }, []);
 
-  // 查看详情
+  // 查看詳情
   const showDetail = (record) => {
     setSelectedPartner(record);
     setDetailModalVisible(true);
   };
 
-  // 获取状态标签颜色
+  // 获取狀態标签颜色
   const getStatusColor = (status) => {
     switch (status) {
       case 'active':
@@ -66,7 +66,7 @@ export default function Partners() {
     }
   };
 
-  // 获取状态中文名称
+  // 获取狀態中文名称
   const getStatusText = (status) => {
     switch (status) {
       case 'active':
@@ -106,11 +106,11 @@ export default function Partners() {
           <div className="thead">
             <div className="th id">ID</div>
             <div className="th name">姓名</div>
-            <div className="th clinic">诊所名称</div>
-            <div className="th phone">电话</div>
-            <div className="th email">邮箱</div>
-            <div className="th status">状态</div>
-            <div className="th created">注册时间</div>
+            <div className="th clinic">診所名稱</div>
+            <div className="th phone">電話</div>
+            <div className="th email">郵箱</div>
+            <div className="th status">狀態</div>
+            <div className="th created">註冊時間</div>
             <div className="th action">操作</div>
             <div className="th caret" />
           </div>
@@ -190,14 +190,14 @@ export default function Partners() {
         </div>
       </div>
 
-      {/* 详情模态框 */}
+      {/* 詳情模態框 */}
       <Modal
-        title="合作夥伴详情"
+        title="合作夥伴詳情"
         open={detailModalVisible}
         onCancel={() => setDetailModalVisible(false)}
         footer={[
           <Button key="close" onClick={() => setDetailModalVisible(false)}>
-            关闭
+            關閉
           </Button>
         ]}
         width={800}
@@ -212,27 +212,27 @@ export default function Partners() {
                   <span>{selectedPartner.full_name || '-'}</span>
                 </div>
                 <div className="detail-item">
-                  <label>诊所名称：</label>
+                  <label>診所名稱：</label>
                   <span>{selectedPartner.clinic_name || '-'}</span>
                 </div>
                 <div className="detail-item">
-                  <label>电话：</label>
+                  <label>電話：</label>
                   <span>{selectedPartner.phone || '-'}</span>
                 </div>
                 <div className="detail-item">
-                  <label>邮箱：</label>
+                  <label>郵箱：</label>
                   <span>{selectedPartner.email || '-'}</span>
                 </div>
                 <div className="detail-item">
-                  <label>经验年数：</label>
+                  <label>經驗年數：</label>
                   <span>{selectedPartner.years_experience ? `${selectedPartner.years_experience}年` : '-'}</span>
                 </div>
                 <div className="detail-item">
-                  <label>治疗数量：</label>
+                  <label>治療數量：</label>
                   <span>{selectedPartner.treatment_count || '-'}</span>
                 </div>
                 <div className="detail-item">
-                  <label>状态：</label>
+                  <label>狀態：</label>
                   <Tag color={getStatusColor(selectedPartner.status)}>
                     {getStatusText(selectedPartner.status)}
                   </Tag>
@@ -250,7 +250,7 @@ export default function Partners() {
 
             {selectedPartner.special_notes && (
               <div className="detail-section">
-                <h3>特别备注</h3>
+                <h3>特別備註</h3>
                 <div className="detail-item full-width">
                   <span>{selectedPartner.special_notes}</span>
                 </div>

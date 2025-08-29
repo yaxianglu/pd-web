@@ -262,7 +262,7 @@ export default function Dashboard({ prefetched = null }) {
             currentPatient={{ uuid: (patientInfo || {}).uuid, full_name: (patientInfo || {}).full_name }}
             smileTestUuid={(patientData || {}).uuid}
             onAppointmentCreated={async () => {
-              // 预约创建成功后，将“等待預約”切换为“預約完成”
+              // 預約創建成功后，将“等待預約”切换为“預約完成”
               // ProgressTracker 的 currentStep 显示由 mapProgressToStep 控制；
               // 这里简单把本地 patientInfo 的 progress 推到至少 1
               setPatientInfo((prev) => ({ ...(prev || {}), treatment_progress: Math.max(1, (prev?.treatment_progress || 0)) }));

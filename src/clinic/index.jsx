@@ -87,18 +87,18 @@ export default function ClinicDashboard() {
     });
   }, []);
 
-  // 当创建成功时刷新医生列表
+  // 当創建成功时刷新醫生列表
   const refreshDoctors = async () => {
     const res = await apiService.getDoctorsWithClinic();
     if (res?.success) setDoctors(res.data || []);
   };
 
-  // 刷新诊所列表
+  // 刷新診所列表
   const refreshClinics = async () => {
     const res = await apiService.getClinics();
     if (res?.success) {
       setClinics(res.data || []);
-      // 如果没有选中的诊所，选择第一个
+      // 如果没有选中的診所，选择第一个
       if (!activeClinic && res.data && res.data.length > 0) {
         setActiveClinic(res.data[0]);
       }
@@ -165,7 +165,7 @@ export default function ClinicDashboard() {
         </div>
       </div>
 
-      {/* 创建账号弹窗 */}
+      {/* 創建账号弹窗 */}
       <Modal
         title={`為 ${activeClinic?.clinic_name || '診所'} 創建醫生帳戶`}
         open={createOpen}
@@ -186,14 +186,14 @@ export default function ClinicDashboard() {
             phone: form.phone || undefined,
             email: form.email || undefined,
             role: 'doctor',
-            department: activeClinic.uuid, // 自动使用当前选中的诊所
+            department: activeClinic.uuid, // 自动使用当前选中的診所
           };
           const res = await apiService.createAdminUser(payload);
           if (res?.success) {
             message.success('創建成功');
             setCreateOpen(false);
             setForm({ username: '', password: 'pd2025!', phone: '', email: '' });
-            // 刷新医生列表
+            // 刷新醫生列表
             await refreshDoctors();
           } else {
             message.error(res?.message || '創建失敗');
@@ -226,7 +226,7 @@ export default function ClinicDashboard() {
         </div>
       </Modal>
 
-      {/* 新增诊所弹窗 */}
+      {/* 新增診所弹窗 */}
       <Modal
         title="新增診所"
         open={addClinicOpen}
@@ -248,7 +248,7 @@ export default function ClinicDashboard() {
             message.success('診所創建成功');
             setAddClinicOpen(false);
             setClinicForm({ clinic_name: '', address: '', phone: '', city: '', website: '' });
-            // 刷新诊所列表
+            // 刷新診所列表
             await refreshClinics();
           } else {
             message.error(res?.message || '診所創建失敗');

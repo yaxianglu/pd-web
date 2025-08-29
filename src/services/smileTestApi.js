@@ -25,7 +25,7 @@ export const smileTestApi = {
     }
   },
 
-  // 创建微笑测试数据
+  // 創建微笑测试数据
   async createSmileTest(data) {
     try {
       const response = await fetch(`${API_BASE_URL}/api/smile-test`, {
@@ -107,7 +107,7 @@ export const smileTestApi = {
     }
   },
 
-  // 保存或更新数据（通过UUID，如果存在则更新，不存在则创建）
+  // 保存或更新数据（通过UUID，如果存在则更新，不存在则創建）
   async saveOrUpdateSmileTestByUuid(uuid, data) {
     try {
       const response = await fetch(`${API_BASE_URL}/api/smile-test/uuid/${uuid}`, {

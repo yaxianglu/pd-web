@@ -72,7 +72,7 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
     return () => { isMounted = false; };
   }, [inputItems]);
 
-  // 预取医生+诊所
+  // 预取醫生+診所
   useEffect(() => {
     apiService.getDoctorsWithClinic().then((res) => {
       if (res?.success) setDoctors(res.data || []);

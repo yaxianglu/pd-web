@@ -44,7 +44,7 @@ export const l = [
     icon: png6,
   }
 ];
-// 进度状态枚举
+// 进度狀態枚举
 export const ProgressStatus = {
   COMPLETED: 'completed',    // 已完成
   CURRENT: 'current',        // 当前步骤
@@ -119,7 +119,7 @@ export default function ProgressTracker({
     }
   }, [userInfo])
 
-  // 更新步骤状态
+  // 更新步骤狀態
   const getStepStatus = (stepId) => {
     if (stepId <= currentStep) return ProgressStatus.COMPLETED;
     return ProgressStatus.PENDING;
@@ -145,15 +145,15 @@ export default function ProgressTracker({
       return;
     }
     /**
-      1 预约完成：自动
-      2 确认方案：医生
-      3 付款完成：超管、管理员
+      1 預約完成：自动
+      2 確認方案：醫生
+      3 付款完成：超管、管理員
       4 生产完成：巧医
-      5 治疗中：医生
-      6 治疗完成：医生
+      5 治療中：醫生
+      6 治療完成：醫生
     */
     if (role === 'doctor') {
-      // 当前是医生
+      // 當前是醫生
       if (![2, 5, 6].includes(nextIdNum)) {
         return;
       }
@@ -220,12 +220,12 @@ export default function ProgressTracker({
   );
 }
 
-// 步骤连接点
+    // 步驟連接點
 function StepDot() {
   return null;
 }
 
-// 步骤状态指示器
+// 步驟狀態指示器
 function StepCheck({ status }) {
   switch (status) {
     case ProgressStatus.COMPLETED:

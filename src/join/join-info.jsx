@@ -67,7 +67,7 @@ export default function JoinInfo() {
     if (!formData.email.trim()) {
       fieldErrors.email = '請填寫電子郵箱';
     } else {
-      // 简单的邮箱格式验证
+      // 简单的郵箱格式验证
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(formData.email)) {
         fieldErrors.email = '請填寫正確的電子郵箱格式';
@@ -135,7 +135,7 @@ export default function JoinInfo() {
         treatment_count: parseInt(formData.treatmentCount),
         address: formData.address.trim(),
         special_notes: formData.remarks.trim(),
-        status: 'pending' // 设置初始状态为待审核
+        status: 'pending' // 设置初始狀態为待审核
       };
 
       console.log('提交数据:', dentistData);

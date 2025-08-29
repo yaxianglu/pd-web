@@ -26,16 +26,16 @@ function Sidebar({ activeTab, onTabChange }) {
         </div>
       </div>
       
-      {/* 账户列表 */}
+      {/* 賬戶列表 */}
       <div className="account-list">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => (
           <div key={index} className={`account-item ${index === 0 ? 'active' : ''}`}>
-            账户: 郭博士
+            賬戶: 郭博士
           </div>
         ))}
       </div>
       
-      {/* 创建账户按钮 */}
+      {/* 創建賬戶按鈕 */}
       <button className="create-account-btn">
         創建帳戶
       </button>
@@ -58,7 +58,7 @@ function UserInfoCard({ userInfo }) {
       
       <div className="user-details">
         <div className="detail-item">
-          <span className="label">账户:</span>
+          <span className="label">賬戶:</span>
           <span className="value">32012310010</span>
         </div>
         <div className="detail-item">
@@ -391,7 +391,7 @@ function TreatmentOverview() {
   );
 }
 
-// 治疗进度时间线
+// 治疗进度時間线
 function TreatmentTimeline() {
   const steps = [
     { name: "口掃完成", completed: true },
@@ -416,7 +416,7 @@ function TreatmentTimeline() {
   );
 }
 
-// 医生/诊所内容组件
+    // 醫生/診所內容組件
 function DoctorClinicContent() {
   return (
     <div className="doctor-clinic-content">
@@ -436,12 +436,12 @@ function DoctorClinicContent() {
         {/* 治疗概览 */}
         <TreatmentOverview />
         
-        {/* 治疗进度时间线 */}
+        {/* 治疗进度時間线 */}
         <TreatmentTimeline />
         
-        {/* 备注区域 */}
+        {/* 備註区域 */}
         <div className="notes-section">
-          <label>备注:</label>
+          <label>備註:</label>
           <div className="notes-actions">
             <button className="upload-btn">上傳</button>
             <button className="download-btn">下載</button>

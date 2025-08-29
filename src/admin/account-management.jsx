@@ -34,7 +34,7 @@ const AccountManagement = () => {
         if (res?.success) {
           setUsers(res.data || []);
         }
-        // 同时加载诊所数据，用于显示医生绑定的诊所
+        // 同時加載診所數據，用於顯示醫生綁定的診所
         const clinicRes = await apiService.getClinics();
         if (clinicRes?.success) {
           setClinics(clinicRes.data || []);
@@ -58,7 +58,7 @@ const AccountManagement = () => {
     }
   };
 
-  // 加载诊所数据（用于医生绑定）
+  // 加載診所數據（用於醫生綁定）
   const loadClinicsForDoctor = async () => {
     try {
       const res = await apiService.getClinics();
@@ -80,7 +80,7 @@ const AccountManagement = () => {
     const userRole = currentUser?.role;
     const tabs = [];
 
-    // 超级管理员可以管理所有账户
+    // 超級管理員可以管理所有賬戶
     if (userRole === 'super_admin') {
       tabs.push(
         { key: 'users', label: '用戶管理', icon: <UserOutlined /> },
@@ -88,7 +88,7 @@ const AccountManagement = () => {
         { key: 'patients', label: '患者管理', icon: <TeamOutlined /> }
       );
     }
-    // 普通管理员可以管理所有账户
+    // 普通管理員可以管理所有賬戶
     else if (userRole === 'admin') {
       tabs.push(
         { key: 'users', label: '用戶管理', icon: <UserOutlined /> },
@@ -96,7 +96,7 @@ const AccountManagement = () => {
         { key: 'patients', label: '患者管理', icon: <TeamOutlined /> }
       );
     }
-    // 医院管理员可以管理诊所、医生、患者
+    // 醫院管理員可以管理診所、醫生、患者
     else if (userRole === 'hospital') {
       tabs.push(
         { key: 'clinics', label: '診所管理', icon: <BankOutlined /> },
@@ -104,7 +104,7 @@ const AccountManagement = () => {
         { key: 'patients', label: '患者管理', icon: <TeamOutlined /> }
       );
     }
-    // 销售专员可以管理诊所、医生、患者
+    // 銷售專員可以管理診所、醫生、患者
     else if (userRole === 'market') {
       tabs.push(
         { key: 'clinics', label: '診所管理', icon: <BankOutlined /> },
@@ -112,7 +112,7 @@ const AccountManagement = () => {
         { key: 'patients', label: '患者管理', icon: <TeamOutlined /> }
       );
     }
-    // 医生只能管理患者
+    // 醫生只能管理患者
     else if (userRole === 'doctor') {
       tabs.push(
         { key: 'patients', label: '患者管理', icon: <TeamOutlined /> }
@@ -122,7 +122,7 @@ const AccountManagement = () => {
     return tabs;
   };
 
-  // 创建账户
+  // 創建賬戶
   const handleCreate = async (values) => {
     try {
       let res;
@@ -148,7 +148,7 @@ const AccountManagement = () => {
     }
   };
 
-  // 删除/关闭账户
+  // 刪除/關閉賬戶
   const handleDelete = async (id) => {
     try {
       let res;
@@ -207,7 +207,7 @@ const AccountManagement = () => {
       key: 'department',
       render: (department, record) => {
         if (record.role === 'doctor' && department) {
-          // 从诊所列表中查找对应的诊所名称
+          // 從診所列表中查找對應的診所名稱
           const clinic = clinics.find(c => c.uuid === department);
           return clinic ? clinic.clinic_name : department;
         }
@@ -240,7 +240,7 @@ const AccountManagement = () => {
     }
   ];
 
-  // 诊所表格列
+  // 診所表格列
   const clinicColumns = [
     {
       title: '診所名稱',
@@ -344,7 +344,7 @@ const AccountManagement = () => {
     }
   ];
 
-  // 获取创建表单字段
+  // 获取創建表单字段
   const getCreateFormFields = () => {
     if (activeTab === 'users') {
       return (
@@ -379,11 +379,11 @@ const AccountManagement = () => {
             <Select 
               onChange={(value) => {
                 setSelectedRole(value);
-                // 如果选择医生角色，加载诊所数据
+                // 如果選擇醫生角色，加載診所數據
                 if (value === 'doctor') {
                   loadClinicsForDoctor();
                 }
-                // 清除诊所选择，保持默认密码
+                // 清除診所選擇，保持默認密碼
                 createForm.setFieldsValue({ 
                   department: undefined,
                   password: 'pd2025!'
@@ -558,7 +558,7 @@ const AccountManagement = () => {
               createForm.resetFields();
               // 设置默认密码
               createForm.setFieldsValue({ password: 'pd2025!' });
-              // 如果是用户管理，预加载诊所数据
+              // 如果是用戶管理，預加載診所數據
               if (activeTab === 'users') {
                 loadClinicsForDoctor();
               }

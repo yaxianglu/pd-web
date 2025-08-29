@@ -19,7 +19,7 @@ function HeaderTabs({ activeKey, onChange, userRole }) {
       { key: 'partners', label: '成為夥伴' }
     ];
 
-    // 管理员可以管理所有账户
+    // 管理員可以管理所有賬戶
     if (userRole === 'admin' || userRole === 'super_admin') {
       baseTabs.push(
         { key: 'doctors', label: '醫生' },
@@ -27,7 +27,7 @@ function HeaderTabs({ activeKey, onChange, userRole }) {
         { key: 'accounts', label: '賬戶管理' }
       );
     }
-    // 业务可以管理诊所、医生、患者
+    // 業務可以管理診所、醫生、患者
     else if (userRole === 'market') {
       baseTabs.push(
         { key: 'doctors', label: '醫生' },
@@ -35,7 +35,7 @@ function HeaderTabs({ activeKey, onChange, userRole }) {
         { key: 'accounts', label: '賬戶管理' }
       );
     }
-    // 医生只能管理患者
+    // 醫生只能管理患者
     else if (userRole === 'doctor') {
       baseTabs.push(
         { key: 'accounts', label: '患者管理' }
@@ -484,7 +484,7 @@ function TreatmentOverview() {
   );
 }
 
-// 治疗进度时间线（未使用）
+// 治疗进度時間线（未使用）
 function TreatmentTimeline() {
   const steps = [
     { name: "預約完成", completed: true },
@@ -509,11 +509,11 @@ function TreatmentTimeline() {
   );
 }
 
-// 业务端内容组件（未使用）
+// 業務端内容组件（未使用）
 function BusinessContent() { return null; }
 
-// 医生/诊所内容组件
-// 旧医生内容不再使用
+    // 醫生/診所內容組件
+    // 舊醫生內容不再使用
 
 export default function AdminDashboard() {
   const [active, setActive] = useState('smile');

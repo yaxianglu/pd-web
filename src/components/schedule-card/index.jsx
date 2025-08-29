@@ -20,10 +20,10 @@ export default function ScheduleCard({
   onUpdate, // (event) => Promise | void
   onView, // (event) => void
   defaultMonth, // string | Dayjs, e.g. '2025-08-01'
-  currentPatient, // { uuid, full_name } 可选，用于详情展示与创建默认归属
-  currentDoctor, // { uuid, full_name } 可选：医生模式下仅展示与自己相关
+  currentPatient, // { uuid, full_name } 可选，用于詳情展示与創建默认归属
+  currentDoctor, // { uuid, full_name } 可选：醫生模式下仅展示与自己相关
   images = [], // 可選：老版本上傳/下載對應的圖片數組（base64或dataURL）
-  onAppointmentCreated, // () => void 可选：创建成功后的回调
+  onAppointmentCreated, // () => void 可选：創建成功后的回调
   smileTestUuid, // 可选：對應 smile_test 的 uuid，用於上傳鏈接
 }) {
   const [value, setValue] = useState(defaultMonth ? dayjs(defaultMonth) : dayjs());
@@ -40,7 +40,7 @@ export default function ScheduleCard({
   const fileInputRef = useRef(null);
   const [messageApi, messageCtx] = message.useMessage();
   
-  // 历史资料弹窗状态
+  // 历史资料弹窗狀態
   const [historyModalOpen, setHistoryModalOpen] = useState(false);
 
   // lazy load doctors when opening create/edit modal
@@ -170,7 +170,7 @@ export default function ScheduleCard({
         return;
       }
       
-      // 过滤出口扫文件，按上传时间排序
+      // 过滤出口扫文件，按上传時間排序
       const oralScanFiles = filesResult.data
         .filter(file => file.upload_type === 'oral_scan' && file.status === 'normal')
         .sort((a, b) => new Date(b.upload_time) - new Date(a.upload_time));
@@ -225,25 +225,25 @@ export default function ScheduleCard({
           status: a.status === "取消" ? "失敗" : "預約完成",
         }));
         
-        // 前端过滤：只显示当前患者和医生的预约
+        // 前端过滤：只显示当前患者和醫生的預約
         let filtered = mapped;
         if (currentPatient?.uuid) {
-          console.log('过滤患者预约:', currentPatient.uuid);
+          console.log('过滤患者預約:', currentPatient.uuid);
           filtered = filtered.filter(event => {
             const matches = event.patient_uuid === currentPatient.uuid;
-            console.log('预约患者UUID:', event.patient_uuid, '当前患者UUID:', currentPatient.uuid, '匹配:', matches);
+            console.log('預約患者UUID:', event.patient_uuid, '当前患者UUID:', currentPatient.uuid, '匹配:', matches);
             return matches;
           });
         }
         if (currentDoctor?.uuid) {
-          console.log('过滤医生预约:', currentDoctor.uuid);
+          console.log('过滤醫生預約:', currentDoctor.uuid);
           filtered = filtered.filter(event => {
             const matches = event.doctor_uuid === currentDoctor.uuid;
-            console.log('预约医生UUID:', event.doctor_uuid, '当前医生UUID:', currentDoctor.uuid, '匹配:', matches);
+            console.log('預約醫生UUID:', event.doctor_uuid, '当前醫生UUID:', currentDoctor.uuid, '匹配:', matches);
             return matches;
           });
         }
-        console.log('过滤前预约数量:', mapped.length, '过滤后预约数量:', filtered.length);
+        console.log('过滤前預約数量:', mapped.length, '过滤后預約数量:', filtered.length);
         
         setEvents(() => {
           // 在患者模式下不回退到本地樣例，避免顯示與自己無關的資料
@@ -325,7 +325,7 @@ export default function ScheduleCard({
   }, [openCreateForDate]);
 
   const handleCancelAppointment = useCallback(async (appointment) => {
-    console.log('取消预约被调用:', appointment);
+    console.log('取消預約被调用:', appointment);
     
     // 先测试简单的确认
     const confirmed = window.confirm('確定要取消這個預約嗎？取消後無法恢復。');
@@ -337,12 +337,12 @@ export default function ScheduleCard({
     console.log('用户确认取消，开始执行取消操作');
     try {
       const api = (await import("../../services/api")).default;
-      console.log('准备调用取消API，预约ID:', appointment.id || appointment.uuid);
+      console.log('准备调用取消API，預約ID:', appointment.id || appointment.uuid);
       const res = await api.cancelAppointment(appointment.id || appointment.uuid);
-      console.log('取消预约API响应:', res);
+      console.log('取消預約API响应:', res);
       if (res && res.success) {
-        messageApi.success('预约已取消');
-        // 关闭当前详情模态框
+        messageApi.success('預約已取消');
+        // 關閉当前詳情模态框
         setModalOpen(false);
         // 重新加载当月数据
         setTimeout(() => {
@@ -352,7 +352,7 @@ export default function ScheduleCard({
         messageApi.error(res?.message || '取消失败');
       }
     } catch (e) {
-      console.error('取消预约失败:', e);
+      console.error('取消預約失败:', e);
       messageApi.error(e?.message || '取消失败');
     }
   }, [value, setModalOpen]);

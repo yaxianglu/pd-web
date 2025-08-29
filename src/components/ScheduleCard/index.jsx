@@ -18,10 +18,10 @@ export default function ScheduleCard({
   onUpdate, // (event) => Promise | void
   onView, // (event) => void
   defaultMonth, // string | Dayjs, e.g. '2025-08-01'
-  currentPatient, // { uuid, full_name } 可选，用于详情展示与创建默认归属
-  currentDoctor, // { uuid, full_name } 可选：医生模式下仅展示与自己相关
+  currentPatient, // { uuid, full_name } 可选，用于詳情展示与創建默认归属
+  currentDoctor, // { uuid, full_name } 可选：醫生模式下仅展示与自己相关
   images = [], // 可選：老版本上傳/下載對應的圖片數組（base64或dataURL）
-  onAppointmentCreated, // () => void 可选：创建成功后的回调
+  onAppointmentCreated, // () => void 可选：創建成功后的回调
   smileTestUuid, // 可选：對應 smile_test 的 uuid，用於上傳鏈接
 }) {
   const [value, setValue] = useState(defaultMonth ? dayjs(defaultMonth) : dayjs());
@@ -38,7 +38,7 @@ export default function ScheduleCard({
   const fileInputRef = useRef(null);
   const [messageApi, messageCtx] = message.useMessage();
   
-  // 新增上传进度状态
+  // 新增上传进度狀態
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -264,32 +264,32 @@ export default function ScheduleCard({
           status: a.status === "取消" ? "失敗" : "預約完成",
         }));
         
-        // 根据当前患者和医生过滤预约数据
+        // 根据当前患者和醫生过滤預約数据
         let filtered = mapped;
         
-        // 如果有当前患者，只显示该患者的预约
+        // 如果有当前患者，只显示该患者的預約
         if (currentPatient?.uuid) {
-          console.log('过滤患者预约:', currentPatient.uuid);
+          console.log('过滤患者預約:', currentPatient.uuid);
           filtered = filtered.filter(event => {
             const matches = event.patient_uuid === currentPatient.uuid;
-            console.log('预约患者UUID:', event.patient_uuid, '当前患者UUID:', currentPatient.uuid, '匹配:', matches);
+            console.log('預約患者UUID:', event.patient_uuid, '当前患者UUID:', currentPatient.uuid, '匹配:', matches);
             return matches;
           });
         }
         
-        // 如果有当前医生，只显示该医生的预约
+        // 如果有当前醫生，只显示该醫生的預約
         if (currentDoctor?.uuid) {
-          console.log('过滤医生预约:', currentDoctor.uuid);
+          console.log('过滤醫生預約:', currentDoctor.uuid);
           filtered = filtered.filter(event => {
             const matches = event.doctor_uuid === currentDoctor.uuid;
-            console.log('预约医生UUID:', event.doctor_uuid, '当前医生UUID:', currentDoctor.uuid, '匹配:', matches);
+            console.log('預約醫生UUID:', event.doctor_uuid, '当前醫生UUID:', currentDoctor.uuid, '匹配:', matches);
             return matches;
           });
         }
         
-        console.log('过滤前预约数量:', mapped.length, '过滤后预约数量:', filtered.length);
+        console.log('过滤前預約数量:', mapped.length, '过滤后預約数量:', filtered.length);
         
-        // 如果既没有患者也没有医生，显示所有预约（保持原有行为）
+        // 如果既没有患者也没有醫生，显示所有預約（保持原有行为）
         setEvents(() => {
           // 在患者模式下不回退到本地樣例，避免顯示與自己無關的資料
           if (currentPatient || currentDoctor) return filtered;

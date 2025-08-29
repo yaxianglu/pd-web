@@ -57,7 +57,7 @@ const UserInfo = () => {
         </div>
       )}
 
-      {/* 点击外部关闭下拉菜单 */}
+      {/* 点击外部關閉下拉菜单 */}
       {showDropdown && (
         <div 
           className="dropdown-overlay"

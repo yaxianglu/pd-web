@@ -76,7 +76,7 @@ const BirthdayPicker = ({ value, onChange, placeholder = "生日", style = {}, v
     }
   }, [value]);
 
-  // 点击外部关闭下拉框
+  // 点击外部關閉下拉框
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {

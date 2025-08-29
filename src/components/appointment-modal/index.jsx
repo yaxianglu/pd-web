@@ -131,14 +131,14 @@ const AppointmentModal = ({
         render: (_, __, index) => index + 1,
       },
       {
-        title: "时间",
+        title: "時間",
         dataIndex: "time",
         key: "time",
         width: 160,
         render: (_, record) => `${record.start_time || '-'} ~ ${record.end_time || '-'}`,
       },
       {
-        title: "医生",
+        title: "醫生",
         dataIndex: "doctor_name",
         key: "doctor",
         width: 120,
@@ -152,13 +152,13 @@ const AppointmentModal = ({
         render: (_, record) => record.patient_name || record.patientName || record.name || '-',
       },
       {
-        title: "备注",
+        title: "備註",
         dataIndex: "note",
         key: "note",
         ellipsis: true,
       },
       {
-        title: "状态",
+        title: "狀態",
         dataIndex: "status",
         key: "status",
         width: 100,
@@ -190,7 +190,7 @@ const AppointmentModal = ({
     return (
       <div className="day-appointments">
         <div style={{ marginBottom: 16 }}>
-          <h3>{activeDate.format("YYYY年MM月DD日")} 的预约</h3>
+          <h3>{activeDate.format("YYYY年MM月DD日")} 的預約</h3>
         </div>
         <Table
           rowKey={(record) => record.id || record.uuid}
@@ -206,7 +206,7 @@ const AppointmentModal = ({
 
   console.info('patients', patients)
 
-  // 当编辑模式打开时，设置表单的初始值
+        // 當編輯模式打開時，設置表單的初始值
   useEffect(() => {
     if (activeEvent && mode === 'edit') {
       form.setFieldsValue({
@@ -218,7 +218,7 @@ const AppointmentModal = ({
         note: activeEvent.note || '',
       });
     } else if (mode === 'create') {
-      // 创建模式时设置默认值
+      // 創建模式時設置默認值
       form.setFieldsValue({
         date: activeDate,
         start_time: dayjs("08:00", "HH:mm"),
@@ -228,7 +228,7 @@ const AppointmentModal = ({
     }
   }, [activeEvent, mode, form, activeDate]);
 
-  // 当创建模式打开时，加载患者列表
+  // 当創建模式打开时，加载患者列表
   useEffect(() => {
     if (mode === 'create' && open) {
       loadPatients();

@@ -4,7 +4,7 @@ class ApiService {
     this.baseURL = API_BASE_URL;
   }
 
-  // 审批合作伙伴申请：创建診所并激活
+  // 审批合作伙伴申请：創建診所并激活
   async approvePartner(id) {
     const response = await fetch(`${this.baseURL}/api/partners/${id}/approve`, {
       method: 'POST',
@@ -97,7 +97,7 @@ class ApiService {
       // Token过期，尝试刷新
       const refreshSuccess = await this.refreshToken();
       if (!refreshSuccess) {
-        // 刷新失败，清除登录状态
+        // 刷新失败，清除登录狀態
         localStorage.removeItem('auth_token');
         localStorage.removeItem('refresh_token');
         localStorage.removeItem('user_info');
@@ -298,7 +298,7 @@ class ApiService {
     }
   }
 
-  // 根据医生信息获取患者列表（与 uuid 接口结构一致的数组）
+  // 根据醫生信息获取患者列表（与 uuid 接口结构一致的数组）
   async getPatientsByDoctor({ uuid, email, username }) {
     const params = new URLSearchParams();
     if (uuid) params.append('uuid', uuid);
@@ -319,7 +319,7 @@ class ApiService {
     }
   }
 
-  // 同时创建患者与smile_test
+  // 同时創建患者与smile_test
   async createPatientWithSmileTest(data) {
     try {
       const response = await fetch(`${this.baseURL}/api/smile-test/with-patient`, {
@@ -330,11 +330,11 @@ class ApiService {
       return await this.handleResponse(response);
     } catch (error) {
       console.error('Failed to create patient with smile test:', error);
-      return { success: false, message: '创建失败，请检查网络连接' };
+      return { success: false, message: '創建失败，请检查网络连接' };
     }
   }
 
-  // 仅创建患者并把现有 smile_test 记录的 patient_uuid 指向它
+  // 仅創建患者并把现有 smile_test 记录的 patient_uuid 指向它
   async bindExistingSmileTest({ smile_uuid, assigned_doctor_uuid }) {
     try {
       const response = await fetch(`${this.baseURL}/api/smile-test/bind-existing`, {
@@ -349,7 +349,7 @@ class ApiService {
     }
   }
 
-  // 获取所有医生（去除敏感字段）
+  // 获取所有醫生（去除敏感字段）
   async getDoctors() {
     try {
       const response = await fetch(`${this.baseURL}/auth/doctors`, {
@@ -363,7 +363,7 @@ class ApiService {
     }
   }
 
-  // 获取医生及其诊所信息
+  // 获取醫生及其診所信息
   async getDoctorsWithClinic() {
     try {
       const response = await fetch(`${this.baseURL}/auth/doctors-with-clinic`, {
@@ -377,12 +377,12 @@ class ApiService {
     }
   }
 
-  // 创建预约
+  // 創建預約
   async createAppointment(data) {
     return this.post('/api/appointments', data, true);
   }
 
-  // 更新预约
+  // 更新預約
   async updateAppointment(idOrUuid, data) {
     const endpoint = isNaN(Number(idOrUuid))
       ? `/api/appointments/${encodeURIComponent(idOrUuid)}`
@@ -390,7 +390,7 @@ class ApiService {
     return this.put(endpoint, data, true);
   }
 
-  // 取消预约
+  // 取消預約
   async cancelAppointment(idOrUuid) {
     const endpoint = isNaN(Number(idOrUuid))
       ? `/api/appointments/${encodeURIComponent(idOrUuid)}/cancel`
@@ -407,7 +407,7 @@ class ApiService {
     return this.put(`/api/smile-test/patient/${encodeURIComponent(uuid)}/progress`, { progress }, true);
   }
 
-  // 按月份获取预约
+  // 按月份获取預約
   async getAppointmentsByMonth(year, month, patientUuid = null, doctorUuid = null) {
     let url = `/api/appointments/by-month?year=${year}&month=${month}`;
     if (patientUuid) {
@@ -419,7 +419,7 @@ class ApiService {
     return this.get(url, true);
   }
 
-  // 获取诊所列表
+  // 获取診所列表
   async getClinics() {
     try {
       const response = await fetch(`${this.baseURL}/auth/clinics`, {
@@ -433,7 +433,7 @@ class ApiService {
     }
   }
 
-  // 创建管理员账号（默认医生角色）
+  // 創建管理員账号（默认醫生角色）
   async createAdminUser(data) {
     try {
       const response = await fetch(`${this.baseURL}/auth/users`, {
@@ -463,7 +463,7 @@ class ApiService {
     }
   }
 
-  // ========== 账户管理功能 ==========
+  // ========== 賬戶管理功能 ==========
 
   // 获取所有用户（根据角色过滤）
   async getUsers(role = null) {
@@ -494,7 +494,7 @@ class ApiService {
     }
   }
 
-  // 创建诊所
+  // 創建診所
   async createClinic(data) {
     try {
       const response = await fetch(`${this.baseURL}/auth/clinics`, {
@@ -509,7 +509,7 @@ class ApiService {
     }
   }
 
-  // 创建患者
+  // 創建患者
   async createPatient(data) {
     try {
       const response = await fetch(`${this.baseURL}/auth/patients`, {
@@ -524,7 +524,7 @@ class ApiService {
     }
   }
 
-  // 删除/关闭用户账户
+  // 删除/關閉用户賬戶
   async deleteUser(id) {
     try {
       const response = await fetch(`${this.baseURL}/auth/users/${id}`, {
@@ -538,7 +538,7 @@ class ApiService {
     }
   }
 
-  // 删除/关闭诊所
+  // 删除/關閉診所
   async deleteClinic(id) {
     try {
       const response = await fetch(`${this.baseURL}/auth/clinics/${id}`, {
@@ -552,7 +552,7 @@ class ApiService {
     }
   }
 
-  // 删除/关闭患者
+  // 删除/關閉患者
   async deletePatient(id) {
     try {
       const response = await fetch(`${this.baseURL}/auth/patients/${id}`, {
@@ -644,7 +644,7 @@ class ApiService {
   }
 }
 
-// 创建单例实例
+// 創建单例实例
 const apiService = new ApiService();
 
 export default apiService; 

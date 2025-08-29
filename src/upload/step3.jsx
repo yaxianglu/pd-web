@@ -191,7 +191,7 @@ export default function Step3({ onNext, setStep, style }) {
       // 准备照片数据，按步骤排序
       const sortedPhotos = photos.sort((a, b) => a.step - b.step);
       
-      // 创建图片组数据
+      // 創建图片组数据
       const imageGroup = {
         images: sortedPhotos.map((photo, index) => ({
           index: index + 1,
@@ -244,15 +244,15 @@ export default function Step3({ onNext, setStep, style }) {
     }
   };
 
-  // 关闭当前页面
+  // 關閉当前页面
   const closePage = () => {
     // 重定向到首页
     window.location.href = '/';
   };
 
-  // 组件加载时初始化状态
+  // 组件加载时初始化狀態
   useEffect(() => {
-    // 重置照片状态，不加载已保存的照片
+    // 重置照片狀態，不加载已保存的照片
     setPhotos([]);
     setCurrentStep(1);
   }, [location.search]);
@@ -283,7 +283,7 @@ export default function Step3({ onNext, setStep, style }) {
       console.log('摄像头流获取成功:', mediaStream);
       setStream(mediaStream);
       setIsCameraActive(true);
-      setIsVideoReady(false); // 重置视频准备状态
+      setIsVideoReady(false); // 重置视频准备狀態
       
       // 确保视频元素存在后再设置
       if (videoRef.current) {
@@ -296,7 +296,7 @@ export default function Step3({ onNext, setStep, style }) {
         };
         
         videoRef.current.oncanplay = () => {
-          console.log('视频可以播放，设置准备状态为true');
+          console.log('视频可以播放，设置准备狀態为true');
           setIsVideoReady(true);
         };
         
@@ -317,7 +317,7 @@ export default function Step3({ onNext, setStep, style }) {
         // 强制触发加载事件
         setTimeout(() => {
           if (videoRef.current && videoRef.current.readyState >= 2) {
-            console.log('视频已准备就绪，手动设置状态');
+            console.log('视频已准备就绪，手动设置狀態');
             setIsVideoReady(true);
           }
         }, 1000);
@@ -344,7 +344,7 @@ export default function Step3({ onNext, setStep, style }) {
 
   // 拍照
   const takePhoto = () => {
-    console.log('拍照按钮被点击，当前状态:', {
+    console.log('拍照按钮被点击，当前狀態:', {
       isCameraActive,
       isVideoReady,
       hasVideoRef: !!videoRef.current,
@@ -369,7 +369,7 @@ export default function Step3({ onNext, setStep, style }) {
       const canvas = canvasRef.current;
       const context = canvas.getContext('2d');
 
-      console.log('视频元素状态:', {
+      console.log('视频元素狀態:', {
         videoWidth: video.videoWidth,
         videoHeight: video.videoHeight,
         readyState: video.readyState,
@@ -422,14 +422,14 @@ export default function Step3({ onNext, setStep, style }) {
                 console.log('Calling savePhotoToDatabase for new photo:', newPhoto);
                 savePhotoToDatabase(newPhoto);
                 
-                // 拍摄完成后停止摄像头，回到案例展示状态
+                // 拍摄完成后停止摄像头，回到案例展示狀態
                 setTimeout(() => {
                   stopCamera();
                 }, 500);
               };
               reader.readAsDataURL(blob);
             } catch (error) {
-              console.error('创建图片URL失败:', error);
+              console.error('創建图片URL失败:', error);
               alert('拍照失败，请重试');
             }
           } else {
@@ -487,7 +487,7 @@ export default function Step3({ onNext, setStep, style }) {
         };
         reader.readAsDataURL(file);
       } catch (error) {
-        console.error('创建文件URL失败:', error);
+        console.error('創建文件URL失败:', error);
         alert('文件选择失败，请重试');
       }
     }
@@ -527,13 +527,13 @@ export default function Step3({ onNext, setStep, style }) {
     };
   }, []);
 
-  // 监听视频状态变化
+  // 监听视频狀態变化
   useEffect(() => {
     if (videoRef.current && isCameraActive) {
       const video = videoRef.current;
       
       const checkVideoReady = () => {
-        console.log('检查视频状态:', {
+        console.log('检查视频狀態:', {
           readyState: video.readyState,
           videoWidth: video.videoWidth,
           videoHeight: video.videoHeight,
@@ -541,7 +541,7 @@ export default function Step3({ onNext, setStep, style }) {
         });
         
         if (video.readyState >= 2 && video.videoWidth > 0 && video.videoHeight > 0) {
-          console.log('视频已准备就绪，设置状态');
+          console.log('视频已准备就绪，设置狀態');
           setIsVideoReady(true);
         }
       };
@@ -730,7 +730,7 @@ export default function Step3({ onNext, setStep, style }) {
         {showQrFull && (
           <div className="qr-fullscreen-mask" onClick={() => setShowQrFull(false)}>
             <QRCodeComponent url={currentUrl} size={280} />
-            <div className="qr-fullscreen-tip">点击任意处关闭</div>
+            <div className="qr-fullscreen-tip">点击任意处關閉</div>
           </div>
         )}
 

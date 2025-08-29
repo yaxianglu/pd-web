@@ -13,17 +13,17 @@ const App = () => {
   const [currentDate, setCurrentDate] = useState(dayjs());
   const { userInfo } = useAuth();
   
-  // 模态框相关状态
+  // 模态框相关狀態
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState("day");
   const [activeDate, setActiveDate] = useState(null);
   const [activeEvent, setActiveEvent] = useState(null);
   
-  // 医生列表相关状态
+  // 醫生列表相關狀態
   const [doctors, setDoctors] = useState([]);
   const [loadingDoctors, setLoadingDoctors] = useState(false);
 
-  // 获取当前医生的所有预约信息
+  // 獲取當前醫生的所有預約信息
   const loadAppointments = async (date) => {
     if (!userInfo?.uuid) {
       console.log('用户信息不存在:', userInfo);
@@ -33,7 +33,7 @@ const App = () => {
     try {
       const year = date.year();
       const month = date.month() + 1; // dayjs月份从0开始
-      console.log('正在加载预约数据:', { year, month, doctorUuid: userInfo.uuid });
+      console.log('正在加載預約數據:', { year, month, doctorUuid: userInfo.uuid });
       console.log('当前用户信息:', userInfo);
       
       const res = await apiService.getAppointmentsByMonth(year, month);
@@ -51,46 +51,46 @@ const App = () => {
         return;
       }
       
-      console.log('解析后的预约数据:', appointmentsData);
+      console.log('解析後的預約數據:', appointmentsData);
       
-      // 临时：显示所有预约数据用于调试
-      console.log('所有预约数据（不过滤医生）:', appointmentsData);
+      // 臨時：顯示所有預約數據用於調試
+      console.log('所有預約数据（不过滤醫生）:', appointmentsData);
       
-      // 只显示当前医生的预约
+      // 只顯示當前醫生的預約
       const doctorAppointments = appointmentsData.filter(apt => {
-        // 支持多种医生UUID字段名
+                  // 支持多種醫生UUID字段名
         const doctorUuid = apt.doctor_uuid || apt.doctorUuid || apt.doctor_id || apt.doctorId;
         const currentUserUuid = userInfo.uuid;
         
-        console.log('检查预约:', apt);
-        console.log('预约中的医生UUID字段:', { 
+        console.log('检查預約:', apt);
+        console.log('預約中的醫生UUID字段:', { 
           doctor_uuid: apt.doctor_uuid, 
           doctorUuid: apt.doctorUuid, 
           doctor_id: apt.doctor_id, 
           doctorId: apt.doctorId 
         });
-        console.log('当前用户UUID:', currentUserUuid);
+        console.log('當前用戶UUID:', currentUserUuid);
         console.log('UUID匹配结果:', doctorUuid === currentUserUuid);
         
-        // 如果预约没有医生UUID，可能是系统预约，暂时显示
+        // 如果預約沒有醫生UUID，可能是系統預約，暫時顯示
         if (!doctorUuid) {
-          console.log('预约没有医生UUID，可能是系统预约');
+          console.log('預約沒有醫生UUID，可能是系統預約');
           return true; // 临时显示，用于调试
         }
         
         return doctorUuid === currentUserUuid;
       });
       
-      console.log('过滤后的医生预约:', doctorAppointments);
+      console.log('過濾後的醫生預約:', doctorAppointments);
       
-      // 如果找到匹配的医生预约，使用过滤后的数据
+      // 如果找到匹配的醫生預約，使用過濾後的數據
       if (doctorAppointments.length > 0) {
         setAppointments(doctorAppointments);
       } else {
-        // 如果没有找到匹配的医生预约，检查是否有其他问题
-        console.log('没有找到匹配的医生预约，检查可能的原因:');
-        console.log('1. 当前用户UUID:', userInfo.uuid);
-        console.log('2. 所有预约的医生UUID:', appointmentsData.map(apt => ({
+        // 如果沒有找到匹配的醫生預約，檢查是否有其他問題
+        console.log('沒有找到匹配的醫生預約，檢查可能的原因:');
+        console.log('1. 當前用戶UUID:', userInfo.uuid);
+        console.log('2. 所有預約的醫生UUID:', appointmentsData.map(apt => ({
           id: apt.id,
           doctor_uuid: apt.doctor_uuid,
           doctorUuid: apt.doctorUuid,
@@ -98,13 +98,13 @@ const App = () => {
           doctorId: apt.doctorId
         })));
         
-        // 临时显示所有预约用于调试
-        console.log('临时显示所有预约用于调试');
+        // 臨時顯示所有預約用於調試
+        console.log('臨時顯示所有預約用於調試');
         setAppointments(appointmentsData);
       }
       
     } catch (error) {
-      console.error('加载预约数据失败:', error);
+      console.error('加載預約數據失敗:', error);
       setAppointments([]);
     }
   };
@@ -120,7 +120,7 @@ const App = () => {
 
   const getListData = value => {
     const dateStr = value.format('YYYY-MM-DD');
-    console.log('检查日期:', dateStr, '当前预约数据:', appointments);
+    console.log('檢查日期:', dateStr, '當前預約數據:', appointments);
     
     const dayAppointments = appointments.filter(appointment => {
       // 处理不同的日期格式和字段名
@@ -134,18 +134,18 @@ const App = () => {
       } else if (dateField instanceof Date) {
         aptDate = dayjs(dateField).format('YYYY-MM-DD');
       } else {
-        console.log('未知的日期格式:', dateField, typeof dateField, '预约对象:', appointment);
+        console.log('未知的日期格式:', dateField, typeof dateField, '預約對象:', appointment);
         return false;
       }
       
       const matches = aptDate === dateStr;
       if (matches) {
-        console.log('找到匹配的预约:', appointment);
+        console.log('找到匹配的預約:', appointment);
       }
       return matches;
     });
 
-    console.log('该日期的预约:', dateStr, dayAppointments);
+    console.log('該日期的預約:', dateStr, dayAppointments);
 
     if (dayAppointments.length === 0) {
       return [];
@@ -155,7 +155,7 @@ const App = () => {
       // 将 dayAppointments 数组附加到返回对象上，以便在渲染时访问
       const result = {
         type: 'default',
-        content: '预约',
+        content: '預約',
         appointment: appointment,
         dayAppointments: dayAppointments
       };
@@ -171,15 +171,15 @@ const App = () => {
         type = 'error';
       }
 
-      // 生成显示内容：开始时间-结束时间 + 患者名称
-      let content = '预约';
+      // 生成顯示內容：開始時間-結束時間 + 患者名稱
+      let content = '預約';
       const startTime = appointment.start_time || appointment.startTime;
       const endTime = appointment.end_time || appointment.endTime;
       const patientName = appointment.patient_name || appointment.patientName || appointment.name || appointment.patient || appointment.user_name || appointment.userName || appointment.user_name || appointment.customer_name || appointment.customerName;
       
-      // 调试：打印所有可能的患者姓名字段
-      console.log('预约对象的所有字段:', Object.keys(appointment));
-      console.log('处理预约数据:', { startTime, endTime, patientName, appointment });
+      // 調試：打印所有可能的患者姓名字段
+      console.log('預約對象的所有字段:', Object.keys(appointment));
+      console.log('處理預約數據:', { startTime, endTime, patientName, appointment });
       console.log('患者姓名字段值:', {
         patient_name: appointment.patient_name,
         patientName: appointment.patientName,
@@ -190,7 +190,7 @@ const App = () => {
       });
       
       if (startTime && endTime && patientName) {
-        // 格式化时间，只显示小时:分钟
+        // 格式化時間，只显示小时:分钟
         let formattedStartTime = startTime;
         let formattedEndTime = endTime;
         
@@ -209,10 +209,10 @@ const App = () => {
         }
         
         content = `${formattedStartTime}-${formattedEndTime} ${patientName}`;
-        console.log('✅ 生成完整内容（有时间+患者姓名）:', content);
+        console.log('✅ 生成完整內容（有時間+患者姓名）:', content);
         console.log('✅ 条件满足: startTime=', !!startTime, 'endTime=', !!endTime, 'patientName=', !!patientName);
       } else if (startTime && endTime) {
-        // 只有时间，没有患者姓名
+        // 只有時間，沒有患者姓名
         let formattedStartTime = startTime;
         let formattedEndTime = endTime;
         
@@ -223,44 +223,44 @@ const App = () => {
           formattedEndTime = endTime.substring(0, 5);
         }
         
-        // 即使没有患者姓名，也显示"未知患者"占位符
+        // 即使沒有患者姓名，也顯示"未知患者"佔位符
         content = `${formattedStartTime}-${formattedEndTime} [未知患者]`;
-        console.log('⚠️ 生成时间范围内容（只有时间，无患者姓名）:', content);
+        console.log('⚠️ 生成時間範圍內容（只有時間，無患者姓名）:', content);
         console.log('⚠️ 条件检查: startTime=', !!startTime, 'endTime=', !!endTime, 'patientName=', !!patientName);
       } else if (startTime && patientName) {
-        // 只有开始时间和患者姓名
+        // 只有開始時間和患者姓名
         let formattedStartTime = startTime;
         if (typeof startTime === 'string' && startTime.length >= 5) {
           formattedStartTime = startTime.substring(0, 5);
         }
         content = `${formattedStartTime} ${patientName}`;
-        console.log('生成时间+患者内容:', content);
+        console.log('生成時間+患者內容:', content);
       } else if (patientName) {
         // 只有患者姓名
         content = patientName;
-        console.log('生成患者内容:', content);
+        console.log('生成患者內容:', content);
       } else if (startTime) {
-        // 只有开始时间
+        // 只有開始時間
         let formattedStartTime = startTime;
         if (typeof startTime === 'string' && startTime.length >= 5) {
           formattedStartTime = startTime.substring(0, 5);
         }
         content = formattedStartTime;
-        console.log('生成时间内容:', content);
+        console.log('生成時間内容:', content);
       }
 
-      // 限制内容长度，避免显示过长 - 增加长度限制以显示患者姓名
+      // 限制內容長度，避免顯示過長 - 增加長度限制以顯示患者姓名
       if (content.length > 30) {
         content = content.substring(0, 30) + '...';
       }
 
-      // 确保内容不包含"时间:"前缀
-      if (content.includes('时间:')) {
-        content = content.replace(/^时间:\s*/, '');
-        console.log('移除时间前缀后的内容:', content);
+      // 确保内容不包含"時間:"前缀
+      if (content.includes('時間:')) {
+        content = content.replace(/^時間:\s*/, '');
+        console.log('移除時間前缀后的内容:', content);
       }
 
-      console.log('最终生成的预约显示:', { type, content, original: appointment });
+      console.log('最終生成的預約顯示:', { type, content, original: appointment });
       result.type = type;
       result.content = content;
       return result;
@@ -287,7 +287,7 @@ const App = () => {
     return num ? (
       <div className="notes-month">
         <section>{num}</section>
-        <span>预约数量</span>
+        <span>預約數量</span>
       </div>
     ) : null;
   };
@@ -303,7 +303,7 @@ const App = () => {
             <li 
               key={`${item.content}-${index}`}
               onClick={() => {
-                // 传递日期，显示该日期的所有预约
+                // 傳遞日期，顯示該日期的所有預約
                 handleAppointmentClick(value);
               }}
               style={{ cursor: 'pointer' }}
@@ -344,14 +344,14 @@ const App = () => {
     setCurrentDate(currentDate.add(1, 'month'));
   };
 
-  // 处理预约点击 - 显示该日期的所有预约列表
+  // 處理預約點擊 - 顯示該日期的所有預約列表
   const handleAppointmentClick = useCallback((date) => {
     setActiveDate(date);
     setModalMode("day");
     setModalOpen(true);
   }, []);
 
-  // 加载医生列表
+  // 加載醫生列表
   const loadDoctors = useCallback(async () => {
     if (doctors.length > 0 || loadingDoctors) return;
     try {
@@ -361,7 +361,7 @@ const App = () => {
         setDoctors(res.data || []);
       }
     } catch (error) {
-      console.error('加载医生列表失败:', error);
+      console.error('加載醫生列表失敗:', error);
     } finally {
       setLoadingDoctors(false);
     }
@@ -372,40 +372,40 @@ const App = () => {
     setActiveEvent(appointment);
     setModalMode("edit");
     setModalOpen(true);
-    loadDoctors(); // 加载医生列表
+    loadDoctors(); // 加載醫生列表
   }, [loadDoctors]);
 
-  // 处理预约更新
+  // 處理預約更新
   const handleAppointmentUpdate = useCallback(async (updated) => {
     try {
-      // 调用API更新预约
+      // 調用API更新預約
       await apiService.updateAppointment(updated.id || updated.uuid, updated);
       
-      // 刷新预约数据
+      // 刷新預約数据
       loadAppointments(currentDate);
       
-      // 关闭编辑模式，回到列表模式
+      // 關閉编辑模式，回到列表模式
       setModalMode("day");
       setActiveEvent(null);
     } catch (error) {
-      console.error('更新预约失败:', error);
+      console.error('更新預約失败:', error);
       throw error; // 让弹窗组件处理错误
     }
   }, [currentDate]);
 
-  // 处理预约创建
+  // 处理預約創建
   const handleAppointmentCreate = useCallback(async (payload) => {
     try {
-      // 调用API创建预约
+      // 调用API創建預約
       await apiService.createAppointment(payload);
       
-      // 刷新预约数据
+      // 刷新預約数据
       loadAppointments(currentDate);
       
-      // 关闭创建模式
+      // 關閉創建模式
       setModalOpen(false);
     } catch (error) {
-      console.error('创建预约失败:', error);
+      console.error('創建預約失败:', error);
       throw error; // 让弹窗组件处理错误
     }
   }, [currentDate]);
@@ -501,7 +501,7 @@ const App = () => {
         headerRender={() => null} // 隐藏默认头部
       />
 
-      {/* 使用独立的预约弹窗组件 */}
+      {/* 使用独立的預約弹窗组件 */}
       <AppointmentModal
         open={modalOpen}
         onCancel={() => setModalOpen(false)}

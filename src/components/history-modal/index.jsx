@@ -31,7 +31,7 @@ const HistoryModal = ({
           // 患者只显示微笑测试图片
           filteredFiles = result.data.filter(file => file.upload_type === 'smile_test');
         }
-        // 其他用户（医生、管理员）显示所有文件
+        // 其他用户（醫生、管理員）显示所有文件
         
         // 过滤掉UUID为null的记录
         filteredFiles = filteredFiles.filter(file => file.uuid && file.uuid !== 'null');
@@ -146,7 +146,7 @@ const HistoryModal = ({
     }
   };
 
-  // 格式化时间显示
+  // 格式化時間显示
   const formatTime = (timeStr) => {
     if (!timeStr) return '—';
     return dayjs(timeStr).format('YYYY/MM/DD/HH:mm');
