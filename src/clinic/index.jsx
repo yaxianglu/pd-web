@@ -73,6 +73,8 @@ export default function ClinicDashboard() {
   const [form, setForm] = useState({ username: '', password: 'pd2025!', phone: '', email: '', clinic_uuid: '' });
   const [addClinicOpen, setAddClinicOpen] = useState(false);
   const [clinicForm, setClinicForm] = useState({ clinic_name: '', address: '', phone: '', city: '', website: '' });
+  const [editClinicOpen, setEditClinicOpen] = useState(false);
+  const [editClinicForm, setEditClinicForm] = useState({ clinic_name: '', address: '', phone: '', city: '', website: '' });
 
   useEffect(() => {
     apiService.getClinics().then((res) => {
@@ -100,8 +102,44 @@ export default function ClinicDashboard() {
       setClinics(res.data || []);
       // 如果没有选中的診所，选择第一个
       if (!activeClinic && res.data && res.data.length > 0) {
-        setActiveClinic(res.data[0]);
+setActiveClinic(res.data[0]);
       }
+    }
+  };
+
+  // 打开编辑诊所弹窗
+  const openEditClinic = () => {
+    if (activeClinic) {
+      setEditClinicForm({
+        clinic_name: activeClinic.clinic_name || '',
+        address: activeClinic.address || '',
+        phone: activeClinic.phone || '',
+        city: activeClinic.city || '',
+        website: activeClinic.website || ''
+      });
+      setEditClinicOpen(true);
+    }
+  };
+
+  // 保存诊所编辑
+  const saveClinicEdit = async () => {
+    if (!activeClinic?.uuid) return;
+    
+    try {
+      const res = await apiService.updateClinic(activeClinic.uuid, editClinicForm);
+      if (res?.success) {
+        alert('診所信息更新成功');
+        setEditClinicOpen(false);
+        // 刷新診所列表
+        await refreshClinics();
+        // 更新当前选中的診所
+        setActiveClinic(res.data);
+      } else {
+        alert(res?.message || '更新失敗');
+      }
+    } catch (error) {
+      console.error('更新診所失敗:', error);
+      alert('更新失敗，請重試');
     }
   };
 
@@ -124,31 +162,48 @@ export default function ClinicDashboard() {
             <div style={{ fontSize: 18, fontWeight: 700, textAlign: 'left' }}>診所資訊</div>
             <div style={{ color: '#666', textAlign: 'left' }}>{activeClinic?.clinic_name || '—'}</div>
           </div>
-          <button 
-            onClick={() => setCreateOpen(true)}
-            style={{
-              padding: '8px 16px',
-              background: '#48d2ce',
-              border: 'none',
-              borderRadius: 8,
-              color: '#fff',
-              cursor: 'pointer',
-              fontSize: '14px',
-              fontWeight: 500,
-              display: 'flex',
-              alignItems: 'center',
-              gap: '4px'
-            }}
-          >
-            <span style={{ fontSize: '16px' }}>+</span>
-            新增醫生
-          </button>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <button 
+              onClick={openEditClinic}
+              style={{
+                padding: '8px 16px',
+                background: '#f0f0f0',
+                border: '1px solid #d9d9d9',
+                borderRadius: 8,
+                color: '#666',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: 500
+              }}
+            >
+              編輯診所
+            </button>
+            <button 
+              onClick={() => setCreateOpen(true)}
+              style={{
+                padding: '8px 16px',
+                background: '#48d2ce',
+                border: 'none',
+                borderRadius: 8,
+                color: '#fff',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: 500,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px'
+              }}
+            >
+              <span style={{ fontSize: '16px' }}>+</span>
+              新增醫生
+            </button>
+          </div>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', rowGap: 8, columnGap: 20, marginBottom: 18, width: '100%' }}>
           <div style={{ textAlign: 'left' }}>地址：{activeClinic?.address || '—'}</div>
           <div style={{ textAlign: 'left' }}>城市：{activeClinic?.city || '—'}</div>
           <div style={{ textAlign: 'left' }}>電話：{activeClinic?.phone || '—'}</div>
-          <div style={{ textAlign: 'left' }}>網站：{activeClinic?.website || '—'}</div>
+          <div style={{ textAlign: 'left' }}>電子郵箱：{activeClinic?.website || '—'}</div>
         </div>
 
         <div style={{ margin: '10px 0 6px', fontSize: 16, fontWeight: 700, width: '100%', textAlign: 'left' }}>醫生列表</div>
@@ -291,11 +346,64 @@ export default function ClinicDashboard() {
             />
           </div>
           <div>
-            <div>網站</div>
+            <div>電子郵箱</div>
             <Input 
               value={clinicForm.website} 
               onChange={(e) => setClinicForm({ ...clinicForm, website: e.target.value })}
-              placeholder="請輸入診所網站"
+              placeholder="請輸入診所電子郵箱"
+            />
+          </div>
+        </div>
+      </Modal>
+
+      {/* 編輯診所彈窗 */}
+      <Modal
+        title="編輯診所信息"
+        open={editClinicOpen}
+        onCancel={() => setEditClinicOpen(false)}
+        onOk={saveClinicEdit}
+        okText="保存"
+        cancelText="取消"
+      >
+        <div style={{ display: 'grid', gap: 12 }}>
+          <div>
+            <div>診所名稱 <span style={{ color: '#ff4d4f' }}>*</span></div>
+            <Input 
+              value={editClinicForm.clinic_name} 
+              onChange={(e) => setEditClinicForm({ ...editClinicForm, clinic_name: e.target.value })}
+              placeholder="請輸入診所名稱"
+            />
+          </div>
+          <div>
+            <div>地址</div>
+            <Input 
+              value={editClinicForm.address} 
+              onChange={(e) => setEditClinicForm({ ...editClinicForm, address: e.target.value })}
+              placeholder="請輸入診所地址"
+            />
+          </div>
+          <div>
+            <div>電話</div>
+            <Input 
+              value={editClinicForm.phone} 
+              onChange={(e) => setEditClinicForm({ ...editClinicForm, phone: e.target.value })}
+              placeholder="請輸入診所電話"
+            />
+          </div>
+          <div>
+            <div>城市</div>
+            <Input 
+              value={editClinicForm.city} 
+              onChange={(e) => setEditClinicForm({ ...editClinicForm, city: e.target.value })}
+              placeholder="請輸入診所所在城市"
+            />
+          </div>
+          <div>
+            <div>電子郵箱</div>
+            <Input 
+              value={editClinicForm.website} 
+              onChange={(e) => setEditClinicForm({ ...editClinicForm, website: e.target.value })}
+              placeholder="請輸入診所電子郵箱"
             />
           </div>
         </div>

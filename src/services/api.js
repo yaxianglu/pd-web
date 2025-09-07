@@ -538,6 +538,21 @@ class ApiService {
     }
   }
 
+  // 更新診所信息
+  async updateClinic(uuid, clinicData) {
+    try {
+      const response = await fetch(`${this.baseURL}/api/clinics/${uuid}`, {
+        method: 'PUT',
+        headers: this.getHeaders(true),
+        body: JSON.stringify(clinicData),
+      });
+      return await this.handleResponse(response);
+    } catch (error) {
+      console.error('Failed to update clinic:', error);
+      return { success: false, message: '更新診所信息失敗' };
+    }
+  }
+
   // 删除/關閉診所
   async deleteClinic(id) {
     try {
