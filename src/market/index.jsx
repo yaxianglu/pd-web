@@ -5,6 +5,7 @@ import apiService from '../services/api';
 import { Modal, Select, message, Tabs } from 'antd';
 import Partners from '../partners';
 import ClinicDashboard from '../clinic';
+import HistoryModal from '../components/history-modal';
 
 function MarketHeader({ activeTab, onTabChange }) {
   return (
@@ -35,6 +36,8 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
   const [selectedDoctorUuid, setSelectedDoctorUuid] = useState('');
   const [targetSmileUuid, setTargetSmileUuid] = useState('');
   const [activeTab, setActiveTab] = useState('smile');
+  const [historyModalOpen, setHistoryModalOpen] = useState(false);
+  const [selectedSmileUuid, setSelectedSmileUuid] = useState('');
 
   // 首次进入或依赖变化时，从后端获取 smile_test 列表
   useEffect(() => {
@@ -82,6 +85,11 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
   const openBindPatientModal = (smileTestUuid) => {
     setTargetSmileUuid(smileTestUuid);
     setCreateOpen(true);
+  };
+
+  const openHistoryModal = (smileUuid) => {
+    setSelectedSmileUuid(smileUuid);
+    setHistoryModalOpen(true);
   };
 
   const onToggle = useCallback((rowId) => {
@@ -170,20 +178,12 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
                     <div className="td region">{row.region || '—'}</div>
                     <div className="td created_at">{row.createdAt || '—'}</div>
                     <div className="td download">
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                        <button
-                          type="button"
-                          onClick={(e) => { e.stopPropagation(); handleDownloadPhotos(row.smileUuid); }}
-                          className="link"
-                          style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontSize: '12px' }}
-                        >照片包</button>
-                        <button
-                          type="button"
-                          onClick={(e) => { e.stopPropagation(); handleDownloadFiles(row.smileUuid); }}
-                          className="link"
-                          style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontSize: '12px' }}
-                        >文件包</button>
-                      </div>
+                      <button
+                        type="button"
+                        onClick={(e) => { e.stopPropagation(); openHistoryModal(row.smileUuid); }}
+                        className="link"
+                        style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontSize: '12px' }}
+                      >歷史資料</button>
                     </div>
                     <div className="td status">
                       {row.statusText === '創建患者信息' ? (
@@ -293,6 +293,14 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
           />
         </div>
       </Modal>
+
+      {/* 历史资料模态框 */}
+      <HistoryModal
+        open={historyModalOpen}
+        onCancel={() => setHistoryModalOpen(false)}
+        smileTestUuid={selectedSmileUuid}
+        userType="admin" // market路由使用admin权限，显示所有文件类型
+      />
     </div>
   );
 }
