@@ -36,7 +36,7 @@ const App = () => {
       console.log('正在加載預約數據:', { year, month, doctorUuid: userInfo.uuid });
       console.log('当前用户信息:', userInfo);
       
-      const res = await apiService.getAppointmentsByMonth(year, month);
+      const res = await apiService.getAppointmentsByMonth(year, month, null, userInfo.uuid);
       console.log('API返回数据:', res);
       
       // 处理API响应数据 - 可能包含在data字段中
