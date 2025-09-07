@@ -617,13 +617,37 @@ export default function Step3({ onNext, setStep, style }) {
               </div>
             </div>
           ) : (
-            // 拍摄准备模式：显示案例照片在中央
+            // 拍摄准备模式：根据currentStep判断显示上传图片或模版图片
             <div className="camera-container">
               <div className="example-photo">
-                {/* 案例照片作为主要显示 */}
                 <div className="posture-hint">
-                  <img src={pMap[currentStep][0]} alt="拍照姿势提示" />
-                  <img className='posture-hint-tishi-img' src={pMap[currentStep][1]} alt="拍照姿势提示" />
+                  {(() => {
+                    // 查找当前步骤是否有上传的图片
+                    const currentPhoto = photos.find(photo => photo.step === currentStep);
+                    
+                    if (currentPhoto) {
+                      // 如果有上传的图片，显示上传的图片
+                      return (
+                        <img 
+                          src={currentPhoto.url} 
+                          alt={`已拍摄照片 - 步骤 ${currentPhoto.step}`}
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'contain'
+                          }}
+                        />
+                      );
+                    } else {
+                      // 如果没有上传的图片，显示模版图片
+                      return (
+                        <>
+                          <img src={pMap[currentStep][0]} alt="拍照姿势提示" />
+                          <img className='posture-hint-tishi-img' src={pMap[currentStep][1]} alt="拍照姿势提示" />
+                        </>
+                      );
+                    }
+                  })()}
                 </div>
               </div>
             </div>
