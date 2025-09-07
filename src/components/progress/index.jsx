@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from "react";
+import { useLocation } from 'react-router-dom';
 import png1 from './imgs/1.png'
 import png2 from './imgs/2.png'
 import png3 from './imgs/3.png'
@@ -111,6 +112,8 @@ export default function ProgressTracker({
   onUpdate,
 }) {
   const { userInfo } = useAuth();
+  const location = useLocation();
+  
   const role = useMemo(() => {
     try {
       return userInfo?.role;
@@ -118,6 +121,11 @@ export default function ProgressTracker({
       return null;
     }
   }, [userInfo])
+
+  // 检查是否为患者页面
+  const isPatientPage = useMemo(() => {
+    return location.pathname === '/patient';
+  }, [location.pathname]);
 
   // 更新步骤狀態
   const getStepStatus = (stepId) => {
@@ -139,6 +147,11 @@ export default function ProgressTracker({
   }
 
   const handleUpdateId = (nextId) => {
+    // 如果是患者页面，不允许任何状态修改
+    if (isPatientPage) {
+      return;
+    }
+    
     const nextIdNum = Number(nextId);
     const changeableId = [currentStep, currentStep + 1];
     if (!changeableId.includes(nextIdNum)) {
@@ -192,7 +205,12 @@ export default function ProgressTracker({
           const isCancel = step.id === currentStep ? '取消' : '';
           return (
             <React.Fragment key={step.id}>
-              <div style={{ textAlign: "center", flex: 1, position: "relative" }}
+              <div style={{ 
+                textAlign: "center", 
+                flex: 1, 
+                position: "relative",
+                cursor: isPatientPage ? 'default' : 'pointer'
+              }}
                 onClick={() => handleUpdateId(step.id)}
               >
                 {
