@@ -17,6 +17,7 @@ export default function PearlLogin() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isMobile, setIsMobile] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     setIsMobile(window.innerWidth <= 1125);
@@ -175,13 +176,22 @@ export default function PearlLogin() {
               onChange={(e) => setStaffUsername(e.target.value)}
               className="form-input"
             />
-            <input
-              placeholder="Password"
-              type="password"
-              value={staffPassword}
-              onChange={(e) => setStaffPassword(e.target.value)}
-              className="form-input"
-            />
+            <div className="password-input-container">
+              <input
+                placeholder="Password"
+                type={showPassword ? "text" : "password"}
+                value={staffPassword}
+                onChange={(e) => setStaffPassword(e.target.value)}
+                className="form-input password-input"
+              />
+              <button
+                type="button"
+                className="password-toggle-btn"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? "👁️" : "👁️‍🗨️"}
+              </button>
+            </div>
             <button 
               onClick={handleStaffLogin}
               className="login-button"
