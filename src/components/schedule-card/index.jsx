@@ -604,6 +604,7 @@ export default function ScheduleCard({
                 placeholder="選擇醫生"
                 loading={loadingDoctors}
                 options={doctors.map((d) => ({ label: d.full_name || d.username || d.email, value: d.uuid || d.id }))}
+                disabled={userInfo?.role === 'doctor'}
               />
             </Form.Item>
             <Form.Item 

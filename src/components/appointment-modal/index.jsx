@@ -386,6 +386,7 @@ const AppointmentModal = ({
               label: d.full_name || d.username || d.email || d.name, 
               value: d.uuid || d.id 
             }))}
+            disabled={userInfo?.role === 'doctor'}
           />
         </Form.Item>
         
