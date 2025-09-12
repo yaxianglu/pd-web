@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Modal, Form, Input, TimePicker, DatePicker, Select, message, Space, Tag, Table, Button } from 'antd';
 import dayjs from 'dayjs';
+import { useAuth } from '../../context/AuthContext';
 
 const AppointmentModal = ({ 
   open, 
@@ -20,6 +21,7 @@ const AppointmentModal = ({
   const [messageApi, messageCtx] = message.useMessage();
   const [patients, setPatients] = useState([]);
   const [loadingPatients, setLoadingPatients] = useState(false);
+  const { userInfo } = useAuth();
 
   // 获取模态框标题
   const getModalTitle = (mode) => {
@@ -355,9 +357,10 @@ const AppointmentModal = ({
         start_time: dayjs("08:00", "HH:mm"),
         end_time: dayjs("09:00", "HH:mm"),
         note: '',
+        doctor_uuid: userInfo?.uuid, // 默认选中当前医生
       });
     }
-  }, [mode, open, activeDate, form]);
+  }, [mode, open, activeDate, form, userInfo]);
 
   // 渲染编辑表单
   const renderEditForm = () => {
