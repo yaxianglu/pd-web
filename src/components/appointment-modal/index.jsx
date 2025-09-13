@@ -153,6 +153,12 @@ const AppointmentModal = ({
     console.log('所有预约数据:', appointments);
     
     const dayAppointments = appointments.filter(appointment => {
+      // 首先检查appointment是否存在
+      if (!appointment) {
+        console.log('发现无效的预约记录:', appointment);
+        return false;
+      }
+      
       const dateField = appointment.date || appointment.appointment_date || appointment.scheduled_date;
       if (!dateField) {
         console.log('预约缺少日期字段:', appointment);
@@ -182,7 +188,7 @@ const AppointmentModal = ({
         console.log('找到匹配的预约:', appointment);
       }
       return matches;
-    });
+    }).filter(appointment => appointment != null); // 额外过滤掉null和undefined
 
     console.log('过滤后的预约:', dayAppointments);
 
@@ -326,7 +332,7 @@ const AppointmentModal = ({
           <h3>{activeDate.format("YYYY年MM月DD日")} 的預約</h3>
         </div>
         <Table
-          rowKey={(record) => record.id || record.uuid}
+          rowKey={(record) => record?.id || record?.uuid || Math.random().toString()}
           size="small"
           pagination={false}
           columns={columns}
