@@ -40,9 +40,34 @@ const AppointmentModal = ({
     try {
       setLoadingPatients(true);
       const api = (await import("../../services/api")).default;
-      const res = await api.getAllSmileTests();
-      console.log('患者列表API响应:', res);
+      
+      // 检查localStorage中的用户角色
+      const userRole = localStorage.getItem('userRole') || localStorage.getItem('role');
+      const currentDoctorUuid = userInfo?.uuid;
+      
+      console.log('用户角色:', userRole);
+      console.log('当前医生UUID:', currentDoctorUuid);
+      
+      let res;
+      
+      // 如果是医生角色，使用专门的接口获取该医生的患者
+      if (userRole === 'doctor' && currentDoctorUuid) {
+        console.log('医生角色，获取当前医生的患者');
+        res = await api.getPatientsByDoctor({
+          uuid: currentDoctorUuid,
+          email: userInfo?.email,
+          username: userInfo?.username
+        });
+        console.log('getPatientsByDoctor API响应:', res);
+      } else {
+        // 管理员或其他角色，获取所有患者
+        console.log('管理员角色，获取所有患者');
+        res = await api.getAllSmileTests();
+        console.log('getAllSmileTests API响应:', res);
+      }
+      
       if (res && res.success && Array.isArray(res.data)) {
+        console.log('患者数据数量:', res.data.length);
         setPatients(res.data);
       } else {
         console.log('患者列表數據格式不正確:', res);
@@ -54,7 +79,7 @@ const AppointmentModal = ({
     } finally {
       setLoadingPatients(false);
     }
-  }, [patients.length, loadingPatients]);
+  }, [patients.length, loadingPatients, userInfo]);
 
   // 处理编辑
   const handleEdit = useCallback((appointment) => {
