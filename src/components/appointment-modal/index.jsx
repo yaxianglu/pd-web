@@ -41,12 +41,20 @@ const AppointmentModal = ({
       setLoadingPatients(true);
       const api = (await import("../../services/api")).default;
       
-      // 检查localStorage中的用户角色
-      const userRole = localStorage.getItem('userRole') || localStorage.getItem('role');
+      // 检查用户角色 - 优先使用AuthContext中的userType，然后检查localStorage
+      const userRole = userInfo?.role || localStorage.getItem('userType') || localStorage.getItem('userRole') || localStorage.getItem('role');
       const currentDoctorUuid = userInfo?.uuid;
       
-      console.log('用户角色:', userRole);
+      console.log('=== 患者加载调试信息 ===');
+      console.log('userInfo:', userInfo);
+      console.log('userInfo.role:', userInfo?.role);
+      console.log('userInfo.uuid:', userInfo?.uuid);
+      console.log('localStorage userType:', localStorage.getItem('userType'));
+      console.log('localStorage userRole:', localStorage.getItem('userRole'));
+      console.log('localStorage role:', localStorage.getItem('role'));
+      console.log('最终用户角色:', userRole);
       console.log('当前医生UUID:', currentDoctorUuid);
+      console.log('========================');
       
       let res;
       
