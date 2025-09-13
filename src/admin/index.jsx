@@ -5,6 +5,7 @@ import Partners from "../partners";
 import HospitalDashboard from "../hospital";
 import ClinicDashboard from "../clinic";
 import AccountManagement from "./account-management";
+import HistoryModal from "../components/history-modal";
 import apiService from "../services/api";
 import "../market/index.scss";
 
@@ -67,6 +68,8 @@ function AdminSmileView() {
   const [doctors, setDoctors] = useState([]);
   const [selectedDoctorUuid, setSelectedDoctorUuid] = useState('');
   const [targetSmileUuid, setTargetSmileUuid] = useState('');
+  const [historyModalOpen, setHistoryModalOpen] = useState(false);
+  const [selectedSmileUuid, setSelectedSmileUuid] = useState('');
 
   useEffect(() => {
     let isMounted = true;
@@ -108,27 +111,15 @@ function AdminSmileView() {
     setCreateOpen(true);
   };
 
+  const openHistoryModal = (smileUuid) => {
+    setSelectedSmileUuid(smileUuid);
+    setHistoryModalOpen(true);
+  };
+
   const onToggle = useCallback((rowId) => {
     setExpanded((prev) => ({ ...prev, [rowId]: !prev[rowId] }));
   }, []);
 
-  const handleDownload = useCallback(async (smileUuid) => {
-    try {
-      if (!smileUuid) { message.error('缺少記錄標識'); return; }
-      const key = 'zip-download';
-      message.loading({ content: '正在生成壓縮包…', key, duration: 0 });
-      const blob = await apiService.downloadSmilePhotosZip(smileUuid);
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `smile_photos_${smileUuid.slice(0, 8)}.zip`;
-      document.body.appendChild(a); a.click(); a.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 2000);
-      message.success({ content: '下載已開始', key, duration: 1.5 });
-    } catch (err) {
-      console.error(err); message.error('下載失敗');
-    }
-  }, []);
 
   return (
     <>
@@ -160,7 +151,12 @@ function AdminSmileView() {
                   <div className="td region">{row.region || '—'}</div>
                   <div className="td created_at">{row.createdAt || '—'}</div>
                   <div className="td download">
-                    <button type="button" onClick={(e) => { e.stopPropagation(); handleDownload(row.smileUuid); }} className="link" style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}>壓縮包</button>
+                    <button
+                      type="button"
+                      onClick={(e) => { e.stopPropagation(); openHistoryModal(row.smileUuid); }}
+                      className="link"
+                      style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontSize: '12px' }}
+                    >歷史資料</button>
                   </div>
                   <div className="td status">
                     {row.statusText === '創建患者信息' ? (
@@ -249,6 +245,14 @@ function AdminSmileView() {
           />
         </div>
       </Modal>
+
+      {/* 历史资料模态框 */}
+      <HistoryModal
+        open={historyModalOpen}
+        onCancel={() => setHistoryModalOpen(false)}
+        smileTestUuid={selectedSmileUuid}
+        userType="admin" // admin路由使用admin权限，显示所有文件类型
+      />
     </>
   );
 }
