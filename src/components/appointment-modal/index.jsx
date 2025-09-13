@@ -62,6 +62,38 @@ const AppointmentModal = ({
     }
   }, [onEdit]);
 
+  // 处理取消预约
+  const handleCancelAppointment = useCallback(async (appointment) => {
+    console.log('取消預約被调用:', appointment);
+    
+    // 先测试简单的确认
+    const confirmed = window.confirm('確定要取消這個預約嗎？取消後無法恢復。');
+    if (!confirmed) {
+      console.log('用户取消操作');
+      return;
+    }
+    
+    console.log('用户确认取消，开始执行取消操作');
+    try {
+      const api = (await import("../../services/api")).default;
+      console.log('准备调用取消API，預約ID:', appointment.id || appointment.uuid);
+      const res = await api.cancelAppointment(appointment.id || appointment.uuid);
+      console.log('取消預約API响应:', res);
+      if (res && res.success) {
+        messageApi.success('預約已取消');
+        // 刷新预约列表
+        if (onUpdate) {
+          onUpdate();
+        }
+      } else {
+        messageApi.error(res?.message || '取消失败');
+      }
+    } catch (e) {
+      console.error('取消預約失败:', e);
+      messageApi.error(e?.message || '取消失败');
+    }
+  }, [messageApi, onUpdate]);
+
   // 处理模态框确认
   const handleOk = useCallback(async () => {
     if (mode === "create") {
@@ -254,18 +286,37 @@ const AppointmentModal = ({
       {
         title: "操作",
         key: "action",
-        width: 80,
-        render: (_, record) => (
-          userType !== 'patient' ? (
-            <Button 
-              type="link" 
-              onClick={() => handleEdit(record)} 
-              style={{ padding: 0, height: 'auto' }}
-            >
-              編輯
-            </Button>
-          ) : null
-        ),
+        width: 120,
+        render: (_, record) => {
+          // 只有非患者用户才能看到操作按钮
+          if (userType === 'patient') {
+            return null;
+          }
+          
+          return (
+            <Space size="small">
+              <Button 
+                type="link" 
+                onClick={() => handleEdit(record)} 
+                style={{ padding: 0, height: 'auto' }}
+              >
+                編輯
+              </Button>
+              <Button 
+                type="link" 
+                danger
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  handleCancelAppointment(record);
+                }} 
+                style={{ padding: 0, height: 'auto', color: '#ff4d4f' }}
+              >
+                取消
+              </Button>
+            </Space>
+          );
+        },
       },
     ];
 
