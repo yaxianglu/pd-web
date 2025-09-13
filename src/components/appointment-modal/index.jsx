@@ -76,7 +76,40 @@ const AppointmentModal = ({
       
       if (res && res.success && Array.isArray(res.data)) {
         console.log('患者数据数量:', res.data.length);
-        setPatients(res.data);
+        console.log('原始患者数据结构:', res.data[0]);
+        
+        // 处理不同的API响应结构
+        let processedPatients = res.data.map(item => {
+          // 如果是getPatientsByDoctor的嵌套结构
+          if (item.patient && item.smileTest) {
+            return {
+              uuid: item.patient.uuid,
+              full_name: item.patient.full_name,
+              name: item.patient.full_name, // 兼容性
+              phone: item.smileTest.phone,
+              email: item.smileTest.email,
+              birth_date: item.patient.birth_date,
+              // 保留原始数据结构以备后用
+              originalData: item
+            };
+          }
+          // 如果是getAllSmileTests的平铺结构
+          else {
+            return {
+              uuid: item.uuid,
+              full_name: item.full_name,
+              name: item.full_name, // 兼容性
+              phone: item.phone,
+              email: item.email,
+              birth_date: item.birth_date,
+              // 保留原始数据结构以备后用
+              originalData: item
+            };
+          }
+        });
+        
+        console.log('处理后的患者数据:', processedPatients[0]);
+        setPatients(processedPatients);
       } else {
         console.log('患者列表數據格式不正確:', res);
         setPatients([]);
