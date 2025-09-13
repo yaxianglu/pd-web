@@ -272,7 +272,7 @@ export default function Dashboard({ prefetched = null }) {
               try {
                 const puid = (patientInfo || {}).uuid;
                 if (puid) {
-                  await apiService.updatePatientProgress(puid, 1);下
+                  await apiService.updatePatientProgress(puid, 1);
                 }
               } catch {}
             }}
