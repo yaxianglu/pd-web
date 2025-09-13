@@ -15,6 +15,7 @@ const AppointmentModal = ({
   onUpdate,
   onEdit,
   onCreate,
+  onReload,
   userType = 'doctor'
 }) => {
   const [form] = Form.useForm();
@@ -81,9 +82,9 @@ const AppointmentModal = ({
       console.log('取消預約API响应:', res);
       if (res && res.success) {
         messageApi.success('預約已取消');
-        // 刷新预约列表
-        if (onUpdate) {
-          onUpdate();
+        // 重新加载预约数据
+        if (onReload) {
+          onReload();
         }
       } else {
         messageApi.error(res?.message || '取消失败');
@@ -92,7 +93,7 @@ const AppointmentModal = ({
       console.error('取消預約失败:', e);
       messageApi.error(e?.message || '取消失败');
     }
-  }, [messageApi, onUpdate]);
+  }, [messageApi, onReload]);
 
   // 处理模态框确认
   const handleOk = useCallback(async () => {

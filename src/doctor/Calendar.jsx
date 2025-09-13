@@ -378,8 +378,21 @@ const App = () => {
   // 處理預約更新
   const handleAppointmentUpdate = useCallback(async (updated) => {
     try {
+      // 检查updated参数是否存在
+      if (!updated) {
+        console.error('更新預約失败: updated参数无效');
+        throw new Error('更新預約失败: updated参数无效');
+      }
+      
+      // 获取预约ID
+      const appointmentId = updated.id || updated.uuid;
+      if (!appointmentId) {
+        console.error('更新預約失败: 预约ID无效');
+        throw new Error('更新預約失败: 预约ID无效');
+      }
+      
       // 調用API更新預約
-      await apiService.updateAppointment(updated.id || updated.uuid, updated);
+      await apiService.updateAppointment(appointmentId, updated);
       
       // 刷新預約数据
       loadAppointments(currentDate);
@@ -408,6 +421,11 @@ const App = () => {
       console.error('創建預約失败:', error);
       throw error; // 让弹窗组件处理错误
     }
+  }, [currentDate]);
+
+  // 重新加载预约数据（用于取消预约后）
+  const handleReloadAppointments = useCallback(() => {
+    loadAppointments(currentDate);
   }, [currentDate]);
 
   // 处理编辑按钮点击
@@ -514,6 +532,7 @@ const App = () => {
         onUpdate={handleAppointmentUpdate}
         onCreate={handleAppointmentCreate}
         onEdit={handleEditClick}
+        onReload={handleReloadAppointments}
         userType="doctor"
       />
 
