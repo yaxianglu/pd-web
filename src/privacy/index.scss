@@ -6,12 +6,8 @@
 }
 
 .privacy-container {
-  max-width: 800px;
+  width: 80%;
   margin: 0 auto;
-  background: #fff;
-  border-radius: 12px;
-  padding: 40px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .privacy-header {
@@ -39,10 +35,11 @@
   }
 
   h1 {
-    color: #333;
-    font-size: 28px;
+    color: #47d3cf;
+    font-size: 32px;
     font-weight: 600;
     margin: 0;
+    text-align: left;
   }
 }
 
@@ -58,13 +55,17 @@
       font-size: 20px;
       font-weight: 600;
       margin-bottom: 15px;
+      margin-top: 30px;
       padding-bottom: 8px;
       border-bottom: 1px solid #e3eaf0;
+      text-align: left;
     }
 
     p {
       margin-bottom: 15px;
       font-size: 16px;
+      line-height: 1.8;
+      text-align: left;
     }
 
     ul {
@@ -74,6 +75,7 @@
       li {
         margin-bottom: 8px;
         font-size: 16px;
+        text-align: left;
       }
     }
   }
@@ -82,7 +84,7 @@
     margin-top: 40px;
     padding-top: 20px;
     border-top: 1px solid #e3eaf0;
-    text-align: center;
+    text-align: left;
 
     p {
       color: #888;
