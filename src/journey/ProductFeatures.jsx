@@ -55,7 +55,7 @@ export default function ProductFeatures() {
               <div className="product-features-item-3-wrapper-item-content-description">
                 $11,000** 2副組<br/>
                 $14,000** 3副組<br/>
-                $16,000** 5副組
+                $19,000** 5副組
               </div>
             </div>
             <div className="product-features-item-3-wrapper-item-image">
