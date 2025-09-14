@@ -127,7 +127,7 @@ export default function PearlLogin() {
         <img src={img2} alt="" className="login-logo"/>
         <div className="login-slogan">
           SHINE BRIGHT<br/>
-          ALIGN RIGHT.
+          SMILE RIGHT.
         </div>
       </div>
 
