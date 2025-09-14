@@ -175,6 +175,7 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
             onCreate={() => setModalOpen(true)}
             statusFromRoute={selectedStatus}
             onStatusChange={setSelectedStatus}
+            doctorUser={doctorUser}
           />
         )}
         {activeView === 'calendar' && (

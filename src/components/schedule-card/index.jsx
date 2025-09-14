@@ -277,7 +277,7 @@ export default function ScheduleCard({
       form.resetFields();
       form.setFieldsValue({
         date: d.startOf("day"),
-        doctor_uuid: userInfo?.uuid || undefined,
+        doctor_uuid: currentDoctor?.uuid || userInfo?.uuid || undefined,
         start_time: dayjs("08:00", "HH:mm"),
         end_time: dayjs("09:00", "HH:mm"),
         note: "",

@@ -114,7 +114,7 @@ function PlanConfirmCard({ currentStepFromProgress, patientData }) {
 
 // 旧的周历与列表 UI 已被统一替换为 components/schedule-card
 
-export default function Dashboard({ prefetched = null }) {
+export default function Dashboard({ prefetched = null, doctorUser = null }) {
   const [patientData, setPatientData] = useState(null); // smileTest
   const [patientInfo, setPatientInfo] = useState(null); // patient
   const [doctorData, setDoctorData] = useState(null);
@@ -224,6 +224,7 @@ export default function Dashboard({ prefetched = null }) {
 
   console.info('patientInfo, ', patientInfo)
   console.info('patientData, ', patientData)
+  console.info('doctorUser', doctorUser);
   return (
     <div style={{
       width: "100%",
@@ -259,8 +260,8 @@ export default function Dashboard({ prefetched = null }) {
             title="治療日誌"
             initialEvents={mockEvents}
             defaultMonth={dayjs().startOf('month')}
-            doctorUuid={{ uuid: (patientInfo || {}).assigned_doctor_uuid }}
-            currentDoctor={{ uuid: (patientInfo || {}).assigned_doctor_uuid }}
+            doctorUuid={doctorUser || { uuid: (patientInfo || {}).assigned_doctor_uuid }}
+            currentDoctor={doctorUser || { uuid: (patientInfo || {}).assigned_doctor_uuid }}
             currentPatient={{ uuid: (patientData || {}).uuid, full_name: (patientInfo || {}).full_name }}
             smileTestUuid={(patientData || {}).uuid}
             onAppointmentCreated={async () => {

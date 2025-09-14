@@ -3,7 +3,7 @@ import './list.scss';
 import ContactInfo from '../components/contact-info';
 import Dashboard from '../patient';
 
-export default function PatientInfoList({ patients = [], onCreate, statusFromRoute = 'all', onStatusChange = () => {} }) {
+export default function PatientInfoList({ patients = [], onCreate, statusFromRoute = 'all', onStatusChange = () => {}, doctorUser = null }) {
   const [keyword, setKeyword] = useState('');
   const [expanded, setExpanded] = useState({}); // key: patient.uuid -> boolean
   const statusFilter = statusFromRoute || 'all';
@@ -95,7 +95,7 @@ export default function PatientInfoList({ patients = [], onCreate, statusFromRou
 
               {isOpen && (
                 <div className="row-expand" onClick={(e)=>e.stopPropagation()}>
-                  <Dashboard prefetched={item} />
+                  <Dashboard prefetched={item} doctorUser={doctorUser} />
                 </div>
               )}
             </div>
