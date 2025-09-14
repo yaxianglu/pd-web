@@ -283,7 +283,7 @@ export default function ScheduleCard({
         note: "",
       });
     } catch {}
-  }, [loadDoctors, form]);
+  }, [loadDoctors, form, currentDoctor?.uuid, userInfo?.uuid]);
 
   const openViewForEvent = useCallback((event) => {
     setActiveEvent(event);
@@ -593,7 +593,7 @@ export default function ScheduleCard({
             date: activeDate,
             start_time: modalMode === 'edit' ? (activeEvent?.start_time ? dayjs(activeEvent.start_time, 'HH:mm') : null) : dayjs("08:00", "HH:mm"),
             end_time: modalMode === 'edit' ? (activeEvent?.end_time ? dayjs(activeEvent.end_time, 'HH:mm') : dayjs("09:00", "HH:mm")) : dayjs("09:00", "HH:mm"),
-            doctor_uuid: modalMode === 'edit' ? activeEvent?.doctor_uuid : (userInfo?.uuid || undefined),
+            doctor_uuid: modalMode === 'edit' ? activeEvent?.doctor_uuid : (currentDoctor?.uuid || userInfo?.uuid || undefined),
             note: activeEvent?.note || "",
           }}>
             <Form.Item name="date" label="日期" rules={[{ required: true, message: "請選擇日期" }]}>
