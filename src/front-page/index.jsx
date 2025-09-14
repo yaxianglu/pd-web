@@ -14,7 +14,7 @@ export default function PageCom() {
       <Header />
       <PageWrapper>
         <Thumbnail 
-          title={<span style={{ fontSize: 56 }}>SHINE BRIGHT<br />ALIGN RIGHT</span>}
+          title={<span style={{ fontSize: 56 }}>SHINE BRIGHT<br />SMILE RIGHT</span>}
           subtitle="笑容不只是整齊，更應自信發光。"
           button1="微笑測試"
           button2="關於珍舒美"
