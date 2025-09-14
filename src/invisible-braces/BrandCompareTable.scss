@@ -6,6 +6,14 @@
   display: inline-block;
   width: 100%;
 
+  @media (max-width: 1125px) {
+    transform: scale(0.5);
+    transform-origin: top left;
+    width: 200%;
+    height: 50%;
+    overflow: hidden;
+  }
+
   .brand-header {
     display: flex;
     align-items: end;
