@@ -7,11 +7,7 @@
   width: 100%;
 
   @media (max-width: 1125px) {
-    transform: scale(0.5);
-    transform-origin: top left;
-    width: 200%;
-    height: 50%;
-    overflow: hidden;
+    zoom: 0.5;
   }
 
   .brand-header {
