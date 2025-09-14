@@ -10,6 +10,10 @@
   position: relative;
   padding: 60px 0;
 
+  @media (max-width: 1125px) {
+    zoom: 0.5;
+  }
+
   &__column {
     flex: 1;
     display: flex;

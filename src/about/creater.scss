@@ -6,6 +6,11 @@
   gap: 40px;
   margin-top: 48px;
   margin-bottom: 48px;
+
+  @media (max-width: 1125px) {
+    flex-direction: column;
+  }
+
   img {
     width: 300px;
   }
