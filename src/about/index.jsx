@@ -73,7 +73,7 @@ export default function PageCom() {
         <img src={p3} alt="#" style={{ width: '70%' }}/>
         </div>
         <Sketch
-          title={<>醫療級軟體</>}
+          title={<>醫療級材料</>}
           subtitle={<>產品採用無BPA高透明度醫療級材料，具有極高透明度，兼具隱形美觀與舒適貼合<br />
             特性，不易染色，易於清潔，讓患者在治療過程中也能自在微笑。</>}
         />

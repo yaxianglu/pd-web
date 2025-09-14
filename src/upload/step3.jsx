@@ -579,7 +579,7 @@ export default function Step3({ onNext, setStep, style }) {
           <div className="step-info">
             <div className="step-number">{currentStep}/4</div>
             <div className="step-instruction">
-              後牙咬緊,前牙放鬆上下門牙不需刻意對齊
+              後牙咬緊,上下門牙不需刻意對齊
             </div>
           </div>
           {!isMobile && (
@@ -587,7 +587,7 @@ export default function Step3({ onNext, setStep, style }) {
               <div className="mobile-icon">
                 <QRCodeComponent url={currentUrl} size={40} onClick={e => { e.stopPropagation(); setShowQrFull(true); }} />
               </div>
-              <span>前往使用手機填寫</span>
+              <span>前往使用手機拍攝照片</span>
             </div>
           )}
         </div>

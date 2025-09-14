@@ -71,7 +71,7 @@ export default function FeatureWithImage() {
               </div>
               <div className="feature-subtitle">三維影像整合設計</div>
               <div className="feature-description">
-                支援整合 CBCT 與側顱 X 光影像資料，提升診斷深度與咬合設計的全面性。
+                支援整合 3D口腔掃描，CBCT，與側顱 X 光影像資料，提升診斷深度與咬合設計的全面性。
               </div>
             </div>
 
