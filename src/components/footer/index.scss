@@ -59,6 +59,17 @@
           margin-top: 10px;
           line-height: 1.6;
           text-align: left;
+
+          .privacy-link,
+          .terms-link,
+          .cookie-link {
+            color: #47d3cf;
+            transition: color 0.3s ease;
+
+            &:hover {
+              color: #3bb5b1;
+            }
+          }
         }
       }
 

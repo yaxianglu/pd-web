@@ -22,6 +22,8 @@ import DoctorDashboard from './doctor';
 import SalesDashboard from './sales';
 import AdminDashboard from './admin';
 import MarketDashboard from './market';
+import Privacy from './privacy';
+import Terms from './terms';
 
 function App() {
   return (
@@ -77,6 +79,8 @@ function App() {
               <AdminDashboard />
             </ProtectedRoute>
           } />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
         </Routes>
       </div>
       </AuthProvider>

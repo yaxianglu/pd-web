@@ -47,7 +47,28 @@ export default function Footer({ style }) {
             {/* Privacy/Cookie Message */}
             <div className="privacy-message">
               請不要出售或分享我的個人信息<br />
-              Cookie設置
+              <span 
+                className="privacy-link"
+                onClick={() => handleItemClick('/privacy')}
+                style={{ cursor: 'pointer', textDecoration: 'underline' }}
+              >
+                隱私條款
+              </span>
+              <span style={{ margin: '0 8px' }}>|</span>
+              <span 
+                className="terms-link"
+                onClick={() => handleItemClick('/terms')}
+                style={{ cursor: 'pointer', textDecoration: 'underline' }}
+              >
+                網站使用條款
+              </span>
+              <span style={{ margin: '0 8px' }}>|</span>
+              <span 
+                className="cookie-link"
+                style={{ cursor: 'pointer', textDecoration: 'underline' }}
+              >
+                Cookie設置
+              </span>
             </div>
           </div>
 
