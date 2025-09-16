@@ -482,6 +482,241 @@ export default {
         }
       },
       footnotes: '*Any clinic-related treatments or services will be collected directly by the clinic. Prices shown in emails may change and do not represent the final actual charges; users should refer to the clinic\'s latest pricing information.\n** During follow-up visits, the attending dentist will assess the oral condition to determine whether to use the last set of aligners or re-scan to produce retainers. Retainer prices may be adjusted due to market fluctuations, and users should contact customer service for actual prices.'
+    },
+    pricingFeatures: {
+      title: 'Pearl Digital Journey Invisible Braces Pricing Features',
+      transparentPricing: {
+        title: 'Transparent Pricing',
+        description: 'Treatment fees are assessed based on individual dental conditions and chosen plan (mild/moderate/severe). We provide detailed quotes and phased explanations, with no additional charges or ambiguity, allowing you to clearly understand every expense.'
+      },
+      affordablePricing: {
+        title: 'Affordable Pricing, Uncompromising Professionalism',
+        description: 'Pearl Digital is committed to providing a high-quality orthodontic experience while maintaining reasonable prices, allowing more people to have the opportunity to improve their teeth alignment and smile with confidence. Balancing efficacy, comfort, and price is our consistent commitment.'
+      },
+      pricingTable: {
+        mild: 'Mild/Complexity Level',
+        moderate: 'Moderate/Complexity Level',
+        severe: 'Severe/Complexity Level'
+      },
+      buttonText: 'What Treatment Do I Need?'
+    }
+  },
+
+  // Privacy Policy page
+  privacy: {
+    title: 'Privacy Policy',
+    introduction: 'This Privacy Policy ("Policy") applies to www.pearl-digital.com and Pearl Digital Inc. ("Company") and governs data collection and usage. Unless otherwise noted, all references to "Company" in this Policy include www.pearl-digital.com. The Company website is an information and e-commerce website. By using the Company website, you consent to the data practices described in this Policy.',
+    sections: {
+      collection: {
+        title: 'Collection of your Personal Information',
+        description: 'To better provide you with products and services offered on our Site, the Company may collect personally identifiable information, such as:',
+        personalInfo: [
+          'First and last name',
+          'Mailing address',
+          'Email address',
+          'Phone number'
+        ],
+        billingInfo: 'If you purchase the Company\'s products and services, we collect billing and credit card information. This information is used to complete the purchase transaction.',
+        demographicInfo: 'The Company may also collect anonymous demographic information, which is not unique to you, such as:',
+        demographicItems: [
+          'Age',
+          'Gender'
+        ],
+        voluntaryInfo: 'We do not collect any personal information about you unless you voluntarily provide it to us. However, you may be required to provide certain personal information to us when you select to use certain products or services available on the Site. These may include: (a) registering for an account on our Site; (b) entering a sweepstakes or contest sponsored by us or one of our partners; (c) signing up for special offers from selected third parties; (d) sending us an email message; (e) submitting your credit card or other payment information when ordering and purchasing products and services on our Site.',
+        futureCollection: 'To wit, we will use your information for, but not limited to, communicating with you in relation to services and/or products you have requested from us. We also may gather additional personal or non-personal information in the future.'
+      },
+      use: {
+        title: 'Use of your Personal Information',
+        description: 'The Company collects and uses your personal information to operate and deliver the services you have requested.',
+        purposes: [
+          'Operate and provide the services you have requested',
+          'Provide you with information, products or services you request',
+          'Send you notices about your account',
+          'Fulfill the Company\'s obligations and exercise rights arising from any contracts entered into between you and the Company, including billing and collection',
+          'Notify you about changes to our Site or any products or services we offer or provide through it',
+          'Use in other ways described in this Policy or in which you provide consent',
+          'For any other purpose with your consent'
+        ],
+        additionalUse: 'The Company may also use your personally identifiable information to inform you of other products or services available from the Company and its affiliates.'
+      },
+      sharing: {
+        title: 'Sharing Information with Third Parties',
+        noSale: 'The Company does not sell, rent or lease its customer lists to third parties.',
+        businessPartners: 'The Company may share data with trusted partners to help perform statistical analysis, send you email or postal mail, provide customer support, or arrange for deliveries. All such third parties are prohibited from using your personal information except to provide these services to the Company, and they are required to maintain the confidentiality of your information.',
+        legalDisclosure: 'The Company may disclose your personal information, without notice, if required to do so by law or in the good faith belief that such action is necessary to: (a) conform to the edicts of the law or comply with legal process served on the Company or the site; (b) protect and defend the rights or property of the Company; and/or (c) act under exigent circumstances to protect the personal safety of users of the Company, or the public.'
+      },
+      optOut: {
+        title: 'Opt-Out of Disclosure of Personal Information to Third Parties',
+        rightToKnow: 'If we sell, rent or lease any of your personal information to third parties, you have the right to know:',
+        rightToKnowItems: [
+          'The categories of personal information that we disclosed about you for a business purpose'
+        ],
+        ccpRights: 'In connection with any personal information we may sell or disclose to a third party for a business purpose, you have the right to know: that personal information disclosed and the specific pieces of personal information we collected about you. In connection with any personal information we may sell or disclose to a third party for a business purpose, you have the right to know: the categories of personal information that we disclosed about you for a business purpose. You have the right to opt out of the sale or disclosure of your personal information. If you exercise your right to opt out of the sale or disclosure of your personal information, we will refrain from selling or disclosing your personal information, unless you subsequently provide express authorization for the sale or disclosure of your personal information. To opt-out of the sale or disclosure of your personal information, visit this web page: _______________.'
+      },
+      tracking: {
+        title: 'Tracking User Behavior',
+        description: 'The Company may keep track of the websites and pages our users visit within the Company, in order to determine what Company services are the most popular. This data is used to deliver customized content and advertising within the Company to customers whose behavior indicates that they are interested in a particular subject area.'
+      },
+      automaticCollection: {
+        title: 'Automatically Collected Information',
+        description: 'Information about your computer hardware and software may be automatically collected by the Company. This information can include: your IP address, browser type, domain names, access times and referring website addresses. This information is used for the operation of the service, to maintain quality of the service, and to provide general statistics regarding use of the Company website.'
+      },
+      cookies: {
+        title: 'Use of Cookies',
+        description: 'The Company website may use "cookies" to help you personalize your online experience. A cookie is a text file that is placed on your hard disk by a web page server. Cookies cannot be used to run programs or deliver viruses to your computer. Cookies are uniquely assigned to you, and can only be read by a web server in the domain that issued the cookie to you.',
+        convenience: 'One of the primary purposes of cookies is to provide a convenience feature to save you time. The purpose of a cookie is to tell the Web server that you have returned to a specific page. For example, if you personalize the Company pages, or register with the Company site or services, a cookie helps the Company to recall your specific information on subsequent visits. This simplifies the process of recording your personal information, such as billing addresses, shipping addresses, and so on. When you return to the same Company website, the information you previously provided can be retrieved, so you can easily use the Company features that you customized.',
+        choice: 'You have the ability to accept or decline cookies. Most Web browsers automatically accept cookies, but you can usually modify your browser setting to decline cookies if you prefer. If you choose to decline cookies, you may not be able to fully experience the interactive features of the Company services or websites you visit.'
+      },
+      links: {
+        title: 'Links',
+        description: 'This website contains links to other sites. Please be aware that we are not responsible for the content or privacy practices of such other sites. We encourage our users to be aware when they leave our site and to read the privacy statements of any other site that collects personally identifiable information.'
+      },
+      security: {
+        title: 'Security of your Personal Information',
+        ssl: 'The Company secures your personal information from unauthorized access, use, or disclosure. The Company uses the following methods for this purpose: SSL Protocol',
+        disclaimer: 'When personal information (such as a credit card number) is transmitted to other websites, it is protected through the use of encryption, such as the Secure Sockets Layer (SSL) protocol. We strive to take appropriate security measures to protect against unauthorized access to or alteration of your personal information. Unfortunately, no data transmission over the Internet or any wireless network can be guaranteed to be 100% secure. As a result, while we strive to protect your personal information, you acknowledge that: (a) there are security and privacy limitations inherent to the Internet which are beyond our control; and (b) security, integrity, and privacy of any and all information and data exchanged between you and us through this Site cannot be guaranteed.'
+      },
+      deletion: {
+        title: 'Right to Deletion',
+        description: 'Subject to certain exceptions set out below, on receipt of a verifiable request from you, we will:',
+        deletionActions: [
+          'Delete your personal information from our records; and',
+          'Direct any service providers to delete your personal information from their records.'
+        ],
+        exceptions: 'Please note that we may not be able to comply with requests to delete your personal information if it is necessary to:',
+        exceptionItems: [
+          'Complete the transaction for which the personal information was collected, fulfill the terms of a written warranty or product recall conducted in accordance with federal law, provide a good or service requested by you, or reasonably anticipated within the context of our ongoing business relationship with you, or otherwise perform a contract between you and us;',
+          'Detect security incidents, protect against malicious, deceptive, fraudulent, or illegal activity; or prosecute those responsible for that activity;',
+          'Debug to identify and repair errors that impair existing intended functionality;',
+          'Exercise free speech, ensure the right of another consumer to exercise his or her right of free speech, or exercise another right provided for by law;',
+          'Comply with the California Electronic Communications Privacy Act;',
+          'Engage in public or peer-reviewed scientific, historical, or statistical research in the public interest that adheres to all other applicable ethics and privacy laws, when our deletion of the information is likely to render impossible or seriously impair the achievement of such research, provided we have obtained your informed consent;',
+          'Enable solely internal uses that are reasonably aligned with your expectations based on your relationship with us;',
+          'Comply with an existing legal obligation; or',
+          'Otherwise use your personal information, internally, in a lawful manner that is compatible with the context in which you provided the information.'
+        ]
+      },
+      children: {
+        title: 'Children Under Thirteen',
+        description: 'The Company does not knowingly collect personally identifiable information from children under the age of thirteen. If you are under the age of thirteen, you must ask your parent or guardian for permission to use this website.'
+      },
+      optOutCommunications: {
+        title: 'Opt Out and Unsubscribe from Third-Party Communications',
+        description: 'We respect your privacy and give you an opportunity to opt-out of receiving announcements of certain information. Users may opt-out of receiving any or all communications from third-party partners of the Company by contacting us here:',
+        methods: [
+          'Web page: _______________',
+          'Email: customer@pearl-digital.com',
+          'Phone: _______________'
+        ]
+      },
+      emailCommunications: {
+        title: 'Email Communications',
+        description: 'From time to time, the Company may contact you via email for the purpose of providing announcements, promotional offers, alerts, confirmations, surveys, and/or other general communication. In order to improve our Services, we may receive a notification when you open an email from the Company or click on a link therein. If you would like to stop receiving marketing or promotional communications via email from the Company, you may opt out of such communications by replying "STOP" or clicking on the UNSUBSCRIBE button.'
+      },
+      externalStorage: {
+        title: 'External Data Storage Sites',
+        description: 'We may store your data on servers provided by third party hosting vendors with whom we have contracted.'
+      },
+      policyChanges: {
+        title: 'Changes to This Statement',
+        description: 'The Company reserves the right to change this Policy from time to time. We will notify you about significant changes in the way we treat personal information by sending a notice to the primary email address specified in your account, by placing a prominent notice on our site, and/or by updating any privacy information on this page. Your continued use of the Site and/or Services available through this Site after such modifications will constitute your: (a) acknowledgment of the modified Policy; and (b) agreement to abide and be bound by that Policy.'
+      },
+      contact: {
+        title: 'Contact Information',
+        description: 'The Company welcomes your questions or comments regarding this Policy. If you believe that the Company has not adhered to this Policy, please contact the Company at:',
+        companyInfo: 'Pearl Digital Inc.<br />2975 Scott Blvd Ste 110<br />Santa Clara, California 95054<br />Email Address: customer@pearl-digital.com<br />Telephone number: +1-408-667-5811'
+      },
+      effectiveDate: 'Effective as of: June 01, 2025'
+    }
+  },
+
+  // Terms of Service page
+  terms: {
+    title: 'Terms of Service',
+    sections: {
+      agreement: {
+        title: 'Agreement between User and www.pearl-digital.com',
+        welcome: 'Welcome to www.pearl-digital.com. The www.pearl-digital.com website (the "Site") is comprised of various web pages operated by Pearl Digital Inc. ("Pearl"). www.pearl-digital.com is offered to you conditioned on your acceptance without modification of the terms, conditions, and notices contained herein (the "Terms"). Your use of www.pearl-digital.com constitutes your agreement to all such Terms. Please read these terms carefully, and keep a copy of them for your reference.',
+        ecommerce: 'www.pearl-digital.com is an E-Commerce Site.',
+        products: 'Pearl sells "White Label Invisible Aligner Services" and "Proprietary Brand Invisible Aligners" on this website.'
+      },
+      medicalDisclaimer: {
+        title: 'Medical Disclaimer',
+        description: 'All information on this website (including information about orthodontics, dental, medical and health conditions, and products and treatments) is for reference purposes only. This information should not be considered complete, nor should it be relied upon as a substitute for a consultation, call, or visit with a licensed orthodontist, dentist, or other healthcare professional, nor should it be relied upon as a substitute for information contained on product packaging or labels. The information obtained through use of this website is not exhaustive and does not cover all orthodontic or dental procedures. The information on this website and the links to other websites are for reference purposes only and are not intended to provide medical advice for any specific medical condition. Use of this website does not constitute a doctor-patient relationship.'
+      },
+      privacy: {
+        title: 'Privacy',
+        description: 'Your use of www.pearl-digital.com is subject to Pearl\'s Privacy Policy. Please review our Privacy Policy, which also governs the Site and informs users of our data collection practices.'
+      },
+      electronicCommunications: {
+        title: 'Electronic Communications',
+        description: 'Visiting www.pearl-digital.com or sending emails to Pearl constitutes electronic communications. You consent to receive electronic communications and you agree that all agreements, notices, disclosures and other communications that we provide to you electronically, via email and on the Site, satisfy any legal requirement that such communications be in writing.'
+      },
+      account: {
+        title: 'Your Account',
+        description: 'If you use this site, you are responsible for maintaining the confidentiality of your account and password and for restricting access to your computer, and you agree to accept responsibility for all activities that occur under your account or password. You may not assign or otherwise transfer your account to any other person or entity. You acknowledge that Pearl is not responsible for third party access to your account that results from theft or misappropriation of your account. Pearl and its associates reserve the right to refuse or cancel service, terminate accounts, or remove or edit content in our sole discretion.'
+      },
+      children: {
+        title: 'Children Under Thirteen',
+        description: 'Pearl does not knowingly collect, either online or offline, personal information from persons under the age of thirteen. If you are under 18, you may use www.pearl-digital.com only with permission of a parent or guardian.'
+      },
+      cancellation: {
+        title: 'Cancellation/Refund Policy',
+        description: 'You may cancel your subscription and/or request a refund for your subscription purchase at any time. Please refer to Pearl\'s product and service sales contract or "Terms and Conditions".'
+      },
+      thirdPartyLinks: {
+        title: 'Links to Third Party Sites / Third Party Services',
+        description: 'Certain services made available via www.pearl-digital.com are delivered by third party sites and organizations. By using any product, service or functionality originating from the www.pearl-digital.com domain, you hereby acknowledge and consent that Pearl may share such information and data with any third party with whom Pearl has a contractual relationship to provide the requested product, service or functionality on behalf of www.pearl-digital.com users and customers.',
+        thirdPartyServices: 'Certain services made available via www.pearl-digital.com are delivered by third party sites and organizations. By using any product, service or functionality originating from the www.pearl-digital.com domain, you hereby acknowledge and consent that Pearl may share such information and data with any third party with whom Pearl has a contractual relationship to provide the requested product, service or functionality on behalf of www.pearl-digital.com users and customers.'
+      },
+      intellectualProperty: {
+        title: 'No Unlawful or Prohibited Use / Intellectual Property',
+        license: 'You are granted a non-exclusive, non-transferable, revocable license to access and use www.pearl-digital.com strictly in accordance with these terms of use. As a condition of your use of the Site, you warrant to Pearl that you will not use the Site for any purpose that is unlawful or prohibited by these Terms. You may not use the Site in any manner which could damage, disable, overburden, or impair the Site or interfere with any other party\'s use and enjoyment of the Site. You may not obtain or attempt to obtain any materials or information through any means not intentionally made available or provided for through the Site.',
+        content: 'All content included as part of the Service, such as text, graphics, logos, images, as well as the compilation thereof, and any software used on the Site, is the property of Pearl or its suppliers and protected by copyright and other laws that protect intellectual property and proprietary rights. You agree to observe and abide by all copyright and other proprietary notices, legends or other restrictions contained in any such content and will not make any changes to any such content.',
+        restrictions: 'You will not modify, publish, transmit, reverse engineer, participate in the transfer or sale, create derivative works, or in any way exploit any of the content, in whole or in part, found on the Site. Pearl\'s content is not for resale. Your use of the Site does not entitle you to make any unauthorized use of any protected content, and in particular you will not delete or alter any proprietary rights or attribution notices in any content. You will use protected content solely for your personal use, and will make no other use of the content without the express written permission of Pearl and the copyright owner. You agree that you do not acquire any ownership rights in any protected content. We do not grant you any licenses, express or implied, to the intellectual property of Pearl or our licensors except as expressly authorized by these Terms.'
+      },
+      internationalUsers: {
+        title: 'International Users',
+        description: 'The Service is controlled, operated and administered by Pearl from our offices within the USA. If you access the Service from a location outside the USA, you are responsible for compliance with all local laws. You agree that you will not use the Pearl Content accessed through www.pearl-digital.com in any country or in any manner prohibited by any applicable laws, restrictions or regulations.'
+      },
+      indemnification: {
+        title: 'Indemnification',
+        description: 'You agree to indemnify, defend and hold harmless Pearl, its officers, directors, employees, agents and third parties, for any losses, costs, liabilities and expenses (including reasonable attorney\'s fees) relating to or arising out of your use of or inability to use the Site or services, any user postings made by you, your violation of any terms of this Agreement or your violation of any rights of a third party, or your violation of any applicable laws, rules or regulations. Pearl reserves the right, at its own cost, to assume the exclusive defense and control of any matter otherwise subject to indemnification by you, in which event you will fully cooperate with Pearl in asserting any available defenses.'
+      },
+      arbitration: {
+        title: 'Arbitration',
+        description: 'In the event the parties are not able to resolve any dispute between them arising out of or concerning these Terms or any provisions hereof, whether in contract, tort, or otherwise at law or in equity for damages or any other relief, then such dispute shall be resolved only by final and binding arbitration pursuant to the Federal Arbitration Act, conducted by a single neutral arbitrator and administered by the American Arbitration Association or a similar arbitration service selected by the parties, in a location mutually agreed upon by the parties. The arbitrator\'s award shall be final, and judgment may be entered upon it in any court having jurisdiction. In the event that any legal or equitable action, proceeding or arbitration arises out of or concerns these Terms, the prevailing party shall be entitled to recover its costs and reasonable attorney\'s fees. The parties agree to arbitrate all disputes and claims in regard to these Terms or any disputes arising as a result of these Terms, whether directly or indirectly related to these Terms including any tort claim. The parties agree that the Federal Arbitration Act governs the interpretation and enforcement of this provision. The entire dispute, including the scope and enforceability of this arbitration provision shall be determined by the Arbitrator. This arbitration provision shall survive the termination of these Terms.',
+        additionalInfo: 'In the event that any legal or equitable action, proceeding or arbitration arises out of or concerns these Terms, the prevailing party shall be entitled to recover its costs and reasonable attorney\'s fees. The parties agree to arbitrate all disputes and claims in regard to these Terms or any disputes arising as a result of these Terms, whether directly or indirectly related to these Terms including any tort claim. The parties agree that the Federal Arbitration Act governs the interpretation and enforcement of this provision. The entire dispute, including the scope and enforceability of this arbitration provision shall be determined by the Arbitrator. This arbitration provision shall survive the termination of these Terms.'
+      },
+      classActionWaiver: {
+        title: 'Class Action Waiver',
+        description: 'Any arbitration under these Terms will take place on an individual basis; class arbitrations and class/representative/collective actions are not permitted. THE PARTIES AGREE THAT A PARTY MAY BRING CLAIMS AGAINST THE OTHER ONLY IN EACH\'S INDIVIDUAL CAPACITY, AND NOT AS A PLAINTIFF OR CLASS MEMBER IN ANY PUTATIVE CLASS, COLLECTIVE AND/ OR REPRESENTATIVE PROCEEDING, SUCH AS IN THE FORM OF A PRIVATE ATTORNEY GENERAL ACTION AGAINST THE OTHER. Further, unless both you and Pearl agree otherwise, the arbitrator may not consolidate more than one person\'s claims, and may not otherwise preside over any form of a representative or class proceeding.'
+      },
+      liabilityDisclaimer: {
+        title: 'Liability Disclaimer',
+        description: 'The information, software, products, and services included in or available through the site may include inaccuracies or typographical errors. Changes are periodically added to the information herein. Pearl Digital Inc. and/or its suppliers may make improvements and/or changes in the site at any time.',
+        warranty: 'Pearl Digital Inc. and/or its suppliers make no representations about the suitability, reliability, availability, timeliness, and accuracy of the information, software, products, services and related graphics contained on the site for any purpose. To the maximum extent permitted by applicable law, all such information, software, products, services and related graphics are provided "as is" without warranty or condition of any kind. Pearl Digital Inc. and/or its suppliers hereby disclaim all warranties and conditions with regard to this information, software, products, services and related graphics, including all implied warranties or conditions of merchantability, fitness for a particular purpose, title and non-infringement.',
+        limitation: 'To the maximum extent permitted by applicable law, in no event shall Pearl Digital Inc. and/or its suppliers be liable for any direct, indirect, punitive, incidental, special, consequential damages or any damages whatsoever including, without limitation, damages for loss of use, data or profits, arising out of or in any way connected with the use or performance of the site, with the delay or inability to use the site or related services, the provision of or failure to provide services, or for any information, software, products, services and related graphics obtained through the site, or otherwise arising out of the use of the site, whether based on contract, tort, negligence, strict liability or otherwise, even if Pearl Digital Inc. or any of its suppliers has been advised of the possibility of damages. Because some states/jurisdictions do not allow the exclusion or limitation of liability for consequential or incidental damages, the above limitation may not apply to you. If you are dissatisfied with any portion of the site, or with any of these terms of use, your sole and exclusive remedy is to discontinue using the site.',
+        remedy: 'If you are dissatisfied with any portion of the site, or with any of these terms of use, your sole and exclusive remedy is to discontinue using the site.'
+      },
+      termination: {
+        title: 'Termination / Access Restriction',
+        description: 'Pearl reserves the right, in its sole discretion, to terminate your access to the Site and the related services or any portion thereof at any time, without notice. To the maximum extent permitted by law, this agreement is governed by the laws of the State of California and you hereby consent to the exclusive jurisdiction and venue of courts in California in all disputes arising out of or relating to the use of the Site. Use of the Site is unauthorized in any jurisdiction that does not give effect to all provisions of these Terms, including, without limitation, this section.',
+        relationship: 'You agree that no joint venture, partnership, employment, or agency relationship exists between you and Pearl as a result of this agreement or use of the Site. Pearl\'s performance of this agreement is subject to existing laws and legal process, and nothing contained in this agreement is in derogation of Pearl\'s right to comply with governmental, court or law enforcement requests or requirements relating to your use of the Site or information provided to or gathered by Pearl with respect to such use.',
+        validity: 'If any part of this agreement is determined to be invalid or unenforceable pursuant to applicable law including, but not limited to, the warranty disclaimers and liability limitations set forth above, then the invalid or unenforceable provision will be deemed superseded by a valid, enforceable provision that most closely matches the intent of the original provision and the remainder of the agreement shall continue in effect.',
+        entireAgreement: 'Unless otherwise specified herein, this agreement constitutes the entire agreement between the user and Pearl with respect to the Site and it supersedes all prior or contemporaneous communications and proposals, whether electronic, oral or written, between the user and Pearl with respect to the Site. A printed version of this agreement and of any notice given in electronic form shall be admissible in judicial or administrative proceedings based upon or relating to this agreement to the same extent and subject to the same conditions as other business documents and records originally generated and maintained in printed form.',
+        language: 'It is the express wish to the parties that this agreement and all related documents be written in English.'
+      },
+      changes: {
+        title: 'Changes to Terms',
+        description: 'Pearl reserves the right, in its sole discretion, to change the Terms under which www.pearl-digital.com is offered. The most current version of the Terms will supersede all previous versions. Pearl encourages you to periodically review the Terms to stay informed of our updates.'
+      },
+      contact: {
+        title: 'Contact Us',
+        description: 'Pearl welcomes your questions or comments regarding the Terms:',
+        companyInfo: 'Pearl Digital Inc.<br />2975 Scott Blvd, Ste 110<br />Santa Clara, California 95054<br />Email Address: customer@pearl-digital.com<br />Telephone number: +1-408-667-5811'
+      },
+      effectiveDate: 'Effective as of: June 01, 2025'
     }
   },
 

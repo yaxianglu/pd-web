@@ -1,181 +1,173 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './index.scss';
+import { useLanguage } from '../context/LanguageContext';
 
 const Terms = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   return (
     <div className="terms-page">
       <div className="terms-container">
         <div className="terms-content">
           <div className="terms-section">
-            <h2>使用者與 www.pearl-digital.com 之間的協議（Agreement between User and www.pearl-digital.com）</h2>
+            <h2>{t('terms.sections.agreement.title')}</h2>
             <p>
-              歡迎來到 www.pearl-digital.com。本網站（以下稱「本網站（the Site）」）由 Pearl Digital Inc.（以下稱「Pearl」）營運。www.pearl-digital.com 的提供係以您在未作任何修改之情況下接受本文件所載的一切條款、條件與聲明（以下稱「本《條款》（the Terms）」）為前提。您使用 www.pearl-digital.com，即表示您同意所有該等條款。請務必仔細閱讀，並保留一份作為參考。
+              {t('terms.sections.agreement.welcome')}
             </p>
             <p>
-              www.pearl-digital.com 為電子商務網站（E‑Commerce Site）。
+              {t('terms.sections.agreement.ecommerce')}
             </p>
             <p>
-              Pearl 於本網站銷售「白標隱形牙套服務」及「自有品牌隱形牙套」。
-            </p>
-          </div>
-
-          <div className="terms-section">
-            <h2>醫療免責聲明（Medical Disclaimer）</h2>
-            <p>
-              本網站所載一切資訊（包括關於齒顎矯正、牙科、醫療與健康狀況，以及產品與治療之資訊）僅供參考用途。此等資訊不應被視為完整，亦非作為患者親自就診、致電、諮詢或取得齒顎矯正專科醫師、牙醫或其他醫療專業人員之建議之替代，亦不應取代任何產品包裝或標籤所載之資訊。透過使用本網站所取得之資訊並非窮盡，且不涵蓋所有齒顎矯正或牙科療程。本網站所載資訊及其連結至其他網站之內容僅供參考之用，並非旨在提供針對您任何特定醫療狀況之醫療建議。本網站之使用不構成醫師與患者關係。
+              {t('terms.sections.agreement.products')}
             </p>
           </div>
 
           <div className="terms-section">
-            <h2>隱私權（Privacy）</h2>
+            <h2>{t('terms.sections.medicalDisclaimer.title')}</h2>
             <p>
-              您對 www.pearl-digital.com 之使用，須受 Pearl 的《隱私權政策（Privacy Policy）》所約束。請查閱本公司《隱私權政策》，該政策同樣適用於本網站，並告知使用者我們的資料蒐集與處理作業。
+              {t('terms.sections.medicalDisclaimer.description')}
             </p>
           </div>
 
           <div className="terms-section">
-            <h2>電子通訊（Electronic Communications）</h2>
+            <h2>{t('terms.sections.privacy.title')}</h2>
             <p>
-              當您造訪 www.pearl-digital.com 或向 Pearl 發送電子郵件，即構成「電子通訊」。您同意接收電子通訊，並同意我們以電子郵件及於本網站所提供之所有協議、通知、揭露與其他通訊，符合任何要求該等通訊應為書面之法律規定。
+              {t('terms.sections.privacy.description')}
             </p>
           </div>
 
           <div className="terms-section">
-            <h2>您的帳號（Your Account）</h2>
+            <h2>{t('terms.sections.electronicCommunications.title')}</h2>
             <p>
-              若您使用本網站，您有責任維持帳號與密碼之機密性，並限制對您電腦之存取。您並同意對於在您的帳號或密碼之下所發生的一切活動承擔責任。您不得將您的帳號以讓與或其他方式移轉予任何他人或實體。您確認，Pearl 對於因您的帳號遭竊或不當使用而導致第三方取得存取權不負責任。Pearl 及其關係企業得依其全權裁量，拒絕或取消服務、終止帳號、或移除或編輯內容。
+              {t('terms.sections.electronicCommunications.description')}
             </p>
           </div>
 
           <div className="terms-section">
-            <h2>十三歲以下兒童（Children Under Thirteen）</h2>
+            <h2>{t('terms.sections.account.title')}</h2>
             <p>
-              透過造訪與使用本網站，您向我們陳述您已年滿十三（13）歲。進一步而言，若您於所屬州之法定成年年齡以下（即未成年人），您陳述您已取得父母或法定監護人之同意，且您的父母或法定監護人已閱讀並同意本《條款》。<strong>若您未滿十三（13）歲，請勿使用本網站。若您為未成年人，未取得父母或法定監護人之同意，請勿使用本網站。</strong>
+              {t('terms.sections.account.description')}
             </p>
           </div>
 
           <div className="terms-section">
-            <h2>取消／退款政策（Cancellation/Refund Policy）</h2>
+            <h2>{t('terms.sections.children.title')}</h2>
+            <p dangerouslySetInnerHTML={{ __html: t('terms.sections.children.description') }} />
+          </div>
+
+          <div className="terms-section">
+            <h2>{t('terms.sections.cancellation.title')}</h2>
             <p>
-              請參閱 Pearl 之產品與服務之銷售契約或「條款與條件」。
+              {t('terms.sections.cancellation.description')}
             </p>
           </div>
 
           <div className="terms-section">
-            <h2>第三方網站連結／第三方服務（Links to Third Party Sites / Third Party Services）</h2>
+            <h2>{t('terms.sections.thirdPartyLinks.title')}</h2>
             <p>
-              本網站可能包含連結至其他網站（以下稱「連結網站（Linked Sites）」）。連結網站不受 Pearl 控制，Pearl 對於任何連結網站之內容（包括但不限於該網站所含之任何連結）或其任何變更或更新概不負責。Pearl 僅為便利您而提供該等連結；任何連結之納入，並不表示 Pearl 對該網站之認可，或與其經營者存在任何關係。
+              {t('terms.sections.thirdPartyLinks.description')}
             </p>
             <p>
-              部分透過 www.pearl-digital.com 所提供之服務係由第三方網站與組織提供。使用任何源自 www.pearl-digital.com 網域之產品、服務或功能，即表示您知悉並同意：Pearl 得向與其具有合約關係之任何第三方分享相關資訊與資料，以便代表 www.pearl-digital.com 之使用者與客戶提供所請求之產品、服務或功能。
-            </p>
-          </div>
-
-          <div className="terms-section">
-            <h2>禁止不法或未經授權之使用／智慧財產權（No Unlawful or Prohibited Use / Intellectual Property）</h2>
-            <p>
-              在符合本《條款》之前提下，授予您非專屬、不可轉讓、可撤銷之授權，以存取並使用 www.pearl-digital.com。作為您使用本網站之條件，您保證不會將本網站用於任何不法或本《條款》所禁止之目的。您不得以任何可能損壞、停用、過載或損害本網站之方式使用本網站，亦不得干擾任何他方對本網站之使用與享受。您不得以本網站未有意提供之任何方式取得或試圖取得任何資料或資訊。
-            </p>
-            <p>
-              作為本服務之一部分所包含之全部內容（包括文字、圖形、標誌、影像、以及其彙編），及本網站上使用之任何軟體，均屬 Pearl 或其供應商所有，並受著作權及其他保護智慧財產權與專有權之法律所保護。您同意遵守並遵循任何該等內容所載之著作權及其他專有權聲明、告示或限制，且不得對任何內容作出任何變更。
-            </p>
-            <p>
-              您不得對本網站之任何內容作出修改、出版、傳輸、逆向工程、參與轉讓或銷售、創作衍生作品，或以任何方式全部或部分加以利用。Pearl 之內容不得作為轉售之用。您對本網站之使用並不授與您對任何受保護內容之未經授權使用權，特別是您不得刪除或更改任何內容上之專有權或權利歸屬之聲明。您僅得將受保護內容用於個人用途；未經 Pearl 與著作權人之明示書面同意，您不得以其他方式使用該等內容。您同意並未取得任何受保護內容之所有權。除本《條款》明示授權外，我們並未授與您對 Pearl 或其授權人之智慧財產權之任何明示或默示授權。
+              {t('terms.sections.thirdPartyLinks.thirdPartyServices')}
             </p>
           </div>
 
           <div className="terms-section">
-            <h2>國際使用者（International Users）</h2>
+            <h2>{t('terms.sections.intellectualProperty.title')}</h2>
             <p>
-              本服務係由 Pearl 於美國境內之辦公處所加以控制、營運及管理。倘若您自美國境外存取本服務，您應自行遵守一切當地法律。您同意不得於任何受適用法律、限制或法規所禁止之國家或方式使用透過 www.pearl-digital.com 所取得之 Pearl 內容。
+              {t('terms.sections.intellectualProperty.license')}
+            </p>
+            <p>
+              {t('terms.sections.intellectualProperty.content')}
+            </p>
+            <p>
+              {t('terms.sections.intellectualProperty.restrictions')}
             </p>
           </div>
 
           <div className="terms-section">
-            <h2>賠償（Indemnification）</h2>
+            <h2>{t('terms.sections.internationalUsers.title')}</h2>
             <p>
-              您同意就因下列事項而產生或與之相關之任何損失、費用、責任與開支（包括合理之律師費），對 Pearl、其董事、主管、員工、代理人及第三方予以賠償、抗辯並使其免受損害：您使用或無法使用本網站或服務、您所為之任何使用者張貼內容、您對本協議任何條款之違反、您對任何第三方權利之侵害、或您對任何適用之法律、規則或法規之違反。Pearl 保留自行負擔費用而取得任何原本由您負有賠償義務之事項之專屬抗辯與控制權之權利；於該等情形下，您應充分配合 Pearl 主張任何可得之抗辯。
+              {t('terms.sections.internationalUsers.description')}
             </p>
           </div>
 
           <div className="terms-section">
-            <h2>仲裁（Arbitration）</h2>
+            <h2>{t('terms.sections.indemnification.title')}</h2>
             <p>
-              如雙方就本《條款》或其任何規定（無論係基於契約、侵權或其他法律或衡平事由，關於損害賠償或其他救濟）所生之任何爭議無法解決，該爭議應依《美國聯邦仲裁法（Federal Arbitration Act）》以最終且具拘束力之仲裁解決，由單一中立仲裁人進行，並由美國仲裁協會（American Arbitration Association）或雙方選定之同類仲裁機構於雙方相互同意之地點管理仲裁程序。仲裁人之裁決為終局，並得向具有管轄權之任何法院聲請登錄為判決。
-            </p>
-            <p>
-              倘若因本《條款》而產生任何法律或衡平之訴訟、程序或仲裁，勝訴方有權請求其訴訟費用與合理律師費。雙方同意就本《條款》以及因本《條款》所生之任何爭議與主張（包括因本《條款》而生之侵權請求，不論係直接或間接）提交仲裁。雙方同意以《美國聯邦仲裁法》作為本條之解釋與執行之準據法。全體爭議（包括本仲裁條款之範圍與可執行性）均由仲裁人決定。本仲裁條款於本《條款》終止後仍繼續有效。
+              {t('terms.sections.indemnification.description')}
             </p>
           </div>
 
           <div className="terms-section">
-            <h2>集體訴訟拋棄（Class Action Waiver）</h2>
+            <h2>{t('terms.sections.arbitration.title')}</h2>
             <p>
-              依本《條款》進行之任何仲裁均應以個別為之；不得進行集體仲裁或集體／代表／集合行動。<strong>雙方同意：任何一方僅得以其個人身分對另一方主張權利，而不得作為任何擬制之集體、集合及／或代表性程序之原告或成員（例如以「私人檢察總長」之形式）對另一方主張。</strong>除非您與 Pearl 另有同意，仲裁人不得合併多於一人之主張，亦不得以任何形式主持代表性或集體程序。
+              {t('terms.sections.arbitration.description')}
+            </p>
+            <p>
+              {t('terms.sections.arbitration.additionalInfo')}
             </p>
           </div>
 
           <div className="terms-section">
-            <h2>責任免除聲明（Liability Disclaimer）</h2>
+            <h2>{t('terms.sections.classActionWaiver.title')}</h2>
+            <p dangerouslySetInnerHTML={{ __html: t('terms.sections.classActionWaiver.description') }} />
+          </div>
+
+          <div className="terms-section">
+            <h2>{t('terms.sections.liabilityDisclaimer.title')}</h2>
             <p>
-              本網站所含或可經由本網站取得之資訊、軟體、產品及服務，可能包含不正確或筆誤之處；此等資訊將不定期更新。Pearl Digital Inc. 及／或其供應商得隨時對本網站進行改進及／或變更。
+              {t('terms.sections.liabilityDisclaimer.description')}
             </p>
             <p>
-              Pearl Digital Inc. 及／或其供應商對於本網站所含之資訊、軟體、產品、服務及相關圖像之適合性、可靠性、可得性、即時性及正確性，不作任何聲明或保證。在適用法律所允許之最大範圍內，前述一切資訊、軟體、產品、服務及相關圖像均係以「現況」（"AS IS"）提供，且不附任何形式之保證或條件。Pearl Digital Inc. 及／或其供應商於此明確否認關於該等資訊、軟體、產品、服務及相關圖像之所有保證與條件，包括所有默示之保證或條件，例如適銷性、特定目的之適用性、所有權及不侵權。
+              {t('terms.sections.liabilityDisclaimer.warranty')}
             </p>
             <p>
-              在適用法律所允許之最大範圍內，於任何情況下，Pearl Digital Inc. 及／或其供應商概不就任何直接、間接、懲罰性、附帶性、特別性、衍生性損害，或任何其他損害承擔責任，包括但不限於因使用、資料或利潤之喪失，而由下列情事引起或以任何方式與之相關者：本網站之使用或效能；延遲或無法使用本網站或相關服務；提供或未能提供服務；透過本網站取得之任何資訊、軟體、產品、服務及相關圖像；或因使用本網站而引起或以任何方式相關之其他情事。無論係基於契約、侵權、過失、嚴格責任或其他事由，即使 Pearl Digital Inc. 或其任何供應商已被告知可能發生損害，亦屬同此。由於部分州或法域不允許排除或限制對衍生性或附帶性損害之責任，上述限制可能不適用於您。
+              {t('terms.sections.liabilityDisclaimer.limitation')}
             </p>
             <p>
-              若您對本網站之任何部分或本《條款》之任何條文不滿，您唯一且專屬之救濟即為停止使用本網站。
+              {t('terms.sections.liabilityDisclaimer.remedy')}
             </p>
           </div>
 
           <div className="terms-section">
-            <h2>終止／存取限制（Termination / Access Restriction）</h2>
+            <h2>{t('terms.sections.termination.title')}</h2>
             <p>
-              Pearl 保留權利，得依其全權裁量，於任何時間無須通知即終止您對本網站及相關服務或其任何部分之存取。在適用法律所允許之最大範圍內，本協議受加利福尼亞州法律管轄，且您於此同意，就一切因使用本網站而生或與之相關之爭議，均由加利福尼亞州法院享有專屬管轄權與審判地。於任何未能賦予本《條款》全部規定以效力之法域中使用本網站，均屬未經授權之使用。
+              {t('terms.sections.termination.description')}
             </p>
             <p>
-              您同意，您與 Pearl 之間並不因本協議或使用本網站而形成合資、合夥、僱傭或代理關係。Pearl 之履行係受現行法律與法律程序拘束，本協議中任何內容均不得解釋為限制 Pearl 依政府機關、法院或執法機關要求而配合，提供或蒐集與您使用本網站有關之資訊之權利。
+              {t('terms.sections.termination.relationship')}
             </p>
             <p>
-              如本協議任何部分依適用法律被認定為無效或不可執行（包括但不限於前述之擔保聲明與責任限制），則該無效或不可執行之規定，應視為由一有效且可執行之規定所取代，而該等規定之意旨應與原規定最為接近；本協議其餘部分則繼續完全有效。
+              {t('terms.sections.termination.validity')}
             </p>
             <p>
-              除非另有明文規定，本協議構成您與 Pearl 就本網站之完整合意，並取代先前或同時期就本網站所為之一切電子、口頭或書面之溝通與提案。本協議及任何以電子形式作成之通知，其紙本版本於司法或行政程序中，基於或與本協議有關之事項，得與原先以紙本形式製作並保存之其他商業文件與紀錄同等程度與條件下作為證據。
+              {t('terms.sections.termination.entireAgreement')}
             </p>
             <p>
-              雙方明確表示，雙方希望本協議及所有相關文件以英文撰寫。
-            </p>
-          </div>
-
-          <div className="terms-section">
-            <h2>條款變更（Changes to Terms）</h2>
-            <p>
-              Pearl保留權利， 得依其全權裁量，變更 www.pearl-digital.com 之適用《條款》。最新版本將取代所有先前版本。Pearl 建議您定期查閱本《條款》，以隨時掌握更新。
+              {t('terms.sections.termination.language')}
             </p>
           </div>
 
           <div className="terms-section">
-            <h2>聯絡我們（Contact Us）</h2>
+            <h2>{t('terms.sections.changes.title')}</h2>
             <p>
-              Pearl 歡迎您就本《條款》提出問題或意見：
+              {t('terms.sections.changes.description')}
             </p>
+          </div>
+
+          <div className="terms-section">
+            <h2>{t('terms.sections.contact.title')}</h2>
             <p>
-              Pearl Digital Inc.<br />
-              2975 Scott Blvd, Ste 110<br />
-              Santa Clara, California 95054<br />
-              電子郵件（Email Address）：customer@pearl-digital.com<br />
-              電話（Telephone number）：+1-408-667-5811
+              {t('terms.sections.contact.description')}
             </p>
+            <p dangerouslySetInnerHTML={{ __html: t('terms.sections.contact.companyInfo') }} />
           </div>
 
           <div className="terms-footer">
-            <p>生效日（Effective as of）：June 01, 2025</p>
+            <p>{t('terms.sections.effectiveDate')}</p>
           </div>
         </div>
       </div>

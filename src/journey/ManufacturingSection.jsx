@@ -4,12 +4,14 @@ import './ManufacturingSection.scss';
 import DetailButton from "../components/detail-button";
 import CardWrapper from "../components/card-wrapper";
 import p12 from '../asserts/12.svg';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function ManufacturingSection() {
   const { isMobile, isTablet } = useResponsive();
+  const { t } = useLanguage();
   
   return (
-    <CardWrapper title="珍舒美旅程隱形牙套價格特點">
+    <CardWrapper title={t('journey.pricingFeatures.title')}>
       <div className="browser-card">
         {/* 卡片头部 */}
         <div className="card-header">
@@ -24,21 +26,33 @@ export default function ManufacturingSection() {
         <div className="card-content">
           <div className="card-content-title">
             <div className="card-content-title-title">
-            價格公開透明
+              {t('journey.pricingFeatures.transparentPricing.title')}
             </div>
             <div className="card-content-title-price">
-              療程費用會根據個人牙齒狀況與選擇的方案（輕度／中度／重度）進行評估。我們提供詳細報<br/>
-              價與階段性說明，無額外加價、不含糊，讓您清楚每一筆支出。
+              {t('journey.pricingFeatures.transparentPricing.description').split('\n').map((line, index) => (
+                <span key={index}>
+                  {line}
+                  {index < t('journey.pricingFeatures.transparentPricing.description').split('\n').length - 1 && <br/>}
+                </span>
+              ))}
             </div>
           </div>
           <div className="card-content-title">
             <div className="card-content-title-title">
-            價格親民，<br/>
-            專業不妥協
+              {t('journey.pricingFeatures.affordablePricing.title').split('\n').map((line, index) => (
+                <span key={index}>
+                  {line}
+                  {index < t('journey.pricingFeatures.affordablePricing.title').split('\n').length - 1 && <br/>}
+                </span>
+              ))}
             </div>
             <div className="card-content-title-price">
-            珍舒美致力於提供高品質矯正體驗的同時，維持合理價格，讓更多人有機會改善牙齒排列與笑<br/>
-            容自信。療效、舒適與價格三者兼顧，是我們一貫的堅持。
+              {t('journey.pricingFeatures.affordablePricing.description').split('\n').map((line, index) => (
+                <span key={index}>
+                  {line}
+                  {index < t('journey.pricingFeatures.affordablePricing.description').split('\n').length - 1 && <br/>}
+                </span>
+              ))}
             </div>
           </div>
           {/* <div className="card-content-title">
@@ -57,9 +71,9 @@ export default function ManufacturingSection() {
               {/* 左侧复杂度列 */}
               <div className="complexity-column">
                 {/* <div className="complexity-header"></div> */}
-                <div className="complexity-item">輕度<span>/複雜程度</span></div>
-                <div className="complexity-item">中度<span>/複雜程度</span></div>
-                <div className="complexity-item">重度<span>/複雜程度</span></div>
+                <div className="complexity-item">{t('journey.pricingFeatures.pricingTable.mild')}</div>
+                <div className="complexity-item">{t('journey.pricingFeatures.pricingTable.moderate')}</div>
+                <div className="complexity-item">{t('journey.pricingFeatures.pricingTable.severe')}</div>
               </div>
               
               {/* 一次性付款列 */}
@@ -89,7 +103,7 @@ export default function ManufacturingSection() {
             </div>
           </div>
 
-          <DetailButton text="我需要哪種治療？" />
+          <DetailButton text={t('journey.pricingFeatures.buttonText')} />
         </div>
       </div>
       </CardWrapper>
