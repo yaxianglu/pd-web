@@ -21,10 +21,10 @@ export default function FaqsSection() {
       a: (
         <>
           {t('faq.questions.process.answer').split('\n').map((line, index) => (
-            <React.Fragment key={index}>
+            <span key={index}>
               {line}
               {index < t('faq.questions.process.answer').split('\n').length - 1 && <br />}
-            </React.Fragment>
+            </span>
           ))}
         </>
       )
@@ -42,10 +42,10 @@ export default function FaqsSection() {
       a: (
         <>
           {t('faq.questions.age.answer').split('\n').map((line, index) => (
-            <React.Fragment key={index}>
+            <span key={index}>
               {line}
               {index < t('faq.questions.age.answer').split('\n').length - 1 && <br />}
-            </React.Fragment>
+            </span>
           ))}
         </>
       )
@@ -55,10 +55,10 @@ export default function FaqsSection() {
       a: (
         <>
           {t('faq.questions.safety.answer').split('\n').map((line, index) => (
-            <React.Fragment key={index}>
+            <span key={index}>
               {line}
               {index < t('faq.questions.safety.answer').split('\n').length - 1 && <br />}
-            </React.Fragment>
+            </span>
           ))}
         </>
       )
@@ -68,10 +68,10 @@ export default function FaqsSection() {
       a: (
         <>
           {t('faq.questions.pricing.answer').split('\n').map((line, index) => (
-            <React.Fragment key={index}>
+            <span key={index}>
               {line}
               {index < t('faq.questions.pricing.answer').split('\n').length - 1 && <br />}
-            </React.Fragment>
+            </span>
           ))}
         </>
       )
@@ -81,10 +81,10 @@ export default function FaqsSection() {
       a: (
         <>
           {t('faq.questions.payment.answer').split('\n').map((line, index) => (
-            <React.Fragment key={index}>
+            <span key={index}>
               {line}
               {index < t('faq.questions.payment.answer').split('\n').length - 1 && <br />}
-            </React.Fragment>
+            </span>
           ))}
         </>
       )
@@ -94,10 +94,10 @@ export default function FaqsSection() {
       a: (
         <>
           {t('faq.questions.satisfaction.answer').split('\n').map((line, index) => (
-            <React.Fragment key={index}>
+            <span key={index}>
               {line}
               {index < t('faq.questions.satisfaction.answer').split('\n').length - 1 && <br />}
-            </React.Fragment>
+            </span>
           ))}
         </>
       )
@@ -107,10 +107,10 @@ export default function FaqsSection() {
       a: (
         <>
           {t('faq.questions.extraction.answer').split('\n').map((line, index) => (
-            <React.Fragment key={index}>
+            <span key={index}>
               {line}
               {index < t('faq.questions.extraction.answer').split('\n').length - 1 && <br />}
-            </React.Fragment>
+            </span>
           ))}
         </>
       )
@@ -173,10 +173,10 @@ export default function FaqsSection() {
 
       <div className="faq-bottom-text">
         {t('faq.bottomText').split('\n').map((line, index) => (
-          <React.Fragment key={index}>
+          <span key={index}>
             {line}
             {index < t('faq.bottomText').split('\n').length - 1 && <br />}
-          </React.Fragment>
+          </span>
         ))}
       </div>
       

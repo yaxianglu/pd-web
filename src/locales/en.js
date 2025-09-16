@@ -414,7 +414,29 @@ export default {
     title: 'Confident Smile\nCustom Made',
     buttonText: 'Smile Test',
     sketchTitle: 'How does Pearl Digital invisible braces work?',
-    sketchDescription: 'Pearl Digital invisible braces are designed to change your smile. The working principle is to use transparent aligners to gradually move teeth to ideal positions, providing a convenient and reliable way to help your smile become more neat and confident! And you only need to upload photos for online preliminary smile appointment to determine the applicability of invisible braces, which can start your smile upgrade journey. After the appointment, our professional partner doctors will provide consultation and comprehensive examination for you, and create the most suitable invisible braces plan for you based on your needs and dental condition. When you and the doctor agree to proceed with the treatment, Pearl Digital will customize exclusive invisible braces for you. The following is the Pearl Digital invisible braces workflow:'
+    sketchDescription: 'Pearl Digital invisible braces are designed to change your smile. The working principle is to use transparent aligners to gradually move teeth to ideal positions, providing a convenient and reliable way to help your smile become more neat and confident! And you only need to upload photos for online preliminary smile appointment to determine the applicability of invisible braces, which can start your smile upgrade journey. After the appointment, our professional partner doctors will provide consultation and comprehensive examination for you, and create the most suitable invisible braces plan for you based on your needs and dental condition. When you and the doctor agree to proceed with the treatment, Pearl Digital will customize exclusive invisible braces for you. The following is the Pearl Digital invisible braces workflow:',
+    additionalCosts: {
+      title: 'Are there any additional costs during the Smile Journey?',
+      description: 'Invisible braces not only have uniform pricing across Taiwan, but also truly achieve transparent pricing with no hidden fees! To help you achieve your expected new smile, our professional partner doctors will conduct oral examinations and scans. These examination/scan fees, or registration fees, are considered additional expenses not included in the invisible braces cost and will be collected by the clinic.',
+      subtitle: 'Below are the additional costs that may be encountered during the Smile Journey:',
+      items: {
+        consultation: {
+          title: 'Dental Consultation Fee',
+          price: '$3,000*',
+          description: 'Includes 3D oral scan, X-ray, and oral examination'
+        },
+        fineTuning: {
+          title: 'Fine-tuning\nRe-scan Fee',
+          price: '$1,000*',
+          description: 'Only required if fine-tuning is performed'
+        },
+        retainers: {
+          title: 'Clear Retainer Fee',
+          description: '$11,000** 2-piece set\n$14,000** 3-piece set\n$19,000** 5-piece set'
+        }
+      },
+      footnotes: '*Any clinic-related treatments or services will be collected directly by the clinic. Prices shown in emails may change and do not represent the final actual charges; users should refer to the clinic\'s latest pricing information.\n** During follow-up visits, the attending dentist will assess the oral condition to determine whether to use the last set of aligners or re-scan to produce retainers. Retainer prices may be adjusted due to market fluctuations, and users should contact customer service for actual prices.'
+    }
   },
 
   // Correction Treatment page
@@ -425,14 +447,136 @@ export default {
     sketchTitle: 'Common Dental Problems and Facial Impact in Asians',
     sketchDescription: 'Due to the genetic expression and craniofacial characteristics of Asians, there are often the following dental alignment and skeletal bite problems, which affect the overall facial appearance:',
     adultCorrection: 'Adult Orthodontics',
-    adultDescription: 'Adults can also have ideal smiles and stable bites. Orthodontics not only improves appearance but also solves functional problems, improving quality of life and self-confidence.'
+    adultDescription: 'Adults can also have ideal smiles and stable bites. Orthodontics not only improves appearance but also solves functional problems, improving quality of life and self-confidence.',
+    facialIssues: {
+      title: 'Due to the genetic expression and craniofacial characteristics of Asians, there are often the following dental alignment and skeletal bite problems, which affect the overall facial appearance:',
+      issues: {
+        protruding: 'Protruding upper front teeth (commonly called buck teeth)\nPrevents natural lip closure,\nExcessive mouth protrusion.',
+        receding: 'Receding chin\nAffects facial proportions and side profile',
+        crowding: 'Dental crowding\nAffects cleaning and aesthetics',
+        deepBite: 'Deep bite issues\nMay affect chewing function'
+      }
+    },
+    teenOrthodontics: {
+      title: 'Are invisible braces suitable for teenagers?',
+      description: 'Adolescence is a crucial period for the development of teeth and facial bones. Early intervention can effectively improve issues such as crowding, buck teeth, and deep bite, and timely planning for sufficient permanent tooth development space can prevent more complex orthodontic needs in the future. Wearing clear aligners does not affect daily learning and activities, allowing children to grow with confidence without limitations.',
+      benefits: {
+        title: 'Benefits of early orthodontic treatment for teenagers',
+        items: [
+          'Prevents crowded teeth and future dental alignment problems',
+          'Promotes normal jawbone development, reducing the need for surgical opportunities',
+          'Improves hard-to-clean areas, reducing the risk of cavities and periodontal disease',
+          'Enhances smile confidence and self-image, beneficial for school life and social interaction'
+        ]
+      },
+      timing: {
+        title: 'Best intervention timing during critical developmental periods',
+        description: 'During adolescence, as teeth and jawbones are still developing, the stability and adaptability of orthodontic treatment are optimal. Based on different age and dentition stages, it can be broadly divided into the following three periods:',
+        stages: {
+          mixed: {
+            title: 'Mixed dentition period (approx. 6-12 years old)',
+            description: 'The transitional stage between primary and permanent teeth, where occlusal abnormalities such as underbite, deep bite, open bite, etc., can be detected early.'
+          },
+          early: {
+            title: 'Early permanent dentition (approx. 12-15 years old)',
+            description: 'The dentition gradually stabilizes, making it the golden time for orthodontic intervention.'
+          },
+          growth: {
+            title: 'Jawbone adjustment period (peak adolescent growth)',
+            description: 'At this time, facial development still has room for guidance; through braces and professional orthodontic appliances, the growth of the jaw can be promoted or inhibited.'
+          }
+        }
+      }
+    },
+    adultBenefits: {
+      title: 'Orthodontics is not just about becoming beautiful, it\'s an upgrade to life',
+      description: 'For adults, orthodontics often serves both aesthetic needs and functional improvements. Neat teeth not only bring a naturally symmetrical smile and facial proportions, but also offer the following substantial benefits:',
+      aesthetics: {
+        title: 'Impact on Aesthetics:',
+        items: [
+          'After adjusting the dental alignment, lip shape becomes naturally full, and facial lines become smoother',
+          'Helps improve common facial appearance problems in Asian populations such as receding chins and protruding mouths',
+          'Makes smiles and eyes more confident and approachable, enhancing overall temperament'
+        ]
+      },
+      lifestyle: {
+        title: 'Accommodating Adult Pace and Needs:',
+        description: 'Zhenshumei\'s invisible aligner treatment is designed with flexibility and removability, allowing you to comfortably handle work meetings, social activities, and business trips.'
+      }
+    }
   },
 
   // Partner page
   join: {
     title: 'Become a Partner',
     subtitle: 'Join Pearl Digital to bring confident smiles to more patients',
-    description: 'We are looking for like-minded dental clinics and professional doctors to jointly promote invisible orthodontic technology and provide better treatment experiences for patients.'
+    description: 'We are looking for like-minded dental clinics and professional doctors to jointly promote invisible orthodontic technology and provide better treatment experiences for patients.',
+    hero: {
+      title: 'Join hands to promote the new era of digital orthodontics\nLet the value of professional clinics be seen by more people',
+      description: 'Pearl Digital sincerely invites you to become our partner clinic, combining international brand with local delivery capabilities to provide patients with trustworthy invisible orthodontic experience, while opening up new service opportunities and brand exposure channels for clinics',
+      buttonText: 'Become a Partner'
+    },
+    features: {
+      title: 'Why become a Pearl Digital partner?',
+      items: {
+        usBrand: {
+          title: 'American Oral Orthodontic Technology Brand',
+          description: 'Pearl Digital was founded by Pearl Digital Inc. in Silicon Valley, USA, focusing on invisible aligner systems that combine artificial intelligence with clinical expertise. Our products have passed US FDA certification and Taiwan TFDA medical device license approval, meeting international dual regulatory standards. Our treatment plans are designed by a professional team with over 30 years of orthodontic planning experience, combined with AI-assisted design and three-dimensional image integration analysis, providing each patient with a safe and efficient orthodontic experience.'
+        },
+        taiwanMade: {
+          title: 'Taiwan Manufacturing × Stable Delivery',
+          description: 'All aligners are manufactured in Taiwan\'s professional medical device factories that have passed ISO 13485 and GMP certification, from design, manufacturing to shipping, all controllable and traceable, ensuring stable delivery and consistent quality.\n• Local manufacturing, fast delivery\n• Professional manufacturing process, quality guaranteed'
+        },
+        marketing: {
+          title: 'Assist Clinics with Digital Marketing\nEnhance Patient Visibility',
+          description: 'We not only provide high-quality products, but also help clinics expand brand exposure and patient acquisition, helping partner clinics strengthen their local influence:\n• Listed on Pearl Digital official website partner clinic list\n• Provide clinic-exclusive smile test links for online patient appointment guidance\n• Assist in creating social media promotional materials, marketing copy and brand visual resources\n• Dedicated staff to help clinics use digital tools for initial filtering and patient flow\n• Provide offline promotional materials (QR Code, DM, clinic introduction pages, etc.)'
+        },
+        join: {
+          title: 'Welcome to Join Us',
+          description: 'If you are a clinic director, dentist, or orthodontic professional team, and are interested in expanding invisible orthodontic treatment services, please fill out the form below to contact us, and we will arrange cooperation explanations and brand resource introductions by dedicated staff'
+        }
+      }
+    },
+    form: {
+      title: 'Become a Pearl Digital Partner',
+      fields: {
+        fullName: 'Full Name',
+        phoneNumber: 'Phone Number',
+        email: 'Email',
+        clinicName: 'Dental Clinic Name',
+        experienceYears: 'Years of Dental Experience',
+        treatmentCount: 'Number of Dental Treatments',
+        address: 'Your Address',
+        remarks: 'Any Special Notes?'
+      },
+      submit: 'Submit',
+      submitting: 'Submitting...',
+      success: 'Submitted successfully! We will contact you soon.',
+      errors: {
+        required: 'Please fill in {field}',
+        invalidPhone: 'Please enter a valid Taiwan phone number format',
+        invalidEmail: 'Please enter a valid email format',
+        invalidNumber: 'Please enter a valid {field}',
+        networkError: 'Submission failed: Network error, please try again later'
+      }
+    },
+    map: {
+      title: 'Where can I find Zhen Shumei dentists?',
+      locations: {
+        taiwan: {
+          name: 'Taiwan',
+          description: 'Partner Dental Clinics'
+        },
+        usa: {
+          name: 'USA',
+          description: 'Headquarters'
+        },
+        other: {
+          name: 'Other Countries',
+          description: 'Hundreds of Partners'
+        }
+      }
+    }
   },
 
   // FAQ Frequently Asked Questions

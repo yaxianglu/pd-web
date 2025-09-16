@@ -1,34 +1,38 @@
+import React from 'react';
 import './map.scss';
 import CardWrapper from '../components/card-wrapper';
 import p2 from './imgs/2.svg';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Map() {
+  const { t } = useLanguage();
+  
   return (
-    <CardWrapper title="珍舒美的牙醫在哪裏可以找到？">
+    <CardWrapper title={t('join.map.title')}>
       <div className="map-section">
        <div className="map-section-title-wrapper">
         <div className="map-section-title">
             <div className="map-section-title-text">
-              台灣
+              {t('join.map.locations.taiwan.name')}
             </div>
             <div className="map-section-title-description">
-              合作牙醫診所
+              {t('join.map.locations.taiwan.description')}
             </div>
           </div>
           <div className="map-section-title">
             <div className="map-section-title-text">
-            美國
+              {t('join.map.locations.usa.name')}
             </div>
             <div className="map-section-title-description">
-            總公司
+              {t('join.map.locations.usa.description')}
             </div>
           </div>
           <div className="map-section-title">
             <div className="map-section-title-text">
-            其他國家
+              {t('join.map.locations.other.name')}
             </div>
             <div className="map-section-title-description">
-            數百個合作者
+              {t('join.map.locations.other.description')}
             </div>
           </div>
        </div>

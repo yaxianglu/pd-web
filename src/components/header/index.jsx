@@ -49,7 +49,7 @@ export default function Header() {
       case '/about':
         return t('about.title');
       case '/join':
-        return t('about.partners');
+        return t('brand.pearlDigital'); // 改为始终显示 PEARL DIGITAL
       default:
         return t('brand.pearlDigital');
     }

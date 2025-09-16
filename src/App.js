@@ -1,3 +1,4 @@
+import React from 'react';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
@@ -32,61 +33,57 @@ function App() {
     <ConfigProvider message={{ top: 80, duration: 1.8 }} notification={{ placement: 'topRight' }}>
       <LanguageProvider>
         <AuthProvider>
-        <div className="App">
-        {/* <nav>
-          <Link to="/front-page">FrontPage</Link> | <Link to="/login">Login</Link>
-        </nav> */}
-        <Routes>
-          <Route path="/" element={<FrontPage />} />
-          <Route path="/front-page" element={<FrontPage />} />
-          <Route path="/maintainer" element={<Maintainer />} />
-          <Route path="/whitening" element={<Whitening />} />
-          <Route path="/front-page-new" element={<PageCom />} />
-          <Route path="/login" element={<PearlLogin />} />
-          <Route path="/invisible-braces" element={<InvisibleBraces />} />
-          <Route path="/patient" element={<Dashboard />} />
-          <Route path="/list" element={<SmileTestTable />} />
-          <Route path="/journey" element={<Journey />} />
-          <Route path="/correction" element={<Correction />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/join" element={<Join />} />
-          {/* <Route path="/upload" element={<FrontPage />} /> */}
-          <Route path="/upload" element={<Upload />} />
-          <Route path="/partners" element={
-            <ProtectedRoute requiredRole="operator">
-              <Partners />
-            </ProtectedRoute>
-          } />
-          <Route path="/hospital" element={
-            <ProtectedRoute requiredRole="hospital">
-              <HospitalDashboard />
-            </ProtectedRoute>
-          } />
-          <Route path="/doctor/*" element={
-            <ProtectedRoute requiredRole="doctor">
-              <DoctorDashboard />
-            </ProtectedRoute>
-          } />
-          <Route path="/sales" element={
-            <ProtectedRoute requiredRole="sales">
-              <SalesDashboard />
-            </ProtectedRoute>
-          } />
-          <Route path="/market" element={
-            <ProtectedRoute requiredRole="market">
-              <MarketDashboard />
-            </ProtectedRoute>
-          } />
-          <Route path="/admin" element={
-            <ProtectedRoute allowedRoles={["admin","super_admin"]}>
-              <AdminDashboard />
-            </ProtectedRoute>
-          } />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/test-i18n" element={<TestI18n />} />
-        </Routes>
-        </div>
+          <div className="App">
+            <Routes>
+              <Route path="/" element={<FrontPage />} />
+              <Route path="/front-page" element={<FrontPage />} />
+              <Route path="/maintainer" element={<Maintainer />} />
+              <Route path="/whitening" element={<Whitening />} />
+              <Route path="/front-page-new" element={<PageCom />} />
+              <Route path="/login" element={<PearlLogin />} />
+              <Route path="/invisible-braces" element={<InvisibleBraces />} />
+              <Route path="/patient" element={<Dashboard />} />
+              <Route path="/list" element={<SmileTestTable />} />
+              <Route path="/journey" element={<Journey />} />
+              <Route path="/correction" element={<Correction />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/join" element={<Join />} />
+              <Route path="/upload" element={<Upload />} />
+              <Route path="/partners" element={
+                <ProtectedRoute requiredRole="operator">
+                  <Partners />
+                </ProtectedRoute>
+              } />
+              <Route path="/hospital" element={
+                <ProtectedRoute requiredRole="hospital">
+                  <HospitalDashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/doctor/*" element={
+                <ProtectedRoute requiredRole="doctor">
+                  <DoctorDashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/sales" element={
+                <ProtectedRoute requiredRole="sales">
+                  <SalesDashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/market" element={
+                <ProtectedRoute requiredRole="market">
+                  <MarketDashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin" element={
+                <ProtectedRoute allowedRoles={["admin","super_admin"]}>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/test-i18n" element={<TestI18n />} />
+            </Routes>
+          </div>
         </AuthProvider>
       </LanguageProvider>
     </ConfigProvider>

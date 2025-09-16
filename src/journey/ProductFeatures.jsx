@@ -6,27 +6,42 @@ import p10 from './imgs/10.svg';
 import CardWrapper from '../components/card-wrapper';
 import Grid from '../components/grid';
 import useMobile from '../hooks/mobile.tsx';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function ProductFeatures() {
+  const { t } = useLanguage();
   const [isMobile] = useMobile();
+  
   return (
-    <CardWrapper title="微笑旅程中會有什麼額外費用嗎？">
+    <CardWrapper title={t('journey.additionalCosts.title')}>
       <div className="product-features-content">
         <div className="product-features-item product-features-item-1">
-          隱形牙套不但全台均一價，更真正做到價格公開透明，絕無隱藏收費！為了讓你獲得預期中的全新笑容，我們的專業合作醫師將會進行口腔<br/>
-          相關檢查與掃描。這些費用或是掛號費等額外支出，是不包括在我們的隱形牙套費用當中，將由診所取這些可能的額外費用。
+          {t('journey.additionalCosts.description').split('\n').map((line, index) => (
+            <React.Fragment key={index}>
+              {line}
+              {index < t('journey.additionalCosts.description').split('\n').length - 1 && <br/>}
+            </React.Fragment>
+          ))}
         </div>
         <div className="product-features-item product-features-item-2">
-          以下是在微笑旅程中，可能會遇到的額外費用：
+          {t('journey.additionalCosts.subtitle')}
         </div>
         <Grid style={ isMobile ? { flexDirection: 'column', width: '60%', marginLeft: '20%' } : {}}>
           <div className="product-features-item-3-wrapper-item">
             <div className="product-features-item-3-wrapper-item-content">
-              <div className="product-features-item-3-wrapper-item-content-title">牙醫諮詢費用</div>
-              <div className="product-features-item-3-wrapper-item-content-price">$3,000*</div>
+              <div className="product-features-item-3-wrapper-item-content-title">
+                {t('journey.additionalCosts.items.consultation.title')}
+              </div>
+              <div className="product-features-item-3-wrapper-item-content-price">
+                {t('journey.additionalCosts.items.consultation.price')}
+              </div>
               <div className="product-features-item-3-wrapper-item-content-description">
-                包括3D口腔掃描、<br/>
-                X光及口腔檢查
+                {t('journey.additionalCosts.items.consultation.description').split('\n').map((line, index) => (
+                  <span key={index}>
+                    {line}
+                    {index < t('journey.additionalCosts.items.consultation.description').split('\n').length - 1 && <br/>}
+                  </span>
+                ))}
               </div>
             </div>
             <div className="product-features-item-3-wrapper-item-image">
@@ -36,12 +51,18 @@ export default function ProductFeatures() {
           <div className="product-features-item-3-wrapper-item">
             <div className="product-features-item-3-wrapper-item-content">
               <div className="product-features-item-3-wrapper-item-content-title">
-                精緻微調<br/>
-                再次口描費用
+                {t('journey.additionalCosts.items.fineTuning.title').split('\n').map((line, index) => (
+                  <span key={index}>
+                    {line}
+                    {index < t('journey.additionalCosts.items.fineTuning.title').split('\n').length - 1 && <br/>}
+                  </span>
+                ))}
               </div>
-              <div className="product-features-item-3-wrapper-item-content-price">$1,000*</div>
+              <div className="product-features-item-3-wrapper-item-content-price">
+                {t('journey.additionalCosts.items.fineTuning.price')}
+              </div>
               <div className="product-features-item-3-wrapper-item-content-description">
-              如果進行微調才需要
+                {t('journey.additionalCosts.items.fineTuning.description')}
               </div>
             </div>
             <div className="product-features-item-3-wrapper-item-image">
@@ -50,12 +71,16 @@ export default function ProductFeatures() {
           </div>
           <div className="product-features-item-3-wrapper-item">
             <div className="product-features-item-3-wrapper-item-content">
-              <div className="product-features-item-3-wrapper-item-content-title">透明維持器費用</div>
-              {/* <div className="product-features-item-3-wrapper-item-content-price">$3,000*</div> */}
+              <div className="product-features-item-3-wrapper-item-content-title">
+                {t('journey.additionalCosts.items.retainers.title')}
+              </div>
               <div className="product-features-item-3-wrapper-item-content-description">
-                $11,000** 2副組<br/>
-                $14,000** 3副組<br/>
-                $19,000** 5副組
+                {t('journey.additionalCosts.items.retainers.description').split('\n').map((line, index) => (
+                  <span key={index}>
+                    {line}
+                    {index < t('journey.additionalCosts.items.retainers.description').split('\n').length - 1 && <br/>}
+                  </span>
+                ))}
               </div>
             </div>
             <div className="product-features-item-3-wrapper-item-image">
@@ -64,8 +89,12 @@ export default function ProductFeatures() {
           </div>
         </Grid>
         <div className="product-features-item product-features-item-3">
-        *任何與診所有關的治療或服務等，其費用會直接由診所收取。電子郵箱所示價格或有所更動，不代表為最終實際收費金額，請依診所最新收費資訊為主。<br/>
-        ** 回診時主治醫師會根據口內情況，評估使用最後一副牙套齒列，或是重新口掃製作維持器。維持器價格將會依市場變動而有所調整，實際價格請聯繫客服。
+          {t('journey.additionalCosts.footnotes').split('\n').map((line, index) => (
+            <span key={index}>
+              {line}
+              {index < t('journey.additionalCosts.footnotes').split('\n').length - 1 && <br/>}
+            </span>
+          ))}
         </div>
       </div>
     </CardWrapper>
