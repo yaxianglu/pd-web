@@ -7,24 +7,25 @@ import Footer from '../components/footer';
 import PageWrapper from '../components/page-wrapper';
 import Thumbnail from '../components/thumbnail';
 import Sketch from '../components/sketch';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function PageCom() {
+  const { t } = useLanguage();
+  
   return (
     <>
       <Header />
       <PageWrapper>
         <Thumbnail 
-          title={<span style={{ fontSize: 56 }}>SHINE BRIGHT<br />SMILE RIGHT</span>}
-          subtitle="笑容不只是整齊，更應自信發光。"
-          button1="微笑測試"
-          button2="關於珍舒美"
+          title={<span style={{ fontSize: 56 }}>{t('home.title')}<br />{t('home.subtitle')}</span>}
+          subtitle={t('brand.tagline')}
+          button1={t('home.button1')}
+          button2={t('home.button2')}
           image={p5}
-          description={<>高透明度材質與口腔護理方案，讓你每個笑容自然明亮<br />AI技術輔助與臨床專業設計，實現客製化的科學矯正效果</>}
+          description={<>{t('home.description')}<br />{t('home.description2')}</>}
         />
         <Sketch
-          title={<>從療程設計到治療完成，我們始終專注於每一個細節，<br />
-            為你提供值得信賴的矯正體驗。<br />
-            因為我們相信，擁有整齊笑容，光芒與自信就會自然綻放。</>}
+          title={<>{t('home.sketchTitle')}</>}
         />
         <FeatureGrid />
       </PageWrapper>

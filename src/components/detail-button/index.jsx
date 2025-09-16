@@ -1,9 +1,12 @@
 import React from "react";
 import "./index.scss";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from '../../context/LanguageContext';
 
 export default function DetailButton({ text, style, size, disabled, onClick }) {
   const navigate = useNavigate();
+  const { t } = useLanguage();
+  
   const handleClick = (text) => {
     if (onClick) {
       onClick();
@@ -11,12 +14,19 @@ export default function DetailButton({ text, style, size, disabled, onClick }) {
     };
     switch (text) {
       case '微笑測試':
+      case t('common.smileTest'):
         window.open('/upload', '_blank');
         break;
       case '關於珍舒美':
+      case t('about.title'):
         navigate('/about');
         break;
       case '合作夥伴':
+      case t('about.partners'):
+        navigate('/join');
+        break;
+      case '成為合作夥伴':
+      case t('about.becomePartner'):
         navigate('/join');
         break;
       case '開啟微笑旅程':

@@ -2,28 +2,40 @@ import React from "react";
 import png2 from '../asserts/2-white.svg';
 import './BrandCompareTable.scss';
 import CardWrapper from "../components/card-wrapper";
+import { useLanguage } from '../context/LanguageContext';
 
 export default function BrandCompareTable() {
+  const { t } = useLanguage();
+  
   const rowGroups = [
     {
-      label: "品質",
+      label: t('invisibleBraces.brandCompare.categories.quality'),
       color: "#78a9ee",
-      rows: ["牙套材質", "生產地點", "醫材認證", "客戶服務"]
+      rows: [
+        t('invisibleBraces.brandCompare.metrics.material'),
+        t('invisibleBraces.brandCompare.metrics.production'),
+        t('invisibleBraces.brandCompare.metrics.certification'),
+        t('invisibleBraces.brandCompare.metrics.service')
+      ]
     },
     {
-      label: "收費",
+      label: t('invisibleBraces.brandCompare.categories.pricing'),
       color: "#b7d257",
-      rows: ["終端收費"]
+      rows: [t('invisibleBraces.brandCompare.metrics.cost')]
     },
     {
-      label: "技術",
+      label: t('invisibleBraces.brandCompare.categories.technology'),
       color: "#f19b43",
-      rows: ["牙套透明度", "軟體模擬", "製作時間"]
+      rows: [
+        t('invisibleBraces.brandCompare.metrics.transparency'),
+        t('invisibleBraces.brandCompare.metrics.software'),
+        t('invisibleBraces.brandCompare.metrics.productionTime')
+      ]
     }
   ];
 
   const brands = [
-    { name: "I牌", isActive: false },
+    { name: t('invisibleBraces.brandCompare.brands.iBrand'), isActive: false },
     { 
       name: (
         <div className="brand-logo">
@@ -31,64 +43,64 @@ export default function BrandCompareTable() {
             src={png2} 
             alt="PEARL DIGITAL"
           />
-          <span>PEARL DIGITAL</span>
+          <span>{t('invisibleBraces.brandCompare.brands.pearlDigital')}</span>
         </div>
       ),
       isActive: true
     },
-    { name: "Z牌", isActive: false },
-    { name: "牙技品牌", isActive: false }
+    { name: t('invisibleBraces.brandCompare.brands.zBrand'), isActive: false },
+    { name: t('invisibleBraces.brandCompare.brands.dentalTech'), isActive: false }
   ];
 
   // 定义比较数据
   const compareData = {
-    "牙套材質": {
-      "I牌": "專利材質",
-      "PEARL DIGITAL": "專利材質",
-      "Z牌": "醫材認證材質",
-      "牙技品牌": "一般牙技材質"
+    [t('invisibleBraces.brandCompare.metrics.material')]: {
+      [t('invisibleBraces.brandCompare.brands.iBrand')]: t('invisibleBraces.brandCompare.data.material.iBrand'),
+      [t('invisibleBraces.brandCompare.brands.pearlDigital')]: t('invisibleBraces.brandCompare.data.material.pearlDigital'),
+      [t('invisibleBraces.brandCompare.brands.zBrand')]: t('invisibleBraces.brandCompare.data.material.zBrand'),
+      [t('invisibleBraces.brandCompare.brands.dentalTech')]: t('invisibleBraces.brandCompare.data.material.dentalTech')
     },
-    "生產地點": {
-      "I牌": "墨西哥\n輸入進口",
-      "PEARL DIGITAL": "台灣QMS\n醫療器材廠",
-      "Z牌": "中國\n輸入進口",
-      "牙技品牌": "牙技所自產"
+    [t('invisibleBraces.brandCompare.metrics.production')]: {
+      [t('invisibleBraces.brandCompare.brands.iBrand')]: t('invisibleBraces.brandCompare.data.production.iBrand'),
+      [t('invisibleBraces.brandCompare.brands.pearlDigital')]: t('invisibleBraces.brandCompare.data.production.pearlDigital'),
+      [t('invisibleBraces.brandCompare.brands.zBrand')]: t('invisibleBraces.brandCompare.data.production.zBrand'),
+      [t('invisibleBraces.brandCompare.brands.dentalTech')]: t('invisibleBraces.brandCompare.data.production.dentalTech')
     },
-    "醫材認證": {
-      "I牌": "台灣FDA認證\n台灣TFDA class II\n醫材許可",
-      "PEARL DIGITAL": "美國FDA認證\n台灣TFDA class II\n醫材許可",
-      "Z牌": "台灣TFDA class II\n醫材許可",
-      "牙技品牌": "X"
+    [t('invisibleBraces.brandCompare.metrics.certification')]: {
+      [t('invisibleBraces.brandCompare.brands.iBrand')]: t('invisibleBraces.brandCompare.data.certification.iBrand'),
+      [t('invisibleBraces.brandCompare.brands.pearlDigital')]: t('invisibleBraces.brandCompare.data.certification.pearlDigital'),
+      [t('invisibleBraces.brandCompare.brands.zBrand')]: t('invisibleBraces.brandCompare.data.certification.zBrand'),
+      [t('invisibleBraces.brandCompare.brands.dentalTech')]: t('invisibleBraces.brandCompare.data.certification.dentalTech')
     },
-    "客戶服務": {
-      "I牌": "中南美洲客服",
-      "PEARL DIGITAL": "台灣在地\n微笑管家",
-      "Z牌": "APP追蹤",
-      "牙技品牌": "品牌端"
+    [t('invisibleBraces.brandCompare.metrics.service')]: {
+      [t('invisibleBraces.brandCompare.brands.iBrand')]: t('invisibleBraces.brandCompare.data.service.iBrand'),
+      [t('invisibleBraces.brandCompare.brands.pearlDigital')]: t('invisibleBraces.brandCompare.data.service.pearlDigital'),
+      [t('invisibleBraces.brandCompare.brands.zBrand')]: t('invisibleBraces.brandCompare.data.service.zBrand'),
+      [t('invisibleBraces.brandCompare.brands.dentalTech')]: t('invisibleBraces.brandCompare.data.service.dentalTech')
     },
-    "終端收費": {
-      "I牌": "美國醫材品牌\n>20萬",
-      "PEARL DIGITAL": "美國醫材品牌\n$48,000起",
-      "Z牌": "新加坡品牌\n$72,000起",
-      "牙技品牌": "牙技自產\n價格不透明"
+    [t('invisibleBraces.brandCompare.metrics.cost')]: {
+      [t('invisibleBraces.brandCompare.brands.iBrand')]: t('invisibleBraces.brandCompare.data.cost.iBrand'),
+      [t('invisibleBraces.brandCompare.brands.pearlDigital')]: t('invisibleBraces.brandCompare.data.cost.pearlDigital'),
+      [t('invisibleBraces.brandCompare.brands.zBrand')]: t('invisibleBraces.brandCompare.data.cost.zBrand'),
+      [t('invisibleBraces.brandCompare.brands.dentalTech')]: t('invisibleBraces.brandCompare.data.cost.dentalTech')
     },
-    "牙套透明度": {
-      "I牌": "中等\n有明顯條紋",
-      "PEARL DIGITAL": "高透明度",
-      "Z牌": "霧面\n不清晰",
-      "牙技品牌": "視生產而定\n無品質管理系統"
+    [t('invisibleBraces.brandCompare.metrics.transparency')]: {
+      [t('invisibleBraces.brandCompare.brands.iBrand')]: t('invisibleBraces.brandCompare.data.transparency.iBrand'),
+      [t('invisibleBraces.brandCompare.brands.pearlDigital')]: t('invisibleBraces.brandCompare.data.transparency.pearlDigital'),
+      [t('invisibleBraces.brandCompare.brands.zBrand')]: t('invisibleBraces.brandCompare.data.transparency.zBrand'),
+      [t('invisibleBraces.brandCompare.brands.dentalTech')]: t('invisibleBraces.brandCompare.data.transparency.dentalTech')
     },
-    "軟體模擬": {
-      "I牌": "○",
-      "PEARL DIGITAL": "○\n合法軟體醫材",
-      "Z牌": "○",
-      "牙技品牌": "X"
+    [t('invisibleBraces.brandCompare.metrics.software')]: {
+      [t('invisibleBraces.brandCompare.brands.iBrand')]: t('invisibleBraces.brandCompare.data.software.iBrand'),
+      [t('invisibleBraces.brandCompare.brands.pearlDigital')]: t('invisibleBraces.brandCompare.data.software.pearlDigital'),
+      [t('invisibleBraces.brandCompare.brands.zBrand')]: t('invisibleBraces.brandCompare.data.software.zBrand'),
+      [t('invisibleBraces.brandCompare.brands.dentalTech')]: t('invisibleBraces.brandCompare.data.software.dentalTech')
     },
-    "製作時間": {
-      "I牌": "2-3周",
-      "PEARL DIGITAL": "5個工作日",
-      "Z牌": "2-3周",
-      "牙技品牌": "7-10天"
+    [t('invisibleBraces.brandCompare.metrics.productionTime')]: {
+      [t('invisibleBraces.brandCompare.brands.iBrand')]: t('invisibleBraces.brandCompare.data.productionTime.iBrand'),
+      [t('invisibleBraces.brandCompare.brands.pearlDigital')]: t('invisibleBraces.brandCompare.data.productionTime.pearlDigital'),
+      [t('invisibleBraces.brandCompare.brands.zBrand')]: t('invisibleBraces.brandCompare.data.productionTime.zBrand'),
+      [t('invisibleBraces.brandCompare.brands.dentalTech')]: t('invisibleBraces.brandCompare.data.productionTime.dentalTech')
     }
   };
 
@@ -99,7 +111,7 @@ export default function BrandCompareTable() {
 
   return (
     <CardWrapper
-      title="與其他品牌比較"
+      title={t('invisibleBraces.brandCompare.title')}
     >
       <div className="table-wrapper">
           {/* 品牌表头 */}

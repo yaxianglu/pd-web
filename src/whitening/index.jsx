@@ -9,22 +9,24 @@ import p1 from './imgs/1.svg';
 import PageWrapper from '../components/page-wrapper';
 import Thumbnail from '../components/thumbnail';
 import Sketch from '../components/sketch';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function PageCom() {
+  const { t } = useLanguage();
+  
   return (
     <>
       <Header />
       <PageWrapper>
         <Thumbnail 
-          title={<>自信，<br />從齒開始</>}
-          subtitle="亮白不只外表，自信從齒開始"
-          button1="微笑測試"
+          title={<>{t('whitening.title')}</>}
+          subtitle={t('whitening.subtitle')}
+          button1={t('whitening.buttonText')}
           image={p1}
         />
         <Sketch
-          title={<>日常笑容中的光彩，來自潔白健康的牙齒。</>}
-          subtitle={<>珍舒美白系列推出專為矯正療程期間與日常口腔護理設計的牙齒美白筆，<br />
-            不僅追求亮白效果，更重視牙齒健康與使用體驗。</>}
+          title={<>{t('whitening.sketchTitle')}</>}
+          subtitle={<>{t('whitening.sketchDescription')}</>}
         />
         <ProductFeatures />
         <ApplicableObjects />

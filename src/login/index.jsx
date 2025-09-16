@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useLanguage } from "../context/LanguageContext";
 import apiService from '../services/api';
 import { getRouteByRole } from '../contants/roleRoutes';
 import CryptoJS from 'crypto-js';
@@ -11,6 +12,7 @@ import './index.scss';
 export default function PearlLogin() {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const { t } = useLanguage();
   const [patientAccount, setPatientAccount] = useState("");
   const [staffUsername, setStaffUsername] = useState("");
   const [staffPassword, setStaffPassword] = useState("");
@@ -32,7 +34,7 @@ export default function PearlLogin() {
   // 患者登录处理
   const handlePatientLogin = async () => {
     if (!patientAccount.trim()) {
-      setErrorMessage('請輸入UUID');
+      setErrorMessage(t('login.errorMessages.enterUuid'));
       return;
     }
 
@@ -59,11 +61,11 @@ export default function PearlLogin() {
         const route = getRouteByRole('patient');
         navigate(route);
       } else {
-        setErrorMessage(responseData.message || 'UUID驗證失敗');
+        setErrorMessage(responseData.message || t('login.errorMessages.uuidValidationFailed'));
       }
     } catch (error) {
       console.error('Patient login error:', error);
-      setErrorMessage(error.message || '網絡錯誤，請稍後再試');
+      setErrorMessage(error.message || t('login.errorMessages.networkError'));
     } finally {
       setIsLoading(false);
     }
@@ -75,7 +77,7 @@ export default function PearlLogin() {
     const password = staffPassword.trim();
 
     if (!username || !password) {
-      setErrorMessage('請輸入用戶名和密碼');
+      setErrorMessage(t('login.errorMessages.enterCredentials'));
       return;
     }
 
@@ -107,11 +109,11 @@ export default function PearlLogin() {
         const route = getRouteByRole(userRole, username);
         navigate(route);
       } else {
-        setErrorMessage(responseData.message || '登入失敗');
+        setErrorMessage(responseData.message || t('login.errorMessages.loginFailed'));
       }
     } catch (error) {
       console.error('Login error:', error);
-      setErrorMessage(error.message || '網絡錯誤，請稍後再試');
+      setErrorMessage(error.message || t('login.errorMessages.networkError'));
     } finally {
       setIsLoading(false);
     }
@@ -126,26 +128,30 @@ export default function PearlLogin() {
       >
         <img src={img2} alt="" className="login-logo"/>
         <div className="login-slogan">
-          SHINE BRIGHT<br/>
-          SMILE RIGHT.
+          {t('login.slogan').split('\n').map((line, index) => (
+            <React.Fragment key={index}>
+              {line}
+              {index < t('login.slogan').split('\n').length - 1 && <br/>}
+            </React.Fragment>
+          ))}
         </div>
       </div>
 
       {/* 右侧登录表单区域 */}
       <div className="login-form-section">
         <div className="login-form-container">
-          <div className="login-welcome">WELCOME TO PEARL DIGITAL</div>
+          <div className="login-welcome">{t('login.welcome')}</div>
 
           {/* 患者登录 */}
           <div className="login-section">
             <div className="section-divider">
               <div className="divider-line" />
-              <div className="section-title">患者登入</div>
+              <div className="section-title">{t('login.patientLogin')}</div>
               <div className="divider-line" />
             </div>
             <div className="input-label">
-            帳號
-              <span className="info-icon" title="請輸入您的微笑測試UUID">ⓘ</span>
+              {t('login.account')}
+              <span className="info-icon" title={t('login.accountTooltip')}>ⓘ</span>
             </div>
             <input
               value={patientAccount}
@@ -158,7 +164,7 @@ export default function PearlLogin() {
               className="login-button"
               disabled={isLoading}
             >
-              {isLoading ? '驗證中...' : '登入'}
+              {isLoading ? t('login.verifying') : t('login.loginButton')}
             </button>
           </div>
 
@@ -167,18 +173,18 @@ export default function PearlLogin() {
           <div className="login-section">
             <div className="section-divider">
               <div className="divider-line" />
-              <div className="section-title">工作人員登入</div>
+              <div className="section-title">{t('login.staffLogin')}</div>
               <div className="divider-line" />
             </div>
             <input
-              placeholder="Username or Email"
+              placeholder={t('login.username')}
               value={staffUsername}
               onChange={(e) => setStaffUsername(e.target.value)}
               className="form-input"
             />
             <div className="password-input-container">
               <input
-                placeholder="Password"
+                placeholder={t('login.password')}
                 type={showPassword ? "text" : "password"}
                 value={staffPassword}
                 onChange={(e) => setStaffPassword(e.target.value)}
@@ -197,7 +203,7 @@ export default function PearlLogin() {
               className="login-button"
               disabled={isLoading}
             >
-              {isLoading ? '登入中...' : '登入'}
+              {isLoading ? t('login.loggingIn') : t('login.loginButton')}
             </button>
             
             {errorMessage && (

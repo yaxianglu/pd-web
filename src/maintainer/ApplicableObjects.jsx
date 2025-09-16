@@ -3,8 +3,10 @@ import './ApplicableObjects.scss';
 import CardWrapper from '../components/card-wrapper';
 import DetailButton from '../components/detail-button';
 import Grid from '../components/grid';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function ApplicableObjects() {
+  const { t } = useLanguage();
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -23,36 +25,33 @@ export default function ApplicableObjects() {
   }, []);
 
   return (
-    <CardWrapper title="適用對象">
+    <CardWrapper title={t('maintainer.applicableObjects.title')}>
       {
         isMobile ? (
           <>
           <Grid>
             <div className="object-card blue">
-              <h3 className="card-title">傳統矯正</h3>
+              <h3 className="card-title">{t('maintainer.applicableObjects.objects.traditional.title')}</h3>
               <p className="card-description">
-                完成傳統矯正療程<br />
-                後的固定期
+                {t('maintainer.applicableObjects.objects.traditional.description')}
               </p>
             </div>
           </Grid>
             
           <Grid>
           <div className="object-card green">
-              <h3 className="card-title">隱形矯正</h3>
+              <h3 className="card-title">{t('maintainer.applicableObjects.objects.invisible.title')}</h3>
               <p className="card-description">
-                完成隱形矯正療<br />
-                程後的穩定階段
+                {t('maintainer.applicableObjects.objects.invisible.description')}
               </p>
             </div>
           </Grid>
             
           <Grid>
           <div className="object-card orange">
-              <h3 className="card-title">回彈復發</h3>
+              <h3 className="card-title">{t('maintainer.applicableObjects.objects.relapse.title')}</h3>
               <p className="card-description">
-                有輕微牙齒位移傾向<br />
-                希望維持齒列整齊者
+                {t('maintainer.applicableObjects.objects.relapse.description')}
               </p>
             </div>
           </Grid>
@@ -61,26 +60,23 @@ export default function ApplicableObjects() {
           <>
           <Grid>
             <div className="object-card blue">
-              <h3 className="card-title">傳統矯正</h3>
+              <h3 className="card-title">{t('maintainer.applicableObjects.objects.traditional.title')}</h3>
               <p className="card-description">
-                完成傳統矯正療程<br />
-                後的固定期
+                {t('maintainer.applicableObjects.objects.traditional.description')}
               </p>
             </div>
             
             <div className="object-card green">
-              <h3 className="card-title">隱形矯正</h3>
+              <h3 className="card-title">{t('maintainer.applicableObjects.objects.invisible.title')}</h3>
               <p className="card-description">
-                完成隱形矯正療<br />
-                程後的穩定階段
+                {t('maintainer.applicableObjects.objects.invisible.description')}
               </p>
             </div>
             
             <div className="object-card orange">
-              <h3 className="card-title">回彈復發</h3>
+              <h3 className="card-title">{t('maintainer.applicableObjects.objects.relapse.title')}</h3>
               <p className="card-description">
-                有輕微牙齒位移傾向<br />
-                希望維持齒列整齊者
+                {t('maintainer.applicableObjects.objects.relapse.description')}
               </p>
             </div>
           </Grid>
@@ -88,7 +84,7 @@ export default function ApplicableObjects() {
         )
       }
       
-      <DetailButton text="免費診斷是否適合我？" />
+      <DetailButton text={t('maintainer.applicableObjects.buttonText')} />
     </CardWrapper>
   );
 } 

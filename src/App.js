@@ -2,6 +2,7 @@ import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 import { AuthProvider } from './context/AuthContext';
+import { LanguageProvider } from './context/LanguageContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import PageCom from './front-page';
 import FrontPage from './front-page';
@@ -24,12 +25,14 @@ import AdminDashboard from './admin';
 import MarketDashboard from './market';
 import Privacy from './privacy';
 import Terms from './terms';
+import TestI18n from './test-i18n';
 
 function App() {
   return (
     <ConfigProvider message={{ top: 80, duration: 1.8 }} notification={{ placement: 'topRight' }}>
-      <AuthProvider>
-      <div className="App">
+      <LanguageProvider>
+        <AuthProvider>
+        <div className="App">
         {/* <nav>
           <Link to="/front-page">FrontPage</Link> | <Link to="/login">Login</Link>
         </nav> */}
@@ -81,9 +84,11 @@ function App() {
           } />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
+          <Route path="/test-i18n" element={<TestI18n />} />
         </Routes>
-      </div>
-      </AuthProvider>
+        </div>
+        </AuthProvider>
+      </LanguageProvider>
     </ConfigProvider>
   );
 }

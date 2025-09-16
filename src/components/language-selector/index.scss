@@ -1,0 +1,51 @@
+.language-selector {
+  .language-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .language-flag {
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    .language-name {
+      font-size: 14px;
+      color: #333;
+    }
+  }
+
+  .ant-select-selection-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ant-select-arrow {
+    color: #666;
+  }
+
+  &:hover .ant-select-arrow {
+    color: #47d3cf;
+  }
+
+  &.ant-select-focused .ant-select-arrow {
+    color: #47d3cf;
+  }
+}
+
+// 下拉选项样式
+.ant-select-dropdown {
+  .ant-select-item {
+    padding: 8px 12px;
+    
+    &:hover {
+      background-color: #f0f9ff;
+    }
+
+    &.ant-select-item-option-selected {
+      background-color: #e6f7ff;
+      color: #47d3cf;
+    }
+  }
+}

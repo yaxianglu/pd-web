@@ -5,10 +5,13 @@ import logo from '../../asserts/2.svg';
 import open from './imgs/1.svg';
 import { Select } from 'antd';
 import 'antd/dist/reset.css';
+import { useLanguage } from '../../context/LanguageContext';
+import LanguageSelector from '../language-selector';
 
 export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [showCover, setShowCover] = useState(false); // 是否顯示遮罩
@@ -42,13 +45,13 @@ export default function Header() {
     switch (location.pathname) {
       case '/':
       case '/front-page':
-        return 'PEARL DIGITAL';
+        return t('brand.pearlDigital');
       case '/about':
-        return '關於我們';
+        return t('about.title');
       case '/join':
-        return '合作夥伴';
+        return t('about.partners');
       default:
-        return 'PEARL DIGITAL';
+        return t('brand.pearlDigital');
     }
   };
 
@@ -69,28 +72,28 @@ export default function Header() {
 
   const handleBrandSelectChange = (value) => {
     switch (value) {
-      case 'PEARL DIGITAL':
+      case t('brand.pearlDigital'):
         navigate('/');
         break;
-      case '隱形牙套':
+      case t('navigation.invisibleBraces'):
         navigate('/invisible-braces');
         break;
-      case '維持器':
+      case t('navigation.maintainer'):
         navigate('/maintainer');
         break;
-      case '珍舒美白':
+      case t('navigation.whitening'):
         navigate('/whitening');
         break;
-      case '珍舒美旅程':
+      case t('navigation.journey'):
         navigate('/journey');
         break;
-      case '矯正與美':
+      case t('navigation.correction'):
         navigate('/correction');
         break;
-      case '關於我們':
+      case t('navigation.about'):
         navigate('/about');
         break;
-      case '合作夥伴':
+      case t('navigation.partners'):
         navigate('/join');
         break;
       default:
@@ -122,9 +125,9 @@ export default function Header() {
             style={{ width: 160, height: 36 }}
             className="brand-select"
             options={[
-              { value: 'PEARL DIGITAL', label: 'PEARL DIGITAL' },
-              { value: '關於我們', label: '關於我們' },
-              { value: '合作夥伴', label: '合作夥伴' },
+              { value: t('brand.pearlDigital'), label: t('brand.pearlDigital') },
+              { value: t('about.title'), label: t('about.title') },
+              { value: t('about.partners'), label: t('about.partners') },
             ]}
             onChange={handleBrandSelectChange}
           />
@@ -139,35 +142,35 @@ export default function Header() {
               className={location.pathname === '/invisible-braces' ? 'active' : ''}
               onClick={(e) => { e.preventDefault(); navigate('/invisible-braces'); }}
             >
-              隱形牙套
+              {t('navigation.invisibleBraces')}
             </a>
             <a 
               href="#" 
               className={location.pathname === '/maintainer' ? 'active' : ''}
               onClick={(e) => { e.preventDefault(); navigate('/maintainer'); }}
             >
-              維持器
+              {t('navigation.maintainer')}
             </a>
             <a 
               href="#" 
               className={location.pathname === '/journey' ? 'active' : ''}
               onClick={(e) => { e.preventDefault(); navigate('/journey'); }}
             >
-              珍舒美旅程
+              {t('navigation.journey')}
             </a>
             <a 
               href="#" 
               className={location.pathname === '/correction' ? 'active' : ''}
               onClick={(e) => { e.preventDefault(); navigate('/correction'); }}
             >
-              矯正與美
+              {t('navigation.correction')}
             </a>
           </nav>
         </>
         )}
         
         <button className="test-btn" onClick={() => window.open('/upload', '_blank')}>
-          微笑測試 <span className="star">✦</span>
+          {t('navigation.smileTest')} <span className="star">✦</span>
         </button>
       </div>
       <div className="header-right">
@@ -175,18 +178,12 @@ export default function Header() {
           <img src={open} alt="#" style={{ width: 28, height: 28, marginLeft: 12 }} onClick={() => setShowCover(true)}/>
         ) : (
           <>
-          <Select
-            defaultValue="台灣(繁中)"
+          <LanguageSelector
             size="small"
             style={{ width: 120, height: 36 }}
             className="lang-select"
-            options={[
-              { value: '台灣(繁中)', label: '台灣(繁中)' },
-              { value: '中国(简体)', label: '中国(简体)' },
-              { value: 'EN', label: 'EN' }
-            ]}
           />
-          <button className="login-btn" onClick={handleLoginClick}>登入</button>
+          <button className="login-btn" onClick={handleLoginClick}>{t('common.login')}</button>
           </>
         )}
       </div>
@@ -194,13 +191,13 @@ export default function Header() {
         <div className="header-cover" onClick={() => setShowCover(false)}>
           <div className="header-cover-close" onClick={() => setShowCover(false)}>X</div>
           <div className="header-cover-content">
-            <span onClick={() => navigate('/invisible-braces')}>隱形牙套</span>
-            <span onClick={() => navigate('/maintainer')}>維持器</span>
-            <span onClick={() => navigate('/journey')}>珍舒美旅程</span>
-            <span onClick={() => navigate('/correction')}>矯正與美</span>
-            <span onClick={() => navigate('/about')}>關於我們</span>
-            <span onClick={() => navigate('/join')}>合作夥伴</span>
-            <span onClick={handleLoginClick}>用户登陆</span>
+            <span onClick={() => navigate('/invisible-braces')}>{t('navigation.invisibleBraces')}</span>
+            <span onClick={() => navigate('/maintainer')}>{t('navigation.maintainer')}</span>
+            <span onClick={() => navigate('/journey')}>{t('navigation.journey')}</span>
+            <span onClick={() => navigate('/correction')}>{t('navigation.correction')}</span>
+            <span onClick={() => navigate('/about')}>{t('navigation.about')}</span>
+            <span onClick={() => navigate('/join')}>{t('navigation.partners')}</span>
+            <span onClick={handleLoginClick}>{t('common.login')}</span>
           </div>
         </div>
       )}

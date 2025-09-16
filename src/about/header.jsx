@@ -1,14 +1,17 @@
 import './header.scss';
 import p5 from './imgs/6.jpg';
 import DetailButton from '../components/detail-button';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Description() {
+  const { t } = useLanguage();
+  
   return (
     <div className="about-about-description-section">
       <div className="about-about-description-section-text">
-        專注科技與專業<br />
-        打造安心美齒體驗
-      <DetailButton text="成為合作夥伴" onClick={() => {
+        {t('about.pageTitle')}<br />
+        {t('about.pageSubtitle')}
+      <DetailButton text={t('about.becomePartner')} onClick={() => {
         window.location.href = '/join';
       }}/>
       </div>
