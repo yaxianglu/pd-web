@@ -6,42 +6,54 @@ import p15 from './imgs/15.png';
 import p16 from './imgs/16.png';
 import p17 from './imgs/17.png';
 import p18 from './imgs/18.png';
-import Grid from '../components/grid';
+import Grid3 from '../components/grid';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function ProductFeatures() {
+  const { t } = useLanguage();
+  
   return (
     <CardWrapper>
-      <Grid>
+      <Grid3>
         <div className="correction-dkfjsl-wrapper-item correction-dkfjsl-wrapper-item-tttt">
-          因亞洲人的基因表現與顱顏<br/>
-          特徵,常有以下牙齒排列與<br/>
-          骨性咬合問題,進而影響整<br/>
-          體臉型的外貌:
+          {t('correction.facialIssues.description').split('\n').map((line, index) => (
+            <span key={index}>
+              {line}
+              {index < t('correction.facialIssues.description').split('\n').length - 1 && <br/>}
+            </span>
+          ))}
         </div>
         <div className="correction-dkfjsl-wrapper-item">
           <img src={p14} alt="p3" />
           <div className="correction-dkfjsl-wrapper-item-content">
-
             <div className="correction-dkfjsl-wrapper-item-title">
-            上前牙突出（俗稱龅牙）
+              {t('correction.facialIssues.problems.overbite.title')}
             </div>
             <div className="correction-dkfjsl-wrapper-item-description">
-            導致嘴唇無法自然閉合、<br/>
-            嘴型過度外凸。
+              {t('correction.facialIssues.problems.overbite.description').split('\n').map((line, index) => (
+                <span key={index}>
+                  {line}
+                  {index < t('correction.facialIssues.problems.overbite.description').split('\n').length - 1 && <br/>}
+                </span>
+              ))}
             </div>
           </div>
         </div>
-      </Grid>
-      <Grid style={{ marginTop: '24px' }}>
+      </Grid3>
+      <Grid3 style={{ marginTop: '24px' }}>
         <div className="correction-dkfjsl-wrapper-item">
           <img src={p17} alt="p3" />
           <div className="correction-dkfjsl-wrapper-item-content">
             <div className="correction-dkfjsl-wrapper-item-title">
-            下巴後縮（骨性二類）
+              {t('correction.facialIssues.problems.underbite.title')}
             </div>
             <div className="correction-dkfjsl-wrapper-item-description">
-            造成臉型比例失衡，視覺<br/>
-            上顯得無神
+              {t('correction.facialIssues.problems.underbite.description').split('\n').map((line, index) => (
+                <span key={index}>
+                  {line}
+                  {index < t('correction.facialIssues.problems.underbite.description').split('\n').length - 1 && <br/>}
+                </span>
+              ))}
             </div>
           </div>
         </div>
@@ -49,40 +61,48 @@ export default function ProductFeatures() {
           <img src={p18} alt="p3" />
           <div className="correction-dkfjsl-wrapper-item-content">
             <div className="correction-dkfjsl-wrapper-item-title">
-          牙弓狹窄／擁擠
-          </div>
-          <div className="correction-dkfjsl-wrapper-item-description">
-          讓臉型偏尖，易顯老態
-          </div>
+              {t('correction.facialIssues.problems.crowding.title')}
+            </div>
+            <div className="correction-dkfjsl-wrapper-item-description">
+              {t('correction.facialIssues.problems.crowding.description')}
+            </div>
           </div>
         </div>
-      </Grid>
-      <Grid style={{ marginTop: '24px' }}>
+      </Grid3>
+      <Grid3 style={{ marginTop: '24px' }}>
         <div className="correction-dkfjsl-wrapper-item">
           <img src={p15} alt="p3" />
           <div className="correction-dkfjsl-wrapper-item-content">
-          <div className="correction-dkfjsl-wrapper-item-title">
-            開咬
-          </div>
-          <div className="correction-dkfjsl-wrapper-item-description">
-          影響發音與咀嚼效率，也<br/>
-          使下半臉比例不協調
-          </div>
+            <div className="correction-dkfjsl-wrapper-item-title">
+              {t('correction.facialIssues.problems.openBite.title')}
+            </div>
+            <div className="correction-dkfjsl-wrapper-item-description">
+              {t('correction.facialIssues.problems.openBite.description').split('\n').map((line, index) => (
+                <span key={index}>
+                  {line}
+                  {index < t('correction.facialIssues.problems.openBite.description').split('\n').length - 1 && <br/>}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
         <div className="correction-dkfjsl-wrapper-item">
           <img src={p16} alt="p3" />
           <div className="correction-dkfjsl-wrapper-item-content">
             <div className="correction-dkfjsl-wrapper-item-title">
-            深咬
-          </div>
-          <div className="correction-dkfjsl-wrapper-item-description">
-            影響發音與咀嚼效率，也<br/>
-            使下半臉比例不協調
-          </div>
+              {t('correction.facialIssues.problems.deepBite.title')}
+            </div>
+            <div className="correction-dkfjsl-wrapper-item-description">
+              {t('correction.facialIssues.problems.deepBite.description').split('\n').map((line, index) => (
+                <span key={index}>
+                  {line}
+                  {index < t('correction.facialIssues.problems.deepBite.description').split('\n').length - 1 && <br/>}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
-      </Grid>
+      </Grid3>
     </CardWrapper>
   );
-} 
+}

@@ -130,7 +130,35 @@ export default {
     // 公司介绍描述
     companyMission: '我们致力于将先进技术应用于齿颚矫正，提升治疗品质与患者体验。我们相信，美丽的笑容，应建立在专业、安全与科技并重的基础上。',
     // 描述部分
-    descriptionText: '在珍舒美，我们以科技辅助、专业主导、品质落实为核心理念，持续精进，只为让每一位佩戴者，看见自然的改变、感受安心的矫正体验。'
+    descriptionText: '在珍舒美，我们以科技辅助、专业主导、品质落实为核心理念，持续精进，只为让每一位佩戴者，看见自然的改变、感受安心的矫正体验。',
+    smileSteps: {
+      step1: {
+        title: '预约',
+        description: '扫QR code前往\n与微笑管家确认特约诊所\n与预约时间',
+        price: '免费'
+      },
+      step2: {
+        title: '评估',
+        description: '前往特约诊所进行\n3D口腔扫描与X光\n检查个别资料评估',
+        price: '$3,000(此费用为诊所收取)'
+      },
+      step3: {
+        title: '计划',
+        description: '报告两周内回特约诊所审核\n并同意您的专属美齿计划',
+        price: '$48,000-$118,000'
+      },
+      step4: {
+        title: '旅程',
+        description: '隐形牙套制作完成\n听取医师说明\n整套牙套一次领取\n视情况分批发放',
+        price: '免费'
+      },
+      step5: {
+        title: '开怀',
+        description: '透过微笑管家持续追踪进度\n联系开怀不间断\n计划安心不中断',
+        price: '免费'
+      },
+      buttonText: '开启微笑旅程'
+    }
   },
 
   // 隐形牙套页面
@@ -468,11 +496,28 @@ export default {
     adultDescription: '成人也能拥有理想笑容与稳定咬合。矫正除了改善外观，更能解决功能性问题，提升生活品质与自信心。',
     facialIssues: {
       title: '因亚洲人的基因表现与颅颜特征，常有以下牙齿排列与骨性咬合问题，进而影响整体脸型的外貌:',
-      issues: {
-        protruding: '上前牙突出(俗称龅牙)\n导致嘴唇无法自然闭合、\n嘴型过度外凸。',
-        receding: '下巴后缩\n影响脸部比例与侧面轮廓',
-        crowding: '牙齿拥挤\n影响清洁与美观',
-        deepBite: '深咬问题\n可能影响咀嚼功能'
+      description: '因亚洲人的基因表现与颅颜\n特征,常有以下牙齿排列与\n骨性咬合问题,进而影响整\n体脸型的外貌:',
+      problems: {
+        overbite: {
+          title: '上前牙突出（俗称龅牙）',
+          description: '导致嘴唇无法自然闭合、\n嘴型过度外凸。'
+        },
+        underbite: {
+          title: '下巴后缩（骨性二类）',
+          description: '造成脸型比例失衡，视觉\n上显得无神'
+        },
+        crowding: {
+          title: '牙弓狭窄／拥挤',
+          description: '让脸型偏尖，易显老态'
+        },
+        openBite: {
+          title: '开咬',
+          description: '影响发音与咀嚼效率，也\n使下半脸比例不协调'
+        },
+        deepBite: {
+          title: '深咬',
+          description: '影响发音与咀嚼效率，也\n使下半脸比例不协调'
+        }
       }
     },
     teenOrthodontics: {
@@ -520,6 +565,26 @@ export default {
       lifestyle: {
         title: '配合成人节奏与需求:',
         description: '珍舒美的隐形牙套疗程设计灵活弹性、可拆卸佩戴，让你在工作会议、社交活动、出差旅程中都能自在应对。'
+      }
+    },
+    earlyCorrection: {
+      title: '早期矫正对青少年带来的帮助',
+      benefits: '预防牙齿拥挤与未来齿列问题\n促进正常颚骨发育，减少需外科手术机会\n改善清洁死角，降低蛀牙与牙周风险\n提升笑容自信与自我形象，有助校园生活与社交互动'
+    },
+    manufacturingSection: {
+      buttonText: '了解你的牙齿状况',
+      description: '透过结合三维影像（CBCT、侧颅X光），深入了解每位患者的独特面部结构和需求，\n珍舒美能针对骨架与牙列同时进行分析与调整，让面部轮廓与咬合功能一并优化，从\n「牙」开始，打造更自然协调的美。'
+    },
+    upgrade: {
+      title: '矫正不只是变美，更是生活的升级',
+      description: '对成年人而言，矫正往往兼具审美需求与功能改善。整齐的牙齿不仅带来自然对称的笑容与脸部比例，也有以下实质帮助：',
+      aestheticImpact: {
+        title: '对美容的影响：',
+        description: '调整齿列后，唇形自然饱满、脸型线条更流畅\n有助改善下巴后缩、嘴突等亚洲人群常见面型外观问题\n让笑容与眼神更有自信与亲和力，提升整体气质'
+      },
+      adultNeeds: {
+        title: '配合成人节奏与需求：',
+        description: '珍舒美的隐形牙套疗程设计灵活弹性、可拆卸佩戴，让你在\n工作会议、社交活动、出差旅程中都能自在应对。'
       }
     }
   },

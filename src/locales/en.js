@@ -130,7 +130,35 @@ export default {
     // Company introduction description
     companyMission: 'We are committed to applying advanced technology to orthodontics, improving treatment quality and patient experience. We believe that beautiful smiles should be built on the foundation of professionalism, safety, and technology.',
     // Description section
-    descriptionText: 'At Pearl Digital, we are assisted by technology, led by professionalism, and grounded in quality as our core philosophy, continuously striving for excellence, only to allow every wearer to see natural changes and experience reassuring orthodontic treatment.'
+    descriptionText: 'At Pearl Digital, we are assisted by technology, led by professionalism, and grounded in quality as our core philosophy, continuously striving for excellence, only to allow every wearer to see natural changes and experience reassuring orthodontic treatment.',
+    smileSteps: {
+      step1: {
+        title: 'Appointment',
+        description: 'Scan QR code to visit\nConfirm with Smile Manager\nSchedule appointment time',
+        price: 'Free'
+      },
+      step2: {
+        title: 'Evaluation',
+        description: 'Visit partner clinic for\n3D oral scan and X-ray\nIndividual data assessment',
+        price: '$3,000 (clinic fee)'
+      },
+      step3: {
+        title: 'Plan',
+        description: 'Return to partner clinic within 2 weeks\nReview and approve your personalized\nbeautiful smile plan',
+        price: '$48,000-$118,000'
+      },
+      step4: {
+        title: 'Journey',
+        description: 'Invisible aligners completed\nListen to doctor\'s instructions\nReceive full set of aligners at once\nDistribute in batches as needed',
+        price: 'Free'
+      },
+      step5: {
+        title: 'Joy',
+        description: 'Continuous progress tracking through Smile Manager\nUninterrupted communication and joy\nSecure and uninterrupted plan',
+        price: 'Free'
+      },
+      buttonText: 'Start Your Smile Journey'
+    }
   },
 
   // Invisible Braces page
@@ -468,11 +496,30 @@ export default {
     adultDescription: 'Adults can also have ideal smiles and stable bites. Orthodontics not only improves appearance but also solves functional problems, improving quality of life and self-confidence.',
     facialIssues: {
       title: 'Due to the genetic expression and craniofacial characteristics of Asians, there are often the following dental alignment and skeletal bite problems, which affect the overall facial appearance:',
-      issues: {
-        protruding: 'Protruding upper front teeth (commonly called buck teeth)\nPrevents natural lip closure,\nExcessive mouth protrusion.',
-        receding: 'Receding chin\nAffects facial proportions and side profile',
-        crowding: 'Dental crowding\nAffects cleaning and aesthetics',
-        deepBite: 'Deep bite issues\nMay affect chewing function'
+      description: 'Due to the genetic expression and craniofacial\ncharacteristics of Asians, there are often the following\ndental alignment and skeletal bite problems, which\naffect the overall facial appearance:',
+      problems: {
+        overbite: {
+          title: 'Protruding Upper Front Teeth',
+          // title: 'Protruding Upper Front Teeth (Buck Teeth)',
+          description: 'Prevents natural lip closure,\nExcessive mouth protrusion.'
+        },
+        underbite: {
+          title: 'Receding Chin ',
+          // title: 'Receding Chin (Class II Skeletal)',
+          description: 'Causes facial proportion imbalance,\nVisually appears weak'
+        },
+        crowding: {
+          title: 'Narrow Dental Arch / Crowding',
+          description: 'Makes face appear pointed,\nEasily shows aging'
+        },
+        openBite: {
+          title: 'Open Bite',
+          description: 'Affects pronunciation and chewing efficiency,\nAlso causes lower facial proportion imbalance'
+        },
+        deepBite: {
+          title: 'Deep Bite',
+          description: 'Affects pronunciation and chewing efficiency,\nAlso causes lower facial proportion imbalance'
+        }
       }
     },
     teenOrthodontics: {
@@ -520,6 +567,26 @@ export default {
       lifestyle: {
         title: 'Accommodating Adult Pace and Needs:',
         description: 'Zhenshumei\'s invisible aligner treatment is designed with flexibility and removability, allowing you to comfortably handle work meetings, social activities, and business trips.'
+      }
+    },
+    earlyCorrection: {
+      title: 'Benefits of Early Orthodontic Treatment for Teens',
+      benefits: 'Prevent tooth crowding and future dental issues\nPromote normal jaw development, reducing need for surgical intervention\nImprove cleaning accessibility, reducing cavities and periodontal risks\nBoost smile confidence and self-image, enhancing school life and social interactions'
+    },
+    manufacturingSection: {
+      buttonText: 'Understand Your Dental Condition',
+      description: 'Through combining three-dimensional imaging (CBCT, lateral cephalometric X-rays), we gain deep understanding of each patient\'s unique facial structure and needs.\nPearl Digital can simultaneously analyze and adjust both skeletal and dental aspects, optimizing facial contours and occlusal function together,\nstarting from the "teeth" to create more natural and harmonious beauty.'
+    },
+    upgrade: {
+      title: 'Orthodontics is More Than Beauty - It\'s a Life Upgrade',
+      description: 'For adults, orthodontics often combines aesthetic needs with functional improvements. Aligned teeth not only bring naturally symmetrical smiles and facial proportions, but also provide the following practical benefits:',
+      aestheticImpact: {
+        title: 'Aesthetic Impact:',
+        description: 'After dental alignment, lips become naturally full and facial lines more fluid\nHelps improve common Asian facial appearance issues like receding chin and protruding mouth\nMakes smiles and eyes more confident and approachable, enhancing overall demeanor'
+      },
+      adultNeeds: {
+        title: 'Adapting to Adult Pace and Needs:',
+        description: 'Pearl Digital\'s invisible aligner treatment design is flexible and removable, allowing you to\nhandle work meetings, social activities, and business trips with ease.'
       }
     }
   },

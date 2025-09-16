@@ -5,30 +5,32 @@ import p2 from './imgs/2.svg';
 import p3 from './imgs/3.svg';
 import p4 from './imgs/4.svg';
 import p5 from './imgs/5.svg';
+import { useLanguage } from '../../context/LanguageContext';
 
 export default function Step(props) {
   const { title, description } = props;
+  const { t } = useLanguage();
   
   const steps = [
     {
       image: p1,
-      text: '預約'
+      text: t('about.smileSteps.step1.title')
     },
     {
       image: p2,
-      text: '評估'
+      text: t('about.smileSteps.step2.title')
     },
     {
       image: p3,
-      text: '計畫'
+      text: t('about.smileSteps.step3.title')
     },
     {
       image: p4,
-      text: '旅程'
+      text: t('about.smileSteps.step4.title')
     },
     {
       image: p5,
-      text: '開懷'
+      text: t('about.smileSteps.step5.title')
     }
   ];
 

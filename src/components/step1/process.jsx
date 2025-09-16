@@ -14,77 +14,104 @@ import l2 from './imgs/l2.svg';
 import l3 from './imgs/l3.svg';
 import l4 from './imgs/l4.svg';
 import l5 from './imgs/l5.svg';
-
-const steps = [
-  {
-    label: "STEP 1",
-    labelColor: "#4777FA",
-    title: "預約",
-    src: p3,
-    desc: (
-      <>
-        掃QR code前往<br/>與微笑管家確認特約診所<br/>與預約時間
-        <br />
-        <span className="free">免費</span>
-      </>
-    ),
-  },
-  {
-    label: "STEP 2",
-    labelColor: "#7BD641",
-    title: "評估",
-    src: p4,
-    desc: (
-      <>
-        前往特約診所進行<br/>3D口腔掃描與X光<br/>檢查個別資料評估
-        <br />
-        <span className="price">$3,000(此費用為診所收取)</span>
-      </>
-    ),
-  },
-  {
-    label: "STEP 3",
-    labelColor: "#FF7837",
-    title: "計畫",
-    src: p5,
-    desc: (
-      <>
-        報告兩週內回特約診所審核<br/>並同意您的專屬美齒計畫
-        <br />
-        <span className="price">$48,000-$118,000</span>
-      </>
-    ),
-  },
-  {
-    label: "STEP 4",
-    labelColor: "#FF7837",
-    title: "旅程",
-    src: p6,
-    desc: (
-      <>
-        隱形牙套製作完成<br/>聽取醫師說明<br/>整套牙套一次領取<br/>視情況分批發放
-        <br />
-        <span className="free">免費</span>
-      </>
-    ),
-  },
-  {
-    label: "STEP 5",
-    labelColor: "#3AD2C8",
-    title: "開懷",
-    src: p7,
-    desc: (
-      <>
-        透過微笑管家持續追蹤進度<br/>聯繫開懷不間斷<br/>計畫安心不中斷
-        <br />
-        <span className="free">免費</span>
-      </>
-    ),
-  },
-];
+import { useLanguage } from '../../context/LanguageContext';
 
 export default function SmileSteps() {
   const { isMobile, isTablet } = useResponsive();
+  const { t } = useLanguage();
+
+  const steps = [
+    {
+      label: "STEP 1",
+      labelColor: "#4777FA",
+      title: t('about.smileSteps.step1.title'),
+      src: p3,
+      desc: (
+        <>
+          {t('about.smileSteps.step1.description').split('\n').map((line, index) => (
+            <span key={index}>
+              {line}
+              {index < t('about.smileSteps.step1.description').split('\n').length - 1 && <br/>}
+            </span>
+          ))}
+          <br />
+          <span className="free">{t('about.smileSteps.step1.price')}</span>
+        </>
+      ),
+    },
+    {
+      label: "STEP 2",
+      labelColor: "#7BD641",
+      title: t('about.smileSteps.step2.title'),
+      src: p4,
+      desc: (
+        <>
+          {t('about.smileSteps.step2.description').split('\n').map((line, index) => (
+            <span key={index}>
+              {line}
+              {index < t('about.smileSteps.step2.description').split('\n').length - 1 && <br/>}
+            </span>
+          ))}
+          <br />
+          <span className="price">{t('about.smileSteps.step2.price')}</span>
+        </>
+      ),
+    },
+    {
+      label: "STEP 3",
+      labelColor: "#FF7837",
+      title: t('about.smileSteps.step3.title'),
+      src: p5,
+      desc: (
+        <>
+          {t('about.smileSteps.step3.description').split('\n').map((line, index) => (
+            <span key={index}>
+              {line}
+              {index < t('about.smileSteps.step3.description').split('\n').length - 1 && <br/>}
+            </span>
+          ))}
+          <br />
+          <span className="price">{t('about.smileSteps.step3.price')}</span>
+        </>
+      ),
+    },
+    {
+      label: "STEP 4",
+      labelColor: "#FF7837",
+      title: t('about.smileSteps.step4.title'),
+      src: p6,
+      desc: (
+        <>
+          {t('about.smileSteps.step4.description').split('\n').map((line, index) => (
+            <span key={index}>
+              {line}
+              {index < t('about.smileSteps.step4.description').split('\n').length - 1 && <br/>}
+            </span>
+          ))}
+          <br />
+          <span className="free">{t('about.smileSteps.step4.price')}</span>
+        </>
+      ),
+    },
+    {
+      label: "STEP 5",
+      labelColor: "#3AD2C8",
+      title: t('about.smileSteps.step5.title'),
+      src: p7,
+      desc: (
+        <>
+          {t('about.smileSteps.step5.description').split('\n').map((line, index) => (
+            <span key={index}>
+              {line}
+              {index < t('about.smileSteps.step5.description').split('\n').length - 1 && <br/>}
+            </span>
+          ))}
+          <br />
+          <span className="free">{t('about.smileSteps.step5.price')}</span>
+        </>
+      ),
+    },
+  ];
   
   return (
     <div>
@@ -127,7 +154,7 @@ export default function SmileSteps() {
         </div> */}
 
       </div>
-      <DetailButton text="開啟微笑旅程" />
+      <DetailButton text={t('about.smileSteps.buttonText')} />
     </div>
   );
 }
