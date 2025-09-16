@@ -9,17 +9,14 @@ const LanguageContext = createContext();
 const languages = {
   'zh-TW': {
     name: '台灣(繁中)',
-    flag: '🇹🇼',
     translations: zhTW
   },
   'zh-CN': {
     name: '中國(简中)',
-    flag: '🇨🇳',
     translations: zhCN
   },
   'en': {
     name: 'English',
-    flag: '🇺🇸',
     translations: en
   }
 };
