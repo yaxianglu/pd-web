@@ -6,9 +6,11 @@ import png2 from './imgs/2.svg';
 import png3 from './imgs/3.svg';
 import png4 from './imgs/4.svg';
 import p2 from '../asserts/2-white.svg';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function OrthoPaletteGrid() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   const handleGridItemClick = (path) => {
     if (path === '/upload') {
@@ -28,11 +30,15 @@ export default function OrthoPaletteGrid() {
           style={{ cursor: 'pointer' }}
         >
           <div className="grid-container-title">
-            隱形牙套
+            {t('home.featureGrid.invisibleBraces.title')}
           </div>
           <div className="description description-large">
-            了解療程設計與隱形牙套的 <br/>
-            矯正優勢
+            {t('home.featureGrid.invisibleBraces.description').split('\n').map((line, index) => (
+              <span key={index}>
+                {line}
+                {index < t('home.featureGrid.invisibleBraces.description').split('\n').length - 1 && <br/>}
+              </span>
+            ))}
           </div>
           <div className="icon">
             <img src={png1} alt="隐形牙套" />
@@ -46,11 +52,15 @@ export default function OrthoPaletteGrid() {
           style={{ cursor: 'pointer' }}
         >
           <div className="grid-container-title">
-            矯正與美
+            {t('home.featureGrid.correctionBeauty.title')}
           </div>
           <div className="description description-medium">
-            正確的齒列排列，不只是外觀上<br/>
-            的美感，更是口腔健康的基礎
+            {t('home.featureGrid.correctionBeauty.description').split('\n').map((line, index) => (
+              <span key={index}>
+                {line}
+                {index < t('home.featureGrid.correctionBeauty.description').split('\n').length - 1 && <br/>}
+              </span>
+            ))}
           </div>
           <div className="icon" style={{ top: '70%' }}>
             <img src={png2} alt="矯正与美" />
@@ -64,11 +74,15 @@ export default function OrthoPaletteGrid() {
           style={{ cursor: 'pointer' }}
         >
           <div className="grid-container-title">
-            維持器
+            {t('home.featureGrid.retainer.title')}
           </div>
           <div className="description description-medium">
-            了解維持器的佩戴時機與<br/>
-            保養方式
+            {t('home.featureGrid.retainer.description').split('\n').map((line, index) => (
+              <span key={index}>
+                {line}
+                {index < t('home.featureGrid.retainer.description').split('\n').length - 1 && <br/>}
+              </span>
+            ))}
           </div>
           <div className="icon">
             <img src={png4} alt="維持器" />
@@ -88,10 +102,15 @@ export default function OrthoPaletteGrid() {
           onClick={() => handleGridItemClick('/upload')}
         >
           <div className="grid-container-title">
-          微笑測試
+            {t('home.featureGrid.smileTest.title')}
           </div>
           <div className="description description-medium">
-            透過珍舒美的免費微笑測試，只需幾張照片，<br />就能快速了解您是否適合進行隱形矯正，並獲得專屬建議
+            {t('home.featureGrid.smileTest.description').split('\n').map((line, index) => (
+              <span key={index}>
+                {line}
+                {index < t('home.featureGrid.smileTest.description').split('\n').length - 1 && <br/>}
+              </span>
+            ))}
           </div>
           <div className="icon">
             <img src={png3} alt="美白介紹" />

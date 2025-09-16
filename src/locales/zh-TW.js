@@ -63,7 +63,25 @@ export default {
     description2: 'AI技術輔助與臨床專業設計，實現客製化的科學矯正效果',
     button1: '微笑測試',
     button2: '關於珍舒美',
-    sketchTitle: '從療程設計到治療完成，我們始終專注於每一個細節，為你提供值得信賴的矯正體驗。因為我們相信，擁有整齊笑容，光芒與自信就會自然綻放。'
+    sketchTitle: '從療程設計到治療完成，我們始終專注於每一個細節，為你提供值得信賴的矯正體驗。因為我們相信，擁有整齊笑容，光芒與自信就會自然綻放。',
+    featureGrid: {
+      invisibleBraces: {
+        title: '隱形牙套',
+        description: '了解療程設計與隱形牙套的\n矯正優勢'
+      },
+      correctionBeauty: {
+        title: '矯正與美',
+        description: '正確的齒列排列，不只是外觀上\n的美感，更是口腔健康的基礎'
+      },
+      retainer: {
+        title: '維持器',
+        description: '了解維持器的佩戴時機與\n保養方式'
+      },
+      smileTest: {
+        title: '微笑測試',
+        description: '透過珍舒美的免費微笑測試，只需幾張照片，\n就能快速了解您是否適合進行隱形矯正，並獲得專屬建議'
+      }
+    }
   },
 
   // 產品

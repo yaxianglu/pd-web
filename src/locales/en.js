@@ -63,7 +63,25 @@ export default {
     description2: 'AI-assisted technology and clinical professional design for customized scientific correction results',
     button1: 'Smile Test',
     button2: 'About Pearl Digital',
-    sketchTitle: 'From treatment design to completion, we focus on every detail to provide you with a trustworthy correction experience. Because we believe that with a neat smile, radiance and confidence will naturally bloom.'
+    sketchTitle: 'From treatment design to completion, we focus on every detail to provide you with a trustworthy correction experience. Because we believe that with a neat smile, radiance and confidence will naturally bloom.',
+    featureGrid: {
+      invisibleBraces: {
+        title: 'Invisible Braces',
+        description: 'Learn about treatment design and the\nadvantages of invisible braces'
+      },
+      correctionBeauty: {
+        title: 'Correction & Beauty',
+        description: 'Proper tooth alignment is not just about\naesthetic beauty, but also the foundation of oral health'
+      },
+      retainer: {
+        title: 'Retainers',
+        description: 'Learn about when to wear retainers and\nhow to maintain them'
+      },
+      smileTest: {
+        title: 'Smile Test',
+        description: 'Through Pearl Digital\'s free smile test, with just a few photos,\nyou can quickly understand if you are suitable for invisible braces and receive personalized recommendations'
+      }
+    }
   },
 
   // Products
