@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import zhTW from '../locales/zh-TW';
 import zhCN from '../locales/zh-CN';
 import en from '../locales/en';
+import geoLocationService from '../services/geoLocationService';
 
 const LanguageContext = createContext();
 
@@ -32,15 +33,40 @@ export const useLanguage = () => {
 export const LanguageProvider = ({ children }) => {
   const [currentLanguage, setCurrentLanguage] = useState('zh-TW');
   const [translations, setTranslations] = useState(zhTW);
+  const [isAutoDetecting, setIsAutoDetecting] = useState(false);
 
   // 从localStorage加载保存的语言设置
   useEffect(() => {
     const savedLanguage = localStorage.getItem('preferred-language');
+    const hasUserSetLanguage = localStorage.getItem('user-set-language') === 'true';
+    
     if (savedLanguage && languages[savedLanguage]) {
       setCurrentLanguage(savedLanguage);
       setTranslations(languages[savedLanguage].translations);
+    } else if (!hasUserSetLanguage) {
+      // 如果用户从未手动设置过语言，则进行自动检测
+      autoDetectLanguage();
     }
   }, []);
+
+  // 自动检测语言
+  const autoDetectLanguage = async () => {
+    setIsAutoDetecting(true);
+    try {
+      const recommendedLanguage = await geoLocationService.detectAndRecommendLanguage();
+      if (recommendedLanguage && languages[recommendedLanguage]) {
+        setCurrentLanguage(recommendedLanguage);
+        setTranslations(languages[recommendedLanguage].translations);
+        // 保存自动检测的语言，但不标记为用户手动设置
+        localStorage.setItem('preferred-language', recommendedLanguage);
+        console.log(`Auto-detected language: ${recommendedLanguage}`);
+      }
+    } catch (error) {
+      console.warn('Auto language detection failed:', error);
+    } finally {
+      setIsAutoDetecting(false);
+    }
+  };
 
   // 切换语言
   const changeLanguage = (languageCode) => {
@@ -48,6 +74,8 @@ export const LanguageProvider = ({ children }) => {
       setCurrentLanguage(languageCode);
       setTranslations(languages[languageCode].translations);
       localStorage.setItem('preferred-language', languageCode);
+      // 标记用户已手动设置语言，避免后续自动切换
+      localStorage.setItem('user-set-language', 'true');
     }
   };
 
@@ -95,7 +123,9 @@ export const LanguageProvider = ({ children }) => {
     t,
     getCurrentLanguageInfo,
     getAvailableLanguages,
-    languages
+    languages,
+    isAutoDetecting,
+    autoDetectLanguage
   };
 
   return (
