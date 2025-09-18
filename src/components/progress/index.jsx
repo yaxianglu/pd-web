@@ -159,11 +159,11 @@ export default function ProgressTracker({
     }
     /**
       1 預約完成：自动
-      2 確認方案：醫生
+      2 確認方案：醫生、管理員
       3 付款完成：超管、管理員
       4 生产完成：巧医
-      5 治療中：醫生
-      6 治療完成：醫生
+      5 治療中：醫生、管理員
+      6 治療完成：醫生、管理員
     */
     if (role === 'doctor') {
       // 當前是醫生
@@ -177,7 +177,8 @@ export default function ProgressTracker({
       }
     }
     if (role === 'super_admin' || role === 'admin') {
-      if (nextIdNum !== 3) return;
+      // admin用户可以切换除生产完成(4)外的所有状态
+      if (nextIdNum === 4) return;
     }
     setUpdateId(nextIdNum);
   }
