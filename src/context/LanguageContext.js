@@ -8,11 +8,11 @@ const LanguageContext = createContext();
 // 语言配置
 const languages = {
   'zh-TW': {
-    name: '台灣(繁中)',
+    name: '繁中',
     translations: zhTW
   },
   'zh-CN': {
-    name: '中國(简中)',
+    name: '简中',
     translations: zhCN
   },
   'en': {

@@ -959,9 +959,9 @@ export default {
 
   // 語言選項
   languages: {
-    taiwan: '台灣(繁中)',
-    hongkong: '香港(繁中)',
-    china: '中國(简中)',
+    taiwan: '繁中',
+    hongkong: '繁中',
+    china: '简中',
     english: 'English'
   },
 
