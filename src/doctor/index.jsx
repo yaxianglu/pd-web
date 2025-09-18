@@ -38,7 +38,7 @@ function UserInfoCard({ userInfo, isDoctorDetail = false }) {
   );
 }
 
-export default function DoctorDashboard({ initialPatients = null, doctorUser = null, style = {} }) {
+export default function DoctorDashboard({ initialPatients = null, doctorUser = null, style = {}, onRefreshPatients = null }) {
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -191,7 +191,15 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
       <CreatePatientModal 
         open={modalOpen} 
         onClose={() => setModalOpen(false)} 
-        onCreated={() => { setModalOpen(false); if (!initialPatients) { load(); } }} 
+        onCreated={() => { 
+          setModalOpen(false); 
+          // 如果有外部刷新函数，使用外部刷新；否则使用内部load
+          if (onRefreshPatients) {
+            onRefreshPatients();
+          } else {
+            load();
+          }
+        }} 
         doctorUser={displayUser}
       />
     </div>

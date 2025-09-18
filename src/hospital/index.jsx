@@ -37,6 +37,16 @@ export default function HospitalDashboard({ isSub }) {
   const { userInfo } = useAuth();
   const navigate = useNavigate();
 
+  // 刷新当前医生的患者数据
+  const refreshPatients = () => {
+    if (!activeDoctor?.uuid) return;
+    apiService.getPatientsByDoctor({ uuid: activeDoctor.uuid }).then(res => {
+      console.info('refreshed patients', res);
+      if (res?.success) setPatientsByDoctor(res.data || []);
+      else setPatientsByDoctor([]);
+    });
+  };
+
   useEffect(() => {
     apiService.getDoctors().then(res => {
       if (res?.success) {
@@ -72,7 +82,12 @@ export default function HospitalDashboard({ isSub }) {
           </div>
         )} */}
         {activeDoctor ? (
-          <DoctorDashboard style={{ height: 'calc(100vh - 40px)' }} initialPatients={patientsByDoctor} doctorUser={activeDoctor} />
+          <DoctorDashboard 
+            style={{ height: 'calc(100vh - 40px)' }} 
+            initialPatients={patientsByDoctor} 
+            doctorUser={activeDoctor}
+            onRefreshPatients={refreshPatients}
+          />
         ) : (
           <div>正在載入醫師資料...</div>
         )}
