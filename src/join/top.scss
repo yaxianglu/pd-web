@@ -20,6 +20,12 @@
     text-align: center;
     gap: 32px;
 
+    @media (max-width: 1125px) {
+      gap: 0;
+      line-height: 1;
+      font-size: 20px;
+    }
+
     .join-join-description-section-text-title {
       font-size: 66px;
       font-weight: bold;
