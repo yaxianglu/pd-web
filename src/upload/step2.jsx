@@ -21,10 +21,10 @@ export default function Step2({ onNext, setStep, style }) {
   const [loading, setLoading] = useState(false);
 
   const teethOptions = [
-    { id: 'crowded', label: '齒列擁擠', image: p3 },
-    { id: 'overbite', label: '咬合不正', image: p4 },
-    { id: 'spaced', label: '牙縫問題', image: p5 },
-    { id: 'other', label: '輕微歪斜', image: p6 }
+    { id: 'crowded', label: '上前牙突出', image: p3 },
+    { id: 'overbite', label: '下巴後縮', image: p4 },
+    { id: 'spaced', label: '牙弓狹窄擁擠', image: p5 },
+    { id: 'other', label: '深咬', image: p6 }
   ];
 
   const considerationOptions = [
