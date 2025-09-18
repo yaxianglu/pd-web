@@ -22,8 +22,9 @@ export default function Top() {
 
   return (
     <div className="join-join-description-section">
-      <div className="join-join-description-section-text">
-        <div className="join-join-description-section-text-title">
+      <div className="join-join-description-section-text" style={{ backgroundImage: `url(${p1})`, backgroundSize: '100%', backgroundRepeat: 'no-repeat' }}>
+      {/* <img src={p1} alt="#" style={{ width: '100%' }} /> */}
+      <div className="join-join-description-section-text-title">
           {t('join.hero.title').split('\n').map((line, index) => (
             <span key={index}>
               {line}
@@ -45,7 +46,6 @@ export default function Top() {
           onClick={handleJoinClick}
         />
       </div>
-      <img src={p1} alt="#" style={{ width: '100%' }} />
     </div>
   );
 }

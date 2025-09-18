@@ -2,6 +2,8 @@
   width: 100%;
   margin-top: 80px;
   position: relative;
+  aspect-ratio: 3996 / 2036; // 保持图片的原始宽高比
+  min-height: 400px; // 设置最小高度，确保在小屏幕上也有合适的显示
 
   .join-join-description-section-text {
     position: absolute;
@@ -19,11 +21,18 @@
     font-weight: bold;
     text-align: center;
     gap: 32px;
+    padding: 20px;
 
     @media (max-width: 1125px) {
       gap: 0;
       line-height: 1;
       font-size: 20px;
+      padding: 15px;
+    }
+
+    @media (max-width: 768px) {
+      padding: 10px;
+      gap: 16px;
     }
 
     .join-join-description-section-text-title {
@@ -43,10 +52,19 @@
       text-align: center;
       margin-top: 12px;
 
-
       @media (max-width: 1125px) {
         font-size: 12px;
       }
     }
+  }
+
+  // 响应式调整
+  @media (max-width: 1125px) {
+    min-height: 300px;
+  }
+
+  @media (max-width: 768px) {
+    min-height: 250px;
+    aspect-ratio: 16 / 9; // 在小屏幕上使用更常见的宽高比
   }
 }
