@@ -724,9 +724,10 @@ export default function ScheduleCard({
 
       {currentPatient && (
         <div className="schedule-card-footer-tools">
-          <div className="qr-box">
+          <div/>
+          {/* <div className="qr-box">
             <img src={png13} alt="QR" />
-          </div>
+          </div> */}
           <div className="schedule-card-footer-tools-buttons">
             <button
               type="button"
