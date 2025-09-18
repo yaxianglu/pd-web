@@ -7,6 +7,7 @@ import 'antd/dist/reset.css';
 import './index.scss';
 import { useLanguage } from '../../context/LanguageContext';
 import LanguageSelector from '../language-selector';
+import CookieSettingsTrigger from '../CookieSettingsTrigger';
 
 export default function Footer({ style }) {
   const navigate = useNavigate();
@@ -42,7 +43,6 @@ export default function Footer({ style }) {
             />
             {/* Privacy/Cookie Message */}
             <div className="privacy-message">
-              {t('footer.privacyMessage')}<br />
               <span 
                 className="privacy-link"
                 onClick={() => handleItemClick('/privacy')}
@@ -59,12 +59,9 @@ export default function Footer({ style }) {
                 {t('footer.termsOfService')}
               </span>
               <span style={{ margin: '0 8px' }}>|</span>
-              <span 
-                className="cookie-link"
-                style={{ cursor: 'pointer', textDecoration: 'underline' }}
-              >
+              <CookieSettingsTrigger className="cookie-link">
                 {t('footer.cookieSettings')}
-              </span>
+              </CookieSettingsTrigger>
             </div>
           </div>
 

@@ -29,7 +29,14 @@ export default {
     yes: '是',
     no: '否',
     ok: '确定',
-    close: '关闭'
+    close: '关闭',
+    accept: '接受',
+    reject: '拒绝',
+    customize: '自定义',
+    necessary: '必要',
+    functional: '功能',
+    analytics: '分析',
+    marketing: '营销'
   },
 
   // 导航
@@ -495,6 +502,49 @@ export default {
       rights: 'All Rights Reserved. ©2025',
       address: '123 Demo StreetNew York, NY 12345',
       contact: 'email@example.com(555)555-5555'
+    }
+  },
+
+  // Cookie设置
+  cookieConsent: {
+    title: 'Cookie设置',
+    description: '我们使用Cookie来改善您的浏览体验，提供个性化内容和广告，并分析我们的流量。通过点击"接受全部"，您同意我们使用所有Cookie。',
+    necessary: {
+      title: '必要Cookie',
+      description: '这些Cookie对于网站的基本功能是必需的，无法关闭。它们通常仅响应您所做的操作而设置，例如设置隐私偏好、登录或填写表单。',
+      required: true
+    },
+    functional: {
+      title: '功能Cookie',
+      description: '这些Cookie使网站能够提供增强的功能和个性化设置。它们可能由我们或第三方设置，我们已将其服务添加到我们的页面中。',
+      required: false
+    },
+    analytics: {
+      title: '分析Cookie',
+      description: '这些Cookie帮助我们了解访问者如何与网站互动，通过匿名收集和报告信息。这有助于我们改善网站性能。',
+      required: false
+    },
+    marketing: {
+      title: '营销Cookie',
+      description: '这些Cookie用于跟踪访问者跨网站的活动。目的是显示相关和吸引个人的广告，因此广告商和第三方广告商可以为您提供更有意义的广告。',
+      required: false
+    },
+    buttons: {
+      acceptAll: '接受全部',
+      rejectAll: '拒绝全部',
+      savePreferences: '保存偏好设置',
+      customize: '自定义设置'
+    },
+    modal: {
+      title: 'Cookie偏好设置',
+      description: '选择您希望允许的Cookie类型。您可以随时更改这些设置。',
+      back: '返回'
+    },
+    footer: {
+      description: '我们重视您的隐私。了解更多关于我们如何使用Cookie的信息，请查看我们的',
+      privacyPolicy: '隐私政策',
+      and: '和',
+      termsOfService: '服务条款'
     }
   },
 

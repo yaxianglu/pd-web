@@ -29,7 +29,14 @@ export default {
     yes: 'Yes',
     no: 'No',
     ok: 'OK',
-    close: 'Close'
+    close: 'Close',
+    accept: 'Accept',
+    reject: 'Reject',
+    customize: 'Customize',
+    necessary: 'Necessary',
+    functional: 'Functional',
+    analytics: 'Analytics',
+    marketing: 'Marketing'
   },
 
   // Navigation
@@ -495,6 +502,49 @@ export default {
       rights: 'All Rights Reserved. ©2025',
       address: '123 Demo StreetNew York, NY 12345',
       contact: 'email@example.com(555)555-5555'
+    }
+  },
+
+  // Cookie Consent
+  cookieConsent: {
+    title: 'Cookie Settings',
+    description: 'We use cookies to improve your browsing experience, provide personalized content and ads, and analyze our traffic. By clicking "Accept All", you consent to our use of all cookies.',
+    necessary: {
+      title: 'Necessary Cookies',
+      description: 'These cookies are essential for the basic functionality of the website and cannot be disabled. They are usually only set in response to actions made by you, such as setting privacy preferences, logging in, or filling in forms.',
+      required: true
+    },
+    functional: {
+      title: 'Functional Cookies',
+      description: 'These cookies enable the website to provide enhanced functionality and personalization. They may be set by us or by third parties whose services we have added to our pages.',
+      required: false
+    },
+    analytics: {
+      title: 'Analytics Cookies',
+      description: 'These cookies help us understand how visitors interact with the website by collecting and reporting information anonymously. This helps us improve the website performance.',
+      required: false
+    },
+    marketing: {
+      title: 'Marketing Cookies',
+      description: 'These cookies are used to track visitors across websites. The intention is to display ads that are relevant and engaging for individual users, so advertisers and third-party advertisers can provide you with more meaningful ads.',
+      required: false
+    },
+    buttons: {
+      acceptAll: 'Accept All',
+      rejectAll: 'Reject All',
+      savePreferences: 'Save Preferences',
+      customize: 'Customize'
+    },
+    modal: {
+      title: 'Cookie Preferences',
+      description: 'Choose which types of cookies you want to allow. You can change these settings at any time.',
+      back: 'Back'
+    },
+    footer: {
+      description: 'We value your privacy. To learn more about how we use cookies, please see our',
+      privacyPolicy: 'Privacy Policy',
+      and: 'and',
+      termsOfService: 'Terms of Service'
     }
   },
 

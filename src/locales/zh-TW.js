@@ -29,7 +29,14 @@ export default {
     yes: '是',
     no: '否',
     ok: '確定',
-    close: '關閉'
+    close: '關閉',
+    accept: '接受',
+    reject: '拒絕',
+    customize: '自訂',
+    necessary: '必要',
+    functional: '功能',
+    analytics: '分析',
+    marketing: '行銷'
   },
 
   // 導航
@@ -495,6 +502,49 @@ export default {
       rights: 'All Rights Reserved. ©2025',
       address: '123 Demo StreetNew York, NY 12345',
       contact: 'email@example.com(555)555-5555'
+    }
+  },
+
+  // Cookie設置
+  cookieConsent: {
+    title: 'Cookie設置',
+    description: '我們使用Cookie來改善您的瀏覽體驗，提供個人化內容和廣告，並分析我們的流量。通過點擊「接受全部」，您同意我們使用所有Cookie。',
+    necessary: {
+      title: '必要Cookie',
+      description: '這些Cookie對於網站的基本功能是必需的，無法關閉。它們通常僅響應您所做的操作而設置，例如設置隱私偏好、登入或填寫表單。',
+      required: true
+    },
+    functional: {
+      title: '功能Cookie',
+      description: '這些Cookie使網站能夠提供增強的功能和個人化設置。它們可能由我們或第三方設置，我們已將其服務添加到我們的頁面中。',
+      required: false
+    },
+    analytics: {
+      title: '分析Cookie',
+      description: '這些Cookie幫助我們了解訪問者如何與網站互動，通過匿名收集和報告信息。這有助於我們改善網站性能。',
+      required: false
+    },
+    marketing: {
+      title: '行銷Cookie',
+      description: '這些Cookie用於跟踪訪問者跨網站的活動。目的是顯示相關和吸引個人的廣告，因此廣告商和第三方廣告商可以為您提供更有意義的廣告。',
+      required: false
+    },
+    buttons: {
+      acceptAll: '接受全部',
+      rejectAll: '拒絕全部',
+      savePreferences: '儲存偏好設置',
+      customize: '自訂設置'
+    },
+    modal: {
+      title: 'Cookie偏好設置',
+      description: '選擇您希望允許的Cookie類型。您可以隨時更改這些設置。',
+      back: '返回'
+    },
+    footer: {
+      description: '我們重視您的隱私。了解更多關於我們如何使用Cookie的信息，請查看我們的',
+      privacyPolicy: '隱私政策',
+      and: '和',
+      termsOfService: '服務條款'
     }
   },
 

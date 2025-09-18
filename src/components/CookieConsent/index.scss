@@ -1,0 +1,353 @@
+// Cookie同意横幅样式
+.cookie-consent-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border-top: 1px solid #e0e0e0;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+  padding: 20px;
+  max-height: 50vh;
+  overflow-y: auto;
+
+  .cookie-banner-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 15px;
+    }
+  }
+
+  .cookie-banner-text {
+    flex: 1;
+    min-width: 300px;
+
+    h3 {
+      margin: 0 0 8px 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #666;
+    }
+  }
+
+  .cookie-banner-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      justify-content: stretch;
+    }
+  }
+}
+
+// Cookie按钮样式
+.cookie-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &.cookie-btn-primary {
+    background: #007bff;
+    color: white;
+
+    &:hover {
+      background: #0056b3;
+    }
+  }
+
+  &.cookie-btn-secondary {
+    background: #6c757d;
+    color: white;
+
+    &:hover {
+      background: #545b62;
+    }
+  }
+
+  &.cookie-btn-outline {
+    background: transparent;
+    color: #007bff;
+    border: 1px solid #007bff;
+
+    &:hover {
+      background: #007bff;
+      color: white;
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+// Cookie设置模态框样式
+.cookie-consent-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.cookie-consent-modal {
+  background: white;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 80vh;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+
+  .cookie-modal-header {
+    padding: 24px 24px 16px 24px;
+    border-bottom: 1px solid #e0e0e0;
+
+    h2 {
+      margin: 0 0 8px 0;
+      font-size: 24px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    p {
+      margin: 0;
+      font-size: 14px;
+      color: #666;
+      line-height: 1.5;
+    }
+  }
+
+  .cookie-modal-content {
+    padding: 24px;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .cookie-modal-footer {
+    padding: 16px 24px 24px 24px;
+    border-top: 1px solid #e0e0e0;
+    background: #f8f9fa;
+
+    .cookie-modal-links {
+      margin-bottom: 16px;
+      font-size: 12px;
+      color: #666;
+      line-height: 1.4;
+
+      a {
+        color: #007bff;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .cookie-modal-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+
+      @media (max-width: 480px) {
+        flex-direction: column;
+      }
+    }
+  }
+}
+
+// Cookie类型选项样式
+.cookie-type {
+  margin-bottom: 24px;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: #fafafa;
+
+  &.required {
+    background: #f0f8ff;
+    border-color: #b3d9ff;
+  }
+
+  .cookie-type-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .cookie-type-info {
+    flex: 1;
+
+    h4 {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    p {
+      margin: 0;
+      font-size: 14px;
+      color: #666;
+      line-height: 1.5;
+    }
+  }
+
+  .cookie-type-toggle {
+    flex-shrink: 0;
+  }
+}
+
+// 切换开关样式
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    &:checked + .toggle-slider {
+      background-color: #007bff;
+
+      &:before {
+        transform: translateX(26px);
+      }
+    }
+
+    &:disabled + .toggle-slider {
+      background-color: #007bff;
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.3s;
+    border-radius: 24px;
+
+    &:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .cookie-consent-banner {
+    padding: 16px;
+  }
+
+  .cookie-consent-modal {
+    margin: 0;
+    border-radius: 0;
+    max-height: 100vh;
+  }
+
+  .cookie-modal-header,
+  .cookie-modal-content,
+  .cookie-modal-footer {
+    padding: 16px;
+  }
+
+  .cookie-type {
+    padding: 16px;
+  }
+
+  .cookie-type-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .cookie-type-toggle {
+    align-self: flex-start;
+  }
+}
+
+// 动画效果
+.cookie-consent-banner {
+  animation: slideUp 0.3s ease-out;
+}
+
+.cookie-consent-modal {
+  animation: scaleIn 0.2s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

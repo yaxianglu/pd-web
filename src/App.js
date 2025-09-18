@@ -28,6 +28,8 @@ import Privacy from './privacy';
 import Terms from './terms';
 import TestI18n from './test-i18n';
 import TestLanguageDetection from './test-language-detection';
+import CookieConsent from './components/CookieConsent';
+import CookieDemo from './cookie-demo';
 
 function App() {
   return (
@@ -84,7 +86,9 @@ function App() {
               <Route path="/terms" element={<Terms />} />
               <Route path="/test-i18n" element={<TestI18n />} />
               <Route path="/test-language-detection" element={<TestLanguageDetection />} />
+              <Route path="/cookie-demo" element={<CookieDemo />} />
             </Routes>
+            <CookieConsent />
           </div>
         </AuthProvider>
       </LanguageProvider>
