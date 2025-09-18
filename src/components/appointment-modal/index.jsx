@@ -83,7 +83,9 @@ const AppointmentModal = ({
           // 如果是getPatientsByDoctor的嵌套结构
           if (item.patient && item.smileTest) {
             return {
-              uuid: item.patient.uuid,
+              // 重要：预约表中的patient_uuid字段实际存储的是smile_test的uuid
+              uuid: item.smileTest.uuid, // 使用smile_test的uuid作为patient_uuid
+              patient_uuid: item.patient.uuid, // 保留patient的uuid用于显示
               full_name: item.patient.full_name,
               name: item.patient.full_name, // 兼容性
               phone: item.smileTest.phone,
@@ -96,7 +98,9 @@ const AppointmentModal = ({
           // 如果是getAllSmileTests的平铺结构
           else {
             return {
+              // 对于getAllSmileTests，item.uuid就是smile_test的uuid
               uuid: item.uuid,
+              patient_uuid: item.patient_uuid, // 这是关联的patient uuid
               full_name: item.full_name,
               name: item.full_name, // 兼容性
               phone: item.phone,
@@ -109,6 +113,11 @@ const AppointmentModal = ({
         });
         
         console.log('处理后的患者数据:', processedPatients[0]);
+        console.log('=== 患者数据处理调试信息 ===');
+        console.log('第一个患者的uuid (smile_test uuid):', processedPatients[0]?.uuid);
+        console.log('第一个患者的patient_uuid (patient uuid):', processedPatients[0]?.patient_uuid);
+        console.log('第一个患者的姓名:', processedPatients[0]?.full_name);
+        console.log('============================');
         setPatients(processedPatients);
       } else {
         console.log('患者列表數據格式不正確:', res);
@@ -172,10 +181,17 @@ const AppointmentModal = ({
           start_time: values.start_time ? values.start_time.format("HH:mm:ss") : null,
           end_time: values.end_time ? values.end_time.format("HH:mm:ss") : null,
           doctor_uuid: values.doctor_uuid || null,
-          patient_uuid: values.patient_uuid || null,
+          patient_uuid: values.patient_uuid || null, // 这里应该是smile_test的uuid
           note: values.note || "",
           status: "scheduled",
         };
+
+        console.log('=== 创建预约调试信息 ===');
+        console.log('选择的患者UUID (应该是smile_test uuid):', values.patient_uuid);
+        console.log('医生UUID:', values.doctor_uuid);
+        console.log('预约日期:', payload.date);
+        console.log('完整payload:', payload);
+        console.log('========================');
 
         if (onCreate) {
           await onCreate(payload);
