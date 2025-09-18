@@ -71,6 +71,7 @@ export default function Step3({ onNext, setStep, style }) {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const fileInputRef = useRef(null);
+  const cameraInputRef = useRef(null);
 
   // 获取当前URL
   const currentUrl = window.location.href;
@@ -342,14 +343,28 @@ export default function Step3({ onNext, setStep, style }) {
     }
   };
 
+  // 从相机拍照（移动端）
+  const takePhotoFromCamera = () => {
+    if (cameraInputRef.current) {
+      cameraInputRef.current.click();
+    }
+  };
+
   // 拍照
   const takePhoto = () => {
     console.log('拍照按钮被点击，当前狀態:', {
       isCameraActive,
       isVideoReady,
       hasVideoRef: !!videoRef.current,
-      hasCanvasRef: !!canvasRef.current
+      hasCanvasRef: !!canvasRef.current,
+      isMobile
     });
+
+    // 如果是移动设备，直接使用相机拍照
+    if (isMobile) {
+      takePhotoFromCamera();
+      return;
+    }
 
     if (!isCameraActive) {
       // 如果摄像头未启动，先启动摄像头
@@ -449,10 +464,14 @@ export default function Step3({ onNext, setStep, style }) {
 
   // 从相册选择照片
   const selectFromGallery = () => {
-    fileInputRef.current?.click();
+    // 移除capture属性，确保打开相册而不是相机
+    if (fileInputRef.current) {
+      fileInputRef.current.removeAttribute('capture');
+      fileInputRef.current.click();
+    }
   };
 
-  // 处理文件选择
+  // 处理文件选择（相册选择）
   const handleFileSelect = (event) => {
     const files = event.target.files;
     if (files && files.length > 0) {
@@ -491,6 +510,53 @@ export default function Step3({ onNext, setStep, style }) {
         alert('文件选择失败，请重试');
       }
     }
+    
+    // 清空input值，允许重复选择同一文件
+    event.target.value = '';
+  };
+
+  // 处理相机拍照文件选择
+  const handleCameraFileSelect = (event) => {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+      
+      try {
+        // 将文件转换为base64
+        const reader = new FileReader();
+        reader.onload = () => {
+          const base64Data = reader.result;
+          const newPhoto = {
+            id: Date.now(),
+            url: base64Data, // 使用base64数据
+            step: currentStep
+          };
+          
+          // 替换当前步骤的照片，而不是添加新照片
+          setPhotos(prev => {
+            const filteredPhotos = prev.filter(photo => photo.step !== currentStep);
+            const updated = [...filteredPhotos, newPhoto];
+            // 自动切换到下一个未完成的步骤
+            const nextStep = [1, 2, 3, 4].find(s => !updated.find(p => p.step === s));
+            if (nextStep) {
+              setCurrentStep(nextStep);
+            }
+            return updated;
+          });
+          
+          // 保存照片到数据库
+          console.log('Calling savePhotoToDatabase for camera photo:', newPhoto);
+          savePhotoToDatabase(newPhoto);
+        };
+        reader.readAsDataURL(file);
+      } catch (error) {
+        console.error('創建相机文件URL失败:', error);
+        alert('拍照失败，请重试');
+      }
+    }
+    
+    // 清空input值，允许重复拍照
+    event.target.value = '';
   };
 
   // 删除照片
@@ -695,28 +761,49 @@ export default function Step3({ onNext, setStep, style }) {
 
           {/* 拍照按钮 */}
           <div className="capture-controls">
-            {isCameraActive ? null : (
-              <button 
-                className="gallery-button"
-                onClick={selectFromGallery}
-              >
-                從相冊選擇
-              </button>
-            )}
-            <button 
-              className="capture-button"
-              onClick={takePhoto}
-              disabled={isCameraActive && !isVideoReady}
-            >
-              {isCameraActive ? (isVideoReady ? '拍攝' : '準備中...') : '開始拍攝'}
-            </button>
-            {isCameraActive && (
-              <button 
-                className="exit-camera-button"
-                onClick={stopCamera}
-              >
-                退出拍攝
-              </button>
+            {isMobile ? (
+              // 移动端：显示两个独立按钮
+              <>
+                <button 
+                  className="gallery-button"
+                  onClick={selectFromGallery}
+                >
+                  從相冊選擇
+                </button>
+                <button 
+                  className="capture-button"
+                  onClick={takePhoto}
+                >
+                  拍照
+                </button>
+              </>
+            ) : (
+              // 桌面端：保持原有逻辑
+              <>
+                {isCameraActive ? null : (
+                  <button 
+                    className="gallery-button"
+                    onClick={selectFromGallery}
+                  >
+                    從相冊選擇
+                  </button>
+                )}
+                <button 
+                  className="capture-button"
+                  onClick={takePhoto}
+                  disabled={isCameraActive && !isVideoReady}
+                >
+                  {isCameraActive ? (isVideoReady ? '拍攝' : '準備中...') : '開始拍攝'}
+                </button>
+                {isCameraActive && (
+                  <button 
+                    className="exit-camera-button"
+                    onClick={stopCamera}
+                  >
+                    退出拍攝
+                  </button>
+                )}
+              </>
             )}
           </div>
 
@@ -741,13 +828,22 @@ export default function Step3({ onNext, setStep, style }) {
           </div>
         </div>
 
-        {/* 隐藏的文件输入 */}
+        {/* 隐藏的文件输入 - 相册选择 */}
         <input
           ref={fileInputRef}
           type="file"
           accept="image/*"
-          capture="environment"
           onChange={handleFileSelect}
+          style={{ display: 'none' }}
+        />
+        
+        {/* 隐藏的文件输入 - 相机拍照 */}
+        <input
+          ref={cameraInputRef}
+          type="file"
+          accept="image/*"
+          capture="environment"
+          onChange={handleCameraFileSelect}
           style={{ display: 'none' }}
         />
         {/* 全屏二维码遮罩 */}
