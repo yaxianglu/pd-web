@@ -7,7 +7,7 @@ const CITIES = [
   '台北市','新北市','桃園市','台中市','台南市','高雄市','基隆市','新竹市','嘉義市','新竹縣','苗栗縣','彰化縣','南投縣','雲林縣','嘉義縣','屏東縣','宜蘭縣','花蓮縣','台東縣','澎湖縣','金門縣','連江縣'
 ];
 
-export default function CreatePatientModal({ open, onClose, onCreated }) {
+export default function CreatePatientModal({ open, onClose, onCreated, doctorUser = null }) {
   const { userInfo } = useAuth();
   const [form, setForm] = useState({
     full_name: '',
@@ -30,9 +30,12 @@ export default function CreatePatientModal({ open, onClose, onCreated }) {
 
     setSubmitting(true);
     try {
+      // 优先使用传入的doctorUser，如果没有则使用当前登录用户
+      const assignedDoctorUuid = doctorUser?.uuid || userInfo?.uuid;
+      
       const payload = {
         ...form,
-        assigned_doctor_uuid: userInfo?.uuid,
+        assigned_doctor_uuid: assignedDoctorUuid,
       };
       const res = await apiService.createPatientWithSmileTest(payload);
       if (res?.success) {

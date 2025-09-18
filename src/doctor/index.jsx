@@ -188,7 +188,12 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
           <Help />
         )}
       </div>
-      <CreatePatientModal open={modalOpen} onClose={() => setModalOpen(false)} onCreated={() => { setModalOpen(false); if (!initialPatients) { load(); } }} />
+      <CreatePatientModal 
+        open={modalOpen} 
+        onClose={() => setModalOpen(false)} 
+        onCreated={() => { setModalOpen(false); if (!initialPatients) { load(); } }} 
+        doctorUser={displayUser}
+      />
     </div>
   );
 }
