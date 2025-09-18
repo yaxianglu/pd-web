@@ -66,27 +66,27 @@ export default {
   home: {
     title: 'SHINE BRIGHT',
     subtitle: 'SMILE RIGHT',
-    description: 'High transparency materials and oral care solutions for naturally bright smiles',
-    description2: 'AI-assisted technology and clinical professional design for customized scientific correction results',
+    description: 'High-transparency materials and oral care solutions make every smile look naturally bright.',
+    description2: 'With AI technology and professional treatment plan, achieve customized, science-driven orthodontic results.',
     button1: 'Smile Test',
     button2: 'About Pearl Digital',
-    sketchTitle: 'From treatment design to completion, we focus on every detail to provide you with a trustworthy correction experience. Because we believe that with a neat smile, radiance and confidence will naturally bloom.',
+    sketchTitle: 'From treatment plan to completion, we focus on every detail to provide you with a trustworthy orthodontic experience. Because we believe that with a well-aligned smile, your radiance and confidence will naturally shine.',
     featureGrid: {
       invisibleBraces: {
         title: 'Invisible Braces',
-        description: 'Learn about treatment design and the\nadvantages of invisible braces'
+        description: 'Clear Aligners — Discover the Treatment Process and Benefits'
       },
       correctionBeauty: {
-        title: 'Correction & Beauty',
-        description: 'Proper tooth alignment is not just about\naesthetic beauty, but also the foundation of oral health'
+        title: 'Orthodontics & Aesthetics',
+        description: 'Proper tooth alignment is not only about appearance —\nit is also the foundation of oral health'
       },
       retainer: {
         title: 'Retainers',
-        description: 'Learn about when to wear retainers and\nhow to maintain them'
+        description: 'Learn when to wear retainers and how to care for them.'
       },
       smileTest: {
         title: 'Smile Test',
-        description: 'Through Pearl Digital\'s free smile test, with just a few photos,\nyou can quickly understand if you are suitable for invisible braces and receive personalized recommendations'
+        description: 'Free Smile Quiz — Upload a few photos to see if clear aligners are right for you and get tailored advice.'
       }
     }
   },
@@ -119,9 +119,9 @@ export default {
     innovationDescription: 'Currently, Pearl Digital focuses on providing complete invisible aligner treatments. Our products can also flexibly support finishing use for some patients or transition applications with fixed orthodontics. In the future, we will continue to collaborate with clinical physicians to expand complete solutions for combined orthodontics.',
     innovationSubtitle: 'Pearl Digital is one of the few brands in the industry focused on Combined Orthodontics (Combo Treatment).',
     innovationDetail: 'We have observed that many patients with traditional fixed orthodontic appliances (braces) in the later stages of treatment hope to complete detailed adjustments or finishing stages with invisible aligners. Therefore, we have developed a complete treatment process that supports the transition from fixed orthodontics to invisible orthodontics.',
-    whyChooseTitle: 'Why Choose Pearl Digital Invisible Aligners?',
-    medicalSoftware: 'Medical-Grade Software',
-    medicalSoftwareDescription: 'Pearl Digital combines the latest artificial intelligence design algorithms with a professional team with over 30 years of orthodontic planning experience to create personalized treatment plans for each patient. Treatment design is assisted by AI intelligent systems that can integrate three-dimensional imaging data such as dental root CBCT scans and lateral cephalometric X-rays to enhance the scientific and comprehensive nature of orthodontics.',
+    whyChooseTitle: 'Why Pearly Aligners?',
+    medicalSoftware: 'AI-Powered Treatment Design',
+    medicalSoftwareDescription: 'Pearly combines the latest AI design algorithms with a professional team that has over 30 years of orthodontic planning experience to create fully customized treatment plans for each patient. The treatment design is supported by an AI system that integrates 3D imaging data such as CBCT root scans and cephalometric X-rays, enhancing both the scientific precision and comprehensiveness of orthodontic care.',
     medicalSoftwareDescription2: 'Through collaboration with Taiwanese medical device factories, Pearl Digital has established a vast Asian dental database, optimizing for common dental issues and facial contours among Asians, including maxillary protrusion, mandibular retrusion, and other conditions. The results after correction can be more perfect, creating smile curves that match Asian facial contours.',
     qualityTitle: 'Stable Quality, Reliable Delivery',
     qualityDescription: 'Each of our aligners is manufactured in Taiwanese dental factories that have passed ISO 13485 and GMP certification, with strict control from raw materials to manufacturing processes, ensuring stable quality and reliable delivery.',
@@ -132,8 +132,8 @@ export default {
     pageSubtitle: 'Create a Reassuring Beautiful Teeth Experience',
     becomePartner: 'Become a Partner',
     // Precise control section
-    preciseControl: 'Precise Control',
-    preciseControlDescription: 'The origin of this concept comes from practical cooperation experience with clinical dentists: when patients need more delicate control in the late stage of orthodontics, but also hope to improve wearing comfort and aesthetics, Pearl Digital provides a solution with clear conversion design logic, stable material performance, and controllable treatment rhythm, so that the treatment effect is not discounted due to conversion, but becomes more precise.',
+    preciseControl: 'Precision Control, Backed by Clinical Expertise',
+    preciseControlDescription: 'Born from collaboration with orthodontists, our approach addresses a key need: in the final stages of traditional braces treatment, patients often require more detailed control — without sacrificing comfort or aesthetics. With Pearly\'s stable materials, clear transition design, and predictable pacing, treatment outcomes are not just preserved during the switch, but refined with even greater precision.',
     // Company introduction description
     companyMission: 'We are committed to applying advanced technology to orthodontics, improving treatment quality and patient experience. We believe that beautiful smiles should be built on the foundation of professionalism, safety, and technology.',
     // Description section
@@ -155,13 +155,13 @@ export default {
         price: '$48,000-$118,000'
       },
       step4: {
-        title: 'Journey',
-        description: 'Invisible aligners completed\nListen to doctor\'s instructions\nReceive full set of aligners at once\nDistribute in batches as needed',
+        title: 'Begin Your Smile Journey',
+        description: 'After your aligners are made, your doctor will guide you through the treatment details. You\'ll receive either the full set at once or in stages, depending on your treatment plan.',
         price: 'Free'
       },
       step5: {
-        title: 'Joy',
-        description: 'Continuous progress tracking through Smile Manager\nUninterrupted communication and joy\nSecure and uninterrupted plan',
+        title: 'Ongoing Care',
+        description: 'With support from your Smile Concierge, your progress is continuously monitored. Stay connected and confident, knowing your treatment plan runs smoothly without interruption.',
         price: 'Free'
       },
       buttonText: 'Start Your Smile Journey'
@@ -171,44 +171,44 @@ export default {
   // Invisible Braces page
   invisibleBraces: {
     // Main page content
-    title: 'US Brand, FDA Certified',
-    subtitle: 'Treatment plans designed by professional teams, AI precisely simulates tooth movement, improving predictability and efficiency.',
+    title: 'American Brand, FDA Cleared',
+    subtitle: 'Orthodontic treatment plans are designed by a professional team, with AI precisely simulating tooth movement.',
     buttonText: 'Smile Test',
-    whyChooseTitle: 'Why Choose Pearl Digital Invisible Aligners?',
-    whyChooseDescription: 'Pearl Digital is a brand under Pearl Digital Inc. from the United States, combining artificial intelligence technology with Asian facial design experience to create an intelligent invisible orthodontic system specifically for Eastern people. The products have passed US FDA certification, with quality and safety meeting international medical device standards. We believe that orthodontic treatment is not just about alignment, but a journey towards health and confidence.',
+    whyChooseTitle: 'Why choose Pearly Clear Aligners?',
+    whyChooseDescription: 'Pearly is a brand under Pearl Digital Inc., combining artificial intelligence technology to create a smart invisible orthodontic system. The product is FDA-cleared in the United States, with quality and safety meeting international medical device standards. We believe that orthodontic treatment is not only about straightening teeth — it is also a transformative journey toward better health and greater confidence.',
     
     // Feature highlights
     features: {
       usBrand: {
-        title: 'US Brand FDA Certified',
-        description: 'Originating from Silicon Valley, products are certified by the US Food and Drug Administration (FDA), meeting international medical device safety and efficacy standards.'
+        title: 'FDA-Cleared American Brand',
+        description: 'Originating from the United States, the product is cleared by the U.S. Food and Drug Administration (FDA), meeting international standards for medical device safety and quality.'
       },
       techAssisted: {
-        title: 'Technology Assisted, Professionally Led',
-        description: 'Treatment plans designed by professional teams, combined with AI precise tooth movement simulation, improving predictability and efficiency.'
+        title: 'Technology-Driven, Expertly Guided',
+        description: 'Treatment plans are designed by a professional team, enhanced with AI precision tooth-movement simulations.'
       },
       highTransparency: {
-        title: 'High Transparency, Almost Invisible',
-        description: 'Made with BPA-free medical-grade high-transparency material, smooth edges, comfortable wear, almost invisible, not affecting daily life and social interactions.'
+        title: 'High Transparency, Nearly Invisible',
+        description: 'Made with BPA-free, medical-grade high-transparency materials. Smooth edges, comfortable fit, and discreet appearance — designed not to affect daily life or social interactions.'
       },
       personalized: {
-        title: 'Personalized Treatment Grading',
-        description: 'Provides three orthodontic intensity options, precisely planned according to tooth alignment and bite requirements.'
+        title: 'Personalized Treatment Stages',
+        description: 'Offering three types of orthodontic treatment options, with precise planning tailored to tooth alignment and bite needs.'
       },
       threeDimensional: {
-        title: '3D Image Integration Design',
-        description: 'Supports integration of CBCT and lateral cephalometric X-ray image data, enhancing diagnostic depth and comprehensive bite design.'
+        title: 'Integrated 3D Imaging Design',
+        description: 'Supports integration of intra-oral scans, CBCT, Ceph, and X-ray data, enhancing diagnostic accuracy and ensuring comprehensive occlusion design.'
       },
       taiwanMade: {
-        title: 'Taiwan Made, Stable Quality',
-        description: 'Aligners manufactured in Taiwan medical device factories certified with ISO 13485 and GMP/QMS, ensuring stable quality and clear delivery for every product.'
+        title: 'Made in Taiwan, Quality Assured',
+        description: 'Aligners are manufactured with medical-grade materials in ISO 13485 and GMP/QMS certified Taiwanese facilities, ensuring consistent quality and on-time delivery for every product.'
       }
     },
     
     // Manufacturing process
     manufacturing: {
-      title: 'Advanced Craftsmanship, Professional Manufacturing',
-      description: 'Pearl Digital aligners can also support integration with traditional orthodontic treatments, serving as mid-to-late stage finishing, detail adjustments, or aesthetic optimization, suitable for users who expect smooth transition from fixed braces to transparent aligners.',
+      title: 'Advanced Technology, Expertly Made',
+      description: 'Pearly aligners can also be combined with traditional orthodontic treatments, serving as a finishing stage, for fine adjustments, or for aesthetic optimization. They are ideal for patients who wish to smoothly transition from fixed braces to clear aligners.',
       sideView: 'Side View',
       frontView: 'Front View'
     },
@@ -350,23 +350,23 @@ export default {
   // Maintainer page
   maintainer: {
     // Main page content
-    title: 'Stable, Orthodontic Results',
-    subtitle: 'After orthodontic treatment, maintaining results is equally crucial.',
+    title: 'Lasting Results — Keeping your new smile stable after treatment is key.',
+    subtitle: 'Keep Your Smile Upgrade Stable',
     buttonText: 'Smile Test',
     sketchTitle: 'Stabilize Your Smile Upgrade Results',
-    sketchDescription: 'Pearl Digital retainers are designed specifically to stabilize post-orthodontic teeth. Whether you have undergone traditional braces or invisible aligner treatment, they can effectively prevent teeth from shifting again, maintain bite stability, and continue the results of a neat smile.',
+    sketchDescription: 'Pearly retainers are designed to maintain your teeth after orthodontic treatment. Whether you\'ve completed a traditional braces treatment or a clear aligner therapy, our retainers effectively prevent teeth from relapse, keep your bite stable, and preserve the results of your straightened smile.',
     
     // Product features
     productFeatures: {
       title: 'Product Features',
       features: {
         fit: {
-          title: 'High intraoral fit, smooth edges, comfortable wear',
-          description: 'Each retainer is meticulously crafted based on individual dental impressions, with polished edges to reduce friction on oral soft tissues, maintaining natural fit even during extended wear.'
+          title: 'Precision Fit & Lasting Comfort',
+          description: 'Custom-made to your teeth, with smooth polished edges for a natural feel, even during extended wear.'
         },
         transparency: {
-          title: 'High transparency, almost invisible',
-          description: 'Made with medical-grade high-transparency material, even in close conversation, it\'s not easily detectable, allowing you to confidently handle daily and social scenarios.'
+          title: 'Crystal-Clear & Nearly Invisible',
+          description: 'Crafted from medical-grade transparent material, so discreet they\'re hard to spot even up close.'
         },
         stainResistant: {
           title: 'Strong stain resistance, not easily yellowed',
@@ -381,20 +381,20 @@ export default {
     
     // Applicable objects
     applicableObjects: {
-      title: 'Applicable Objects',
+      title: 'Who Needs Retainers?',
       buttonText: 'Free diagnosis to see if it suits me?',
       objects: {
         traditional: {
-          title: 'Traditional Orthodontics',
-          description: 'Fixed period after completing traditional orthodontic treatment'
+          title: 'Post-Braces Patients',
+          description: 'To keep teeth stable after completing traditional orthodontic treatment.'
         },
         invisible: {
-          title: 'Invisible Orthodontics',
-          description: 'Stable stage after completing invisible orthodontic treatment'
+          title: 'Post-Aligner Patients',
+          description: 'To ensure long-term stability after clear aligner therapy.'
         },
         relapse: {
           title: 'Relapse Prevention',
-          description: 'Those with slight tooth displacement tendency who wish to maintain dental alignment'
+          description: 'For those noticing minor tooth shifts who want to maintain a straight smile.'
         }
       }
     }
@@ -455,8 +455,8 @@ export default {
       description: 'Please fill in the following basic information so we can contact you smoothly.\nWe will contact you within 1-2 business days via LINE, Email or phone to provide further explanation or arrange clinic consultation.'
     },
     step1Form: {
-      title: 'Leave simple information, let us know you better!',
-      subtitle: 'Just a few minutes to share your detailed information and 4 smile photos',
+      title: 'Share a Few Details & Photos',
+      subtitle: 'It only takes a few minutes to provide your basic info and 4 smile photos — so we can give you personalized feedback on your aligner journey.',
       loading: 'Loading...',
       name: 'Name',
       birthday: 'Birthday',
@@ -550,7 +550,7 @@ export default {
 
   // Smile Journey page
   journey: {
-    title: 'Confident Smile\nCustom Made',
+    title: 'A Confident Smile, Custom-Made for You',
     buttonText: 'Smile Test',
     sketchTitle: 'How does Pearl Digital invisible braces work?',
     sketchDescription: 'Pearl Digital invisible braces are designed to change your smile. The working principle is to use transparent aligners to gradually move teeth to ideal positions, providing a convenient and reliable way to help your smile become more neat and confident! And you only need to upload photos for online preliminary smile appointment to determine the applicability of invisible braces, which can start your smile upgrade journey. After the appointment, our professional partner doctors will provide consultation and comprehensive examination for you, and create the most suitable invisible braces plan for you based on your needs and dental condition. When you and the doctor agree to proceed with the treatment, Pearl Digital will customize exclusive invisible braces for you. The following is the Pearl Digital invisible braces workflow:',
@@ -815,38 +815,36 @@ export default {
 
   // Correction Treatment page
   correction: {
-    title: 'Orthodontic Treatment\nLong-term Change',
-    subDescription: 'Straight teeth are not just for appearance, but also related to bite, development, speech, breathing, and even overall confidence and quality of life. Proper orthodontic treatment can bring long-term changes that combine health and aesthetics.',
+    title: 'Orthodontic Treatment for Lasting Change',
+    subDescription: 'Orthodontics isn\'t just about looks. Correct tooth alignment supports healthy bite, speech, breathing, and development — while boosting confidence and quality of life. With the right treatment, you\'ll enjoy lasting benefits for both health and aesthetics.',
     buttonText: 'Smile Test',
-    sketchTitle: 'Common Dental Problems and Facial Impact in Asians',
-    sketchDescription: 'Due to the genetic expression and craniofacial characteristics of Asians, there are often the following dental alignment and skeletal bite problems, which affect the overall facial appearance:',
+    sketchTitle: 'Common Bite & Alignment Issues',
+    sketchDescription: 'Because of genetic and craniofacial features, many patients experience certain dental alignment and bite problems that can significantly influence facial aesthetics:',
     adultCorrection: 'Adult Orthodontics',
     adultDescription: 'Adults can also have ideal smiles and stable bites. Orthodontics not only improves appearance but also solves functional problems, improving quality of life and self-confidence.',
     facialIssues: {
-      title: 'Due to the genetic expression and craniofacial characteristics of Asians, there are often the following dental alignment and skeletal bite problems, which affect the overall facial appearance:',
-      description: 'Due to the genetic expression and craniofacial\ncharacteristics of Asians, there are often the following\ndental alignment and skeletal bite problems, which\naffect the overall facial appearance:',
+      title: 'Because of genetic and craniofacial features, many patients experience certain dental alignment and bite problems that can significantly influence facial aesthetics:',
+      description: 'Because of genetic and craniofacial features, many patients experience certain dental alignment and bite problems that can significantly influence facial aesthetics:',
       problems: {
         overbite: {
-          title: 'Protruding Upper Front Teeth',
-          // title: 'Protruding Upper Front Teeth (Buck Teeth)',
-          description: 'Prevents natural lip closure,\nExcessive mouth protrusion.'
+          title: 'Protruding Upper Teeth ("Buck Teeth")',
+          description: 'When the upper front teeth jut out, the lips can\'t close naturally, causing an overly convex mouth profile.'
         },
         underbite: {
-          title: 'Receding Chin ',
-          // title: 'Receding Chin (Class II Skeletal)',
-          description: 'Causes facial proportion imbalance,\nVisually appears weak'
+          title: 'Receding Chin (Class II Malocclusion)',
+          description: 'A retrusive lower jaw disrupts facial balance and can make the face appear less lively or defined.'
         },
         crowding: {
-          title: 'Narrow Dental Arch / Crowding',
-          description: 'Makes face appear pointed,\nEasily shows aging'
+          title: 'Narrow Arch & Crowded Teeth',
+          description: 'A constricted arch or crowded teeth can create a pointed facial shape, often giving an aged appearance.'
         },
         openBite: {
           title: 'Open Bite',
-          description: 'Affects pronunciation and chewing efficiency,\nAlso causes lower facial proportion imbalance'
+          description: 'An open bite can impair speech and chewing, and it often makes the lower face look unbalanced.'
         },
         deepBite: {
           title: 'Deep Bite',
-          description: 'Affects pronunciation and chewing efficiency,\nAlso causes lower facial proportion imbalance'
+          description: 'A deep bite can interfere with proper chewing and speech, while making the lower face appear unbalanced.'
         }
       }
     },
@@ -863,43 +861,37 @@ export default {
         ]
       },
       timing: {
-        title: 'Best intervention timing during critical developmental periods',
-        description: 'During adolescence, as teeth and jawbones are still developing, the stability and adaptability of orthodontic treatment are optimal. Based on different age and dentition stages, it can be broadly divided into the following three periods:',
+        title: 'The Best Time for Orthodontic Care in Growing Years',
+        description: 'The teenage years are the most effective time for orthodontics, as teeth and jaws are still developing and highly adaptable. Treatment opportunities can be divided into three key phases:',
         stages: {
           mixed: {
-            title: 'Mixed dentition period (approx. 6-12 years old)',
-            description: 'The transitional stage between primary and permanent teeth, where occlusal abnormalities such as underbite, deep bite, open bite, etc., can be detected early.'
+            title: 'Mixed Dentition (6–12 years old)',
+            description: 'Baby and permanent teeth overlap. Early detection of crossbites, deep bites, or open bites helps prevent worsening issues.'
           },
           early: {
-            title: 'Early permanent dentition (approx. 12-15 years old)',
-            description: 'The dentition gradually stabilizes, making it the golden time for orthodontic intervention.'
+            title: 'Early Permanent Dentition (12–15 years old)',
+            description: 'Teeth are stabilizing, making this the golden window for orthodontic treatment.'
           },
           growth: {
-            title: 'Jawbone adjustment period (peak adolescent growth)',
-            description: 'At this time, facial development still has room for guidance; through braces and professional orthodontic appliances, the growth of the jaw can be promoted or inhibited.'
+            title: 'Jaw Growth Phase (pubertal growth spurt)',
+            description: 'Facial structure can still be guided. Aligners and professional appliances can help direct or restrict jaw growth for balanced development.'
           }
         }
       }
     },
     adultBenefits: {
-      title: 'Orthodontics is not just about becoming beautiful, it\'s an upgrade to life',
-      description: 'For adults, orthodontics often serves both aesthetic needs and functional improvements. Neat teeth not only bring a naturally symmetrical smile and facial proportions, but also offer the following substantial benefits:',
-      aesthetics: {
-        title: 'Impact on Aesthetics:',
-        items: [
-          'After adjusting the dental alignment, lip shape becomes naturally full, and facial lines become smoother',
-          'Helps improve common facial appearance problems in Asian populations such as receding chins and protruding mouths',
-          'Makes smiles and eyes more confident and approachable, enhancing overall temperament'
-        ]
-      },
-      lifestyle: {
-        title: 'Accommodating Adult Pace and Needs:',
-        description: 'Zhenshumei\'s invisible aligner treatment is designed with flexibility and removability, allowing you to comfortably handle work meetings, social activities, and business trips.'
-      }
+      title: 'Orthodontics for Adults',
+      description: 'It\'s never too late for a confident smile. Orthodontics for adults not only improves appearance but also:',
+      benefits: [
+        'Reduces risks of gum disease and teeth grinding',
+        'Improves oral hygiene and overall dental health',
+        'Enhances balance between teeth and facial proportions',
+        '✨ At any age, your smile can be redesigned.'
+      ]
     },
     earlyCorrection: {
-      title: 'Benefits of Early Orthodontic Treatment for Teens',
-      benefits: 'Prevent tooth crowding and future dental issues\nPromote normal jaw development, reducing need for surgical intervention\nImprove cleaning accessibility, reducing cavities and periodontal risks\nBoost smile confidence and self-image, enhancing school life and social interactions'
+      title: 'Why Early Orthodontics Matters for Teens',
+      benefits: 'Prevents crowding and long-term dental problems\nGuides proper jaw growth, reducing the chance of surgery later\nMakes cleaning easier, lowering risks of cavities and gum disease\nBuilds confidence and self-esteem, helping kids thrive in school and social life'
     },
     manufacturingSection: {
       buttonText: 'Understand Your Dental Condition',
@@ -995,7 +987,7 @@ export default {
   // FAQ Frequently Asked Questions
   faq: {
     title: 'FAQs',
-    bottomText: 'If you have further questions, we recommend using the online appointment form to provide photos and basic information, and we will quickly arrange for consultants and professional doctors to provide one-on-one responses and explanations.',
+    bottomText: 'Still Have Questions?\nSubmit your photos and details through our online Smile Quiz, and we\'ll connect you with a consultant or orthodontist for a personalized one-on-one reply.',
     questions: {
       process: {
         question: 'What is the process for invisible braces treatment?',
@@ -1014,8 +1006,8 @@ export default {
         answer: 'We provide treatment options specifically designed for teenagers.\nFor those with stable wearing habits\n**Middle school students (approximately 12 years and above) can proceed with treatment planning after evaluation by a dentist.**\nIf still in the period of mixed dentition, we recommend regular follow-up and waiting until the appropriate age for orthodontic treatment.'
       },
       safety: {
-        question: 'Are Pearl Digital invisible braces safe?',
-        answer: '• We use BPA-free medical-grade transparent materials.\n• American brand Pearl Digital Inc. products have passed FDA certification.\n• Taiwan manufacturing factory has ISO 13485 and QMS/GMP certification.\n• The design process is led by a team of treatment planners with over 30 years of experience, with AI serving only as an auxiliary tool to ensure each set of braces meets international medical device standards in terms of materials, safety, design, and efficacy.'
+        question: 'Are Pearly Aligners Safe?',
+        answer: 'Absolutely. Safety and quality are at the core of everything we do.\nMade with BPA-free, medical-grade transparent materials\nDeveloped by Pearl Digital Inc., a U.S. brand with FDA clearance\nManufactured in Taiwan at ISO 13485 and QMS/GMP-certified facilities\nTreatment plans designed by a professional team with 30+ years of experience; AI serves only as a supportive tool to enhance accuracy.\nThis ensures every aligner meets international medical device standards for material safety, design, and effectiveness.'
       },
       pricing: {
         question: 'What is the price of Pearl Digital invisible braces? Are there any hidden fees?',
@@ -1026,12 +1018,12 @@ export default {
         answer: 'Support flexible payment methods: enjoy one-time payment discounts, or apply for installment payments.\nSupport all major payment tools: credit cards, bank transfers, mobile payments.\nAimed at making treatment arrangements easier and reducing your financial pressure in choosing.'
       },
       satisfaction: {
-        question: 'What if I\'m not satisfied with the final results?',
-        answer: 'If further adjustments are needed after treatment completion, additional braces can be applied for, exempting additional brace fees.\nIf re-scanning is needed, the clinic will charge a re-scanning fee of $3000, which you will pay directly to the clinic.\nHelping you achieve your ideal smile is our commitment and responsibility.'
+        question: 'What If I\'m Not Happy With the Results?',
+        answer: 'Your smile is our commitment. If refinements are needed after your initial treatment:\nExtra aligners will be provided at no additional charge.\nIf a new intra-oral scan is required, the clinic may collect a rescan fee.\nWith Pearly, you can feel confident knowing we\'ll support you until you achieve the smile you deserve.'
       },
       extraction: {
-        question: 'Do I need to have teeth extracted during treatment?',
-        answer: 'Most mild plans do not require tooth extraction\nModerate and severe plans depend on the patient\'s tooth crowding and bite condition, to be determined by clinical physician evaluation. If tooth extraction is needed, it will be informed in advance during the consultation stage and assistance will be provided for arrangement.'
+        question: 'Do I Need Extractions for Pearly Treatment?',
+        answer: 'In most cases, no.\nMild Case: Usually no extractions needed.\nModerate & Comprehensive Cases: May require extractions depending on your teeth alignment and bite.\nYour orthodontist will carefully evaluate your case. If extractions are necessary, you\'ll be informed during consultation and guided through the process.'
       }
     }
   },
