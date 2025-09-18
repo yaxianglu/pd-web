@@ -447,6 +447,49 @@ export default {
       title: '留下联络方式',
       description: '请填写以下基本资料，让我们能顺利与您联系。\n我们将于 1–2 个工作天内透过 LINE、Email 或电话与您联系，提供进一步说明或安排诊所咨询。'
     },
+    step1Form: {
+      title: '留下简单资讯，让我们更了解你！',
+      subtitle: '只需几分钟，即可分享您的详细讯息和4张微笑照片',
+      loading: '载入中...',
+      name: '名字',
+      birthday: '生日',
+      phone: '手机号码',
+      email: '电子信箱',
+      lineId: 'LINE ID',
+      city: '选择县市',
+      phoneError: '请输入正确的台湾手机号码格式 (09xxxxxxxx)',
+      consent: '点击此处即表示你接受我们的使用者条款和隐私权条款，并同意根据隐私权条款内之内容，透过LINE、SMS 或其他管道联系我',
+      nextButton: '下一步',
+      cities: [
+        '台北市', '新北市', '桃园市', '台中市', '台南市', '高雄市',
+        '基隆市', '新竹市', '新竹县', '苗栗县', '彰化县', '南投县',
+        '云林县', '嘉义市', '嘉义县', '屏东县', '宜兰县', '花莲县',
+        '台东县', '澎湖县', '金门县', '连江县'
+      ]
+    },
+    step2Form: {
+      loading: '载入中...',
+      teethTitle: '您如何形容您的牙齿？',
+      teethOptions: {
+        crowded: '上前牙突出',
+        overbite: '下巴后缩',
+        spaced: '牙弓狭窄拥挤',
+        other: '深咬'
+      },
+      teethUnsure: '我不确定',
+      considerationTitle: '您对于透明牙套的考量是？',
+      considerationOptions: {
+        price: '价格',
+        procedure: '治疗程序',
+        duration: '疗程周期',
+        pain: '疼痛状况'
+      },
+      considerationNone: '以上都没有',
+      improvementTitle: '您觉得哪里需要改善吗？',
+      improvementPlaceholder: '例如:我希望牙齿变得整齐。',
+      prevButton: '上一步',
+      nextButton: '下一步'
+    },
     footer: {
       company: 'Pearl Digitalinc.',
       rights: 'All Rights Reserved. ©2025',

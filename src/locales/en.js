@@ -447,6 +447,49 @@ export default {
       title: 'Leave Contact Information',
       description: 'Please fill in the following basic information so we can contact you smoothly.\nWe will contact you within 1-2 business days via LINE, Email or phone to provide further explanation or arrange clinic consultation.'
     },
+    step1Form: {
+      title: 'Leave simple information, let us know you better!',
+      subtitle: 'Just a few minutes to share your detailed information and 4 smile photos',
+      loading: 'Loading...',
+      name: 'Name',
+      birthday: 'Birthday',
+      phone: 'Phone Number',
+      email: 'Email',
+      lineId: 'LINE ID',
+      city: 'Select City',
+      phoneError: 'Please enter the correct Taiwan mobile phone number format (09xxxxxxxx)',
+      consent: 'Clicking here means you accept our terms of use and privacy policy, and agree to contact me through LINE, SMS or other channels according to the content in the privacy policy',
+      nextButton: 'Next',
+      cities: [
+        'Taipei City', 'New Taipei City', 'Taoyuan City', 'Taichung City', 'Tainan City', 'Kaohsiung City',
+        'Keelung City', 'Hsinchu City', 'Hsinchu County', 'Miaoli County', 'Changhua County', 'Nantou County',
+        'Yunlin County', 'Chiayi City', 'Chiayi County', 'Pingtung County', 'Yilan County', 'Hualien County',
+        'Taitung County', 'Penghu County', 'Kinmen County', 'Lienchiang County'
+      ]
+    },
+    step2Form: {
+      loading: 'Loading...',
+      teethTitle: 'How would you describe your teeth?',
+      teethOptions: {
+        crowded: 'Protruding front teeth',
+        overbite: 'Receding chin',
+        spaced: 'Narrow crowded arch',
+        other: 'Deep bite'
+      },
+      teethUnsure: 'I\'m not sure',
+      considerationTitle: 'What are your considerations for clear aligners?',
+      considerationOptions: {
+        price: 'Price',
+        procedure: 'Treatment procedure',
+        duration: 'Treatment duration',
+        pain: 'Pain level'
+      },
+      considerationNone: 'None of the above',
+      improvementTitle: 'What do you think needs improvement?',
+      improvementPlaceholder: 'For example: I hope my teeth become neat.',
+      prevButton: 'Previous',
+      nextButton: 'Next'
+    },
     footer: {
       company: 'Pearl Digitalinc.',
       rights: 'All Rights Reserved. ©2025',

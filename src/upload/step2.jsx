@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 import { smileTestApi } from '../services/smileTestApi';
 import './step2.scss';
 import p3 from './imgs/3.png';
@@ -13,6 +14,7 @@ import p14 from './imgs/14.svg';
 
 export default function Step2({ onNext, setStep, style }) {
   const location = useLocation();
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     teethDescription: [],
     alignerConsideration: [],
@@ -21,17 +23,17 @@ export default function Step2({ onNext, setStep, style }) {
   const [loading, setLoading] = useState(false);
 
   const teethOptions = [
-    { id: 'crowded', label: '上前牙突出', image: p3 },
-    { id: 'overbite', label: '下巴後縮', image: p4 },
-    { id: 'spaced', label: '牙弓狹窄擁擠', image: p5 },
-    { id: 'other', label: '深咬', image: p6 }
+    { id: 'crowded', label: t('upload.step2Form.teethOptions.crowded'), image: p3 },
+    { id: 'overbite', label: t('upload.step2Form.teethOptions.overbite'), image: p4 },
+    { id: 'spaced', label: t('upload.step2Form.teethOptions.spaced'), image: p5 },
+    { id: 'other', label: t('upload.step2Form.teethOptions.other'), image: p6 }
   ];
 
   const considerationOptions = [
-    { id: 'price', label: '價格', icon: <img src={p11} alt="p11" /> },
-    { id: 'procedure', label: '治療程序', icon: <img src={p12} alt="p12" style={{ width: '100%', height: '100%' }} /> },
-    { id: 'duration', label: '療程週期', icon: <img src={p13} alt="p13" /> },
-    { id: 'pain', label: '疼痛狀況', icon: <img src={p14} alt="p14" /> }
+    { id: 'price', label: t('upload.step2Form.considerationOptions.price'), icon: <img src={p11} alt="p11" /> },
+    { id: 'procedure', label: t('upload.step2Form.considerationOptions.procedure'), icon: <img src={p12} alt="p12" style={{ width: '100%', height: '100%' }} /> },
+    { id: 'duration', label: t('upload.step2Form.considerationOptions.duration'), icon: <img src={p13} alt="p13" /> },
+    { id: 'pain', label: t('upload.step2Form.considerationOptions.pain'), icon: <img src={p14} alt="p14" /> }
   ];
 
   // 从URL获取UUID
@@ -209,7 +211,7 @@ export default function Step2({ onNext, setStep, style }) {
     return (
       <div className="step2-wrapper" style={style}>
         <div className="step2-content">
-          <div className="loading">載入中...</div>
+          <div className="loading">{t('upload.step2Form.loading')}</div>
         </div>
       </div>
     );
@@ -221,7 +223,7 @@ export default function Step2({ onNext, setStep, style }) {
         <form className="step2-form" onSubmit={handleSubmit}>
           {/* 第一部分：牙齿描述 */}
           <div className="form-section">
-            <h2 className="section-title">您如何形容您的牙齒？</h2>
+            <h2 className="section-title">{t('upload.step2Form.teethTitle')}</h2>
             <div className="options-grid">
               {teethOptions.map(option => (
                 <div
@@ -241,13 +243,13 @@ export default function Step2({ onNext, setStep, style }) {
               className={`unsure-button ${formData.teethDescription.includes('unsure') ? 'selected' : ''}`}
               onClick={() => handleTeethSelect('unsure')}
             >
-              我不確定
+              {t('upload.step2Form.teethUnsure')}
             </button>
           </div>
 
           {/* 第二部分：透明牙套考量 */}
           <div className="form-section">
-            <h2 className="section-title">您對於透明牙套的考量是？</h2>
+            <h2 className="section-title">{t('upload.step2Form.considerationTitle')}</h2>
             <div className="options-grid">
               {considerationOptions.map(option => (
                 <div
@@ -265,20 +267,20 @@ export default function Step2({ onNext, setStep, style }) {
               className={`none-button ${formData.alignerConsideration.includes('none') ? 'selected' : ''}`}
               onClick={() => handleConsiderationSelect('none')}
             >
-              以上都沒有
+              {t('upload.step2Form.considerationNone')}
             </button>
           </div>
 
           {/* 第三部分：改善需求 */}
           <div className="form-section">
-            <h2 className="section-title">您覺得哪裡需要改善嗎？</h2>
+            <h2 className="section-title">{t('upload.step2Form.improvementTitle')}</h2>
             <div className="improvement-input-wrapper">
               <input
                 type="text"
                 className="improvement-input"
                 value={formData.improvement}
                 onChange={handleImprovementChange}
-                placeholder="例如:我希望牙齒變得整齊。"
+                placeholder={t('upload.step2Form.improvementPlaceholder')}
               />
             </div>
           </div>
@@ -290,13 +292,13 @@ export default function Step2({ onNext, setStep, style }) {
               className="step2-prev-button"
               onClick={handlePrev}
             >
-              上一步
+              {t('upload.step2Form.prevButton')}
             </button>
             <button
               type="submit"
               className="step2-next-button"
             >
-              下一步
+              {t('upload.step2Form.nextButton')}
             </button>
           </div>
         </form>

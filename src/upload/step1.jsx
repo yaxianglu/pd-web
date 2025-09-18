@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 import BirthdayPicker from '../components/birthday';
 import { smileTestApi } from '../services/smileTestApi';
 import './step1.scss';
 
 export default function Step1({ onNext, style, setStep }) {
   const location = useLocation();
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     full_name: '',
     birth_date: '',
@@ -129,7 +131,7 @@ export default function Step1({ onNext, style, setStep }) {
     
     // 验证手机号码
     if (formData.phone && !/^09\d{8}$/.test(formData.phone)) {
-      setPhoneError('請輸入正確的台灣手機號碼格式 (09xxxxxxxx)');
+      setPhoneError(t('upload.step1Form.phoneError'));
       return;
     }
     
@@ -144,18 +146,13 @@ export default function Step1({ onNext, style, setStep }) {
     }
   };
 
-  const cities = [
-    '台北市', '新北市', '桃園市', '台中市', '台南市', '高雄市',
-    '基隆市', '新竹市', '新竹縣', '苗栗縣', '彰化縣', '南投縣',
-    '雲林縣', '嘉義市', '嘉義縣', '屏東縣', '宜蘭縣', '花蓮縣',
-    '台東縣', '澎湖縣', '金門縣', '連江縣'
-  ];
+  const cities = t('upload.step1Form.cities');
 
   if (loading) {
     return (
       <div className="step1-wrapper" style={style}>
         <div className="step1-content">
-          <div className="loading">載入中...</div>
+          <div className="loading">{t('upload.step1Form.loading')}</div>
         </div>
       </div>
     );
@@ -166,10 +163,10 @@ export default function Step1({ onNext, style, setStep }) {
       <div className="step1-content">
         <div className="step1-header">
           <h1 className="step1-title">
-            留下簡單資訊，讓我們更了解你！
+            {t('upload.step1Form.title')}
           </h1>
           <p className="step1-subtitle">
-            只需幾分鐘，即可分享您的詳細訊息和4張微笑照片
+            {t('upload.step1Form.subtitle')}
           </p>
         </div>
 
@@ -180,7 +177,7 @@ export default function Step1({ onNext, style, setStep }) {
               name="full_name"
               value={formData.full_name}
               onChange={handleInputChange}
-              placeholder="名字"
+              placeholder={t('upload.step1Form.name')}
               required
             />
           </div>
@@ -189,7 +186,7 @@ export default function Step1({ onNext, style, setStep }) {
             <BirthdayPicker
               value={formData.birth_date}
               onChange={handleBirthdayChange}
-              placeholder="生日"
+              placeholder={t('upload.step1Form.birthday')}
             />
           </div>
 
@@ -199,7 +196,7 @@ export default function Step1({ onNext, style, setStep }) {
               name="phone"
               value={formData.phone}
               onChange={handleInputChange}
-              placeholder="手機號碼"
+              placeholder={t('upload.step1Form.phone')}
               required
               className={phoneError ? 'error' : ''}
             />
@@ -212,7 +209,7 @@ export default function Step1({ onNext, style, setStep }) {
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              placeholder="電子信箱"
+              placeholder={t('upload.step1Form.email')}
               required
             />
           </div>
@@ -223,7 +220,7 @@ export default function Step1({ onNext, style, setStep }) {
               name="line_id"
               value={formData.line_id}
               onChange={handleInputChange}
-              placeholder="LINE ID"
+              placeholder={t('upload.step1Form.lineId')}
             />
           </div>
 
@@ -234,7 +231,7 @@ export default function Step1({ onNext, style, setStep }) {
               onChange={handleInputChange}
               required
             >
-              <option value="">選擇縣市</option>
+              <option value="">{t('upload.step1Form.city')}</option>
               {cities.map(city => (
                 <option key={city} value={city}>{city}</option>
               ))}
@@ -250,7 +247,7 @@ export default function Step1({ onNext, style, setStep }) {
                 className="consent-checkbox"
               />
               <span className="consent-text">
-                點擊此處即表示你接受我們的使用者條款和隱私權條款，並同意根據隱私權條款內之內容，透過LINE、SMS 或其他管道聯繫我
+                {t('upload.step1Form.consent')}
               </span>
             </label>
           </div>
@@ -260,7 +257,7 @@ export default function Step1({ onNext, style, setStep }) {
               className="next-button"
               disabled={!agreed}
             >
-              下一步
+              {t('upload.step1Form.nextButton')}
             </button>
           </div>
         </form>
