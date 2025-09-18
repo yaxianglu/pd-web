@@ -585,7 +585,7 @@ export default function Step3({ onNext, setStep, style }) {
           {!isMobile && (
             <div className="mobile-prompt" onClick={selectFromGallery}>
               <div className="mobile-icon">
-                <QRCodeComponent url={currentUrl} size={40} onClick={e => { e.stopPropagation(); setShowQrFull(true); }} />
+                <QRCodeComponent url={currentUrl} size={80} onClick={e => { e.stopPropagation(); setShowQrFull(true); }} />
               </div>
               <span>前往使用手機拍攝照片</span>
             </div>
