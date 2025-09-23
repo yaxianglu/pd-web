@@ -1,37 +1,36 @@
 import png12 from '../../asserts/12.svg';
 import './index.scss';
 
-export default function PlanCard({ tag, duration, subtitle, price, badge, features, checks, color }) {
+export default function PlanCard({ tag, duration, subtitle, price, badge, features, checks, color, complexityText }) {
   return (
     <div className="plan-card" style={{ '--card-color': color }}>
       {/* 标题栏 */}
       <div className="card-header">
         {tag}
-        <span className="complexity-text">/複雜程度</span>
+        <span className="complexity-text">/{complexityText}</span>
       </div>
       {/* 主体内容 */}
       <div className="card-body">
         <div className="duration">{duration}</div>
         <div className="subtitle">{subtitle}</div>
         
-        {/* 第一个分隔线 */}
-        <div className="divider" />
-        
-        {/* 价格和徽章容器 */}
-        <div className="price-container">
-          <div className="price">
-            {price}
-            {/* 限时优惠徽章图片 */}
-            <img 
-              src={png12} 
-              alt="限時優惠"
-              className="badge-image"
-            />
-          </div>
-        </div>
-
-        {/* 第二个分隔线 */}
-        <div className="divider" />
+        {/* 价格与分隔线：英文不显示价格且移除两条分隔线 */}
+        {price ? (
+          <>
+            <div className="divider" />
+            <div className="price-container">
+              <div className="price">
+                {price}
+                <img 
+                  src={png12} 
+                  alt="限時優惠"
+                  className="badge-image"
+                />
+              </div>
+            </div>
+            <div className="divider" />
+          </>
+        ) : null}
 
         {/* 适应症 */}
         <ul className="features-list">

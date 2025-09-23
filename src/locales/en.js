@@ -49,7 +49,7 @@ export default {
     correction: 'Correction & Beauty',
     about: 'About Us',
     partners: 'Partners',
-    smileTest: 'Smile Test',
+    smileTest: 'Smile Quiz',
     smileUpgrade: 'Smile Upgrade',
     faq: 'FAQ'
   },
@@ -68,7 +68,7 @@ export default {
     subtitle: 'SMILE RIGHT',
     description: 'High-transparency materials and oral care solutions make every smile look naturally bright.',
     description2: 'With AI technology and professional treatment plan, achieve customized, science-driven orthodontic results.',
-    button1: 'Smile Test',
+    button1: 'Smile Quiz',
     button2: 'About Pearl Digital',
     sketchTitle: 'From treatment plan to completion, we focus on every detail to provide you with a trustworthy orthodontic experience. Because we believe that with a well-aligned smile, your radiance and confidence will naturally shine.',
     featureGrid: {
@@ -85,7 +85,7 @@ export default {
         description: 'Learn when to wear retainers and how to care for them.'
       },
       smileTest: {
-        title: 'Smile Test',
+        title: 'Smile Quiz',
         description: 'Free Smile Quiz — Upload a few photos to see if clear aligners are right for you and get tailored advice.'
       }
     }
@@ -173,7 +173,7 @@ export default {
     // Main page content
     title: 'American Brand, FDA Cleared',
     subtitle: 'Orthodontic treatment plans are designed by a professional team, with AI precisely simulating tooth movement.',
-    buttonText: 'Smile Test',
+    buttonText: 'Smile Quiz',
     whyChooseTitle: 'Why choose Pearly Clear Aligners?',
     whyChooseDescription: 'Pearly is a brand under Pearl Digital Inc., combining artificial intelligence technology to create a smart invisible orthodontic system. The product is FDA-cleared in the United States, with quality and safety meeting international medical device standards. We believe that orthodontic treatment is not only about straightening teeth — it is also a transformative journey toward better health and greater confidence.',
     
@@ -215,20 +215,23 @@ export default {
     
     // Plan selection
     planSelection: {
-      title: 'Which One is More Suitable for Me?',
-      subtitle: 'Based on your dental condition, we professionally recommend three invisible aligner plans. Whether it\'s minor alignment or complex dental issues, we have comprehensive treatments to give you a dazzling smile.',
+      title: 'Which Treatment Is Right for You?',
+      subtitle: 'Our experts recommend three clear aligner options tailored to your needs. From minor alignment to complex cases, Pearly provides complete solutions designed to deliver your brightest, most confident smile.',
       buttonText: 'Which Plan Suits Me?',
+      complexity: 'Complexity',
       plans: {
         mild: {
-          tag: 'Mild',
+          tag: 'Light',
           duration: '3-9 months',
-          subtitle: '(Average treatment cycle)',
+          subtitle: '(Average treatment duration)',
           price: '$ 48,000',
           badge: 'Limited Offer',
           features: [
-            'Front teeth appearance focus',
+            'Focused on the appearance of front teeth',
             'No or minimal attachments',
-            'No tooth extraction needed'
+            'No extractions required',
+            'Primarily aesthetic, barely noticeable in daily life',
+            'Attachment-free design for a clean, natural look'
           ],
           checks: [
             'Aesthetic focus, almost unnoticeable daily',
@@ -238,13 +241,15 @@ export default {
         moderate: {
           tag: 'Moderate',
           duration: '9-15 months',
-          subtitle: '(Average treatment cycle)',
+          subtitle: '(Average treatment duration)',
           price: '$ 98,000',
           badge: 'Limited Offer',
           features: [
-            'Front and partial back teeth',
+            'Treats front and some back teeth',
             'Most teeth require attachments',
-            'Tooth extraction may be needed depending on situation'
+            'Extractions may be needed depending on the case',
+            'Balances aesthetics and function',
+            'Suitable for most adult orthodontic needs'
           ],
           checks: [
             'Balancing aesthetics and function',
@@ -254,13 +259,15 @@ export default {
         severe: {
           tag: 'Severe',
           duration: '15-22 months',
-          subtitle: '(Average treatment cycle)',
+          subtitle: '(Average treatment duration)',
           price: '$ 118,000',
           badge: 'Limited Offer',
           features: [
-            'Front teeth adjustment and bite improvement',
+            'Aligns front teeth and improves bite',
             'Most teeth require attachments',
-            'Tooth extraction may be needed depending on situation'
+            'Extractions may be necessary depending on the case',
+            'Provides full correction of alignment and bite relationship',
+            'Suitable for advanced needs or skeletal adjustments'
           ],
           checks: [
             'Comprehensive improvement of dental alignment and bite relationship',
@@ -352,7 +359,7 @@ export default {
     // Main page content
     title: 'Lasting Results — Keeping your new smile stable after treatment is key.',
     subtitle: 'Keep Your Smile Upgrade Stable',
-    buttonText: 'Smile Test',
+    buttonText: 'Smile Quiz',
     sketchTitle: 'Stabilize Your Smile Upgrade Results',
     sketchDescription: 'Pearly retainers are designed to maintain your teeth after orthodontic treatment. Whether you\'ve completed a traditional braces treatment or a clear aligner therapy, our retainers effectively prevent teeth from relapse, keep your bite stable, and preserve the results of your straightened smile.',
     
@@ -404,7 +411,7 @@ export default {
   whitening: {
     title: 'Confidence, Starting from Teeth',
     subtitle: 'Brightness is not just appearance, confidence starts from teeth',
-    buttonText: 'Smile Test',
+    buttonText: 'Smile Quiz',
     sketchTitle: 'The radiance in daily smiles comes from clean and healthy teeth.',
     sketchDescription: 'Pearl Digital whitening series introduces teeth whitening pens designed for orthodontic treatment periods and daily oral care, not only pursuing whitening effects but also emphasizing dental health and user experience.'
   },
@@ -440,7 +447,7 @@ export default {
     minutes: 'min',
     startTest: 'Start Test',
     step1: {
-      title: 'Take Smile Test',
+      title: 'Take Smile Quiz',
       photo1: 'Front smile photo (natural smile, teeth showing)',
       photo2: 'Upper teeth close-up (gently pull upper lip)',
       photo3: 'Lower teeth close-up (gently pull lower lip)',
@@ -551,7 +558,7 @@ export default {
   // Smile Journey page
   journey: {
     title: 'A Confident Smile, Custom-Made for You',
-    buttonText: 'Smile Test',
+    buttonText: 'Smile Quiz',
     sketchTitle: 'How does Pearl Digital invisible braces work?',
     sketchDescription: 'Pearl Digital invisible braces are designed to change your smile. The working principle is to use transparent aligners to gradually move teeth to ideal positions, providing a convenient and reliable way to help your smile become more neat and confident! And you only need to upload photos for online preliminary smile appointment to determine the applicability of invisible braces, which can start your smile upgrade journey. After the appointment, our professional partner doctors will provide consultation and comprehensive examination for you, and create the most suitable invisible braces plan for you based on your needs and dental condition. When you and the doctor agree to proceed with the treatment, Pearl Digital will customize exclusive invisible braces for you. The following is the Pearl Digital invisible braces workflow:',
     additionalCosts: {
@@ -817,7 +824,7 @@ export default {
   correction: {
     title: 'Orthodontic Treatment for Lasting Change',
     subDescription: 'Orthodontics isn\'t just about looks. Correct tooth alignment supports healthy bite, speech, breathing, and development — while boosting confidence and quality of life. With the right treatment, you\'ll enjoy lasting benefits for both health and aesthetics.',
-    buttonText: 'Smile Test',
+    buttonText: 'Smile Quiz',
     sketchTitle: 'Common Bite & Alignment Issues',
     sketchDescription: 'Because of genetic and craniofacial features, many patients experience certain dental alignment and bite problems that can significantly influence facial aesthetics:',
     adultCorrection: 'Adult Orthodontics',

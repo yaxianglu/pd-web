@@ -30,12 +30,19 @@ export default function DetailButton({ text, style, size, disabled, onClick }) {
         navigate('/join');
         break;
       case '開啟微笑旅程':
+      case 'Start Your Smile Journey':
+      case '開啟你的微笑旅程':
+      case '开启你的微笑旅程':
         window.open('/upload', '_blank');
         break;
       case '我需要哪種治療？':
+      case '我需要哪种治疗？':
+      case 'Which Plan Suits Me?':
         window.open('/upload', '_blank');
         break;
       case '了解你的牙齒狀況':
+      case '了解你的牙齿状况':
+      case 'Learn about your dental condition':
         window.open('/upload', '_blank');
         break;
       default:

@@ -25,7 +25,7 @@ const InvisibleBracesPage = () => {
       <SEOHead
         title="Clear Aligners - FDA Cleared Invisible Braces | Pearly Digital"
         description="Discover Pearly clear aligners - FDA cleared, AI-powered invisible braces. Medical-grade materials, professional treatment planning, and precise tooth movement simulation for optimal orthodontic results."
-        keywords="clear aligner, invisible braces, FDA cleared, AI orthodontics, transparent aligners, teeth straightening, orthodontic treatment, medical grade materials"
+        keywords="clear aligner, invisible braces, FDA cleared, AI orthodontics, transparent aligners, teeth straightening, orthodontic treatment, medical grade materials, 珍舒美，隱形牙套，隱形矯正，數位化矯正，美國品牌，AI技術，亞洲人數據庫，維持器， 美國FDA認證，台灣TFDA class II，台灣醫療器材，台灣製造工廠，國際醫療器材標準"
         url="/invisible-braces"
         structuredData={{
           "@context": "https://schema.org",
