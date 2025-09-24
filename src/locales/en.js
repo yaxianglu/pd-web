@@ -357,8 +357,8 @@ export default {
   // Maintainer page
   maintainer: {
     // Main page content
-    title: 'Lasting Results — Keeping your new smile stable after treatment is key.',
-    subtitle: 'Keep Your Smile Upgrade Stable',
+    title: 'Lasting Results',
+    subtitle: 'Keeping your new smile stable after treatment is key.',
     buttonText: 'Smile Quiz',
     sketchTitle: 'Stabilize Your Smile Upgrade Results',
     sketchDescription: 'Pearly retainers are designed to maintain your teeth after orthodontic treatment. Whether you\'ve completed a traditional braces treatment or a clear aligner therapy, our retainers effectively prevent teeth from relapse, keep your bite stable, and preserve the results of your straightened smile.',
