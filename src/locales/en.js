@@ -830,8 +830,15 @@ Below is the step-by-step process of how Pearly clear aligners work:`,
     buttonText: 'Smile Quiz',
     sketchTitle: 'Common Bite & Alignment Issues',
     sketchDescription: 'Because of genetic and craniofacial features, many patients experience certain dental alignment and bite problems that can significantly influence facial aesthetics:',
-    adultCorrection: 'Adult Orthodontics',
-    adultDescription: 'Adults can also have ideal smiles and stable bites. Orthodontics not only improves appearance but also solves functional problems, improving quality of life and self-confidence.',
+    adultCorrection: 'Orthodontics for Adults',
+    adultDescription: `Orthodontics for Adults
+It’s never too late for a confident smile. Orthodontics for adults not only improves appearance but also:\n
+Reduces risks of gum disease and teeth grinding\n
+Improves oral hygiene and overall dental health\n
+Enhances balance between teeth and facial proportions\n
+
+At any age, your smile can be redesigned.
+`,
     facialIssues: {
       title: 'Because of genetic and craniofacial features, many patients experience certain dental alignment and bite problems that can significantly influence facial aesthetics:',
       description: 'Because of genetic and craniofacial features, many patients experience certain dental alignment and bite problems that can significantly influence facial aesthetics:',
