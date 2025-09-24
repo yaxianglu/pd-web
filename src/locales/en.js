@@ -111,8 +111,8 @@ export default {
     partners: 'Partners',
     faq: 'FAQ',
     // About page content
-    companyIntro: 'Pearl Digital is founded by PEARL DIGITAL INC., a Silicon Valley technology company.',
-    companyDescription: 'Pearl Digital was founded in Silicon Valley, with co-founder and guiding physician Dr. David Shen focusing on orthodontics for 30 years with rich clinical experience. He is the founder and CEO of OrthoWorks Orthodontic Group, which owns 11 clinics and is the oldest and still privately operated orthodontic specialty clinic in the San Francisco Bay Area.',
+    companyIntro: 'Our Story',
+    companyDescription: 'Founded in Silicon Valley by Pearl Digital Inc., Pearly brings together world-class orthodontic expertise and cutting-edge AI technology.\nOur co-founder and clinical advisor, Dr. David Shen, has over 30 years of orthodontic experience. He is the founder and CEO of OrthoWorks Orthodontic Group, with 11 clinics across the San Francisco Bay Area — the region’s oldest and longest-standing private orthodontic network.',
     drDavidShen: 'DR. DAVID SHEN',
     drDescription: 'Dr. David Shen graduated from the University of Pennsylvania School of Dental Medicine, previously taught at the University of California, San Francisco, and is also the founding president of the Northern California Asian American Dental Association. He currently serves as Chairman of the Advisory Board of the University of Pennsylvania School of Dental Medicine. He has been a speaker at numerous international dental conferences and is internationally renowned. The brand he created focuses on professional medical teams with AI intelligent systems as support, helping to plan precise and efficient treatments. Through artificial intelligence simulation of tooth movement processes and effects, combined with clinical data and three-dimensional image interpretation, treatment predictability and overall safety are enhanced. Pearl Digital is one of the few brands in the market that supports "Combined Orthodontics". Dr. David Shen points out that Pearl Digital is specially designed to interface with traditional fixed orthodontic appliances, allowing users to transition to more comfortable and aesthetically pleasing transparent aligners in the later stages of treatment without affecting their usage status.',
     innovationTitle: 'Innovative Concept of Combined Orthodontics',
@@ -128,7 +128,7 @@ export default {
     materialTitle: 'Medical-Grade Materials',
     materialDescription: 'Products use BPA-free high-transparency medical-grade materials with extremely high transparency, combining invisible aesthetics with comfortable fit characteristics, resistant to staining, easy to clean, allowing patients to smile freely during the treatment process.',
     // Page titles and buttons
-    pageTitle: 'Focus on Technology and Professionalism',
+    pageTitle: 'Powered by Technology, Guided by Expertise — For a Smile You Can Trust.',
     pageSubtitle: 'Create a Reassuring Beautiful Teeth Experience',
     becomePartner: 'Become a Partner',
     // Precise control section
