@@ -1048,20 +1048,20 @@ Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
         answer: 'Book & Smile Test — Start online with a free photo-based smile test.\nClinic Consultation — Get a full consultation with 3D oral scan and X-ray examination.\nTreatment Planning — Your doctor leads the design, enhanced with AI simulations for accuracy.\nConfirm & Start — Approve your plan, sign your contract, and complete payment.\nAligner Production — Your aligners are crafted in Taiwan at QMS/GMP-certified facilities. Ready in 2–3 weeks.\nWear & Track — Begin treatment, wearing aligners 20–22 hours daily, with regular clinic check-ups.'
       },
       duration: {
-        question: 'How long do invisible braces need to be worn each day?',
-        answer: 'Generally recommended to wear 20-22 hours daily, including daytime and nighttime. Except when eating and brushing teeth, they should be worn at all other times to ensure the treatment progresses as expected.'
+        question: 'How Long Should I Wear My Aligners Every Day?',
+        answer: 'For best results, wear your aligners 20–22 hours a day. Only remove them for meals and brushing — consistent wear keeps your treatment on track and ensures predictable progress.'
       },
       results: {
-        question: 'How long after wearing can effects be seen?',
-        answer: 'Most people can feel obvious changes within 2-4 months of wearing, such as front teeth alignment or gap reduction. Although the initial effects of the treatment may be obvious, the final results need to be evaluated based on the overall treatment progress.'
+        question: 'When Will I Notice Results?',
+        answer: 'Many patients start seeing changes in just 2–4 months — like straighter front teeth or reduced gaps. Although the improvements might be noticeable early on, your final results depend on completing the full treatment as planned.'
       },
       age: {
-        question: 'Are invisible braces suitable for those under 18 years old?',
-        answer: 'We provide treatment options specifically designed for teenagers.\nFor those with stable wearing habits\n**Middle school students (approximately 12 years and above) can proceed with treatment planning after evaluation by a dentist.**\nIf still in the period of mixed dentition, we recommend regular follow-up and waiting until the appropriate age for orthodontic treatment.'
+        question: 'Are Pearly Clear Aligners Right for Teens Under 18?',
+        answer: 'Pearly provides aligner solutions tailored for teenagers.\nStudents around 12 years and older, with good wearing habits, can begin treatment after a dentist\'s evaluation.\nFor children still transitioning from baby to permanent teeth, regular monitoring is advised, with treatment planned once they reach the right age.'
       },
       safety: {
         question: 'Are Pearly Aligners Safe?',
-        answer: 'Absolutely. Safety and quality are at the core of everything we do.\nMade with BPA-free, medical-grade transparent materials\nDeveloped by Pearl Digital Inc., a U.S. brand with FDA clearance\nManufactured in Taiwan at ISO 13485 and QMS/GMP-certified facilities\nTreatment plans designed by a professional team with 30+ years of experience; AI serves only as a supportive tool to enhance accuracy.\nThis ensures every aligner meets international medical device standards for material safety, design, and effectiveness.'
+        answer: 'Absolutely. Safety and quality are at the core of everything we do.\nBPA-free, medical-grade materials.\nFDA-cleared U.S. brand.\nISO 13485 and GMP-certified manufacturing in Taiwan.\nA professional team with 30+ years of orthodontic expertise, with AI as a supporting tool for precision.\n\nEvery aligner is designed and produced to meet strict international medical device standards — giving patients confidence in both safety and results.'
       },
       pricing: {
         question: 'What is the price of Pearl Digital invisible braces? Are there any hidden fees?',
