@@ -9,6 +9,7 @@ import img from './imgs/1.jpg';
 import img2 from './imgs/2.svg';
 import './index.scss';
 
+
 export default function PearlLogin() {
   const navigate = useNavigate();
   const { login } = useAuth();
