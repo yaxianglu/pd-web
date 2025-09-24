@@ -1044,8 +1044,8 @@ Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
     bottomText: 'Still Have Questions?\nSubmit your photos and details through our online Smile Quiz, and we\'ll connect you with a consultant or orthodontist for a personalized one-on-one reply.',
     questions: {
       process: {
-        question: 'What is the process for invisible braces treatment?',
-        answer: 'Online appointment booking and selfie smile photo test (free service)\nDetailed consultation at the clinic with 3D oral scan/X-ray examination\nClinical dentist leads the design, AI assists in simulation, determining the complexity of the treatment plan\nConfirm treatment plan, sign contract, and make payment\nBraces manufactured in Taiwan QMS/GMP factory, pick up at clinic after approximately 2-3 weeks\nOfficially begin wearing, 20-22 hours daily, and regular follow-up visits'
+        question: 'What Is the Clear Aligner Treatment Process?',
+        answer: 'Book & Smile Test — Start online with a free photo-based smile test.\nClinic Consultation — Get a full consultation with 3D oral scan and X-ray examination.\nTreatment Planning — Your doctor leads the design, enhanced with AI simulations for accuracy.\nConfirm & Start — Approve your plan, sign your contract, and complete payment.\nAligner Production — Your aligners are crafted in Taiwan at QMS/GMP-certified facilities. Ready in 2–3 weeks.\nWear & Track — Begin treatment, wearing aligners 20–22 hours daily, with regular clinic check-ups.'
       },
       duration: {
         question: 'How long do invisible braces need to be worn each day?',
