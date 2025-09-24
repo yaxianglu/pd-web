@@ -14,6 +14,7 @@ export default function DetailButton({ text, style, size, disabled, onClick }) {
     };
     switch (text) {
       case '微笑測試':
+      case '微笑测试':
       case t('common.smileTest'):
         window.open('/upload', '_blank');
         break;
