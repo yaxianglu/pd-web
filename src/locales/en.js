@@ -443,25 +443,25 @@ export default {
   // Upload page
   upload: {
     brandName: 'PEARL DIGITAL',
-    title: 'Your smile can be more natural and confident!',
-    description: 'Through Pearl Digital\'s free smile test, with just a few photos, you can quickly understand whether you are suitable for invisible orthodontics and get personalized advice!',
+    title: 'Unlock Your Best Smile — Naturally and Confidently',
+    description: 'Take Pearly’s free smile quiz. Upload just a few photos to see if clear aligners are right for you and get personalized advice instantly.',
     steps: 'step',
     minutes: 'min',
-    startTest: 'Start Test',
+    startTest: 'Start Quiz',
     step1: {
-      title: 'Take Smile Quiz',
-      photo1: 'Front smile photo (natural smile, teeth showing)',
-      photo2: 'Upper teeth close-up (gently pull upper lip)',
-      photo3: 'Lower teeth close-up (gently pull lower lip)',
-      tips: 'Ensure adequate lighting and clear focus\nNo need to open mouth too wide, show overall tooth condition'
+      title: 'Step 1: Take Your Smile Photos',
+      photo1: 'Natural smile (front view, teeth visible)',
+      photo2: 'Upper teeth (lift upper lip slightly)',
+      photo3: 'Lower teeth (pull down lower lip slightly)',
+      tips: 'Tip: Good lighting and sharp focus are enough — no need to open wide.'
     },
     step2: {
-      title: 'Upload Your Photos',
-      description: 'Please use the form below to upload the photos you just took. Our professional team will conduct a preliminary assessment based on your dental condition and provide feedback on whether you are suitable for invisible orthodontics.'
+      title: 'Step 2: Upload Your Photos',
+      description: 'Submit your photos using the form below. Our clinical team will review them and let you know if clear aligners are right for you.'
     },
     step3: {
-      title: 'Leave Contact Information',
-      description: 'Please fill in the following basic information so we can contact you smoothly.\nWe will contact you within 1-2 business days via LINE, Email or phone to provide further explanation or arrange clinic consultation.'
+      title: 'Step 3: Share Your Contact Info',
+      description: 'Fill out your basic details so we can follow up. Within 1–2 business days, you’ll receive feedback and next steps via LINE, email, or phone.'
     },
     step1Form: {
       title: 'Share a Few Details & Photos',
