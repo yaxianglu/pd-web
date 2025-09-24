@@ -524,6 +524,16 @@ export default {
         message1: 'Your smile quiz has been completed and successfully submitted!',
         message2: 'Thank you for your participation. We will analyze the results for you as soon as possible.',
         closeButton: 'Close Page'
+      },
+      errors: {
+        photoFormatError: 'Photo format error, please try again',
+        savePhotoFailed: 'Failed to save photo',
+        savePhotoFailedRetry: 'Failed to save photo, please try again',
+        deletePhotoGroupFailed: 'Failed to delete photo group, please try again',
+        getFileListFailed: 'Failed to get file list',
+        uploadFourPhotosFirst: 'Please upload 4 photos first',
+        saveImageGroupFailed: 'Failed to save image group',
+        saveFailedRetry: 'Save failed, please try again'
       }
     },
     footer: {

@@ -522,6 +522,16 @@ export default {
         message1: '您的微笑测试已完成并成功提交！',
         message2: '感谢您的参与，我们会尽快为您分析结果。',
         closeButton: '关闭页面'
+      },
+      errors: {
+        photoFormatError: '照片格式错误，请重试',
+        savePhotoFailed: '保存照片失败',
+        savePhotoFailedRetry: '保存照片失败，请重试',
+        deletePhotoGroupFailed: '删除照片组失败，请重试',
+        getFileListFailed: '获取文件列表失败',
+        uploadFourPhotosFirst: '请先上传4张照片',
+        saveImageGroupFailed: '保存图片组失败',
+        saveFailedRetry: '保存失败，请重试'
       }
     },
     footer: {

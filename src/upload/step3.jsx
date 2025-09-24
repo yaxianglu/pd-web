@@ -166,7 +166,7 @@ export default function Step3({ onNext, setStep, style }) {
         }
       } else {
         console.error('Failed to get files list:', filesResult.message);
-        alert(`獲取文件列表失敗: ${filesResult.message}`);
+        alert(`${t('upload.step3.errors.getFileListFailed')}: ${filesResult.message}`);
       }
     } catch (error) {
       console.error('Failed to delete photo group from database:', error);
@@ -177,7 +177,7 @@ export default function Step3({ onNext, setStep, style }) {
   // 完成提交
   const handleComplete = async () => {
     if (photos.length < 4) {
-      alert('請先上傳4張照片');
+      alert(t('upload.step3.errors.uploadFourPhotosFirst'));
       return;
     }
 
@@ -216,7 +216,7 @@ export default function Step3({ onNext, setStep, style }) {
       
       if (!imageGroupResult.success) {
         console.error('Failed to save image group:', imageGroupResult.message);
-        alert(`保存图片组失敗: ${imageGroupResult.message}`);
+        alert(`${t('upload.step3.errors.saveImageGroupFailed')}: ${imageGroupResult.message}`);
         return;
       }
       
@@ -237,11 +237,11 @@ export default function Step3({ onNext, setStep, style }) {
         onNext && onNext(photos);
       } else {
         console.error('Failed to complete test:', result.message);
-        alert('保存失敗，請重試');
+        alert(t('upload.step3.errors.saveFailedRetry'));
       }
     } catch (error) {
       console.error('Failed to complete test:', error);
-      alert('保存失敗，請重試');
+      alert(t('upload.step3.errors.saveFailedRetry'));
     } finally {
       setSaving(false);
     }
