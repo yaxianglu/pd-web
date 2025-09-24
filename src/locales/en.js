@@ -941,23 +941,28 @@ At any age, your smile can be redesigned.
       buttonText: 'Become a Partner'
     },
     features: {
-      title: 'Why become a Pearl Digital partner?',
+      title: 'Why Partner With Pearly?',
       items: {
         usBrand: {
-          title: 'American Oral Orthodontic Technology Brand',
-          description: 'Pearl Digital was founded by Pearl Digital Inc. in Silicon Valley, USA, focusing on invisible aligner systems that combine artificial intelligence with clinical expertise. Our products have passed US FDA certification and Taiwan TFDA medical device license approval, meeting international dual regulatory standards. Our treatment plans are designed by a professional team with over 30 years of orthodontic planning experience, combined with AI-assisted design and three-dimensional image integration analysis, providing each patient with a safe and efficient orthodontic experience.'
+          title: 'Trusted U.S. Brand',
+          description: 'Founded in Silicon Valley by Pearl Digital Inc., Pearly combines AI-powered design with over 30 years of orthodontic expertise. With FDA and TFDA approvals clearance, our aligners meet the highest international safety and quality standards.'
         },
         taiwanMade: {
-          title: 'Taiwan Manufacturing × Stable Delivery',
-          description: 'All aligners are manufactured in Taiwan\'s professional medical device factories that have passed ISO 13485 and GMP certification, from design, manufacturing to shipping, all controllable and traceable, ensuring stable delivery and consistent quality.\n• Local manufacturing, fast delivery\n• Professional manufacturing process, quality guaranteed'
+          title: 'Made in Taiwan, Delivered With Confidence',
+          description: 'Produced in ISO 13485 and GMP-certified facilities, every aligner is carefully tracked from design to delivery. Clinics benefit from:\nLocal production and fast turnaround\nReliable quality from a professional manufacturing process'
         },
         marketing: {
-          title: 'Assist Clinics with Digital Marketing\nEnhance Patient Visibility',
-          description: 'We not only provide high-quality products, but also help clinics expand brand exposure and patient acquisition, helping partner clinics strengthen their local influence:\n• Listed on Pearl Digital official website partner clinic list\n• Provide clinic-exclusive smile test links for online patient appointment guidance\n• Assist in creating social media promotional materials, marketing copy and brand visual resources\n• Dedicated staff to help clinics use digital tools for initial filtering and patient flow\n• Provide offline promotional materials (QR Code, DM, clinic introduction pages, etc.)'
+          title: 'Marketing Support for Clinics',
+          description: `We go beyond aligners — helping your practice grow with:\n
+Listing in the official Pearly partner clinic directory\n
+Exclusive Smile Test link to attract and guide new patients online\n
+Ready-to-use marketing content, social media assets, and branding resources\n
+Dedicated support with digital tools for lead generation and filtering\n
+Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
         },
         join: {
-          title: 'Welcome to Join Us',
-          description: 'If you are a clinic director, dentist, or orthodontic professional team, and are interested in expanding invisible orthodontic treatment services, please fill out the form below to contact us, and we will arrange cooperation explanations and brand resource introductions by dedicated staff'
+          title: 'Grow With US',
+          description: 'If you’re a clinic owner, dentist, or orthodontic team looking to expand into clear aligner treatments, join us. Fill out the form below, and our team will provide full partnership details and brand resource support.'
         }
       }
     },
