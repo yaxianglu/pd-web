@@ -119,25 +119,25 @@ export default {
     innovationDescription: 'At Pearly, we believe orthodontics should be flexible. While we provide complete clear aligner treatments, our aligners are also designed to work alongside traditional braces — serving as a seamless finishing solution or transition tool.',
     innovationSubtitle: '',
     innovationDetail: 'As one of the few brands specializing in combo orthodontic treatment, we recognize a growing need: many braces patients wish to switch to clear aligners during the final stages of treatment. That’s why we created a process that allows patients to smoothly transition from braces to aligners — for precise finishing, aesthetic improvements, and a more comfortable experience.',
-    whyChooseTitle: 'Why Pearly Aligners?',
-    medicalSoftware: 'AI-Powered Treatment Design',
-    medicalSoftwareDescription: 'Pearly combines the latest AI design algorithms with a professional team that has over 30 years of orthodontic planning experience to create fully customized treatment plans for each patient. The treatment design is supported by an AI system that integrates 3D imaging data such as CBCT root scans and cephalometric X-rays, enhancing both the scientific precision and comprehensiveness of orthodontic care.',
-    medicalSoftwareDescription2: 'Through collaboration with Taiwanese medical device factories, Pearl Digital has established a vast Asian dental database, optimizing for common dental issues and facial contours among Asians, including maxillary protrusion, mandibular retrusion, and other conditions. The results after correction can be more perfect, creating smile curves that match Asian facial contours.',
-    qualityTitle: 'Stable Quality, Reliable Delivery',
-    qualityDescription: 'Each of our aligners is manufactured in Taiwanese dental factories that have passed ISO 13485 and GMP certification, with strict control from raw materials to manufacturing processes, ensuring stable quality and reliable delivery.',
-    materialTitle: 'Medical-Grade Materials',
-    materialDescription: 'Products use BPA-free high-transparency medical-grade materials with extremely high transparency, combining invisible aesthetics with comfortable fit characteristics, resistant to staining, easy to clean, allowing patients to smile freely during the treatment process.',
+    whyChooseTitle: 'Why Choose Pearly Clear Aligners?',
+    medicalSoftware: 'Medical-Grade Software',
+    medicalSoftwareDescription: 'Pearly combines the latest AI design algorithms with over 30 years of orthodontic planning expertise to create fully customized treatment plans for each patient. With the support of AI-powered systems, treatment designs integrate CBCT root scans and cephalometric X-rays, making orthodontics more scientific and comprehensive.',
+    medicalSoftwareDescription2: 'By collaborating with Taiwanese medical device manufacturers, Pearly has built a large orthodontic database for Asian patients. This allows optimization for common dental and facial issues such as protrusive upper jaws and receding chins, delivering results that better match facial contours and create a naturally harmonious smile curve.',
+    qualityTitle: 'Trusted Quality, On-Time Delivery',
+    qualityDescription: 'Each Pearly aligner is crafted in ISO 13485 and GMP-certified facilities in Taiwan. From raw materials to production, we maintain rigorous controls — ensuring consistent quality and reliable delivery for every patient.',
+    materialTitle: 'Crystal-Clear, Medical-Grade Comfort',
+    materialDescription: 'Made from BPA-free, high-transparency materials, Pearly aligners are made to be nearly invisible, stain-resistant, and easy to clean. With their natural fit and clarity, patients can enjoy a confident smile every step of the way.',
     // Page titles and buttons
     pageTitle: 'Powered by Technology, Guided by Expertise — For a Smile You Can Trust.',
     pageSubtitle: 'Create a Reassuring Beautiful Teeth Experience',
     becomePartner: 'Become a Partner',
     // Precise control section
-    preciseControl: 'Precision Control, Backed by Clinical Expertise',
+    preciseControl: 'Precision Control',
     preciseControlDescription: 'Born from collaboration with orthodontists, our approach addresses a key need: in the final stages of traditional braces treatment, patients often require more detailed control — without sacrificing comfort or aesthetics. With Pearly\'s stable materials, clear transition design, and predictable pacing, treatment outcomes are not just preserved during the switch, but refined with even greater precision.',
     // Company introduction description
     companyMission: 'We are committed to applying advanced technology to orthodontics, improving treatment quality and patient experience. We believe that beautiful smiles should be built on the foundation of professionalism, safety, and technology.',
     // Description section
-    descriptionText: 'At Pearl Digital, we are assisted by technology, led by professionalism, and grounded in quality as our core philosophy, continuously striving for excellence, only to allow every wearer to see natural changes and experience reassuring orthodontic treatment.',
+    descriptionText: 'At Pearly, we combine advanced technology, clinical expertise, and strict quality standards to deliver more than just straight teeth. We strive for natural results and a treatment journey that patients can trust with confidence and peace of mind.',
     smileSteps: {
       step1: {
         title: 'Booking',

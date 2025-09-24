@@ -132,3 +132,27 @@
   background-position: center;
   background-size: contain;
 }
+
+// 移动端旅程图样式
+.smile-steps-mobile {
+  padding: 40px 20px;
+  text-align: center;
+  background: #f8f9fa;
+  border-radius: 12px;
+  margin: 20px;
+  
+  .journey-map-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 16px;
+  }
+  
+  .journey-map-content {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
