@@ -84,7 +84,7 @@ export default function ApplicableObjects() {
         )
       }
       
-      <DetailButton text={t('maintainer.applicableObjects.buttonText')} />
+      <DetailButton text={t('maintainer.applicableObjects.buttonText')} onClick={() => window.open('/upload', '_blank')} />
     </CardWrapper>
   );
 } 
