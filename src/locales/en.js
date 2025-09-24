@@ -584,7 +584,7 @@ Below is the step-by-step process of how Pearly clear aligners work:`,
           description: ''
         }
       },
-      footnotes: '*Any clinic-related treatments or services will be collected directly by the clinic. Prices shown in emails may change and do not represent the final actual charges; users should refer to the clinic\'s latest pricing information.\n** During follow-up visits, the attending dentist will assess the oral condition to determine whether to use the last set of aligners or re-scan to produce retainers. Retainer prices may be adjusted due to market fluctuations, and users should contact customer service for actual prices.'
+      footnotes: '* Any treatments or services related to the clinic will be charged directly by the clinic. Prices shown in emails or online are for reference only and may change; please follow the clinic’s latest official fees.\n** At follow-up visits, the attending doctor will assess whether your final aligner can be used as a retainer or if a new intraoral scan is required to fabricate retainers. Retainer pricing may vary with market conditions. For current fees, please contact customer service.'
     },
     pricingFeatures: {
       title: 'Pearly Journey — Clear Aligner Pricing',
