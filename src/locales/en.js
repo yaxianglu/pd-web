@@ -485,15 +485,15 @@ export default {
     },
     step2Form: {
       loading: 'Loading...',
-      teethTitle: 'How would you describe your teeth?',
+      teethTitle: 'Tell Us About Your Smile',
       teethOptions: {
         crowded: 'Protruding front teeth',
         overbite: 'Receding chin',
-        spaced: 'Narrow crowded arch',
-        other: 'Deep bite'
+        spaced: 'Deep bite',
+        other: 'Narrow crowded arch'
       },
       teethUnsure: 'I\'m not sure',
-      considerationTitle: 'What are your considerations for clear aligners?',
+      considerationTitle: 'What Matters Most to You in Treatment?',
       considerationOptions: {
         price: 'Price',
         procedure: 'Treatment procedure',
@@ -501,7 +501,7 @@ export default {
         pain: 'Pain level'
       },
       considerationNone: 'None of the above',
-      improvementTitle: 'What do you think needs improvement?',
+      improvementTitle: 'Which areas of your smile would you like to improve?',
       improvementPlaceholder: 'For example: I hope my teeth become neat.',
       prevButton: 'Previous',
       nextButton: 'Next'
