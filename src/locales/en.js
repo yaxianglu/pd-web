@@ -376,12 +376,12 @@ export default {
           description: 'Crafted from medical-grade transparent material, so discreet they\'re hard to spot even up close.'
         },
         stainResistant: {
-          title: 'Strong stain resistance, not easily yellowed',
-          description: 'Effectively resists penetration of coffee, tea, red wine and other pigments, maintaining clear appearance and hygiene.'
+          title: 'Resistant to Stains',
+          description: 'Designed to withstand coffee, tea, and wine discoloration, keeping your smile fresh and clear.'
         },
         stability: {
-          title: 'High strength, good stability, not easily deformed',
-          description: 'Features excellent elasticity and recovery force, even long-term wear won\'t easily deform, ensuring bite stability and orthodontic results.'
+          title: 'Durable & Stable',
+          description: 'Strong elasticity and shape retention ensure long-lasting stability and protection of your orthodontic results.'
         }
       }
     },
