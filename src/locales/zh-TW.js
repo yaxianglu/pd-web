@@ -160,8 +160,8 @@ export default {
         price: '免費'
       },
       step5: {
-        title: '開懷',
-        description: '透過微笑管家持續追蹤進度\n聯繫開懷不間斷\n計畫安心不中斷',
+        title: '關懷',
+        description: '透過微笑管家持續追蹤進度\n聯繫關懷不間斷\n計畫安心不中斷',
         price: '免費'
       },
       buttonText: '開啟微笑旅程'

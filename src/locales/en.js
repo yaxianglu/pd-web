@@ -140,28 +140,28 @@ export default {
     descriptionText: 'At Pearl Digital, we are assisted by technology, led by professionalism, and grounded in quality as our core philosophy, continuously striving for excellence, only to allow every wearer to see natural changes and experience reassuring orthodontic treatment.',
     smileSteps: {
       step1: {
-        title: 'Appointment',
-        description: 'Scan QR code to visit\nConfirm with Smile Manager\nSchedule appointment time',
+        title: 'Booking',
+        description: 'Scan QR code to access form\nConfirm partner clinic with Smile Concierge\nSchedule your appointment',
         price: 'Free'
       },
       step2: {
         title: 'Evaluation',
-        description: 'Visit partner clinic for\n3D oral scan and X-ray\nIndividual data assessment',
+        description: 'Visit partner clinic\n3D oral scan & X-rays\nComprehensive case evaluation',
         price: '$3,000 (clinic fee)'
       },
       step3: {
         title: 'Plan',
-        description: 'Return to partner clinic within 2 weeks\nReview and approve your personalized\nbeautiful smile plan',
+        description: 'Return to partner clinic within 2 weeks\nReview & approve your personalized smile plan',
         price: '$48,000-$118,000'
       },
       step4: {
-        title: 'Begin Your Smile Journey',
-        description: 'After your aligners are made, your doctor will guide you through the treatment details. You\'ll receive either the full set at once or in stages, depending on your treatment plan.',
+        title: 'Journey',
+        description: 'Clear aligners completed\nDoctor’s instructions provided\nFull set collected at once\nOr distributed in stages if needed',
         price: 'Free'
       },
       step5: {
-        title: 'Ongoing Care',
-        description: 'With support from your Smile Concierge, your progress is continuously monitored. Stay connected and confident, knowing your treatment plan runs smoothly without interruption.',
+        title: 'Care',
+        description: 'Ongoing progress tracking via Smile Concierge\nContinuous support and communication\nTreatment plan uninterrupted and worry-free',
         price: 'Free'
       },
       buttonText: 'Start Your Smile Journey'
@@ -559,8 +559,11 @@ export default {
   journey: {
     title: 'A Confident Smile, Custom-Made for You',
     buttonText: 'Smile Quiz',
-    sketchTitle: 'How does Pearl Digital invisible braces work?',
-    sketchDescription: 'Pearl Digital invisible braces are designed to change your smile. The working principle is to use transparent aligners to gradually move teeth to ideal positions, providing a convenient and reliable way to help your smile become more neat and confident! And you only need to upload photos for online preliminary smile appointment to determine the applicability of invisible braces, which can start your smile upgrade journey. After the appointment, our professional partner doctors will provide consultation and comprehensive examination for you, and create the most suitable invisible braces plan for you based on your needs and dental condition. When you and the doctor agree to proceed with the treatment, Pearl Digital will customize exclusive invisible braces for you. The following is the Pearl Digital invisible braces workflow:',
+    sketchTitle: 'How Do Pearly Clear Aligners Work?',
+    sketchDescription: `Pearly clear aligners are designed to transform your smile. The principle is simple: by changing to a new set of aligners over time, your teeth are gradually moved into the ideal position. This offers a convenient and reliable way to achieve a straighter, more confident smile.
+Getting started is easy — simply upload a few photos online for a preliminary smile assessment to see if clear aligners are right for you. From there, your smile upgrade journey begins!
+After booking, one of our professional partner doctors will provide consultation and a full examination. Based on your needs and dental condition, they will design the most suitable treatment plan for you. Once you and the doctor agree to move forward, Pearly will create your custom-made clear aligners.
+Below is the step-by-step process of how Pearly clear aligners work:`,
     additionalCosts: {
       title: 'Are there any additional costs during the Smile Journey?',
       description: 'Invisible braces not only have uniform pricing across Taiwan, but also truly achieve transparent pricing with no hidden fees! To help you achieve your expected new smile, our professional partner doctors will conduct oral examinations and scans. These examination/scan fees, or registration fees, are considered additional expenses not included in the invisible braces cost and will be collected by the clinic.',
