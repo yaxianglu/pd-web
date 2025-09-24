@@ -27,6 +27,7 @@ export default function DetailButton({ text, style, size, disabled, onClick }) {
         navigate('/join');
         break;
       case '成為合作夥伴':
+      case 'Become a Partner':
       case t('about.becomePartner'):
         navigate('/join');
         break;

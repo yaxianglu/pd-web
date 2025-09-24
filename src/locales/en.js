@@ -936,8 +936,8 @@ At any age, your smile can be redesigned.
     subtitle: 'Join Pearl Digital to bring confident smiles to more patients',
     description: 'We are looking for like-minded dental clinics and professional doctors to jointly promote invisible orthodontic technology and provide better treatment experiences for patients.',
     hero: {
-      title: 'Join hands to promote the new era of digital orthodontics\nLet the value of professional clinics be seen by more people',
-      description: 'Pearl Digital sincerely invites you to become our partner clinic, combining international brand with local delivery capabilities to provide patients with trustworthy invisible orthodontic experience, while opening up new service opportunities and brand exposure channels for clinics',
+      title: 'Shaping the Future of Digital Orthodontics',
+      description: 'Bring AI-powered aligner solutions and professional expertise to your patients. Together, we’ll expand treatment options, strengthen your brand, and build lasting patient trust.',
       buttonText: 'Become a Partner'
     },
     features: {
