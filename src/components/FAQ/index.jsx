@@ -9,7 +9,7 @@ import apiService from "../../services/api";
 // FAQ列表将在组件内部动态生成
 
 export default function FaqsSection() {
-  const { t } = useLanguage();
+  const { t, currentLanguage } = useLanguage();
   const [openIdxes, setOpenIdxes] = useState([0]);
   const [apiStatus, setApiStatus] = useState('');
   const { isMobile, isTablet } = useResponsive();
@@ -63,7 +63,8 @@ export default function FaqsSection() {
         </>
       )
     },
-    {
+    // 在英文环境下隐藏价格相关FAQ
+    ...(currentLanguage !== 'en' ? [{
       q: t('faq.questions.pricing.question'),
       a: (
         <>
@@ -75,8 +76,9 @@ export default function FaqsSection() {
           ))}
         </>
       )
-    },
-    {
+    }] : []),
+    // 在英文环境下隐藏付款方式相关FAQ
+    ...(currentLanguage !== 'en' ? [{
       q: t('faq.questions.payment.question'),
       a: (
         <>
@@ -88,7 +90,7 @@ export default function FaqsSection() {
           ))}
         </>
       )
-    },
+    }] : []),
     {
       q: t('faq.questions.satisfaction.question'),
       a: (
