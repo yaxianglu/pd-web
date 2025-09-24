@@ -14,7 +14,7 @@ import p5 from '../asserts/5.jpg';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function PageCom() {
-  const { t } = useLanguage();
+  const { t, currentLanguage } = useLanguage();
   
   return (
     <>
@@ -33,7 +33,7 @@ export default function PageCom() {
         <FeatureWithImage />
         <ManufacturingSection />
         <WhichPlan />
-        <BrandCompareTable />
+        {currentLanguage !== 'en' && <BrandCompareTable />}
         <FAQ />
       </PageWrapper>
       <Footer />
