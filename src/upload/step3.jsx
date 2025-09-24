@@ -104,7 +104,7 @@ export default function Step3({ onNext, setStep, style }) {
       
       if (!isBase64) {
         console.error('Photo data is not in base64 format');
-        alert('照片格式錯誤，請重試');
+        alert(t('upload.step3.errors.photoFormatError'));
         return;
       }
       
@@ -119,13 +119,13 @@ export default function Step3({ onNext, setStep, style }) {
       
       if (!result.success) {
         console.error('Failed to save photo:', result.message);
-        alert(`保存照片失敗: ${result.message}`);
+        alert(`${t('upload.step3.errors.savePhotoFailed')}: ${result.message}`);
       } else {
         console.log(`Photo for step ${photoData.step} saved successfully`);
       }
     } catch (error) {
       console.error('Failed to save photo to database:', error);
-      alert('保存照片失敗，請重試');
+      alert(t('upload.step3.errors.savePhotoFailedRetry'));
     }
   };
 
@@ -170,7 +170,7 @@ export default function Step3({ onNext, setStep, style }) {
       }
     } catch (error) {
       console.error('Failed to delete photo group from database:', error);
-      alert('刪除照片組失敗，請重試');
+      alert(t('upload.step3.errors.deletePhotoGroupFailed'));
     }
   };
 
@@ -816,7 +816,7 @@ export default function Step3({ onNext, setStep, style }) {
               className="step3-prev-button"
               onClick={() => setStep(pre => pre - 1)}
             >
-              上一步
+              {t('upload.step3.prevButton')}
             </button>
 
             <button
@@ -825,7 +825,7 @@ export default function Step3({ onNext, setStep, style }) {
               onClick={handleComplete}
               disabled={photos.length < 4 || saving}
             >
-              {saving ? '保存中...' : '完成提交'}
+              {saving ? t('upload.step3.saving') : t('upload.step3.completeSubmit')}
             </button>
           </div>
         </div>
@@ -852,25 +852,25 @@ export default function Step3({ onNext, setStep, style }) {
         {showQrFull && (
           <div className="qr-fullscreen-mask" onClick={() => setShowQrFull(false)}>
             <QRCodeComponent url={currentUrl} size={280} />
-            <div className="qr-fullscreen-tip">点击任意处關閉</div>
+            <div className="qr-fullscreen-tip">{t('upload.step3.qrCloseTip')}</div>
           </div>
         )}
 
         {/* 成功提示Modal */}
         <Modal
-          title="提交成功"
+          title={t('upload.step3.successModal.title')}
           open={showSuccessModal}
           onCancel={() => setShowSuccessModal(false)}
           footer={[
             <Button key="close" type="primary" onClick={closePage}>
-              關閉頁面
+              {t('upload.step3.successModal.closeButton')}
             </Button>
           ]}
           closable={true}
           maskClosable={false}
         >
-          <p>您的微笑測試已完成並成功提交！</p>
-          <p>感謝您的參與，我們會盡快為您分析結果。</p>
+          <p>{t('upload.step3.successModal.message1')}</p>
+          <p>{t('upload.step3.successModal.message2')}</p>
         </Modal>
       </div>
     </div>

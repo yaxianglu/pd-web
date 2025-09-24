@@ -513,7 +513,17 @@ export default {
       capture: '拍攝',
       preparing: '準備中...',
       startCapture: '開始拍攝',
-      exitCapture: '退出拍攝'
+      exitCapture: '退出拍攝',
+      prevButton: '上一步',
+      saving: '保存中...',
+      completeSubmit: '完成提交',
+      qrCloseTip: '點擊任意處關閉',
+      successModal: {
+        title: '提交成功',
+        message1: '您的微笑測試已完成並成功提交！',
+        message2: '感謝您的參與，我們會盡快為您分析結果。',
+        closeButton: '關閉頁面'
+      }
     },
     footer: {
       company: 'Pearl Digitalinc.',

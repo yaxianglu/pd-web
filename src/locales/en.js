@@ -514,7 +514,17 @@ export default {
       capture: 'Capture',
       preparing: 'Preparing...',
       startCapture: 'Take Photos',
-      exitCapture: 'Exit Shooting'
+      exitCapture: 'Exit Shooting',
+      prevButton: 'Previous',
+      saving: 'Saving...',
+      completeSubmit: 'Complete Submission',
+      qrCloseTip: 'Click anywhere to close',
+      successModal: {
+        title: 'Submission Successful',
+        message1: 'Your smile quiz has been completed and successfully submitted!',
+        message2: 'Thank you for your participation. We will analyze the results for you as soon as possible.',
+        closeButton: 'Close Page'
+      }
     },
     footer: {
       company: 'Pearl Digitalinc.',
