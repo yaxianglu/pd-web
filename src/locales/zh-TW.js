@@ -505,6 +505,16 @@ export default {
       prevButton: '上一步',
       nextButton: '下一步'
     },
+    step3: {
+      instruction: '後牙咬緊,上下門牙不需刻意對齊',
+      mobilePrompt: '前往使用手機拍攝照片',
+      selectFromGallery: '從相冊選擇',
+      takePhoto: '拍照',
+      capture: '拍攝',
+      preparing: '準備中...',
+      startCapture: '開始拍攝',
+      exitCapture: '退出拍攝'
+    },
     footer: {
       company: 'Pearl Digitalinc.',
       rights: 'All Rights Reserved. ©2025',

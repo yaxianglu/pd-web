@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { Modal, Button } from 'antd';
 import { smileTestApi } from '../services/smileTestApi';
 import apiService from '../services/api';
+import { useLanguage } from '../context/LanguageContext';
 import './step3.scss';
 import p7 from './imgs/7.png';
 import p15 from './imgs/15.png';
@@ -58,6 +59,7 @@ const QRCodeComponent = ({ url, size = 120, onClick }) => {
 
 export default function Step3({ onNext, setStep, style }) {
   const location = useLocation();
+  const { t } = useLanguage();
   const [currentStep, setCurrentStep] = useState(1);
   const [photos, setPhotos] = useState([]);
   const [isCameraActive, setIsCameraActive] = useState(false);
@@ -645,7 +647,7 @@ export default function Step3({ onNext, setStep, style }) {
           <div className="step-info">
             <div className="step-number">{currentStep}/4</div>
             <div className="step-instruction">
-              後牙咬緊,上下門牙不需刻意對齊
+              {t('upload.step3.instruction')}
             </div>
           </div>
           {!isMobile && (
@@ -653,7 +655,7 @@ export default function Step3({ onNext, setStep, style }) {
               <div className="mobile-icon">
                 <QRCodeComponent url={currentUrl} size={80} onClick={e => { e.stopPropagation(); setShowQrFull(true); }} />
               </div>
-              <span>前往使用手機拍攝照片</span>
+              <span>{t('upload.step3.mobilePrompt')}</span>
             </div>
           )}
         </div>
@@ -768,13 +770,13 @@ export default function Step3({ onNext, setStep, style }) {
                   className="gallery-button"
                   onClick={selectFromGallery}
                 >
-                  從相冊選擇
+                  {t('upload.step3.selectFromGallery')}
                 </button>
                 <button 
                   className="capture-button"
                   onClick={takePhoto}
                 >
-                  拍照
+                  {t('upload.step3.takePhoto')}
                 </button>
               </>
             ) : (
@@ -785,7 +787,7 @@ export default function Step3({ onNext, setStep, style }) {
                     className="gallery-button"
                     onClick={selectFromGallery}
                   >
-                    從相冊選擇
+                    {t('upload.step3.selectFromGallery')}
                   </button>
                 )}
                 <button 
@@ -793,14 +795,14 @@ export default function Step3({ onNext, setStep, style }) {
                   onClick={takePhoto}
                   disabled={isCameraActive && !isVideoReady}
                 >
-                  {isCameraActive ? (isVideoReady ? '拍攝' : '準備中...') : '開始拍攝'}
+                  {isCameraActive ? (isVideoReady ? t('upload.step3.capture') : t('upload.step3.preparing')) : t('upload.step3.startCapture')}
                 </button>
                 {isCameraActive && (
                   <button 
                     className="exit-camera-button"
                     onClick={stopCamera}
                   >
-                    退出拍攝
+                    {t('upload.step3.exitCapture')}
                   </button>
                 )}
               </>

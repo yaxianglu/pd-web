@@ -506,6 +506,16 @@ export default {
       prevButton: 'Previous',
       nextButton: 'Next'
     },
+    step3: {
+      instruction: 'Gently bite down with your back teeth, and don’t force your upper and lower front teeth to line up.',
+      mobilePrompt: 'Scan the QR code to use your mobile phone camera.',
+      selectFromGallery: 'Select from Album',
+      takePhoto: 'Take Photo',
+      capture: 'Capture',
+      preparing: 'Preparing...',
+      startCapture: 'Take Photos',
+      exitCapture: 'Exit Shooting'
+    },
     footer: {
       company: 'Pearl Digitalinc.',
       rights: 'All Rights Reserved. ©2025',
