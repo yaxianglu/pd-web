@@ -114,11 +114,11 @@ export default {
     companyIntro: 'Our Story',
     companyDescription: 'Founded in Silicon Valley by Pearl Digital Inc., Pearly brings together world-class orthodontic expertise and cutting-edge AI technology.\nOur co-founder and clinical advisor, Dr. David Shen, has over 30 years of orthodontic experience. He is the founder and CEO of OrthoWorks Orthodontic Group, with 11 clinics across the San Francisco Bay Area — the region’s oldest and longest-standing private orthodontic network.',
     drDavidShen: 'DR. DAVID SHEN',
-    drDescription: 'Dr. David Shen graduated from the University of Pennsylvania School of Dental Medicine, previously taught at the University of California, San Francisco, and is also the founding president of the Northern California Asian American Dental Association. He currently serves as Chairman of the Advisory Board of the University of Pennsylvania School of Dental Medicine. He has been a speaker at numerous international dental conferences and is internationally renowned. The brand he created focuses on professional medical teams with AI intelligent systems as support, helping to plan precise and efficient treatments. Through artificial intelligence simulation of tooth movement processes and effects, combined with clinical data and three-dimensional image interpretation, treatment predictability and overall safety are enhanced. Pearl Digital is one of the few brands in the market that supports "Combined Orthodontics". Dr. David Shen points out that Pearl Digital is specially designed to interface with traditional fixed orthodontic appliances, allowing users to transition to more comfortable and aesthetically pleasing transparent aligners in the later stages of treatment without affecting their usage status.',
-    innovationTitle: 'Innovative Concept of Combined Orthodontics',
-    innovationDescription: 'Currently, Pearl Digital focuses on providing complete invisible aligner treatments. Our products can also flexibly support finishing use for some patients or transition applications with fixed orthodontics. In the future, we will continue to collaborate with clinical physicians to expand complete solutions for combined orthodontics.',
-    innovationSubtitle: 'Pearl Digital is one of the few brands in the industry focused on Combined Orthodontics (Combo Treatment).',
-    innovationDetail: 'We have observed that many patients with traditional fixed orthodontic appliances (braces) in the later stages of treatment hope to complete detailed adjustments or finishing stages with invisible aligners. Therefore, we have developed a complete treatment process that supports the transition from fixed orthodontics to invisible orthodontics.',
+    drDescription: 'A graduate of the University of Pennsylvania School of Dental Medicine, Dr. Shen has taught at UCSF, served as the founding president of the Northern California Asian American Dental Association, and now chairs the Advisory Board at his alma mater. He is an internationally recognized speaker at global dental conferences.\nAt Pearly, our professional medical team is empowered by AI-powered treatment planning. By combining advanced simulations with clinical expertise and 3D imaging, we deliver precise, efficient, and safe orthodontic care.\nPearly is also one of the few brands to offer combo orthodontic treatment — offers uniquely designed clear aligner solutions that seamlessly transition from traditional braces. As Dr. Shen emphasizes, patients can switch to more comfortable and aesthetic clear aligners during the later stages of treatment without disrupting progress.',
+    innovationTitle: 'Pioneering Combo Treatment',
+    innovationDescription: 'At Pearly, we believe orthodontics should be flexible. While we provide complete clear aligner treatments, our aligners are also designed to work alongside traditional braces — serving as a seamless finishing solution or transition tool.',
+    innovationSubtitle: '',
+    innovationDetail: 'As one of the few brands specializing in combo orthodontic treatment, we recognize a growing need: many braces patients wish to switch to clear aligners during the final stages of treatment. That’s why we created a process that allows patients to smoothly transition from braces to aligners — for precise finishing, aesthetic improvements, and a more comfortable experience.',
     whyChooseTitle: 'Why Pearly Aligners?',
     medicalSoftware: 'AI-Powered Treatment Design',
     medicalSoftwareDescription: 'Pearly combines the latest AI design algorithms with a professional team that has over 30 years of orthodontic planning experience to create fully customized treatment plans for each patient. The treatment design is supported by an AI system that integrates 3D imaging data such as CBCT root scans and cephalometric X-rays, enhancing both the scientific precision and comprehensiveness of orthodontic care.',
@@ -164,7 +164,9 @@ export default {
         description: 'Ongoing progress tracking via Smile Concierge\nContinuous support and communication\nTreatment plan uninterrupted and worry-free',
         price: ''
       },
-      buttonText: 'Start Your Smile Journey'
+      buttonText: 'Start Your Smile Journey',
+      journeyMapTitle: 'Journey Map',
+      journeyMapDescription: 'Our comprehensive treatment journey guides you through every step of your smile transformation, from initial consultation to final results.'
     }
   },
 

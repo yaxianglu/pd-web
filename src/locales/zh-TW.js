@@ -164,7 +164,9 @@ export default {
         description: '透過微笑管家持續追蹤進度\n聯繫關懷不間斷\n計畫安心不中斷',
         price: '免費'
       },
-      buttonText: '開啟微笑旅程'
+      buttonText: '開啟微笑旅程',
+      journeyMapTitle: '旅程圖',
+      journeyMapDescription: '我們完整的治療旅程將引導您完成微笑轉變的每一步，從初步諮詢到最終結果。'
     }
   },
 

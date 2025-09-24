@@ -165,7 +165,9 @@ export default {
         description: '透过微笑管家持续追踪进度\n联系开怀不间断\n计划安心不中断',
         price: '免费'
       },
-      buttonText: '开启微笑旅程'
+      buttonText: '开启微笑旅程',
+      journeyMapTitle: '旅程图',
+      journeyMapDescription: '我们完整的治疗旅程将引导您完成微笑转变的每一步，从初步咨询到最终结果。'
     }
   },
 

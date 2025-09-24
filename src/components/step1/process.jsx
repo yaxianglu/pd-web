@@ -115,7 +115,19 @@ export default function SmileSteps() {
   
   return (
     <div>
-      <div className="smile-steps">
+      {isMobile ? (
+        // 移动端显示简化的旅程图
+        <div className="smile-steps-mobile">
+          <div className="journey-map-title">
+            {t('about.smileSteps.journeyMapTitle')}
+          </div>
+          <div className="journey-map-content">
+            {t('about.smileSteps.journeyMapDescription')}
+          </div>
+        </div>
+      ) : (
+        // 桌面端显示完整的流程图
+        <div className="smile-steps">
         <div className="smile-steps__column smile-steps__column">
           {steps.map(
             (step, i) => (
@@ -153,7 +165,8 @@ export default function SmileSteps() {
           <Bezier direction="left" color="#C1DF1A" circlePosition="bottom" circleColor="#C1DF1A" />
         </div> */}
 
-      </div>
+        </div>
+      )}
       <DetailButton text={t('about.smileSteps.buttonText')} />
     </div>
   );
