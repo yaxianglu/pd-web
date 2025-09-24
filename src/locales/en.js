@@ -990,7 +990,7 @@ Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
       }
     },
     map: {
-      title: 'Where can I find Zhen Shumei dentists?',
+      title: 'Where to Find Pearly Partner Clinics',
       locations: {
         taiwan: {
           name: 'Taiwan',
@@ -1002,7 +1002,7 @@ Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
         },
         other: {
           name: 'Other Countries',
-          description: 'Hundreds of Partners'
+          description: ''
         }
       }
     }

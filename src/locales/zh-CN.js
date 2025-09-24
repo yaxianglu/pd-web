@@ -991,7 +991,8 @@ export default {
         },
         other: {
           name: '其他国家',
-          description: '数百个合作者'
+          description: ''
+          // description: '数百个合作者'
         }
       }
     }
