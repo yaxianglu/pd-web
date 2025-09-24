@@ -46,7 +46,7 @@ export default {
     maintainer: 'Retainers',
     whitening: 'Pearl Whitening',
     journey: 'Pearl Journey',
-    correction: 'Correction & Beauty',
+    correction: 'Orthodontics & Aesthetics',
     about: 'About Us',
     partners: 'Partners',
     smileTest: 'Smile Quiz',
