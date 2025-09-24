@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, NavLink } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useLanguage } from "../context/LanguageContext";
 import apiService from "../services/api";
 import PatientInfoList from "./list";
 import PersonalSettings from "./PersonalSettings";
@@ -39,6 +40,7 @@ function UserInfoCard({ userInfo, isDoctorDetail = false }) {
 }
 
 export default function DoctorDashboard({ initialPatients = null, doctorUser = null, style = {}, onRefreshPatients = null }) {
+  const { t } = useLanguage();
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -110,7 +112,7 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
   if (loading) {
     return (
       <div style={{ width: "100vw", height: "100vh", background: "#f6f6f7", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <div>載入中...</div>
+        <div>{t('doctor.loading')}</div>
       </div>
     );
   }
@@ -119,7 +121,7 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
     return (
       <div style={{ width: "100vw", height: "100vh", background: "#f6f6f7", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: "20px" }}>
         <div style={{ color: "red" }}>{error}</div>
-        <button onClick={() => window.location.href = '/login'} style={{ background: "#48d2ce", color: "#fff", border: "none", borderRadius: "8px", padding: "10px 20px", cursor: "pointer" }}>返回登錄頁面</button>
+        <button onClick={() => window.location.href = '/login'} style={{ background: "#48d2ce", color: "#fff", border: "none", borderRadius: "8px", padding: "10px 20px", cursor: "pointer" }}>{t('doctor.backToLogin')}</button>
       </div>
     );
   }
@@ -130,17 +132,17 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
         isDoctorDetail ? null : (
           <div className="sidebar" style={{ position: 'sticky', top: 0, width: SIDEBAR_WIDTH }}>
             <div>
-              <div style={{ color: '#fff', fontSize: 16, marginBottom: 10 }} onClick={() => setActiveView('patients')}>患者列表</div>
+              <div style={{ color: '#fff', fontSize: 16, marginBottom: 10 }} onClick={() => setActiveView('patients')}>{t('doctor.patientList')}</div>
               <div className="account-list">
                 {[
-                  { key: 'all', label: '全部' },
-                  { key: '等待預約', label: '等待預約' },
-                  { key: '預約完成', label: '預約完成' },
-                  { key: '確認方案', label: '確認方案' },
-                  { key: '付款完成', label: '付款完成' },
-                  { key: '生產完成', label: '生產完成' },
-                  { key: '治療中', label: '治療中' },
-                  { key: '治療完成', label: '治療完成' },
+                  { key: 'all', label: t('doctor.status.all') },
+                  { key: '等待預約', label: t('doctor.status.waitingAppointment') },
+                  { key: '預約完成', label: t('doctor.status.appointmentCompleted') },
+                  { key: '確認方案', label: t('doctor.status.planConfirmed') },
+                  { key: '付款完成', label: t('doctor.status.paymentCompleted') },
+                  { key: '生產完成', label: t('doctor.status.productionCompleted') },
+                  { key: '治療中', label: t('doctor.status.inTreatment') },
+                  { key: '治療完成', label: t('doctor.status.treatmentCompleted') },
                 ].map(item => (
                   <div
                     key={item.key}
@@ -151,17 +153,17 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
                   </div>
                 ))}
               </div>
-              <div style={{ color: '#fff', fontSize: 14, margin: '30px 0 16px' }}>日曆看板</div>
+              <div style={{ color: '#fff', fontSize: 14, margin: '30px 0 16px' }}>{t('doctor.calendarBoard')}</div>
               <div className="account-list">
-                <div className={`account-item ${activeView==='calendar' ? 'active' : ''}`} onClick={() => setActiveView('calendar')}>日曆看板</div>
+                <div className={`account-item ${activeView==='calendar' ? 'active' : ''}`} onClick={() => setActiveView('calendar')}>{t('doctor.calendarBoard')}</div>
               </div>
             </div>
             <div>
               <div className="account-list">
-                <div className={`account-item ${activeView==='settings' ? 'active' : ''}`} onClick={() => setActiveView('settings')}>個人設置</div>
-                <div className={`account-item ${activeView==='help' ? 'active' : ''}`} onClick={() => setActiveView('help')}>尋找幫助</div>
+                <div className={`account-item ${activeView==='settings' ? 'active' : ''}`} onClick={() => setActiveView('settings')}>{t('doctor.personalSettings')}</div>
+                <div className={`account-item ${activeView==='help' ? 'active' : ''}`} onClick={() => setActiveView('help')}>{t('doctor.help')}</div>
               </div>
-              <Logout style={{ width: '100%' }}>退出登錄</Logout>
+              <Logout style={{ width: '100%' }}>{t('doctor.logout')}</Logout>
             </div>
           </div>
         )

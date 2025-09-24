@@ -1,9 +1,11 @@
 import React, { useMemo, useState, useCallback } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 import './list.scss';
 import ContactInfo from '../components/contact-info';
 import Dashboard from '../patient';
 
 export default function PatientInfoList({ patients = [], onCreate, statusFromRoute = 'all', onStatusChange = () => {}, doctorUser = null }) {
+  const { t } = useLanguage();
   const [keyword, setKeyword] = useState('');
   const [expanded, setExpanded] = useState({}); // key: patient.uuid -> boolean
   const statusFilter = statusFromRoute || 'all';
@@ -14,7 +16,15 @@ export default function PatientInfoList({ patients = [], onCreate, statusFromRou
 
   const mapProgressToTitle = (progress) => {
     const idx = Math.max(0, Math.min(6, Number(progress) || 0));
-    const titles = ['等待預約', '預約完成', '確認方案', '付款完成', '生產完成', '治療中', '治療完成'];
+    const titles = [
+      t('doctor.status.waitingAppointment'),
+      t('doctor.status.appointmentCompleted'),
+      t('doctor.status.planConfirmed'),
+      t('doctor.status.paymentCompleted'),
+      t('doctor.status.productionCompleted'),
+      t('doctor.status.inTreatment'),
+      t('doctor.status.treatmentCompleted')
+    ];
     return titles[idx] || '';
   };
 
@@ -81,11 +91,11 @@ export default function PatientInfoList({ patients = [], onCreate, statusFromRou
                 <div className="col name">{st.full_name || '—'}</div>
                 <div className="col info" style={{ flex: 1, display: 'flex', alignItems: 'center', marginRight: 12, overflow: 'hidden' }}>
                   <ContactInfo list={[
-                    { label: '用戶ID', value: st.uuid || 'N/A' },
-                    { label: '性別', value: pt.gender || st.gender || 'N/A' },
-                    { label: '生日', value: pt.birth_date || st.birth_date || 'N/A' },
-                    { label: '聯繫方式', value: pt.phone || st.phone || 'N/A' },
-                    { label: '信箱', value: pt.email || st.email || 'N/A' },
+                    { label: t('doctor.patientInfo.userId'), value: st.uuid || 'N/A' },
+                    { label: t('doctor.patientInfo.gender'), value: pt.gender || st.gender || 'N/A' },
+                    { label: t('doctor.patientInfo.birthday'), value: pt.birth_date || st.birth_date || 'N/A' },
+                    { label: t('doctor.patientInfo.contact'), value: pt.phone || st.phone || 'N/A' },
+                    { label: t('doctor.patientInfo.email'), value: pt.email || st.email || 'N/A' },
                   ]} style={{ marginBottom: 0, width: '100%' }} />
                 </div>
                 <div className="col action" style={{ marginRight: 12 }} onClick={() => onToggle(id)}>

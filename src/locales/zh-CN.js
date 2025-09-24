@@ -1277,5 +1277,102 @@ export default {
     pound: '英镑',
     yen: '日元',
     won: '韩元'
+  },
+
+  // Admin Management Page Translations
+  admin: {
+    tabs: {
+      userManagement: '用户管理',
+      clinicManagement: '诊所管理', 
+      patientManagement: '患者管理',
+      doctorManagement: '医生管理'
+    },
+    userColumns: {
+      username: '用户名',
+      name: '姓名',
+      role: '角色',
+      clinic: '绑定诊所',
+      createdAt: '创建时间',
+      actions: '操作'
+    },
+    clinicColumns: {
+      name: '诊所名称',
+      code: '诊所代码',
+      address: '地址',
+      phone: '电话',
+      createdAt: '创建时间',
+      actions: '操作'
+    },
+    patientColumns: {
+      name: '姓名',
+      phone: '电话',
+      gender: '性别',
+      createdAt: '创建时间',
+      actions: '操作'
+    },
+    roles: {
+      admin: '普通管理员',
+      superAdmin: '超级管理员',
+      sales: '销售专员',
+      doctor: '医生',
+      manufacturer: '医院管理员'
+    },
+    gender: {
+      male: '男',
+      female: '女',
+      other: '其他'
+    },
+    types: {
+      user: '用户',
+      clinic: '诊所',
+      patient: '患者'
+    },
+    createButton: '创建{{type}}',
+    createModal: {
+      title: '创建{{type}}'
+    },
+    confirm: {
+      deleteUser: '确定要删除此用户吗？',
+      deleteClinic: '确定要关闭此诊所吗？',
+      closeClinic: '确定要关闭此诊所吗？',
+      closePatient: '确定要关闭此患者吗？',
+      ok: '确定',
+      cancel: '取消'
+    },
+    actions: {
+      delete: '删除',
+      close: '关闭'
+    },
+    pagination: {
+      total: '共 {{total}} 条记录'
+    }
+  },
+
+  // Doctor Dashboard Translations
+  doctor: {
+    loading: '加载中...',
+    backToLogin: '返回登录页面',
+    patientList: '患者列表',
+    calendarBoard: '日历看板',
+    personalSettings: '个人设置',
+    help: '寻找帮助',
+    logout: '退出登录',
+    status: {
+      all: '全部',
+      waitingAppointment: '等待预约',
+      appointmentCompleted: '预约完成',
+      planConfirmed: '确认方案',
+      paymentCompleted: '付款完成',
+      productionCompleted: '生产完成',
+      inTreatment: '治疗中',
+      treatmentCompleted: '治疗完成'
+    },
+    patientInfo: {
+      userId: '用户ID',
+      gender: '性别',
+      birthday: '生日',
+      contact: '联系方式',
+      email: '信箱'
+    }
   }
 };

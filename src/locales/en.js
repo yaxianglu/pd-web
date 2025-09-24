@@ -1287,5 +1287,102 @@ Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
     pound: 'GBP',
     yen: 'JPY',
     won: 'KRW'
+  },
+
+  // Admin Management Page Translations
+  admin: {
+    tabs: {
+      userManagement: 'Accounts',
+      clinicManagement: 'Clinics', 
+      patientManagement: 'Patients',
+      doctorManagement: 'Doctors'
+    },
+    userColumns: {
+      username: 'Username',
+      name: 'Name',
+      role: 'Role',
+      clinic: 'Clinic',
+      createdAt: 'Date Created',
+      actions: 'Action'
+    },
+    clinicColumns: {
+      name: 'Clinic Name',
+      code: 'Clinic Code',
+      address: 'Address',
+      phone: 'Phone',
+      createdAt: 'Date Created',
+      actions: 'Action'
+    },
+    patientColumns: {
+      name: 'Name',
+      phone: 'Phone',
+      gender: 'Gender',
+      createdAt: 'Date Created',
+      actions: 'Action'
+    },
+    roles: {
+      admin: 'Admin',
+      superAdmin: 'Super Admin',
+      sales: 'Sales',
+      doctor: 'Doctor',
+      manufacturer: 'Manufacturer'
+    },
+    gender: {
+      male: 'Male',
+      female: 'Female',
+      other: 'Other'
+    },
+    types: {
+      user: 'User',
+      clinic: 'Clinic',
+      patient: 'Patient'
+    },
+    createButton: 'Create {{type}}',
+    createModal: {
+      title: 'Create {{type}}'
+    },
+    confirm: {
+      deleteUser: 'Are you sure you want to delete this user?',
+      deleteClinic: 'Are you sure you want to close this clinic?',
+      closeClinic: 'Are you sure you want to close this clinic?',
+      closePatient: 'Are you sure you want to close this patient?',
+      ok: 'OK',
+      cancel: 'Cancel'
+    },
+    actions: {
+      delete: 'Delete',
+      close: 'Close'
+    },
+    pagination: {
+      total: 'Total {{total}} records'
+    }
+  },
+
+  // Doctor Dashboard Translations
+  doctor: {
+    loading: 'Loading...',
+    backToLogin: 'Back to Login',
+    patientList: 'Patient List',
+    calendarBoard: 'Calendar Board',
+    personalSettings: 'Personal Settings',
+    help: 'Help',
+    logout: 'Logout',
+    status: {
+      all: 'All',
+      waitingAppointment: 'Waiting Appointment',
+      appointmentCompleted: '1st Appointment',
+      planConfirmed: 'Plan Approved',
+      paymentCompleted: 'Payment Status',
+      productionCompleted: 'Aligner Shipped',
+      inTreatment: 'In Treatment',
+      treatmentCompleted: 'Treatment Finished'
+    },
+    patientInfo: {
+      userId: 'User ID',
+      gender: 'Gender',
+      birthday: 'Birthday',
+      contact: 'Contact',
+      email: 'E-mail'
+    }
   }
 };

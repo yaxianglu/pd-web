@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Tabs, Table, Button, Modal, Form, Input, Select, message, Popconfirm, Tag, Space } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined, UserOutlined, BankOutlined, TeamOutlined } from '@ant-design/icons';
 import apiService from '../services/api';
+import { useLanguage } from '../context/LanguageContext';
 import '../market/index.scss';
 import './account-management.scss';
 
@@ -9,6 +10,7 @@ const { Option } = Select;
 const { TabPane } = Tabs;
 
 const AccountManagement = () => {
+  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState('users');
   const [users, setUsers] = useState([]);
   const [clinics, setClinics] = useState([]);
@@ -83,39 +85,39 @@ const AccountManagement = () => {
     // 超級管理員可以管理所有賬戶
     if (userRole === 'super_admin') {
       tabs.push(
-        { key: 'users', label: '用戶管理', icon: <UserOutlined /> },
-        { key: 'clinics', label: '診所管理', icon: <BankOutlined /> },
-        { key: 'patients', label: '患者管理', icon: <TeamOutlined /> }
+        { key: 'users', label: t('admin.tabs.userManagement'), icon: <UserOutlined /> },
+        { key: 'clinics', label: t('admin.tabs.clinicManagement'), icon: <BankOutlined /> },
+        { key: 'patients', label: t('admin.tabs.patientManagement'), icon: <TeamOutlined /> }
       );
     }
     // 普通管理員可以管理所有賬戶
     else if (userRole === 'admin') {
       tabs.push(
-        { key: 'users', label: '用戶管理', icon: <UserOutlined /> },
-        { key: 'clinics', label: '診所管理', icon: <BankOutlined /> },
-        { key: 'patients', label: '患者管理', icon: <TeamOutlined /> }
+        { key: 'users', label: t('admin.tabs.userManagement'), icon: <UserOutlined /> },
+        { key: 'clinics', label: t('admin.tabs.clinicManagement'), icon: <BankOutlined /> },
+        { key: 'patients', label: t('admin.tabs.patientManagement'), icon: <TeamOutlined /> }
       );
     }
     // 醫院管理員可以管理診所、醫生、患者
     else if (userRole === 'hospital') {
       tabs.push(
-        { key: 'clinics', label: '診所管理', icon: <BankOutlined /> },
-        { key: 'users', label: '醫生管理', icon: <UserOutlined /> },
-        { key: 'patients', label: '患者管理', icon: <TeamOutlined /> }
+        { key: 'clinics', label: t('admin.tabs.clinicManagement'), icon: <BankOutlined /> },
+        { key: 'users', label: t('admin.tabs.doctorManagement'), icon: <UserOutlined /> },
+        { key: 'patients', label: t('admin.tabs.patientManagement'), icon: <TeamOutlined /> }
       );
     }
     // 銷售專員可以管理診所、醫生、患者
     else if (userRole === 'market') {
       tabs.push(
-        { key: 'clinics', label: '診所管理', icon: <BankOutlined /> },
-        { key: 'users', label: '醫生管理', icon: <UserOutlined /> },
-        { key: 'patients', label: '患者管理', icon: <TeamOutlined /> }
+        { key: 'clinics', label: t('admin.tabs.clinicManagement'), icon: <BankOutlined /> },
+        { key: 'users', label: t('admin.tabs.doctorManagement'), icon: <UserOutlined /> },
+        { key: 'patients', label: t('admin.tabs.patientManagement'), icon: <TeamOutlined /> }
       );
     }
     // 醫生只能管理患者
     else if (userRole === 'doctor') {
       tabs.push(
-        { key: 'patients', label: '患者管理', icon: <TeamOutlined /> }
+        { key: 'patients', label: t('admin.tabs.patientManagement'), icon: <TeamOutlined /> }
       );
     }
 
@@ -177,32 +179,32 @@ const AccountManagement = () => {
   // 用户表格列
   const userColumns = [
     {
-      title: '用戶名',
+      title: t('admin.userColumns.username'),
       dataIndex: 'username',
       key: 'username',
     },
     {
-      title: '姓名',
+      title: t('admin.userColumns.name'),
       dataIndex: 'full_name',
       key: 'full_name',
     },
     {
-      title: '角色',
+      title: t('admin.userColumns.role'),
       dataIndex: 'role',
       key: 'role',
       render: (role) => {
         const roleMap = {
-          admin: '普通管理員',
-          super_admin: '超級管理員',
-          market: '銷售專員',
-          doctor: '醫生',
-          hospital: '醫院管理員'
+          admin: t('admin.roles.admin'),
+          super_admin: t('admin.roles.superAdmin'),
+          market: t('admin.roles.sales'),
+          doctor: t('admin.roles.doctor'),
+          hospital: t('admin.roles.manufacturer')
         };
         return <Tag color="blue">{roleMap[role] || role}</Tag>;
       }
     },
     {
-      title: '綁定診所',
+      title: t('admin.userColumns.clinic'),
       dataIndex: 'department',
       key: 'department',
       render: (department, record) => {
@@ -215,24 +217,24 @@ const AccountManagement = () => {
       }
     },
     {
-      title: '創建時間',
+      title: t('admin.userColumns.createdAt'),
       dataIndex: 'created_at',
       key: 'created_at',
       render: (date) => date ? new Date(date).toLocaleString('zh-TW') : '-'
     },
     {
-      title: '操作',
+      title: t('admin.userColumns.actions'),
       key: 'actions',
       render: (_, record) => (
         <Space>
           <Popconfirm
-            title="確定要刪除此用戶嗎？"
+            title={t('admin.confirm.deleteUser')}
             onConfirm={() => handleDelete(record.id)}
-            okText="確定"
-            cancelText="取消"
+            okText={t('admin.confirm.ok')}
+            cancelText={t('admin.confirm.cancel')}
           >
             <Button type="link" danger icon={<DeleteOutlined />}>
-              刪除
+              {t('admin.actions.delete')}
             </Button>
           </Popconfirm>
         </Space>
@@ -243,17 +245,17 @@ const AccountManagement = () => {
   // 診所表格列
   const clinicColumns = [
     {
-      title: '診所名稱',
+      title: t('admin.clinicColumns.name'),
       dataIndex: 'clinic_name',
       key: 'clinic_name',
     },
     {
-      title: '診所代碼',
+      title: t('admin.clinicColumns.code'),
       dataIndex: 'clinic_code',
       key: 'clinic_code',
     },
     {
-      title: '地址',
+      title: t('admin.clinicColumns.address'),
       dataIndex: 'address',
       key: 'address',
       render: (address, record) => {
@@ -262,29 +264,29 @@ const AccountManagement = () => {
       }
     },
     {
-      title: '電話',
+      title: t('admin.clinicColumns.phone'),
       dataIndex: 'phone',
       key: 'phone',
     },
     {
-      title: '創建時間',
+      title: t('admin.clinicColumns.createdAt'),
       dataIndex: 'created_at',
       key: 'created_at',
       render: (date) => date ? new Date(date).toLocaleString('zh-TW') : '-'
     },
     {
-      title: '操作',
+      title: t('admin.clinicColumns.actions'),
       key: 'actions',
       render: (_, record) => (
         <Space>
           <Popconfirm
-            title="確定要關閉此診所嗎？"
+            title={t('admin.confirm.closeClinic')}
             onConfirm={() => handleDelete(record.id)}
-            okText="確定"
-            cancelText="取消"
+            okText={t('admin.confirm.ok')}
+            cancelText={t('admin.confirm.cancel')}
           >
             <Button type="link" danger icon={<DeleteOutlined />}>
-              關閉
+              {t('admin.actions.close')}
             </Button>
           </Popconfirm>
         </Space>
@@ -295,48 +297,48 @@ const AccountManagement = () => {
   // 患者表格列
   const patientColumns = [
     {
-      title: '姓名',
+      title: t('admin.patientColumns.name'),
       dataIndex: 'full_name',
       key: 'full_name',
     },
     {
-      title: '電話',
+      title: t('admin.patientColumns.phone'),
       dataIndex: 'phone',
       key: 'phone',
     },
     {
-      title: '性別',
+      title: t('admin.patientColumns.gender'),
       dataIndex: 'gender',
       key: 'gender',
       render: (gender) => {
         const genderMap = {
-          male: '男',
-          female: '女',
-          other: '其他'
+          male: t('admin.gender.male'),
+          female: t('admin.gender.female'),
+          other: t('admin.gender.other')
         };
         return genderMap[gender] || gender;
       }
     },
 
     {
-      title: '創建時間',
+      title: t('admin.patientColumns.createdAt'),
       dataIndex: 'created_at',
       key: 'created_at',
       render: (date) => date ? new Date(date).toLocaleString('zh-TW') : '-'
     },
     {
-      title: '操作',
+      title: t('admin.patientColumns.actions'),
       key: 'actions',
       render: (_, record) => (
         <Space>
           <Popconfirm
-            title="確定要關閉此患者嗎？"
+            title={t('admin.confirm.closePatient')}
             onConfirm={() => handleDelete(record.id)}
-            okText="確定"
-            cancelText="取消"
+            okText={t('admin.confirm.ok')}
+            cancelText={t('admin.confirm.cancel')}
           >
             <Button type="link" danger icon={<DeleteOutlined />}>
-              關閉
+              {t('admin.actions.close')}
             </Button>
           </Popconfirm>
         </Space>
@@ -564,7 +566,7 @@ const AccountManagement = () => {
               }
             }}
           >
-            創建{activeTab === 'users' ? '用戶' : activeTab === 'clinics' ? '診所' : '患者'}
+{t('admin.createButton', { type: activeTab === 'users' ? t('admin.types.user') : activeTab === 'clinics' ? t('admin.types.clinic') : t('admin.types.patient') })}
           </Button>
         </div>
 
@@ -584,13 +586,13 @@ const AccountManagement = () => {
           pagination={{
             showSizeChanger: true,
             showQuickJumper: true,
-            showTotal: (total) => `共 ${total} 條記錄`,
+            showTotal: (total) => t('admin.pagination.total', { total }),
           }}
         />
       </div>
 
       <Modal
-        title={`創建${activeTab === 'users' ? '用戶' : activeTab === 'clinics' ? '診所' : '患者'}`}
+        title={t('admin.createModal.title', { type: activeTab === 'users' ? t('admin.types.user') : activeTab === 'clinics' ? t('admin.types.clinic') : t('admin.types.patient') })}
         open={createModalVisible}
         onCancel={() => {
           setCreateModalVisible(false);

@@ -1280,5 +1280,102 @@ export default {
     pound: '英鎊',
     yen: '日元',
     won: '韓元'
+  },
+
+  // Admin Management Page Translations
+  admin: {
+    tabs: {
+      userManagement: '用戶管理',
+      clinicManagement: '診所管理', 
+      patientManagement: '患者管理',
+      doctorManagement: '醫生管理'
+    },
+    userColumns: {
+      username: '用戶名',
+      name: '姓名',
+      role: '角色',
+      clinic: '綁定診所',
+      createdAt: '創建時間',
+      actions: '操作'
+    },
+    clinicColumns: {
+      name: '診所名稱',
+      code: '診所代碼',
+      address: '地址',
+      phone: '電話',
+      createdAt: '創建時間',
+      actions: '操作'
+    },
+    patientColumns: {
+      name: '姓名',
+      phone: '電話',
+      gender: '性別',
+      createdAt: '創建時間',
+      actions: '操作'
+    },
+    roles: {
+      admin: '普通管理員',
+      superAdmin: '超級管理員',
+      sales: '銷售專員',
+      doctor: '醫生',
+      manufacturer: '醫院管理員'
+    },
+    gender: {
+      male: '男',
+      female: '女',
+      other: '其他'
+    },
+    types: {
+      user: '用戶',
+      clinic: '診所',
+      patient: '患者'
+    },
+    createButton: '創建{{type}}',
+    createModal: {
+      title: '創建{{type}}'
+    },
+    confirm: {
+      deleteUser: '確定要刪除此用戶嗎？',
+      deleteClinic: '確定要關閉此診所嗎？',
+      closeClinic: '確定要關閉此診所嗎？',
+      closePatient: '確定要關閉此患者嗎？',
+      ok: '確定',
+      cancel: '取消'
+    },
+    actions: {
+      delete: '刪除',
+      close: '關閉'
+    },
+    pagination: {
+      total: '共 {{total}} 條記錄'
+    }
+  },
+
+  // Doctor Dashboard Translations
+  doctor: {
+    loading: '載入中...',
+    backToLogin: '返回登錄頁面',
+    patientList: '患者列表',
+    calendarBoard: '日曆看板',
+    personalSettings: '個人設置',
+    help: '尋找幫助',
+    logout: '退出登錄',
+    status: {
+      all: '全部',
+      waitingAppointment: '等待預約',
+      appointmentCompleted: '預約完成',
+      planConfirmed: '確認方案',
+      paymentCompleted: '付款完成',
+      productionCompleted: '生產完成',
+      inTreatment: '治療中',
+      treatmentCompleted: '治療完成'
+    },
+    patientInfo: {
+      userId: '用戶ID',
+      gender: '性別',
+      birthday: '生日',
+      contact: '聯繫方式',
+      email: '信箱'
+    }
   }
 };
