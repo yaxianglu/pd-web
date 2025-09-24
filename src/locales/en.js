@@ -474,7 +474,7 @@ export default {
       lineId: 'LINE ID',
       city: 'Select City',
       phoneError: 'Please enter the correct Taiwan mobile phone number format (09xxxxxxxx)',
-      consent: 'Clicking here means you accept our terms of use and privacy policy, and agree to contact me through LINE, SMS or other channels according to the content in the privacy policy',
+      consent: 'By clicking, you agree to our Terms of Use and Privacy Policy, and consent to us contacting you through LINE, SMS, or other methods as outlined in the policy.',
       nextButton: 'Next',
       cities: [
         'Taipei City', 'New Taipei City', 'Taoyuan City', 'Taichung City', 'Tainan City', 'Kaohsiung City',
