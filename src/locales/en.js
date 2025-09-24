@@ -142,27 +142,27 @@ export default {
       step1: {
         title: 'Booking',
         description: 'Scan QR code to access form\nConfirm partner clinic with Smile Concierge\nSchedule your appointment',
-        price: 'Free'
+        price: ''
       },
       step2: {
         title: 'Evaluation',
         description: 'Visit partner clinic\n3D oral scan & X-rays\nComprehensive case evaluation',
-        price: '$3,000 (clinic fee)'
+        price: ''
       },
       step3: {
         title: 'Plan',
         description: 'Return to partner clinic within 2 weeks\nReview & approve your personalized smile plan',
-        price: '$48,000-$118,000'
+        price: ''
       },
       step4: {
         title: 'Journey',
         description: 'Clear aligners completed\nDoctor’s instructions provided\nFull set collected at once\nOr distributed in stages if needed',
-        price: 'Free'
+        price: ''
       },
       step5: {
         title: 'Care',
         description: 'Ongoing progress tracking via Smile Concierge\nContinuous support and communication\nTreatment plan uninterrupted and worry-free',
-        price: 'Free'
+        price: ''
       },
       buttonText: 'Start Your Smile Journey'
     }
@@ -581,20 +581,20 @@ Below is the step-by-step process of how Pearly clear aligners work:`,
         },
         retainers: {
           title: 'Clear Retainer Fee',
-          description: '$11,000** 2-piece set\n$14,000** 3-piece set\n$19,000** 5-piece set'
+          description: ''
         }
       },
       footnotes: '*Any clinic-related treatments or services will be collected directly by the clinic. Prices shown in emails may change and do not represent the final actual charges; users should refer to the clinic\'s latest pricing information.\n** During follow-up visits, the attending dentist will assess the oral condition to determine whether to use the last set of aligners or re-scan to produce retainers. Retainer prices may be adjusted due to market fluctuations, and users should contact customer service for actual prices.'
     },
     pricingFeatures: {
-      title: 'Pearl Digital Journey Invisible Braces Pricing Features',
+      title: 'Pearly Journey — Clear Aligner Pricing',
       transparentPricing: {
         title: 'Transparent Pricing',
-        description: 'Treatment fees are assessed based on individual dental conditions and chosen plan (mild/moderate/severe). We provide detailed quotes and phased explanations, with no additional charges or ambiguity, allowing you to clearly understand every expense.'
+        description: 'Treatment costs are evaluated based on your dental condition and chosen plan (Light / Moderate / Comprehensive). We provide detailed quotations with clear explanations at every stage — no hidden fees, no surprises.'
       },
       affordablePricing: {
-        title: 'Affordable Pricing, Uncompromising Professionalism',
-        description: 'Pearl Digital is committed to providing a high-quality orthodontic experience while maintaining reasonable prices, allowing more people to have the opportunity to improve their teeth alignment and smile with confidence. Balancing efficacy, comfort, and price is our consistent commitment.'
+        title: 'Affordable, Without Compromising on Quality',
+        description: 'Pearly is committed to delivering high-quality orthodontic care at a fair price. We make it possible for more people to improve their alignment and smile with confidence. Treatment effectiveness, comfort, and affordability are always our priorities.'
       },
       pricingTable: {
         mild: 'Mild/Complexity Level',

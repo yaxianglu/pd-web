@@ -38,6 +38,7 @@ export default function DetailButton({ text, style, size, disabled, onClick }) {
       case '我需要哪種治療？':
       case '我需要哪种治疗？':
       case 'Which Plan Suits Me?':
+      case 'What Treatment Do I Need?':
         window.open('/upload', '_blank');
         break;
       case '了解你的牙齒狀況':

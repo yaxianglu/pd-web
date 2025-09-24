@@ -8,7 +8,7 @@ import { useLanguage } from '../context/LanguageContext';
 
 export default function ManufacturingSection() {
   const { isMobile, isTablet } = useResponsive();
-  const { t } = useLanguage();
+  const { t, currentLanguage } = useLanguage();
   
   return (
     <CardWrapper title={t('journey.pricingFeatures.title')}>
@@ -66,42 +66,44 @@ export default function ManufacturingSection() {
               我們的目標是讓療程不影響您生活節奏，彈性規畫預算、變美更輕鬆。
             </div>
           </div> */}
-          <div className="card-content-price">
-            <div className="pricing-table">
-              {/* 左侧复杂度列 */}
-              <div className="complexity-column">
-                {/* <div className="complexity-header"></div> */}
-                <div className="complexity-item">{t('journey.pricingFeatures.pricingTable.mild')}</div>
-                <div className="complexity-item">{t('journey.pricingFeatures.pricingTable.moderate')}</div>
-                <div className="complexity-item">{t('journey.pricingFeatures.pricingTable.severe')}</div>
-              </div>
-              
-              {/* 一次性付款列 */}
-              <div className="payment-column">
-                {/* <div className="payment-header">
-                  <div className="payment-title">一次付款</div>
-                  <div className="payment-subtitle">一次拿到所有牙套</div>
-                  <div className="limited-badge">
-                    <img src={p12} alt="#" />
-                  </div>
-                </div> */}
-                <div className="price-item">$ 48,000</div>
-                <div className="price-item">$ 98,000</div>
-                <div className="price-item">$ 118,000</div>
-              </div>
-              
-              {/* 分期付款列 */}
-              {/* <div className="payment-column installment">
-                <div className="payment-header">
-                  <div className="payment-title">分期付款</div>
-                  <div className="payment-subtitle">12個月零利率</div>
+          {currentLanguage !== 'en' && (
+            <div className="card-content-price">
+              <div className="pricing-table">
+                {/* 左侧复杂度列 */}
+                <div className="complexity-column">
+                  {/* <div className="complexity-header"></div> */}
+                  <div className="complexity-item">{t('journey.pricingFeatures.pricingTable.mild')}</div>
+                  <div className="complexity-item">{t('journey.pricingFeatures.pricingTable.moderate')}</div>
+                  <div className="complexity-item">{t('journey.pricingFeatures.pricingTable.severe')}</div>
                 </div>
-                <div className="price-item">$ 40,00</div>
-                <div className="price-item">$ 81,67</div>
-                <div className="price-item">$ 98,33</div>
-              </div> */}
+                
+                {/* 一次性付款列 */}
+                <div className="payment-column">
+                  {/* <div className="payment-header">
+                    <div className="payment-title">一次付款</div>
+                    <div className="payment-subtitle">一次拿到所有牙套</div>
+                    <div className="limited-badge">
+                      <img src={p12} alt="#" />
+                    </div>
+                  </div> */}
+                  <div className="price-item">$ 48,000</div>
+                  <div className="price-item">$ 98,000</div>
+                  <div className="price-item">$ 118,000</div>
+                </div>
+                
+                {/* 分期付款列 */}
+                {/* <div className="payment-column installment">
+                  <div className="payment-header">
+                    <div className="payment-title">分期付款</div>
+                    <div className="payment-subtitle">12個月零利率</div>
+                  </div>
+                  <div className="price-item">$ 40,00</div>
+                  <div className="price-item">$ 81,67</div>
+                  <div className="price-item">$ 98,33</div>
+                </div> */}
+              </div>
             </div>
-          </div>
+          )}
 
           <DetailButton text={t('journey.pricingFeatures.buttonText')} />
         </div>
