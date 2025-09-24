@@ -42,7 +42,7 @@ export default function DetailButton({ text, style, size, disabled, onClick }) {
         window.open('/upload', '_blank');
         break;
       case '了解你的牙齒狀況':
-      case '了解你的牙齿状况':
+      case 'Understand Your Dental Condition':
       case 'Learn about your dental condition':
         window.open('/upload', '_blank');
         break;

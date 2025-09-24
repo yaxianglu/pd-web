@@ -859,8 +859,8 @@ Below is the step-by-step process of how Pearly clear aligners work:`,
       }
     },
     teenOrthodontics: {
-      title: 'Are invisible braces suitable for teenagers?',
-      description: 'Adolescence is a crucial period for the development of teeth and facial bones. Early intervention can effectively improve issues such as crowding, buck teeth, and deep bite, and timely planning for sufficient permanent tooth development space can prevent more complex orthodontic needs in the future. Wearing clear aligners does not affect daily learning and activities, allowing children to grow with confidence without limitations.',
+      title: 'Clear Aligners for Teens',
+      description: 'The teenage years are key to dental and jaw development. Starting treatment early helps fix crowding, protrusion, and deep bites, while creating space for permanent teeth and reducing the risk of complex problems later on. With clear aligners, teens can study, play, and live freely — growing up confident, without limits.',
       benefits: {
         title: 'Benefits of early orthodontic treatment for teenagers',
         items: [
@@ -884,7 +884,7 @@ Below is the step-by-step process of how Pearly clear aligners work:`,
           },
           growth: {
             title: 'Jaw Growth Phase (pubertal growth spurt)',
-            description: 'Facial structure can still be guided. Aligners and professional appliances can help direct or restrict jaw growth for balanced development.'
+            description: 'Facial structure can still be guided. Aligners and professional appliances can help direct or restrict jaw growth.'
           }
         }
       }
@@ -905,7 +905,7 @@ Below is the step-by-step process of how Pearly clear aligners work:`,
     },
     manufacturingSection: {
       buttonText: 'Understand Your Dental Condition',
-      description: 'Through combining three-dimensional imaging (CBCT, lateral cephalometric X-rays), we gain deep understanding of each patient\'s unique facial structure and needs.\nPearl Digital can simultaneously analyze and adjust both skeletal and dental aspects, optimizing facial contours and occlusal function together,\nstarting from the "teeth" to create more natural and harmonious beauty.'
+      description: 'Using CBCT and cephalometric X-rays, Pearly analyzes both jaw structure and tooth alignment. This integrated approach enhances facial balance and bite function — creating a smile that looks natural, harmonious, and beautifully you.'
     },
     upgrade: {
       title: 'Orthodontics is More Than Beauty - It\'s a Life Upgrade',
