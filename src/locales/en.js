@@ -915,15 +915,15 @@ At any age, your smile can be redesigned.
       description: 'Using CBCT and cephalometric X-rays, Pearly analyzes both jaw structure and tooth alignment. This integrated approach enhances facial balance and bite function — creating a smile that looks natural, harmonious, and beautifully you.'
     },
     upgrade: {
-      title: 'Orthodontics is More Than Beauty - It\'s a Life Upgrade',
-      description: 'For adults, orthodontics often combines aesthetic needs with functional improvements. Aligned teeth not only bring naturally symmetrical smiles and facial proportions, but also provide the following practical benefits:',
+      title: 'Orthodontics Is More Than Beauty — It’s a Lifestyle Upgrade',
+      description: 'For adults, orthodontics often combines aesthetic goals with functional improvements. Straight teeth not only create a naturally balanced smile and facial proportions, but also bring real benefits:',
       aestheticImpact: {
-        title: 'Aesthetic Impact:',
-        description: 'After dental alignment, lips become naturally full and facial lines more fluid\nHelps improve common Asian facial appearance issues like receding chin and protruding mouth\nMakes smiles and eyes more confident and approachable, enhancing overall demeanor'
+        title: 'Aesthetic Benefits:',
+        description: 'Aligned teeth give the lips a fuller, more natural shape and enhance facial harmony.\nHelps improve common facial profile issues.\nA confident smile and brighter expression boost overall charm and approachability.'
       },
       adultNeeds: {
-        title: 'Adapting to Adult Pace and Needs:',
-        description: 'Pearl Digital\'s invisible aligner treatment design is flexible and removable, allowing you to\nhandle work meetings, social activities, and business trips with ease.'
+        title: 'Designed for Adult Lifestyles:',
+        description: 'Pearly clear aligners are flexible and removable, allowing you to stay comfortable and confident during work meetings, social events, and business trips.'
       }
     }
   },
