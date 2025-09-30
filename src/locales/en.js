@@ -102,7 +102,7 @@ export default {
   // Services
   services: {
     journey: 'Pearl Journey',
-    correction: 'Correction & Beauty',
+    correction: 'Orthodontics & Aesthetics',
     smileUpgrade: 'Smile Upgrade'
   },
 
