@@ -16,7 +16,7 @@ import l4 from './imgs/l4.svg';
 import l5 from './imgs/l5.svg';
 import { useLanguage } from '../../context/LanguageContext';
 
-export default function SmileSteps() {
+export default function SmileSteps({ showDetails = true }) {
   const { isMobile, isTablet } = useResponsive();
   const { t } = useLanguage();
 
@@ -26,7 +26,7 @@ export default function SmileSteps() {
       labelColor: "#4777FA",
       title: t('about.smileSteps.step1.title'),
       src: p3,
-      desc: (
+      desc: showDetails ? (
         <>
           {t('about.smileSteps.step1.description').split('\n').map((line, index) => (
             <span key={index}>
@@ -37,14 +37,14 @@ export default function SmileSteps() {
           <br />
           <span className="free">{t('about.smileSteps.step1.price')}</span>
         </>
-      ),
+      ) : null,
     },
     {
       label: "STEP 2",
       labelColor: "#7BD641",
       title: t('about.smileSteps.step2.title'),
       src: p4,
-      desc: (
+      desc: showDetails ? (
         <>
           {t('about.smileSteps.step2.description').split('\n').map((line, index) => (
             <span key={index}>
@@ -55,14 +55,14 @@ export default function SmileSteps() {
           <br />
           <span className="price">{t('about.smileSteps.step2.price')}</span>
         </>
-      ),
+      ) : null,
     },
     {
       label: "STEP 3",
       labelColor: "#FF7837",
       title: t('about.smileSteps.step3.title'),
       src: p5,
-      desc: (
+      desc: showDetails ? (
         <>
           {t('about.smileSteps.step3.description').split('\n').map((line, index) => (
             <span key={index}>
@@ -73,14 +73,14 @@ export default function SmileSteps() {
           <br />
           <span className="price">{t('about.smileSteps.step3.price')}</span>
         </>
-      ),
+      ) : null,
     },
     {
       label: "STEP 4",
       labelColor: "#FF7837",
       title: t('about.smileSteps.step4.title'),
       src: p6,
-      desc: (
+      desc: showDetails ? (
         <>
           {t('about.smileSteps.step4.description').split('\n').map((line, index) => (
             <span key={index}>
@@ -91,14 +91,14 @@ export default function SmileSteps() {
           <br />
           <span className="free">{t('about.smileSteps.step4.price')}</span>
         </>
-      ),
+      ) : null,
     },
     {
       label: "STEP 5",
       labelColor: "#3AD2C8",
       title: t('about.smileSteps.step5.title'),
       src: p7,
-      desc: (
+      desc: showDetails ? (
         <>
           {t('about.smileSteps.step5.description').split('\n').map((line, index) => (
             <span key={index}>
@@ -109,7 +109,7 @@ export default function SmileSteps() {
           <br />
           <span className="free">{t('about.smileSteps.step5.price')}</span>
         </>
-      ),
+      ) : null,
     },
   ];
   

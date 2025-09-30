@@ -46,7 +46,7 @@ export default function PageCom() {
         <Innovation />
         {
           isMobile ? (
-            <SmileSteps />
+            <SmileSteps showDetails={false} />
           ) : (
             <Step />
           )
