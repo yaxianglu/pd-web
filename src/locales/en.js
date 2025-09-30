@@ -538,7 +538,7 @@ export default {
       }
     },
     footer: {
-      company: 'Pearl Digitalinc.',
+      company: 'Pearl Digital Inc.',
       rights: 'All Rights Reserved. ©2025',
       address: '123 Demo StreetNew York, NY 12345',
       contact: 'email@example.com(555)555-5555'
@@ -1092,7 +1092,7 @@ Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
     privacyPolicy: 'Privacy Policy',
     termsOfService: 'Terms of Service',
     cookieSettings: 'Cookie Settings',
-    copyright: 'Pearl Digitalinc. All Rights Reserved. ©2025',
+    copyright: 'Pearl Digital Inc. All Rights Reserved. ©2025',
     address: '2975 Scott Blvd, Ste 110, Santa Clara, CA 95054',
     contact: 'customer@pearl-digital.com +1-408-667-5811'
   },
