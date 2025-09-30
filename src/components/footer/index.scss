@@ -85,7 +85,8 @@
           padding: 0;
           width: 100%;
           display: flex;
-          justify-content: space-around;
+          justify-content: flex-start;
+          gap: 40px;
         }
 
         .footer-column {
@@ -93,6 +94,11 @@
           flex-direction: column;
           gap: 10px;
           align-items: start;
+
+          @media (max-width: 1125px) {
+            align-items: flex-start;
+            text-align: left;
+          }
 
           .column-title {
             font-weight: bold;
@@ -105,6 +111,7 @@
             margin-bottom: 6px;
             cursor: pointer;
             transition: color 0.3s ease;
+            text-align: left;
 
             &:last-child {
               margin-bottom: 0;
