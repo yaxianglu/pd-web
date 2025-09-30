@@ -32,7 +32,7 @@ export default function PageCom() {
               {index < t('correction.title').split('\n').length - 1 && <br/>}
             </React.Fragment>
           ))}</>}
-          subDescription={<>{t('correction.subDescription')}</>}
+          subtitle={<>{t('correction.subDescription')}</>}
           button1={t('correction.buttonText')}
           image={p17}
         />
