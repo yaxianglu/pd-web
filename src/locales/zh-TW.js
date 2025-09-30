@@ -539,8 +539,8 @@ export default {
     footer: {
       company: 'Pearl Digital Inc.',
       rights: 'All Rights Reserved. ©2025',
-      address: '123 Demo StreetNew York, NY 12345',
-      contact: 'email@example.com(555)555-5555'
+      address: '2975 Scott Blvd, Ste 110, Santa Clara, CA 95054',
+      contact: 'customer@pearl-digital.com +1-408-667-5811'
     }
   },
 
