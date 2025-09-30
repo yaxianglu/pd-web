@@ -129,8 +129,8 @@ export default {
     materialTitle: 'Crystal-Clear, Medical-Grade Comfort',
     materialDescription: 'Made from BPA-free, high-transparency materials, Pearly aligners are made to be nearly invisible, stain-resistant, and easy to clean. With their natural fit and clarity, patients can enjoy a confident smile every step of the way.',
     // Page titles and buttons
-    pageTitle: 'Powered by Technology, Guided by Expertise — For a Smile You Can Trust.',
-    pageSubtitle: 'Create a Reassuring Beautiful Teeth Experience',
+    pageTitle: 'Powered by Technology, Guided by Expertise',
+    pageSubtitle: 'For a Smile You Can Trust. Create a Reassuring Beautiful Teeth Experience',
     becomePartner: 'Become a Partner',
     // Precise control section
     preciseControl: 'Precision Control',
