@@ -36,7 +36,8 @@ export default {
     necessary: '必要',
     functional: '功能',
     analytics: '分析',
-    marketing: '行銷'
+    marketing: '行銷',
+    smileTest: '微笑測試'
   },
 
   // 導航

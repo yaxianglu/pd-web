@@ -36,7 +36,8 @@ export default {
     necessary: 'Necessary',
     functional: 'Functional',
     analytics: 'Analytics',
-    marketing: 'Marketing'
+    marketing: 'Marketing',
+    smileTest: 'Smile Quiz'
   },
 
   // Navigation
