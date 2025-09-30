@@ -8,13 +8,25 @@ export default function Top() {
   const { t } = useLanguage();
   
   const handleJoinClick = () => {
+    console.log('Button clicked! Scrolling to bottom...');
+    console.log('Document body scrollHeight:', document.body.scrollHeight);
+    console.log('Window scrollY:', window.scrollY);
+    console.log('Document documentElement scrollHeight:', document.documentElement.scrollHeight);
+    console.log('Window innerHeight:', window.innerHeight);
+    
+    // 尝试滚动到JoinInfo组件
     const joinInfoElement = document.getElementById('join-info');
     if (joinInfoElement) {
-      const offset = 80; // 为固定header留出空间
-      const elementPosition = joinInfoElement.offsetTop - offset;
-      
+      console.log('Found join-info element, scrolling to it...');
+      joinInfoElement.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    } else {
+      console.log('join-info element not found, trying alternative scroll...');
+      // 尝试滚动到页面底部
       window.scrollTo({
-        top: elementPosition,
+        top: document.body.scrollHeight,
         behavior: 'smooth'
       });
     }

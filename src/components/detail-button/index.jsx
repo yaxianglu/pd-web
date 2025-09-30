@@ -7,11 +7,11 @@ export default function DetailButton({ text, style, size, disabled, onClick }) {
   const navigate = useNavigate();
   const { t } = useLanguage();
   
-  const handleClick = (text) => {
+  const handleClick = () => {
     if (onClick) {
       onClick();
       return;
-    };
+    }
     switch (text) {
       case '微笑測試':
       case '微笑测试':
@@ -27,6 +27,7 @@ export default function DetailButton({ text, style, size, disabled, onClick }) {
         navigate('/join');
         break;
       case '成為合作夥伴':
+      case '成为合作伙伴':
       case 'Become a Partner':
       case t('about.becomePartner'):
         navigate('/join');
@@ -57,7 +58,7 @@ export default function DetailButton({ text, style, size, disabled, onClick }) {
       <button 
         className={`detail-button detail-button-${size}`}
         disabled={disabled}
-        onClick={() => handleClick(text)}
+        onClick={handleClick}
         style={{
           opacity: disabled ? 0.6 : 1,
           cursor: disabled ? 'not-allowed' : 'pointer'

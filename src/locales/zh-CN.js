@@ -51,8 +51,7 @@ export default {
     about: '关于我们',
     partners: '合作伙伴',
     smileTest: '微笑测试',
-    smileUpgrade: '笑容升级',
-    faq: '常见问题'
+    smileUpgrade: '笑容升级'
   },
 
   // 品牌
@@ -110,7 +109,6 @@ export default {
   about: {
     title: '关于我们',
     partners: '合作伙伴',
-    faq: '常见问题',
     // 关于页面内容
     companyIntro: '珍舒美是由美国硅谷科技公司 PEARL DIGITAL INC. 所创立。',
     companyDescription: '珍舒美创立于美国硅谷，联合创办人兼指导医师Dr. David Shen专注于牙齿矫正领域30年，有丰富的临床经验，是 OrthoWorks 矫正专科集团的创办人兼执行长，该集团拥有11家诊所，是旧金山湾区历史最悠久且仍由私人经营的矫正专科诊所。',
