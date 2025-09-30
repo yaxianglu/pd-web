@@ -129,13 +129,6 @@ export default function Footer({ style }) {
               </div>
               <div 
                 className="column-item"
-                onClick={() => handleItemClick('/faq')}
-                style={{ cursor: 'pointer' }}
-              >
-                {t('about.faq')}
-              </div>
-              <div 
-                className="column-item"
                 onClick={() => handleItemClick('/join')}
                 style={{ cursor: 'pointer' }}
               >
