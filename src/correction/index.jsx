@@ -38,7 +38,7 @@ export default function PageCom() {
         />
         <Sketch
           title={<>{t('correction.sketchTitle')}</>}
-          subtitle={<>{t('correction.sketchDescription')}</>}
+          // subtitle={<>{t('correction.sketchDescription')}</>}
         />
         <ProductFeatures />
         <ManufacturingSection />

@@ -15,14 +15,14 @@ export default function ProductFeatures() {
   return (
     <CardWrapper>
       <Grid3>
-        {/* <div className="correction-dkfjsl-wrapper-item correction-dkfjsl-wrapper-item-tttt">
+        <div className="correction-dkfjsl-wrapper-item correction-dkfjsl-wrapper-item-tttt">
           {t('correction.facialIssues.description').split('\n').map((line, index) => (
             <span key={index}>
               {line}
               {index < t('correction.facialIssues.description').split('\n').length - 1 && <br/>}
             </span>
           ))}
-        </div> */}
+        </div>
         <div className="correction-dkfjsl-wrapper-item">
           <img src={p14} alt="p3" />
           <div className="correction-dkfjsl-wrapper-item-content">
