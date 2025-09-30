@@ -489,8 +489,8 @@ export default {
       teethOptions: {
         crowded: '上前牙突出',
         overbite: '下巴後縮',
-        spaced: '牙弓狹窄擁擠',
-        other: '深咬'
+        spaced: '深咬',
+        other: '牙弓狹窄擁擠'
       },
       teethUnsure: '我不確定',
       considerationTitle: '您對於透明牙套的考量是？',
