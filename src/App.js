@@ -30,6 +30,7 @@ import TestI18n from './test-i18n';
 import TestLanguageDetection from './test-language-detection';
 import CookieConsent from './components/CookieConsent';
 import CookieDemo from './cookie-demo';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
       <LanguageProvider>
         <AuthProvider>
           <div className="App">
+            <ScrollToTop />
             <Routes>
               <Route path="/" element={<FrontPage />} />
               <Route path="/front-page" element={<FrontPage />} />

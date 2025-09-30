@@ -150,7 +150,7 @@ export default {
         description: 'Visit partner clinic\n3D oral scan & X-rays\nComprehensive case evaluation',
         price: ''
       },
-      step3Form: {
+      step3: {
         title: 'Plan',
         description: 'Return to partner clinic within 2 weeks\nReview & approve your personalized smile plan',
         price: ''
