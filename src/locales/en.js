@@ -150,7 +150,7 @@ export default {
         description: 'Visit partner clinic\n3D oral scan & X-rays\nComprehensive case evaluation',
         price: ''
       },
-      step3: {
+      step3Form: {
         title: 'Plan',
         description: 'Return to partner clinic within 2 weeks\nReview & approve your personalized smile plan',
         price: ''
@@ -507,7 +507,7 @@ export default {
       prevButton: 'Previous',
       nextButton: 'Next'
     },
-    step3: {
+    step3Form: {
       instruction: 'Gently bite down with your back teeth, and don’t force your upper and lower front teeth to line up.',
       mobilePrompt: 'Scan the QR code to use your mobile phone camera.',
       selectFromGallery: 'Select from Album',

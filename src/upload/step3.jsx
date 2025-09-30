@@ -104,7 +104,7 @@ export default function Step3({ onNext, setStep, style }) {
       
       if (!isBase64) {
         console.error('Photo data is not in base64 format');
-        alert(t('upload.step3.errors.photoFormatError'));
+        alert(t('upload.step3FormForm.errors.photoFormatError'));
         return;
       }
       
@@ -119,13 +119,13 @@ export default function Step3({ onNext, setStep, style }) {
       
       if (!result.success) {
         console.error('Failed to save photo:', result.message);
-        alert(`${t('upload.step3.errors.savePhotoFailed')}: ${result.message}`);
+        alert(`${t('upload.step3Form.errors.savePhotoFailed')}: ${result.message}`);
       } else {
         console.log(`Photo for step ${photoData.step} saved successfully`);
       }
     } catch (error) {
       console.error('Failed to save photo to database:', error);
-      alert(t('upload.step3.errors.savePhotoFailedRetry'));
+      alert(t('upload.step3Form.errors.savePhotoFailedRetry'));
     }
   };
 
@@ -166,18 +166,18 @@ export default function Step3({ onNext, setStep, style }) {
         }
       } else {
         console.error('Failed to get files list:', filesResult.message);
-        alert(`${t('upload.step3.errors.getFileListFailed')}: ${filesResult.message}`);
+        alert(`${t('upload.step3Form.errors.getFileListFailed')}: ${filesResult.message}`);
       }
     } catch (error) {
       console.error('Failed to delete photo group from database:', error);
-      alert(t('upload.step3.errors.deletePhotoGroupFailed'));
+      alert(t('upload.step3Form.errors.deletePhotoGroupFailed'));
     }
   };
 
   // 完成提交
   const handleComplete = async () => {
     if (photos.length < 4) {
-      alert(t('upload.step3.errors.uploadFourPhotosFirst'));
+      alert(t('upload.step3Form.errors.uploadFourPhotosFirst'));
       return;
     }
 
@@ -216,7 +216,7 @@ export default function Step3({ onNext, setStep, style }) {
       
       if (!imageGroupResult.success) {
         console.error('Failed to save image group:', imageGroupResult.message);
-        alert(`${t('upload.step3.errors.saveImageGroupFailed')}: ${imageGroupResult.message}`);
+        alert(`${t('upload.step3Form.errors.saveImageGroupFailed')}: ${imageGroupResult.message}`);
         return;
       }
       
@@ -237,11 +237,11 @@ export default function Step3({ onNext, setStep, style }) {
         onNext && onNext(photos);
       } else {
         console.error('Failed to complete test:', result.message);
-        alert(t('upload.step3.errors.saveFailedRetry'));
+        alert(t('upload.step3Form.errors.saveFailedRetry'));
       }
     } catch (error) {
       console.error('Failed to complete test:', error);
-      alert(t('upload.step3.errors.saveFailedRetry'));
+      alert(t('upload.step3Form.errors.saveFailedRetry'));
     } finally {
       setSaving(false);
     }
@@ -647,7 +647,7 @@ export default function Step3({ onNext, setStep, style }) {
           <div className="step-info">
             <div className="step-number">{currentStep}/4</div>
             <div className="step-instruction">
-              {t('upload.step3.instruction')}
+              {t('upload.step3Form.instruction')}
             </div>
           </div>
           {!isMobile && (
@@ -655,7 +655,7 @@ export default function Step3({ onNext, setStep, style }) {
               <div className="mobile-icon">
                 <QRCodeComponent url={currentUrl} size={80} onClick={e => { e.stopPropagation(); setShowQrFull(true); }} />
               </div>
-              <span>{t('upload.step3.mobilePrompt')}</span>
+              <span>{t('upload.step3Form.mobilePrompt')}</span>
             </div>
           )}
         </div>
@@ -770,13 +770,13 @@ export default function Step3({ onNext, setStep, style }) {
                   className="gallery-button"
                   onClick={selectFromGallery}
                 >
-                  {t('upload.step3.selectFromGallery')}
+                  {t('upload.step3Form.selectFromGallery')}
                 </button>
                 <button 
                   className="capture-button"
                   onClick={takePhoto}
                 >
-                  {t('upload.step3.takePhoto')}
+                  {t('upload.step3Form.takePhoto')}
                 </button>
               </>
             ) : (
@@ -787,7 +787,7 @@ export default function Step3({ onNext, setStep, style }) {
                     className="gallery-button"
                     onClick={selectFromGallery}
                   >
-                    {t('upload.step3.selectFromGallery')}
+                    {t('upload.step3Form.selectFromGallery')}
                   </button>
                 )}
                 <button 
@@ -795,14 +795,14 @@ export default function Step3({ onNext, setStep, style }) {
                   onClick={takePhoto}
                   disabled={isCameraActive && !isVideoReady}
                 >
-                  {isCameraActive ? (isVideoReady ? t('upload.step3.capture') : t('upload.step3.preparing')) : t('upload.step3.startCapture')}
+                  {isCameraActive ? (isVideoReady ? t('upload.step3Form.capture') : t('upload.step3Form.preparing')) : t('upload.step3Form.startCapture')}
                 </button>
                 {isCameraActive && (
                   <button 
                     className="exit-camera-button"
                     onClick={stopCamera}
                   >
-                    {t('upload.step3.exitCapture')}
+                    {t('upload.step3Form.exitCapture')}
                   </button>
                 )}
               </>
@@ -816,7 +816,7 @@ export default function Step3({ onNext, setStep, style }) {
               className="step3-prev-button"
               onClick={() => setStep(pre => pre - 1)}
             >
-              {t('upload.step3.prevButton')}
+              {t('upload.step3Form.prevButton')}
             </button>
 
             <button
@@ -825,7 +825,7 @@ export default function Step3({ onNext, setStep, style }) {
               onClick={handleComplete}
               disabled={photos.length < 4 || saving}
             >
-              {saving ? t('upload.step3.saving') : t('upload.step3.completeSubmit')}
+              {saving ? t('upload.step3Form.saving') : t('upload.step3Form.completeSubmit')}
             </button>
           </div>
         </div>
@@ -852,25 +852,25 @@ export default function Step3({ onNext, setStep, style }) {
         {showQrFull && (
           <div className="qr-fullscreen-mask" onClick={() => setShowQrFull(false)}>
             <QRCodeComponent url={currentUrl} size={280} />
-            <div className="qr-fullscreen-tip">{t('upload.step3.qrCloseTip')}</div>
+            <div className="qr-fullscreen-tip">{t('upload.step3Form.qrCloseTip')}</div>
           </div>
         )}
 
         {/* 成功提示Modal */}
         <Modal
-          title={t('upload.step3.successModal.title')}
+          title={t('upload.step3Form.successModal.title')}
           open={showSuccessModal}
           onCancel={() => setShowSuccessModal(false)}
           footer={[
             <Button key="close" type="primary" onClick={closePage}>
-              {t('upload.step3.successModal.closeButton')}
+              {t('upload.step3Form.successModal.closeButton')}
             </Button>
           ]}
           closable={true}
           maskClosable={false}
         >
-          <p>{t('upload.step3.successModal.message1')}</p>
-          <p>{t('upload.step3.successModal.message2')}</p>
+          <p>{t('upload.step3Form.successModal.message1')}</p>
+          <p>{t('upload.step3Form.successModal.message2')}</p>
         </Modal>
       </div>
     </div>

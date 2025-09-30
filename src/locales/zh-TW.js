@@ -150,7 +150,7 @@ export default {
         description: '前往特約診所進行\n3D口腔掃描與X光\n檢查個別資料評估',
         price: '$3,000(此費用為診所收取)'
       },
-      step3: {
+      step3Form: {
         title: '計畫',
         description: '報告兩週內回特約診所審核\n並同意您的專屬美齒計畫',
         price: '$48,000-$118,000'
@@ -506,7 +506,7 @@ export default {
       prevButton: '上一步',
       nextButton: '下一步'
     },
-    step3: {
+    step3Form: {
       instruction: '後牙咬緊,上下門牙不需刻意對齊',
       mobilePrompt: '前往使用手機拍攝照片',
       selectFromGallery: '從相冊選擇',
