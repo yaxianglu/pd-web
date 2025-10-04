@@ -12,6 +12,9 @@ function ScrollToTop() {
     if (location.pathname !== '/join') {
       console.log('ScrollToTop: Scrolling to top');
       
+      // 先滚动到稍微下面的位置，让滚动效果更明显
+      window.scrollTo(0, 50);
+      
       // 使用setTimeout确保页面内容完全加载后再滚动
       setTimeout(() => {
         window.scrollTo({
@@ -20,12 +23,8 @@ function ScrollToTop() {
           behavior: 'smooth'
         });
         
-        // 备用方案：立即滚动
-        setTimeout(() => {
-          window.scrollTo(0, 0);
-          console.log('ScrollToTop: Final scroll position:', window.scrollY);
-        }, 50);
-      }, 100);
+        console.log('ScrollToTop: Smooth scroll executed');
+      }, 150);
     } else {
       console.log('ScrollToTop: Skipping scroll for join route');
     }

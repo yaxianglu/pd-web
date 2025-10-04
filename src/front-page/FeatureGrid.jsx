@@ -104,7 +104,7 @@ export default function OrthoPaletteGrid() {
           <div className="grid-container-title">
             {t('home.featureGrid.smileTest.title')}
           </div>
-          <div className="description description-medium">
+          <div className="description description-medium" style={{ width: '70%' }}>
             {t('home.featureGrid.smileTest.description').split('\n').map((line, index) => (
               <span key={index}>
                 {line}
