@@ -17,6 +17,7 @@ import p6 from './imgs/6.png';
 import ScheduleCard from "../components/schedule-card";
 import Logout from "../components/logout";
 import { message } from "antd";
+import { useResponsive } from "../components/responsive-hook";
 const list = {
   1: p1,
   2: p2,
@@ -28,10 +29,18 @@ const list = {
 
 const gapSize = 16;
 
-function InfoCard({ patientData, doctor, patientInfo, clinic, isInput = false, currentStepFromProgress, onUpdate }) {
+function InfoCard({ patientData, doctor, patientInfo, clinic, isInput = false, currentStepFromProgress, onUpdate, isMobile = false }) {
   console.info("patientInfo", patientInfo)
   return (
-    <div style={{ background: "#fff", borderRadius: "18px", padding: "30px", boxSizing: "border-box", marginBottom: gapSize, flex: 3 }}>
+    <div style={{ 
+      background: "#fff", 
+      borderRadius: "18px", 
+      padding: "30px", 
+      boxSizing: "border-box", 
+      marginBottom: gapSize, 
+      flex: isMobile ? "none" : 3,
+      width: isMobile ? "100%" : "auto"
+    }}>
       {
         isInput ? null : (
           <>
@@ -80,7 +89,7 @@ function InfoCard({ patientData, doctor, patientInfo, clinic, isInput = false, c
 }
 
 
-function PlanConfirmCard({ currentStepFromProgress, patientData }) {
+function PlanConfirmCard({ currentStepFromProgress, patientData, isMobile = false }) {
   // const ddd = l[currentStepFromProgress] || {};
   const hobbies = patientData?.hobbies || '';
   return (
@@ -88,7 +97,9 @@ function PlanConfirmCard({ currentStepFromProgress, patientData }) {
       background: "#fff", borderRadius: "18px",
       display: "flex", alignItems: "center", justifyContent: "center",
       flexDirection: "column", marginBottom: gapSize,
-      flex: 1,
+      flex: isMobile ? "none" : 1,
+      width: isMobile ? "100%" : "auto",
+      minHeight: isMobile ? "200px" : "auto"
     }}>
       {
         hobbies ? (
@@ -124,6 +135,7 @@ export default function Dashboard({ prefetched = null, doctorUser = null }) {
   const { logout } = useAuth(); // eslint-disable-line no-unused-vars
   const navigate = useNavigate(); // eslint-disable-line no-unused-vars
   const isInput = !!prefetched;
+  const { isMobile } = useResponsive();
 
   console.info('patientData', patientData);
   console.info('patientInfo', patientInfo);
@@ -225,6 +237,80 @@ export default function Dashboard({ prefetched = null, doctorUser = null }) {
   console.info('patientInfo, ', patientInfo)
   console.info('patientData, ', patientData)
   console.info('doctorUser', doctorUser);
+  
+  // 移动端布局
+  if (isMobile) {
+    return (
+      <div style={{
+        width: "100%",
+        background: "#f6f6f7",
+        padding: gapSize,
+        boxSizing: "border-box"
+      }}>
+        {/* 上半部分：用户信息和进度 */}
+        <div style={{ 
+          display: "flex", 
+          flexDirection: "column", 
+          gap: gapSize,
+          minHeight: "calc(100vh - 200px)"
+        }}>
+          {/* 移动端：垂直排列卡片 */}
+          <div style={{ display: "flex", flexDirection: "column", gap: gapSize }}>
+            <InfoCard
+              patientData={patientData}
+              patientInfo={patientInfo}
+              doctor={doctorData}
+              clinic={clinicData}
+              isInput={isInput}
+              currentStepFromProgress={currentStepFromProgress}
+              isMobile={true}
+              onUpdate={(nexthobbies) => {
+                setPatientInfo((prev) => ({ ...(prev || {}), hobbies: nexthobbies }));
+              }}
+            />
+            <PlanConfirmCard 
+              currentStepFromProgress={currentStepFromProgress || 0} 
+              patientData={patientInfo}
+              isMobile={true}
+            />
+          </div>
+          <ProgressTracker
+            currentStep={currentStepFromProgress} uuid={(patientInfo || {}).uuid}
+            onUpdate={(next_progress) => {
+              setPatientInfo((prev) => ({ ...(prev || {}), treatment_progress: next_progress || 0 }));
+            }}
+          />
+        </div>
+
+        {/* 下半部分：治療日誌 */}
+        <div style={{ marginTop: gapSize }}>
+          <ScheduleCard
+            title="治療日誌"
+            initialEvents={mockEvents}
+            defaultMonth={dayjs().startOf('month')}
+            doctorUuid={doctorUser || { uuid: (patientInfo || {}).assigned_doctor_uuid }}
+            currentDoctor={doctorUser || { uuid: (patientInfo || {}).assigned_doctor_uuid }}
+            currentPatient={{ uuid: (patientData || {}).uuid, full_name: (patientInfo || {}).full_name }}
+            smileTestUuid={(patientData || {}).uuid}
+            onAppointmentCreated={async () => {
+              setPatientInfo((prev) => ({ ...(prev || {}), treatment_progress: Math.max(1, (prev?.treatment_progress || 0)) }));
+              try {
+                const puid = (patientInfo || {}).uuid;
+                if (puid) {
+                  await apiService.updatePatientProgress(puid, 1);
+                }
+              } catch {}
+            }}
+          />
+        </div>
+
+        <div style={{ position: "fixed", bottom: "20px", left: "50%", transform: "translateX(-50%)", zIndex: 10 }}>
+        </div>
+      </div>
+    );
+  }
+
+  // 桌面端布局
   return (
     <div style={{
       width: "100%",
@@ -265,11 +351,7 @@ export default function Dashboard({ prefetched = null, doctorUser = null }) {
             currentPatient={{ uuid: (patientData || {}).uuid, full_name: (patientInfo || {}).full_name }}
             smileTestUuid={(patientData || {}).uuid}
             onAppointmentCreated={async () => {
-              // 預約創建成功后，将“等待預約”切换为“預約完成”
-              // ProgressTracker 的 currentStep 显示由 mapProgressToStep 控制；
-              // 这里简单把本地 patientInfo 的 progress 推到至少 1
               setPatientInfo((prev) => ({ ...(prev || {}), treatment_progress: Math.max(1, (prev?.treatment_progress || 0)) }));
-              // 同步落庫，刷新後也保持“預約完成”
               try {
                 const puid = (patientInfo || {}).uuid;
                 if (puid) {
