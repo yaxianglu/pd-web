@@ -34,7 +34,7 @@ import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
-    <ConfigProvider message={{ top: 80, duration: 1.8 }} notification={{ placement: 'topRight' }}>
+    <ConfigProvider message={{ top: 100, duration: 3 }} notification={{ placement: 'topRight' }}>
       <LanguageProvider>
         <AuthProvider>
           <div className="App">

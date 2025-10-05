@@ -997,7 +997,7 @@ export default {
       },
       submit: '提交',
       submitting: '提交中...',
-      success: '提交成功！我们会尽快与您联系。',
+      success: '您的申请已提交。我们珍舒美团队会尽快与您联系。谢谢！',
       errors: {
         required: '请填写{field}',
         invalidPhone: '请填写正确的台湾电话号码格式',

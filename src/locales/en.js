@@ -1011,7 +1011,7 @@ Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
       },
       submit: 'Submit',
       submitting: 'Submitting...',
-      success: 'Submitted successfully! We will contact you soon.',
+      success: 'Your application has been submitted. Our Pearl Digital team will contact you soon. Thank you!',
       errors: {
         required: 'Please fill in {field}',
         invalidPhone: 'Please enter a valid Taiwan phone number format',

@@ -1003,7 +1003,7 @@ export default {
       },
       submit: '提交',
       submitting: '提交中...',
-      success: '提交成功！我們會盡快與您聯繫。',
+      success: '您的申請已提交。我們珍舒美團隊會盡快與您聯繫。謝謝！',
       errors: {
         required: '請填寫{field}',
         invalidPhone: '請填寫正確的台灣電話號碼格式',
