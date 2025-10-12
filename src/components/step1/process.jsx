@@ -115,19 +115,8 @@ export default function SmileSteps({ showDetails = true }) {
   
   return (
     <div>
-      {isMobile ? (
-        // 移动端显示简化的旅程图
-        <div className="smile-steps-mobile">
-          <div className="journey-map-title">
-            {t('about.smileSteps.journeyMapTitle')}
-          </div>
-          <div className="journey-map-content">
-            {t('about.smileSteps.journeyMapDescription')}
-          </div>
-        </div>
-      ) : (
-        // 桌面端显示完整的流程图
-        <div className="smile-steps">
+      {/* 始终显示完整的流程图，移动端使用zoom缩放 */}
+      <div className={`smile-steps ${isMobile ? 'smile-steps-mobile-zoom' : ''}`}>
         <div className="smile-steps__column smile-steps__column">
           {steps.map(
             (step, i) => (
@@ -145,7 +134,7 @@ export default function SmileSteps({ showDetails = true }) {
                     <div className="smile-steps__step-desc">{step.desc}</div>
                   </div>
                   {i % 2 === 1 ? null : <img src={step.src} alt={step.title} className="smile-steps__image-placeholder" />}
-              </div>
+                </div>
                 </>
               )
           )}
@@ -157,16 +146,7 @@ export default function SmileSteps({ showDetails = true }) {
           <div className="smile-steps__centerline-item" style={{ backgroundImage: `url(${l4})`, backgroundPosition: '70% 30%' }}/>
           <div className="smile-steps__centerline-item" style={{ backgroundImage: `url(${l5})`, backgroundPosition: '30% 70%' }}/>
         </div>
-        {/* <div className="smile-steps__centerline">
-          <Bezier direction="left" color="#76Aaff" circlePosition="top" />
-          <Bezier direction="right" color="#7BD641" />
-          <Bezier direction="left" color="#FF7837" />
-          <Bezier direction="right" color="#3AD2C8" />
-          <Bezier direction="left" color="#C1DF1A" circlePosition="bottom" circleColor="#C1DF1A" />
-        </div> */}
-
-        </div>
-      )}
+      </div>
       <DetailButton text={t('about.smileSteps.buttonText')} />
     </div>
   );

@@ -156,3 +156,27 @@
     margin: 0 auto;
   }
 }
+
+// 移动端使用zoom缩放
+.smile-steps-mobile-zoom {
+  @media (max-width: 768px) {
+    zoom: 0.6;
+    transform-origin: top center;
+    overflow-x: auto;
+    padding: 20px 0;
+    margin: 0 -20px; // 增加左右边距，避免内容被遮挡
+    width: calc(100% + 40px); // 补偿margin的宽度
+  }
+  
+  @media (max-width: 480px) {
+    zoom: 0.5;
+    margin: 0 -30px;
+    width: calc(100% + 60px);
+  }
+  
+  @media (max-width: 360px) {
+    zoom: 0.4;
+    margin: 0 -40px;
+    width: calc(100% + 80px);
+  }
+}
