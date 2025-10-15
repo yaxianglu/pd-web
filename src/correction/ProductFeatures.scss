@@ -20,6 +20,11 @@ background-color: #F5F5F5;
 
   @media (max-width: 1125px) {
     font-size: 12px;
+    gap: 0;
+
+    span {
+      white-space: nowrap;
+    }
   }
 }
 

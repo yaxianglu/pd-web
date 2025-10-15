@@ -7,7 +7,7 @@ export default function PlanCard({ tag, duration, subtitle, price, badge, featur
       {/* 标题栏 */}
       <div className="card-header">
         {tag}
-        <span className="complexity-text">/{complexityText}</span>
+        <span className="complexity-text">{complexityText ? `/${complexityText}` : ''}</span>
       </div>
       {/* 主体内容 */}
       <div className="card-body">
