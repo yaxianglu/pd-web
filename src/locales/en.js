@@ -70,7 +70,7 @@ export default {
     description: 'High-transparency materials and oral care solutions make every smile look naturally bright.',
     description2: 'With AI technology and professional treatment plan, achieve customized, science-driven orthodontic results.',
     button1: 'Smile Quiz',
-    button2: 'About Pearl Digital',
+    button2: 'About Us',
     sketchTitle: 'From treatment plan to completion, we focus on every detail to provide you with a trustworthy orthodontic experience. Because we believe that with a well-aligned smile, your radiance and confidence will naturally shine.',
     featureGrid: {
       invisibleBraces: {
