@@ -17,9 +17,13 @@ import Thumbnail from '../components/thumbnail';
 import Sketch from '../components/sketch';
 import DetailButton from '../components/detail-button';
 import { useLanguage } from '../context/LanguageContext';
+import { useSEO } from '../hooks/useSEO';
 
 export default function PageCom() {
   const { t } = useLanguage();
+  
+  // Set SEO for this page
+  useSEO('correction');
   
   return (
     <>
