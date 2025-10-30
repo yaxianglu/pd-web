@@ -148,18 +148,22 @@ export default function Footer({ style }) {
             </div>
             <div className="footer-column hotline-column">
               <div className="column-title">{t('footer.hotlineTitle')}</div>
-                <div 
+                <a 
                   className="column-item"
+                  href="tel:0809090338"
+                  aria-label="Call 0809-090-338"
                   style={{ cursor: 'pointer' }}
                 >
                   0809-090-338
-                </div>
-                <div 
+                </a>
+                <a 
                   className="column-item"
+                  href="tel:0277021343"
+                  aria-label="Call 02-7702-1343"
                   style={{ cursor: 'pointer' }}
                 >
                   02-7702-1343
-                </div>
+                </a>
               <div className="social-icons">
                 <img src={fbIcon} alt="facebook" onClick={() => window.open('https://www.facebook.com/share/17PGwwxt1N/?mibextid=wwXIfr', '_blank', 'noopener')} />
                 <img src={igIcon} alt="instagram" onClick={() => window.open('https://www.instagram.com/pearl.digital_?igsh=Ym5lYmIwOXF3OWM0&utm_source=qr', '_blank', 'noopener')} />
