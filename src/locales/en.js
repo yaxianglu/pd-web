@@ -221,7 +221,7 @@ export default {
       title: 'Which Treatment Is Right for You?',
       subtitle: 'Our experts recommend three clear aligner options tailored to your needs. From minor alignment to complex cases, Pearly provides complete solutions designed to deliver your brightest, most confident smile.',
       buttonText: 'Which Plan Suits Me?',
-      complexity: '',
+      complexity: 'Complexity',
       plans: {
         mild: {
           tag: 'Light',

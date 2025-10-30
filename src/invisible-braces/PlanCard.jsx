@@ -4,9 +4,13 @@ import CardWrapper from "../components/card-wrapper";
 import DetailButton from "../components/detail-button";
 import PlanCard from "../components/plan-card";
 import { useLanguage } from '../context/LanguageContext';
+import useMobile from '../hooks/mobile.tsx';
+
 
 export default function WhichPlan() {
   const { t, currentLanguage } = useLanguage();
+  const [isMobile] = useMobile();
+  
   
   const plans = [
     {
@@ -51,7 +55,7 @@ export default function WhichPlan() {
     >
       <div className="plan-cards">
         {plans.map((plan, idx) =>
-          <PlanCard key={plan.tag} {...plan} complexityText={currentLanguage === 'en' ? t('invisibleBraces.planSelection.complexity') : '複雜程度'} />
+          <PlanCard key={plan.tag} {...plan} complexityText={isMobile ? '' : currentLanguage === 'en' ? t('invisibleBraces.planSelection.complexity') : '複雜程度'} />
         )}
       </div>
       <DetailButton text={t('invisibleBraces.planSelection.buttonText')}   />
