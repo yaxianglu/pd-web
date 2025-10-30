@@ -143,11 +143,11 @@ export default function Footer({ style }) {
                 onClick={() => handleItemClick('/faq')}
                 style={{ cursor: 'pointer' }}
               >
-                加入LINE
+                {t('footer.joinLine')}
                 </div>
             </div>
             <div className="footer-column hotline-column">
-              <div className="column-title">珍舒美專線</div>
+              <div className="column-title">{t('footer.hotlineTitle')}</div>
                 <div 
                   className="column-item"
                   style={{ cursor: 'pointer' }}
@@ -161,8 +161,8 @@ export default function Footer({ style }) {
                   02-7702-1343
                 </div>
               <div className="social-icons">
-                <img src={fbIcon} alt="facebook" onClick={() => window.open('#', '_blank', 'noopener')} />
-                <img src={igIcon} alt="instagram" onClick={() => window.open('#', '_blank', 'noopener')} />
+                <img src={fbIcon} alt="facebook" onClick={() => window.open('https://www.facebook.com/share/17PGwwxt1N/?mibextid=wwXIfr', '_blank', 'noopener')} />
+                <img src={igIcon} alt="instagram" onClick={() => window.open('https://www.instagram.com/pearl.digital_?igsh=Ym5lYmIwOXF3OWM0&utm_source=qr', '_blank', 'noopener')} />
                 <img src={ytIcon} alt="youtube" onClick={() => window.open('#', '_blank', 'noopener')} />
                 <img src={lineIcon} alt="line" onClick={() => window.open('#', '_blank', 'noopener')} />
               </div>

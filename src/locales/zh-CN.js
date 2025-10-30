@@ -1081,6 +1081,8 @@ export default {
     privacyPolicy: '隐私条款',
     termsOfService: '网站使用条款',
     cookieSettings: 'Cookie设置',
+    hotlineTitle: '珍舒美专线',
+    joinLine: '加入 LINE',
     copyright: 'Pearl Digital Inc. All Rights Reserved. ©2025',
     address: '2975 Scott Blvd, Ste 110, Santa Clara, CA 95054',
     contact: 'customer@pearl-digital.com +1-408-667-5811'
