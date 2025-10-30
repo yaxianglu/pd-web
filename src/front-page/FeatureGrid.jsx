@@ -29,16 +29,18 @@ export default function OrthoPaletteGrid() {
           onClick={() => handleGridItemClick('/invisible-braces')}
           style={{ cursor: 'pointer' }}
         >
-          <div className="grid-container-title">
-            {t('home.featureGrid.invisibleBraces.title')}
-          </div>
-          <div className="description description-large">
-            {t('home.featureGrid.invisibleBraces.description').split('\n').map((line, index) => (
-              <span key={index}>
-                {line}
-                {index < t('home.featureGrid.invisibleBraces.description').split('\n').length - 1 && <br/>}
-              </span>
-            ))}
+          <div className="grid-content-left-content">
+            <div className="grid-container-title">
+              {t('home.featureGrid.invisibleBraces.title')}
+            </div>
+            <div className="description description-large">
+              {t('home.featureGrid.invisibleBraces.description').split('\n').map((line, index) => (
+                <span key={index}>
+                  {line}
+                  {index < t('home.featureGrid.invisibleBraces.description').split('\n').length - 1 && <br/>}
+                </span>
+              ))}
+            </div>
           </div>
           <div className="icon">
             <img src={png1} alt="隐形牙套" />
@@ -51,16 +53,18 @@ export default function OrthoPaletteGrid() {
           onClick={() => handleGridItemClick('/correction')}
           style={{ cursor: 'pointer' }}
         >
-          <div className="grid-container-title">
-            {t('home.featureGrid.correctionBeauty.title')}
-          </div>
-          <div className="description description-medium">
-            {t('home.featureGrid.correctionBeauty.description').split('\n').map((line, index) => (
-              <span key={index}>
-                {line}
-                {index < t('home.featureGrid.correctionBeauty.description').split('\n').length - 1 && <br/>}
-              </span>
-            ))}
+          <div className="grid-content-left-content">
+            <div className="grid-container-title">
+              {t('home.featureGrid.correctionBeauty.title')}
+            </div>
+            <div className="description description-medium">
+              {t('home.featureGrid.correctionBeauty.description').split('\n').map((line, index) => (
+                <span key={index}>
+                  {line}
+                  {index < t('home.featureGrid.correctionBeauty.description').split('\n').length - 1 && <br/>}
+                </span>
+              ))}
+            </div>
           </div>
           <div className="icon" style={{ top: '70%' }}>
             <img src={png2} alt="矯正与美" />
@@ -73,16 +77,18 @@ export default function OrthoPaletteGrid() {
           onClick={() => handleGridItemClick('/maintainer')}
           style={{ cursor: 'pointer' }}
         >
-          <div className="grid-container-title">
-            {t('home.featureGrid.retainer.title')}
-          </div>
-          <div className="description description-medium">
-            {t('home.featureGrid.retainer.description').split('\n').map((line, index) => (
-              <span key={index}>
-                {line}
-                {index < t('home.featureGrid.retainer.description').split('\n').length - 1 && <br/>}
-              </span>
-            ))}
+          <div className="grid-content-left-content">
+            <div className="grid-container-title">
+              {t('home.featureGrid.retainer.title')}
+            </div>
+            <div className="description description-medium">
+              {t('home.featureGrid.retainer.description').split('\n').map((line, index) => (
+                <span key={index}>
+                  {line}
+                  {index < t('home.featureGrid.retainer.description').split('\n').length - 1 && <br/>}
+                </span>
+              ))}
+            </div>
           </div>
           <div className="icon">
             <img src={png4} alt="維持器" />
@@ -101,16 +107,18 @@ export default function OrthoPaletteGrid() {
         <div className="grid-item whitening-intro"
           onClick={() => handleGridItemClick('/upload')}
         >
-          <div className="grid-container-title">
-            {t('home.featureGrid.smileTest.title')}
-          </div>
-          <div className="description description-medium" style={{ width: '70%' }}>
-            {t('home.featureGrid.smileTest.description').split('\n').map((line, index) => (
-              <span key={index}>
-                {line}
-                {index < t('home.featureGrid.smileTest.description').split('\n').length - 1 && <br/>}
-              </span>
-            ))}
+          <div className="grid-content-left-content">
+            <div className="grid-container-title">
+              {t('home.featureGrid.smileTest.title')}
+            </div>
+            <div className="description description-medium" style={{ width: '70%' }}>
+              {t('home.featureGrid.smileTest.description').split('\n').map((line, index) => (
+                <span key={index}>
+                  {line}
+                  {index < t('home.featureGrid.smileTest.description').split('\n').length - 1 && <br/>}
+                </span>
+              ))}
+            </div>
           </div>
           <div className="icon">
             <img src={png3} alt="美白介紹" />

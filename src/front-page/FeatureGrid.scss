@@ -298,7 +298,7 @@
 
   // 移动端样式
   @media (max-width: 1125px) {
-    font-size: 12px;
+    font-size: 16px;
     margin-bottom: 8px;
   }
 }
@@ -337,3 +337,19 @@
 .description-small {
   font-size: 14px;
 } 
+
+.grid-content-left-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 8px;
+
+  @media (max-width: 1125px) {
+    font-weight: bold;
+
+    .description {
+      font-size: 12px;
+    }
+  }
+}
