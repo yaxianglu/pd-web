@@ -140,7 +140,7 @@ export default function Footer({ style }) {
               </div>
               <div 
                 className="column-item"
-                onClick={() => handleItemClick('/faq')}
+                onClick={() => window.open('https://www.threads.com/@pearl.digital_?invite=0', '_blank', 'noopener')}
                 style={{ cursor: 'pointer' }}
               >
                 {t('footer.joinLine')}
@@ -164,7 +164,7 @@ export default function Footer({ style }) {
                 <img src={fbIcon} alt="facebook" onClick={() => window.open('https://www.facebook.com/share/17PGwwxt1N/?mibextid=wwXIfr', '_blank', 'noopener')} />
                 <img src={igIcon} alt="instagram" onClick={() => window.open('https://www.instagram.com/pearl.digital_?igsh=Ym5lYmIwOXF3OWM0&utm_source=qr', '_blank', 'noopener')} />
                 <img src={ytIcon} alt="youtube" onClick={() => window.open('#', '_blank', 'noopener')} />
-                <img src={lineIcon} alt="line" onClick={() => window.open('#', '_blank', 'noopener')} />
+                <img src={lineIcon} alt="line" onClick={() => window.open('https://lin.ee/mw8yJ6qcao', '_blank', 'noopener')} />
               </div>
             </div>
             {/* 探索更多 */}
