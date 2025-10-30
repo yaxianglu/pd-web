@@ -68,8 +68,10 @@ export default {
     subtitle: 'SMILE RIGHT',
     description: '高透明度材质与口腔护理方案，让你每个笑容自然明亮',
     description2: 'AI技术辅助与临床专业设计，实现客制化的科学矫正效果',
-    button1: '微笑测试',
-    button2: '关于珍舒美',
+    button1: '微笑',
+    button11: '测试',
+    button2: '关于',
+    button21: '珍舒美',
     sketchTitle: '从疗程设计到治疗完成，我们始终专注于每一个细节，为你提供值得信赖的矫正体验。因为我们相信，拥有整齐笑容，光芒与自信就会自然绽放。',
     featureGrid: {
       invisibleBraces: {

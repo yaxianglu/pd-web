@@ -118,6 +118,12 @@
     cursor: pointer;
     letter-spacing: 1.2px;
 
+    @media (max-width: 1125px) {
+      font-size: 14px;
+      padding: 6px 20px;
+      height: 36px;
+    }
+
     .star-icon {
       margin-left: 12px;
       font-size: 24px;
@@ -137,6 +143,11 @@
     align-items: center;
     cursor: pointer;
     letter-spacing: 1.2px;
+    @media (max-width: 1125px) {
+      font-size: 14px;
+      padding: 6px 20px;
+      height: 36px;
+    }
   }
 
   .description {

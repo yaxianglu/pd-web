@@ -7,10 +7,11 @@ import CardWrapper from '../components/card-wrapper';
 import Grid from '../components/grid';
 import useMobile from '../hooks/mobile.tsx';
 import { useLanguage } from '../context/LanguageContext';
+import { useResponsive } from '../components/responsive-hook';
 
 export default function ProductFeatures() {
   const { t } = useLanguage();
-  const [isMobile] = useMobile();
+  const { isMobile, isTablet } = useResponsive();
   
   return (
     <CardWrapper title={t('journey.additionalCosts.title')}>
