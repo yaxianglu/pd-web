@@ -87,6 +87,7 @@
           display: flex;
           justify-content: flex-start;
           gap: 40px;
+          flex-wrap: wrap;
         }
 
         .footer-column {
@@ -139,6 +140,38 @@
               margin-left: 6px;
               vertical-align: middle;
             }
+          }
+        }
+
+        .hotline-column {
+          .hotline-phone {
+            color: #111;
+            letter-spacing: .3px;
+          }
+          .line-join {
+            color: #47d3cf;
+            cursor: pointer;
+            user-select: none;
+            margin-bottom: 12px;
+            transition: color .2s ease;
+            &:hover { color: #3bb5b1; }
+          }
+          .social-icons {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            img {
+              width: 22px;
+              height: 22px;
+              cursor: pointer;
+              opacity: .9;
+              transition: transform .15s ease, opacity .15s ease;
+              &:hover { transform: translateY(-1px); opacity: 1; }
+            }
+          }
+          @media (max-width: 1125px) {
+            flex-basis: 100%;
+            margin-top: 12px;
           }
         }
       }

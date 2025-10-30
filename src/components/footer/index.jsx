@@ -8,6 +8,10 @@ import './index.scss';
 import { useLanguage } from '../../context/LanguageContext';
 import LanguageSelector from '../language-selector';
 import CookieSettingsTrigger from '../CookieSettingsTrigger';
+import fbIcon from './img/facebook.svg';
+import igIcon from './img/ins.svg';
+import ytIcon from './img/youtube.svg';
+import lineIcon from './img/line.svg';
 
 export default function Footer({ style }) {
   const navigate = useNavigate();
@@ -133,6 +137,34 @@ export default function Footer({ style }) {
                 style={{ cursor: 'pointer' }}
               >
                 {t('about.partners')}
+              </div>
+              <div 
+                className="column-item"
+                onClick={() => handleItemClick('/faq')}
+                style={{ cursor: 'pointer' }}
+              >
+                加入LINE
+                </div>
+            </div>
+            <div className="footer-column hotline-column">
+              <div className="column-title">珍舒美專線</div>
+                <div 
+                  className="column-item"
+                  style={{ cursor: 'pointer' }}
+                >
+                  0809-090-338
+                </div>
+                <div 
+                  className="column-item"
+                  style={{ cursor: 'pointer' }}
+                >
+                  02-7702-1343
+                </div>
+              <div className="social-icons">
+                <img src={fbIcon} alt="facebook" onClick={() => window.open('#', '_blank', 'noopener')} />
+                <img src={igIcon} alt="instagram" onClick={() => window.open('#', '_blank', 'noopener')} />
+                <img src={ytIcon} alt="youtube" onClick={() => window.open('#', '_blank', 'noopener')} />
+                <img src={lineIcon} alt="line" onClick={() => window.open('#', '_blank', 'noopener')} />
               </div>
             </div>
             {/* 探索更多 */}
