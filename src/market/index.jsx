@@ -44,14 +44,18 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
     let isMounted = true;
     const load = async () => {
       if (Array.isArray(inputItems) && inputItems.length > 0) {
-        if (isMounted) setItems(inputItems);
+        // 过滤掉 patient_uuid 有值的记录
+        const filteredInputItems = inputItems.filter((s) => !s.patient_uuid);
+        if (isMounted) setItems(filteredInputItems);
         return;
       }
       const res = await apiService.getAllSmileTests();
       if (isMounted) {
         if (res?.success && Array.isArray(res.data)) {
+          // 过滤掉 patient_uuid 有值的记录
+          const filteredData = res.data.filter((s) => !s.patient_uuid);
           // 适配表格字段
-          const mapped = res.data.map((s, idx) => ({
+          const mapped = filteredData.map((s, idx) => ({
             id: String(idx + 1).padStart(2, '0'),
             patientName: s.full_name || '—',
             phone: s.phone || '—',

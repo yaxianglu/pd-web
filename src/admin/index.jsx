@@ -77,7 +77,9 @@ function AdminSmileView() {
       const res = await apiService.getAllSmileTests();
       if (isMounted) {
         if (res?.success && Array.isArray(res.data)) {
-          const mapped = res.data.map((s, idx) => ({
+          // 过滤掉 patient_uuid 有值的记录
+          const filteredData = res.data.filter((s) => !s.patient_uuid);
+          const mapped = filteredData.map((s, idx) => ({
             id: String(idx + 1).padStart(2, '0'),
             patientName: s.full_name || '—',
             phone: s.phone || '—',
