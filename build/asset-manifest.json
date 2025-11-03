@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.6cad9425.css",
-    "main.js": "/static/js/main.1263368f.js",
+    "main.css": "/static/css/main.c1ae6109.css",
+    "main.js": "/static/js/main.c66ce949.js",
     "static/js/453.b9d18fee.chunk.js": "/static/js/453.b9d18fee.chunk.js",
     "static/media/i.MP4": "/static/media/i.886d8f2a9000a80f4d4a.MP4",
     "static/media/1.svg": "/static/media/1.88a2ae0308448b2167a9022fd51b4082.svg",
@@ -33,7 +33,7 @@
     "static/media/14.png": "/static/media/14.95b96f781a8ae03504a1.png",
     "static/media/4.png": "/static/media/4.32a0ff34a1e166c4943f.png",
     "static/media/6.png": "/static/media/6.fd871dabdc741325014b.png",
-    "static/media/5.png": "/static/media/5.8fb61ef46a2409de507d.png",
+    "static/media/5.png": "/static/media/5.20978fc27ee6b8a1b260.png",
     "static/media/7.png": "/static/media/7.fb88bbe9da8ca968679f.png",
     "static/media/10.jpg": "/static/media/10.804e0338fa0a4f6926b4.jpg",
     "static/media/12.jpg": "/static/media/12.a91531b2d35f54065959.jpg",
@@ -45,6 +45,7 @@
     "static/media/21.svg": "/static/media/21.6e9afa6f427f72d30a5eddbb66776284.svg",
     "static/media/9.jpg": "/static/media/9.bd7c5c342105900e8e49.jpg",
     "static/media/41.svg": "/static/media/41.ad4716c423673bcac8da9a4c0453fb9e.svg",
+    "static/media/55.png": "/static/media/55.a80a0008379da3ca909b.png",
     "static/media/2.jpg": "/static/media/2.788287caa715575c7927.jpg",
     "static/media/13.svg": "/static/media/13.cf4dc8e4c479f93399e59ebc6f042e86.svg",
     "index.html": "/index.html",
@@ -53,6 +54,7 @@
     "static/media/ins.svg": "/static/media/ins.bb60141140a4e37397af40a0bd3bcc83.svg",
     "static/media/line.svg": "/static/media/line.91e4054444648d821e4b5097681d9bc9.svg",
     "static/media/14.svg": "/static/media/14.4abaaf5d058b24ed0d43f38daa9389db.svg",
+    "static/media/threads.svg": "/static/media/threads.6101846eb9a8ac94e0d464fab1321a9e.svg",
     "static/media/youtube.svg": "/static/media/youtube.388a797f00cc3db21e1aa57da7a2109a.svg",
     "static/media/l5.svg": "/static/media/l5.36892fbe8a29e0a5aa48048dec5cf788.svg",
     "static/media/l1.svg": "/static/media/l1.09fb8e6c9b51c759e0aeb7183e5a3544.svg",
@@ -62,7 +64,7 @@
     "static/media/facebook.svg": "/static/media/facebook.dc6e2c55c882e8a576dd564cdf20ef81.svg"
   },
   "entrypoints": [
-    "static/css/main.6cad9425.css",
-    "static/js/main.1263368f.js"
+    "static/css/main.c1ae6109.css",
+    "static/js/main.c66ce949.js"
   ]
 }
