@@ -1,15 +1,16 @@
 // SEO Configuration for different pages
 export const seoConfig = {
   home: {
-    title: 'Pearly Clear Aligners - FDA Cleared Invisible Braces | AI-Powered Orthodontics',
-    description: 'Transform your smile with Pearly clear aligners. FDA cleared, AI-powered orthodontic treatment with medical-grade materials. Professional treatment planning with 30+ years experience. Made in Taiwan with ISO 13485 certification.',
+    title: '珍舒美 Pearly - FDA認證隱形牙套 | AI智能矯正 | 美國品牌',
+    description: '珍舒美（Pearly）隱形牙套，美國FDA認證、AI智能矯正系統。採用醫療級材料，專業團隊30年經驗，台灣ISO 13485認證製造。提供平價、專業、透明的矯正體驗。',
     keywords: 'clear aligner, invisible braces, orthodontics, teeth straightening, FDA cleared, AI orthodontics, medical grade, transparent aligners, bite correction, malocclusion treatment, 珍舒美, 隱形牙套, 透明牙套, 平價矯正, 微笑矯正, 隱形矯正, 數位化矯正, 美國品牌, AI技術, 亞洲人數據庫, 維持器, 美國FDA認證, 台灣TFDA class II, 台灣醫療器材, 台灣製造工廠, 國際醫療器材標準',
     url: '/',
     structuredData: {
       "@context": "https://schema.org",
       "@type": "MedicalBusiness",
-      "name": "Pearly Digital",
-      "description": "AI-powered clear aligner orthodontic treatment with FDA clearance and medical-grade materials",
+      "name": "珍舒美 Pearly Digital",
+      "alternateName": "珍舒美",
+      "description": "珍舒美（Pearly）AI智能隱形牙套矯正系統，美國FDA認證，採用醫療級材料",
       "url": "https://pearl-digital.com",
       "medicalSpecialty": "Orthodontics",
       "serviceType": "Clear Aligner Treatment"
@@ -17,18 +18,19 @@ export const seoConfig = {
   },
   
   invisibleBraces: {
-    title: 'Clear Aligners - FDA Cleared Invisible Braces | Pearly Digital',
-    description: 'Discover Pearly clear aligners - FDA cleared, AI-powered invisible braces. Medical-grade materials, professional treatment planning, and precise tooth movement simulation for optimal orthodontic results.',
+    title: '珍舒美隱形牙套 - FDA認證透明牙套 | AI智能矯正 | 美國品牌',
+    description: '珍舒美隱形牙套，美國FDA認證、AI智能矯正系統。採用醫療級透明材料，專業治療規劃，精準模擬牙齒移動。提供輕度、中度、重度三種方案，價格公開透明。',
     keywords: 'clear aligner, invisible braces, FDA cleared, AI orthodontics, transparent aligners, teeth straightening, orthodontic treatment, medical grade materials, 珍舒美, 隱形牙套, 透明牙套, 平價矯正, 微笑矯正, 隱形矯正, 數位化矯正, 美國品牌, AI技術, 亞洲人數據庫, 維持器, 美國FDA認證, 台灣TFDA class II, 台灣醫療器材, 台灣製造工廠, 國際醫療器材標準',
     url: '/invisible-braces',
     structuredData: {
       "@context": "https://schema.org",
       "@type": "Product",
-      "name": "Pearly Clear Aligners",
-      "description": "FDA cleared clear aligners with AI-powered treatment planning",
+      "name": "珍舒美隱形牙套",
+      "alternateName": "珍舒美透明牙套",
+      "description": "珍舒美FDA認證隱形牙套，AI智能治療規劃",
       "brand": {
         "@type": "Brand",
-        "name": "Pearly Digital"
+        "name": "珍舒美 Pearly Digital"
       },
       "category": "Orthodontic Treatment",
       "offers": {
@@ -39,26 +41,26 @@ export const seoConfig = {
   },
 
   maintainer: {
-    title: 'Clear Retainers - Maintain Your Smile Results | Pearly Digital',
-    description: 'Keep your orthodontic results stable with Pearly clear retainers. Medical-grade materials, comfortable fit, and nearly invisible design for long-term smile maintenance.',
+    title: '珍舒美維持器 - 透明維持器 | 穩定矯正成果 | 珍舒美',
+    description: '珍舒美透明維持器，穩定您的矯正成果。採用醫療級高透明材料，邊緣光滑、配戴舒適，幾乎隱形。有效防止牙齒回彈，保持咬合穩定。',
     keywords: 'clear retainers, orthodontic retainers, smile maintenance, transparent retainers, post-treatment care, teeth stability, 珍舒美, 維持器, 透明維持器, 矯正維持器, 隱形牙套, 透明牙套, 平價矯正, 微笑矯正, 矯正後維持, 牙齒穩定, 維持器, 透明維持器, 矫正维持器',
     url: '/maintainer',
     structuredData: {
       "@context": "https://schema.org",
       "@type": "Product",
-      "name": "Pearly Clear Retainers",
-      "description": "Medical-grade clear retainers for maintaining orthodontic results",
+      "name": "珍舒美透明維持器",
+      "description": "珍舒美醫療級透明維持器，穩定矯正成果",
       "brand": {
         "@type": "Brand",
-        "name": "Pearly Digital"
+        "name": "珍舒美 Pearly Digital"
       },
       "category": "Orthodontic Retainers"
     }
   },
 
   journey: {
-    title: 'Your Clear Aligner Journey - Step by Step Process | Pearly Digital',
-    description: 'Learn about the complete clear aligner treatment process with Pearly. From initial consultation to final results, discover how our AI-powered treatment planning ensures optimal outcomes.',
+    title: '珍舒美旅程 - 隱形牙套治療流程 | 微笑升級 | 珍舒美',
+    description: '了解珍舒美隱形牙套完整治療流程。從預約、評估、計劃、旅程到關懷，AI智能輔助設計，確保最佳矯正效果。價格公開透明，無隱藏費用。',
     keywords: 'clear aligner journey, orthodontic process, treatment steps, AI treatment planning, orthodontic consultation, smile transformation, 珍舒美, 珍舒美旅程, 隱形牙套, 透明牙套, 平價矯正, 微笑矯正, 矯正流程, 治療過程, 微笑升級, 矯正方案',
     url: '/journey',
     structuredData: {
@@ -68,14 +70,14 @@ export const seoConfig = {
       "description": "Step-by-step clear aligner orthodontic treatment process",
       "provider": {
         "@type": "MedicalBusiness",
-        "name": "Pearly Digital"
+        "name": "珍舒美 Pearly Digital"
       }
     }
   },
 
   correction: {
-    title: 'Orthodontic Treatment - Correct Bite & Alignment Issues | Pearly Digital',
-    description: 'Comprehensive orthodontic treatment for bite correction and teeth alignment. Address common issues like protrusion, malocclusion, and crowding with our advanced clear aligner system.',
+    title: '珍舒美矯正與美 - 咬合矯正 | 牙齒排列 | 隱形牙套',
+    description: '珍舒美矯正與美，全面矯正咬合與牙齒排列問題。改善上前牙突出、下巴後縮、牙弓狹窄等亞洲人常見問題。隱形牙套治療，美觀舒適。',
     keywords: 'orthodontic treatment, bite correction, teeth alignment, malocclusion, protrusion, crowding, orthodontics, dental correction, 珍舒美, 隱形牙套, 透明牙套, 平價矯正, 微笑矯正, 隱形矯正, 數位化矯正',
     url: '/correction',
     structuredData: {
@@ -89,8 +91,8 @@ export const seoConfig = {
   },
 
   about: {
-    title: 'About Pearly Digital - AI-Powered Orthodontics | Our Story',
-    description: 'Learn about Pearly Digital\'s mission to revolutionize orthodontics with AI technology. Founded in Silicon Valley, we combine 30+ years of clinical expertise with cutting-edge AI design.',
+    title: '關於珍舒美 - 美國矽谷AI智能矯正 | 珍舒美品牌故事',
+    description: '了解珍舒美（Pearly Digital）的品牌故事。創立於美國矽谷，結合30年臨床經驗與AI技術，專為亞洲人設計的隱形牙套系統。Dr. David Shen指導醫師，專業醫療團隊。',
     keywords: 'about Pearly Digital, AI orthodontics, Silicon Valley, orthodontic technology, Dr. David Shen, clinical expertise, orthodontic innovation, 珍舒美, 關於珍舒美, 隱形牙套, 透明牙套, 平價矯正, 微笑矯正, 美國品牌, AI技術, 美國矽谷, 矯正專業團隊',
     url: '/about',
     structuredData: {
@@ -100,14 +102,14 @@ export const seoConfig = {
       "description": "Learn about our AI-powered orthodontic technology and clinical expertise",
       "mainEntity": {
         "@type": "MedicalBusiness",
-        "name": "Pearly Digital"
+        "name": "珍舒美 Pearly Digital"
       }
     }
   },
 
   join: {
-    title: 'Partner With Pearly - Join Our Orthodontic Network | Become a Partner',
-    description: 'Join Pearly Digital\'s partner network and offer FDA cleared clear aligners to your patients. Marketing support, professional resources, and comprehensive training included.',
+    title: '珍舒美合作夥伴 - 加入診所網絡 | 隱形牙套合作計劃',
+    description: '加入珍舒美合作夥伴網絡，為患者提供FDA認證隱形牙套。提供數位行銷支援、專業資源、品牌視覺資源，協助診所拓展客源與品牌曝光。',
     keywords: 'orthodontic partner, dental partner, clear aligner partnership, orthodontic network, dental practice partnership, orthodontic marketing, 珍舒美, 合作夥伴, 隱形牙套, 透明牙套, 平價矯正, 微笑矯正, 診所合作, 醫師合作, 數位行銷支援',
     url: '/join',
     structuredData: {
@@ -117,14 +119,14 @@ export const seoConfig = {
       "description": "Join our orthodontic partner network and offer clear aligner treatments",
       "mainEntity": {
         "@type": "MedicalBusiness",
-        "name": "Pearly Digital"
+        "name": "珍舒美 Pearly Digital"
       }
     }
   },
 
   upload: {
-    title: 'Free Smile Quiz - See If Clear Aligners Are Right for You | Pearly Digital',
-    description: 'Take our free smile quiz to see if clear aligners are right for you. Upload photos and get personalized recommendations from our orthodontic experts.',
+    title: '珍舒美免費微笑測試 - 線上評估 | 隱形牙套適用性檢測',
+    description: '珍舒美免費微笑測試，只需上傳幾張照片，即可快速了解您是否適合隱形牙套治療。專業團隊評估，提供個人化建議。完全免費，無需費用。',
     keywords: 'free smile quiz, clear aligner assessment, orthodontic consultation, smile test, teeth evaluation, orthodontic suitability, 珍舒美, 微笑測試, 免費微笑測試, 隱形牙套, 透明牙套, 平價矯正, 微笑矯正, 線上評估, 矯正諮詢',
     url: '/upload',
     structuredData: {
@@ -142,8 +144,8 @@ export const seoConfig = {
   },
 
   faq: {
-    title: 'Frequently Asked Questions - Clear Aligners & Orthodontics | Pearly Digital',
-    description: 'Find answers to common questions about clear aligners, orthodontic treatment, safety, pricing, and more. Get expert insights from our orthodontic team.',
+    title: '珍舒美常見問題 - 隱形牙套FAQ | 矯正常見問題解答',
+    description: '珍舒美常見問題解答，包含隱形牙套療程、配戴時間、安全性、價格、付款方式等問題。專業團隊提供詳細解答，讓您了解矯正治療的每個細節。',
     keywords: 'clear aligner FAQ, orthodontic questions, invisible braces FAQ, orthodontic treatment questions, clear aligner safety, orthodontic pricing, 珍舒美, 常見問題, 隱形牙套, 透明牙套, 平價矯正, 微笑矯正, 矯正常見問題, 矯正安全性, 矯正價格',
     url: '/faq',
     structuredData: {
