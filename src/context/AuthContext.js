@@ -109,7 +109,7 @@ export const AuthProvider = ({ children }) => {
     if (!refreshToken) return false;
 
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/refresh`, {
+      const response = await fetch(`${API_BASE_URL}/api/auth/refresh`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ refresh_token: refreshToken }),
@@ -145,7 +145,7 @@ export const AuthProvider = ({ children }) => {
   const verifyToken = async () => {
     if (!token) return false;
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/verify`, {
+      const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -197,6 +197,7 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated,
     userType,
     userInfo,
+    setUserInfo,
     clinicInfo,
     token,
     login,

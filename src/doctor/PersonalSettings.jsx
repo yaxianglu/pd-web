@@ -1,17 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import apiService from '../services/api';
 import './PersonalSettings.scss';
 
 export default function PersonalSettings() {
-  const { userInfo } = useAuth();
+  const { userInfo, setUserInfo } = useAuth();
   const [passwordForm, setPasswordForm] = useState({
     currentPassword: '',
     newPassword: '',
     confirmPassword: ''
   });
+  const [profileForm, setProfileForm] = useState({
+    phone: '',
+    email: ''
+  });
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [profileLoading, setProfileLoading] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
+  const [profileMessage, setProfileMessage] = useState({ type: '', text: '' });
+
+  // 当 userInfo 更新时，同步更新 profileForm
+  useEffect(() => {
+    if (userInfo && !isEditingProfile) {
+      setProfileForm({
+        phone: userInfo.phone || '',
+        email: userInfo.email || ''
+      });
+    }
+  }, [userInfo, isEditingProfile]);
 
   const handlePasswordChange = (e) => {
     const { name, value } = e.target;
@@ -89,33 +106,196 @@ export default function PersonalSettings() {
     setMessage({ type: '', text: '' });
   };
 
+  const clearProfileMessage = () => {
+    setProfileMessage({ type: '', text: '' });
+  };
+
+  const handleProfileChange = (e) => {
+    const { name, value } = e.target;
+    setProfileForm(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleEditProfile = () => {
+    setIsEditingProfile(true);
+    setProfileForm({
+      phone: userInfo?.phone || '',
+      email: userInfo?.email || ''
+    });
+    setProfileMessage({ type: '', text: '' });
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditingProfile(false);
+    setProfileForm({
+      phone: userInfo?.phone || '',
+      email: userInfo?.email || ''
+    });
+    setProfileMessage({ type: '', text: '' });
+  };
+
+  const handleProfileSubmit = async (e) => {
+    e.preventDefault();
+    
+    // 验证邮箱格式
+    if (profileForm.email && profileForm.email !== '') {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(profileForm.email)) {
+        setProfileMessage({ type: 'error', text: '郵箱格式不正確' });
+        return;
+      }
+    }
+
+    setProfileLoading(true);
+    setProfileMessage({ type: '', text: '' });
+
+    try {
+      const response = await apiService.updateProfile({
+        phone: profileForm.phone || null,
+        email: profileForm.email || null
+      });
+
+      if (response.success) {
+        setProfileMessage({ type: 'success', text: '個人信息更新成功！' });
+        setIsEditingProfile(false);
+        
+        // 更新 userInfo
+        if (response.data) {
+          // 合并更新后的数据，保留原有字段（如 clinic 等）
+          const updatedUserInfo = {
+            ...(userInfo || {}),
+            ...response.data
+          };
+          setUserInfo(updatedUserInfo);
+          
+          // 同时更新 localStorage，确保完整保存
+          const storedUserInfo = JSON.parse(localStorage.getItem('user_info') || '{}');
+          const updatedStoredInfo = {
+            ...storedUserInfo,
+            ...response.data
+          };
+          localStorage.setItem('user_info', JSON.stringify(updatedStoredInfo));
+          
+          console.log('✅ 用户信息已更新:', {
+            phone: updatedUserInfo.phone,
+            email: updatedUserInfo.email
+          });
+        }
+      } else {
+        setProfileMessage({ type: 'error', text: response.message || '個人信息更新失敗' });
+      }
+    } catch (error) {
+      setProfileMessage({ type: 'error', text: error.message || '個人信息更新失敗' });
+    } finally {
+      setProfileLoading(false);
+    }
+  };
+
   return (
     <div className="personal-settings">
       {/* 用戶信息展示 */}
       <div className="card user-info-section">
         <div className="card-title">個人信息</div>
-        <div className="info-grid">
-          <div className="info-item">
-            <label>姓名：</label>
-            <span>{userInfo?.full_name || userInfo?.username || '—'}</span>
-          </div>
-          <div className="info-item">
-            <label>帳戶：</label>
-            <span>{userInfo?.username || '—'}</span>
-          </div>
-          <div className="info-item">
-            <label>聯繫方式：</label>
-            <span>{userInfo?.phone || '—'}</span>
-          </div>
-          <div className="info-item">
-            <label>信箱：</label>
-            <span>{userInfo?.email || '—'}</span>
-          </div>
-          <div className="info-item">
-            <label>角色：</label>
-            <span>{userInfo?.role === 'doctor' ? '醫師' : userInfo?.role || '—'}</span>
-          </div>
-        </div>
+        {!isEditingProfile ? (
+          <>
+            <div className="info-grid">
+              <div className="info-item">
+                <label>姓名：</label>
+                <span>{userInfo?.full_name || userInfo?.username || '—'}</span>
+              </div>
+              <div className="info-item">
+                <label>帳戶：</label>
+                <span>{userInfo?.username || '—'}</span>
+              </div>
+              <div className="info-item">
+                <label>聯繫方式：</label>
+                <span>{userInfo?.phone || '—'}</span>
+              </div>
+              <div className="info-item">
+                <label>信箱：</label>
+                <span>{userInfo?.email || '—'}</span>
+              </div>
+              <div className="info-item">
+                <label>角色：</label>
+                <span>{userInfo?.role === 'doctor' ? '醫師' : userInfo?.role || '—'}</span>
+              </div>
+            </div>
+            <div className="form-actions" style={{ marginTop: '16px' }}>
+              <button 
+                type="button" 
+                className="btn primary" 
+                onClick={handleEditProfile}
+              >
+                編輯個人信息
+              </button>
+            </div>
+          </>
+        ) : (
+          <form onSubmit={handleProfileSubmit} className="profile-form">
+            <div className="info-grid">
+              <div className="info-item">
+                <label>姓名：</label>
+                <span>{userInfo?.full_name || userInfo?.username || '—'}</span>
+              </div>
+              <div className="info-item">
+                <label>帳戶：</label>
+                <span>{userInfo?.username || '—'}</span>
+              </div>
+              <div className="info-item">
+                <label htmlFor="phone">聯繫方式：</label>
+                <input
+                  type="text"
+                  id="phone"
+                  name="phone"
+                  value={profileForm.phone}
+                  onChange={handleProfileChange}
+                  placeholder="請輸入聯繫方式"
+                />
+              </div>
+              <div className="info-item">
+                <label htmlFor="email">信箱：</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={profileForm.email}
+                  onChange={handleProfileChange}
+                  placeholder="請輸入信箱"
+                />
+              </div>
+              <div className="info-item">
+                <label>角色：</label>
+                <span>{userInfo?.role === 'doctor' ? '醫師' : userInfo?.role || '—'}</span>
+              </div>
+            </div>
+
+            {profileMessage.text && (
+              <div className={`message ${profileMessage.type}`} onClick={clearProfileMessage}>
+                {profileMessage.text}
+              </div>
+            )}
+
+            <div className="form-actions">
+              <button 
+                type="button" 
+                className="btn secondary" 
+                onClick={handleCancelEdit}
+                disabled={profileLoading}
+              >
+                取消
+              </button>
+              <button 
+                type="submit" 
+                className="btn primary" 
+                disabled={profileLoading}
+              >
+                {profileLoading ? '保存中...' : '保存'}
+              </button>
+            </div>
+          </form>
+        )}
       </div>
 
       {/* 診所信息展示 */}

@@ -134,7 +134,7 @@ class ApiService {
     }
 
     try {
-      const response = await fetch(`${this.baseURL}/auth/refresh`, {
+      const response = await fetch(`${this.baseURL}/api/auth/refresh`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -352,7 +352,7 @@ class ApiService {
   // 获取所有醫生（去除敏感字段）
   async getDoctors() {
     try {
-      const response = await fetch(`${this.baseURL}/auth/doctors`, {
+      const response = await fetch(`${this.baseURL}/api/auth/doctors`, {
         method: 'GET',
         headers: this.getHeaders(true),
       });
@@ -366,7 +366,7 @@ class ApiService {
   // 获取醫生及其診所信息
   async getDoctorsWithClinic() {
     try {
-      const response = await fetch(`${this.baseURL}/auth/doctors-with-clinic`, {
+      const response = await fetch(`${this.baseURL}/api/auth/doctors-with-clinic`, {
         method: 'GET',
         headers: this.getHeaders(true),
       });
@@ -422,7 +422,7 @@ class ApiService {
   // 获取診所列表
   async getClinics() {
     try {
-      const response = await fetch(`${this.baseURL}/auth/clinics`, {
+      const response = await fetch(`${this.baseURL}/api/auth/clinics`, {
         method: 'GET',
         headers: this.getHeaders(true),
       });
@@ -436,7 +436,7 @@ class ApiService {
   // 創建管理員账号（默认醫生角色）
   async createAdminUser(data) {
     try {
-      const response = await fetch(`${this.baseURL}/auth/users`, {
+      const response = await fetch(`${this.baseURL}/api/auth/users`, {
         method: 'POST',
         headers: this.getHeaders(true),
         body: JSON.stringify(data),
@@ -451,7 +451,7 @@ class ApiService {
   // 修改密码
   async changePassword(data) {
     try {
-      const response = await fetch(`${this.baseURL}/auth/change-password`, {
+      const response = await fetch(`${this.baseURL}/api/auth/change-password`, {
         method: 'POST',
         headers: this.getHeaders(true),
         body: JSON.stringify(data),
@@ -463,12 +463,27 @@ class ApiService {
     }
   }
 
+  // 更新用户个人信息（联系方式、邮箱）
+  async updateProfile(data) {
+    try {
+      const response = await fetch(`${this.baseURL}/api/auth/profile`, {
+        method: 'PUT',
+        headers: this.getHeaders(true),
+        body: JSON.stringify(data),
+      });
+      return await this.handleResponse(response);
+    } catch (error) {
+      console.error('Failed to update profile:', error);
+      return { success: false, message: '更新個人信息失敗' };
+    }
+  }
+
   // ========== 賬戶管理功能 ==========
 
   // 获取所有用户（根据角色过滤）
   async getUsers(role = null) {
     try {
-      const url = role ? `${this.baseURL}/auth/users?role=${encodeURIComponent(role)}` : `${this.baseURL}/auth/users`;
+      const url = role ? `${this.baseURL}/api/auth/users?role=${encodeURIComponent(role)}` : `${this.baseURL}/api/auth/users`;
       const response = await fetch(url, {
         method: 'GET',
         headers: this.getHeaders(true),
@@ -483,7 +498,7 @@ class ApiService {
   // 获取所有患者
   async getPatients() {
     try {
-      const response = await fetch(`${this.baseURL}/auth/patients`, {
+      const response = await fetch(`${this.baseURL}/api/auth/patients`, {
         method: 'GET',
         headers: this.getHeaders(true),
       });
@@ -497,7 +512,7 @@ class ApiService {
   // 創建診所
   async createClinic(data) {
     try {
-      const response = await fetch(`${this.baseURL}/auth/clinics`, {
+      const response = await fetch(`${this.baseURL}/api/auth/clinics`, {
         method: 'POST',
         headers: this.getHeaders(true),
         body: JSON.stringify(data),
@@ -512,7 +527,7 @@ class ApiService {
   // 創建患者
   async createPatient(data) {
     try {
-      const response = await fetch(`${this.baseURL}/auth/patients`, {
+      const response = await fetch(`${this.baseURL}/api/auth/patients`, {
         method: 'POST',
         headers: this.getHeaders(true),
         body: JSON.stringify(data),
@@ -527,7 +542,7 @@ class ApiService {
   // 删除/關閉用户賬戶
   async deleteUser(id) {
     try {
-      const response = await fetch(`${this.baseURL}/auth/users/${id}`, {
+      const response = await fetch(`${this.baseURL}/api/auth/users/${id}`, {
         method: 'DELETE',
         headers: this.getHeaders(true),
       });
@@ -556,7 +571,7 @@ class ApiService {
   // 删除/關閉診所
   async deleteClinic(id) {
     try {
-      const response = await fetch(`${this.baseURL}/auth/clinics/${id}`, {
+      const response = await fetch(`${this.baseURL}/api/auth/clinics/${id}`, {
         method: 'DELETE',
         headers: this.getHeaders(true),
       });
@@ -570,7 +585,7 @@ class ApiService {
   // 删除/關閉患者
   async deletePatient(id) {
     try {
-      const response = await fetch(`${this.baseURL}/auth/patients/${id}`, {
+      const response = await fetch(`${this.baseURL}/api/auth/patients/${id}`, {
         method: 'DELETE',
         headers: this.getHeaders(true),
       });

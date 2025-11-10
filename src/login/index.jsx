@@ -89,7 +89,7 @@ export default function PearlLogin() {
       // 使用 crypto-js 进行 SHA-256 加密，避免对 Web Crypto API 的依赖
       const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
       
-      const responseData = await apiService.post('/auth/login', {
+      const responseData = await apiService.post('/api/auth/login', {
         username,
         password: hashedPassword,
       }, false); // 登录不需要认证
