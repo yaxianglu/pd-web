@@ -542,7 +542,7 @@ export default {
       company: 'Pearl Digital Inc.',
       rights: 'All Rights Reserved. ©2025',
       address: '2975 Scott Blvd, Ste 110, Santa Clara, CA 95054',
-      contact: 'customer@pearl-digital.com +1-408-667-5811'
+      contact: 'customer@pearl-digital.com'
     }
   },
 
@@ -1091,7 +1091,7 @@ export default {
     joinLine: '加入 LINE',
     copyright: 'Pearl Digital Inc. All Rights Reserved. ©2025',
     address: '2975 Scott Blvd, Ste 110, Santa Clara, CA 95054',
-    contact: 'customer@pearl-digital.com +1-408-667-5811'
+    contact: 'customer@pearl-digital.com'
   },
 
   // 語言選項
