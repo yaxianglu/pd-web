@@ -21,11 +21,11 @@ export default function PlanCard({ tag, duration, subtitle, price, badge, featur
             <div className="price-container">
               <div className="price">
                 {price}
-                <img 
+                {/* <img 
                   src={png12} 
                   alt="限時優惠"
                   className="badge-image"
-                />
+                /> */}
               </div>
             </div>
             <div className="divider" />
