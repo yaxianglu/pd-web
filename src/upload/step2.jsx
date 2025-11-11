@@ -63,6 +63,7 @@ export default function Step2({ onNext, setStep, style }) {
         console.log('Setting form data:', {
           teeth_type: data?.teeth_type,
           considerations: data?.considerations,
+          bio: data?.bio,
           improvement_points: data?.improvement_points
         });
 
@@ -75,10 +76,15 @@ export default function Step2({ onNext, setStep, style }) {
             .filter(Boolean);
         };
 
+        // 获取备注信息：优先使用 bio 字段（通过 updateSmileTestBio 更新的备注）
+        // 如果没有 bio，则使用 improvement_points
+        // 注意：considerations 字段用于存储多选选项，不应该作为备注文本使用
+        const bioText = data?.improvement_points || data?.bio || '';
+
         setFormData({
           teethDescription: data?.teeth_type ? [data.teeth_type] : [],
           alignerConsideration: parseConsiderations(data?.considerations),
-          improvement: data?.improvement_points || ''
+          improvement: bioText
         });
       } else {
         console.log('No data found or API failed');
@@ -117,9 +123,13 @@ export default function Step2({ onNext, setStep, style }) {
       
       if (!result.success) {
         console.error('Failed to save data:', result.message);
+        return { success: false, message: result.message };
       }
+      
+      return { success: true };
     } catch (error) {
       console.error('Failed to save data:', error);
+      return { success: false, message: error.message };
     }
   };
 
@@ -191,12 +201,20 @@ export default function Step2({ onNext, setStep, style }) {
     }));
   };
 
+  // 输入框失去焦点时自动保存
+  const handleImprovementBlur = async () => {
+    try {
+      await saveData(formData);
+    } catch {
+
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     // 保存数据到API
     await saveData(formData);
-    
     // 调用原有的onNext回调
     onNext && onNext(formData);
     
@@ -281,6 +299,7 @@ export default function Step2({ onNext, setStep, style }) {
                 className="improvement-input"
                 value={formData.improvement}
                 onChange={handleImprovementChange}
+                onBlur={handleImprovementBlur}
                 placeholder={t('upload.step2Form.improvementPlaceholder')}
               />
             </div>
