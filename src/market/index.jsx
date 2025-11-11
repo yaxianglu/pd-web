@@ -56,6 +56,7 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
           const filteredData = res.data.filter((s) => !s.patient_uuid);
           // 适配表格字段
           const mapped = filteredData.map((s, idx) => ({
+            ...s,
             id: String(idx + 1).padStart(2, '0'),
             patientName: s.full_name || '—',
             phone: s.phone || '—',
@@ -203,6 +204,9 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
 
                   {isOpen && (
                     <div className="row-expand" onClick={(e) => e.stopPropagation()}>
+                      <div className="user-note-section">
+                        <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>用戶備註：{row.improvement_points || '—'}</div>
+                      </div>
                       <textarea
                         className="note-input"
                         placeholder="備註"
