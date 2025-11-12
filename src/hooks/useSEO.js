@@ -1,18 +1,26 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { seoConfig, generateKeywords } from '../components/SEO/seoConfig';
+import { useLanguage } from '../context/LanguageContext';
+import { getPageTitle } from '../config/pageTitles';
 
 // Hook to automatically set SEO based on current route
 export const useSEO = (pageKey, customSEO = {}) => {
   const location = useLocation();
+  const { currentLanguage } = useLanguage();
   
   useEffect(() => {
     const pageSEO = seoConfig[pageKey] || {};
     const mergedSEO = { ...pageSEO, ...customSEO };
     
+    // 优先使用 pageTitles 配置中的多语言标题（如果存在）
+    // 这样可以确保标题能够根据语言动态切换
+    const dynamicTitle = getPageTitle(location.pathname, currentLanguage);
+    const titleToUse = dynamicTitle || mergedSEO.title;
+    
     // Update document title
-    if (mergedSEO.title) {
-      document.title = mergedSEO.title;
+    if (titleToUse) {
+      document.title = titleToUse;
     }
     
     // Update meta description
@@ -89,7 +97,7 @@ export const useSEO = (pageKey, customSEO = {}) => {
       }
     }
     
-  }, [location.pathname, pageKey, customSEO]);
+  }, [location.pathname, pageKey, customSEO, currentLanguage]);
   
   return seoConfig[pageKey] || {};
 };
