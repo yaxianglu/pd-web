@@ -217,9 +217,13 @@ function AdminSmileView() {
           if (res?.success) {
             message.success('創建成功');
             setCreateOpen(false); setSelectedDoctorUuid('');
+            // 重新拉取列表，只显示等待指定的患者信息（patient_uuid 为 null）
             const again = await apiService.getAllSmileTests();
             if (again?.success && Array.isArray(again.data)) {
-              const mapped = again.data.map((s, idx) => ({
+              // 过滤掉 patient_uuid 有值的记录
+              const filteredData = again.data.filter((s) => !s.patient_uuid);
+              const mapped = filteredData.map((s, idx) => ({
+                ...s,
                 id: String(idx + 1).padStart(2, '0'),
                 patientName: s.full_name || '—',
                 phone: s.phone || '—',
@@ -227,7 +231,7 @@ function AdminSmileView() {
                 lineId: s.line_id || '—',
                 region: s.city || '—',
                 downloadUrl: '#',
-                note: '',
+                considerations: s.considerations || '',
                 statusText: s?.patient_uuid ? s?.uuid : '創建患者信息',
                 smileUuid: s.uuid,
                 createdAt: s.created_at ? new Date(s.created_at).toLocaleString('zh-TW') : '—',
