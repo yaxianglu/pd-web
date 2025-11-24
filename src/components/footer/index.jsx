@@ -141,7 +141,7 @@ export default function Footer({ style }) {
               </div>
               <div 
                 className="column-item"
-                onClick={() => window.open('#', '_blank', 'noopener')}
+                onClick={() => window.open('https://lin.ee/mw8yJ6q', '_blank', 'noopener')}
                 style={{ cursor: 'pointer' }}
               >
                 {t('footer.joinLine')}
