@@ -11,6 +11,8 @@ export default function PersonalSettings() {
     confirmPassword: ''
   });
   const [profileForm, setProfileForm] = useState({
+    full_name: '',
+    username: '',
     phone: '',
     email: ''
   });
@@ -24,6 +26,8 @@ export default function PersonalSettings() {
   useEffect(() => {
     if (userInfo && !isEditingProfile) {
       setProfileForm({
+        full_name: userInfo.full_name || '',
+        username: userInfo.username || '',
         phone: userInfo.phone || '',
         email: userInfo.email || ''
       });
@@ -121,6 +125,8 @@ export default function PersonalSettings() {
   const handleEditProfile = () => {
     setIsEditingProfile(true);
     setProfileForm({
+      full_name: userInfo?.full_name || '',
+      username: userInfo?.username || '',
       phone: userInfo?.phone || '',
       email: userInfo?.email || ''
     });
@@ -130,6 +136,8 @@ export default function PersonalSettings() {
   const handleCancelEdit = () => {
     setIsEditingProfile(false);
     setProfileForm({
+      full_name: userInfo?.full_name || '',
+      username: userInfo?.username || '',
       phone: userInfo?.phone || '',
       email: userInfo?.email || ''
     });
@@ -139,6 +147,18 @@ export default function PersonalSettings() {
   const handleProfileSubmit = async (e) => {
     e.preventDefault();
     
+    // 验证用户名
+    if (profileForm.username && profileForm.username !== '') {
+      if (profileForm.username.length < 3) {
+        setProfileMessage({ type: 'error', text: '帳戶名至少需要3個字符' });
+        return;
+      }
+      if (!/^[a-zA-Z0-9_]+$/.test(profileForm.username)) {
+        setProfileMessage({ type: 'error', text: '帳戶名只能包含字母、數字和下劃線' });
+        return;
+      }
+    }
+
     // 验证邮箱格式
     if (profileForm.email && profileForm.email !== '') {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -153,6 +173,8 @@ export default function PersonalSettings() {
 
     try {
       const response = await apiService.updateProfile({
+        full_name: profileForm.full_name || null,
+        username: profileForm.username || null,
         phone: profileForm.phone || null,
         email: profileForm.email || null
       });
@@ -179,6 +201,8 @@ export default function PersonalSettings() {
           localStorage.setItem('user_info', JSON.stringify(updatedStoredInfo));
           
           console.log('✅ 用户信息已更新:', {
+            full_name: updatedUserInfo.full_name,
+            username: updatedUserInfo.username,
             phone: updatedUserInfo.phone,
             email: updatedUserInfo.email
           });
@@ -236,12 +260,26 @@ export default function PersonalSettings() {
           <form onSubmit={handleProfileSubmit} className="profile-form">
             <div className="info-grid">
               <div className="info-item">
-                <label>姓名：</label>
-                <span>{userInfo?.full_name || userInfo?.username || '—'}</span>
+                <label htmlFor="full_name">姓名：</label>
+                <input
+                  type="text"
+                  id="full_name"
+                  name="full_name"
+                  value={profileForm.full_name}
+                  onChange={handleProfileChange}
+                  placeholder="請輸入姓名"
+                />
               </div>
               <div className="info-item">
-                <label>帳戶：</label>
-                <span>{userInfo?.username || '—'}</span>
+                <label htmlFor="username">帳戶：</label>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  value={profileForm.username}
+                  onChange={handleProfileChange}
+                  placeholder="請輸入帳戶名"
+                />
               </div>
               <div className="info-item">
                 <label htmlFor="phone">聯繫方式：</label>
