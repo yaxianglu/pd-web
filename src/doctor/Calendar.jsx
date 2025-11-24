@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Badge, Calendar, Select, Button } from 'antd';
 import dayjs from 'dayjs';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import apiService from '../services/api';
 import AppointmentModal from '../components/appointment-modal';
 import './Calendar.scss';
@@ -9,6 +10,7 @@ import './Calendar.scss';
 const { Option } = Select;
 
 const App = () => {
+  const { t } = useLanguage();
   const [appointments, setAppointments] = useState([]);
   const [currentDate, setCurrentDate] = useState(dayjs());
   const { userInfo } = useAuth();
@@ -172,7 +174,7 @@ const App = () => {
       }
 
       // 生成顯示內容：開始時間-結束時間 + 患者名稱
-      let content = '預約';
+      let content = t('doctor.calendar.appointment');
       const startTime = appointment.start_time || appointment.startTime;
       const endTime = appointment.end_time || appointment.endTime;
       const patientName = appointment.patient_name || appointment.patientName || appointment.name || appointment.patient || appointment.user_name || appointment.userName || appointment.user_name || appointment.customer_name || appointment.customerName;
@@ -287,7 +289,7 @@ const App = () => {
     return num ? (
       <div className="notes-month">
         <section>{num}</section>
-        <span>預約數量</span>
+        <span>{t('doctor.calendar.appointmentCount')}</span>
       </div>
     ) : null;
   };
@@ -500,7 +502,7 @@ const App = () => {
             }}
             className="add-appointment-button"
           >
-            新增預約
+            {t('doctor.calendar.createAppointment')}
           </Button>
           <Button 
             type="primary" 

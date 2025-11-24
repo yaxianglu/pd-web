@@ -32,6 +32,11 @@ export default function PatientInfoList({ patients = [], onCreate, statusFromRou
     const k = keyword.trim().toLowerCase();
     const listByStatus = (statusFilter === 'all') ? patients : (patients || []).filter((p) => {
       const progress = p?.patient?.treatment_progress ?? p?.smileTest?.treatment_progress ?? 0;
+      // 如果 statusFilter 是数字字符串，直接比较 progress
+      if (statusFilter !== 'all' && !isNaN(Number(statusFilter))) {
+        return Number(progress) === Number(statusFilter);
+      }
+      // 否则使用翻译文本比较（向后兼容）
       return mapProgressToTitle(progress) === statusFilter;
     });
 
@@ -52,10 +57,10 @@ export default function PatientInfoList({ patients = [], onCreate, statusFromRou
 
   const mapStatusToText = (status) => {
     switch (status) {
-      case 'pending': return '待處理';
-      case 'in_progress': return '處理中';
-      case 'completed': return '已完成';
-      case 'cancelled': return '已取消';
+      case 'pending': return t('common.loading');
+      case 'in_progress': return t('common.loading');
+      case 'completed': return t('common.ok');
+      case 'cancelled': return t('common.cancel');
       default: return status || '—';
     }
   };
@@ -63,17 +68,17 @@ export default function PatientInfoList({ patients = [], onCreate, statusFromRou
   return (
     <div className="card patient-list">
       <div className="list-header">
-        <div className="card-title">患者列表</div>
+        <div className="card-title">{t('doctor.patientList')}</div>
         <div style={{ display: 'flex', gap: 12, alignItems: 'center', flex: 1, justifyContent: 'end' }}>
           <div className="search-bar">
             <input
-              placeholder="搜索姓名 / 用戶ID / 手機 / 信箱"
+              placeholder={t('common.search')}
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
             />
           </div>
           {onCreate ? (
-            <button className="btn primary" onClick={onCreate}>創建患者資料卡</button>
+            <button className="btn primary" onClick={onCreate}>{t('admin.createButton', { type: t('admin.types.patient') })}</button>
           ) : null}
         </div>
       </div>

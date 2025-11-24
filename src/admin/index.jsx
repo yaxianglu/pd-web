@@ -7,39 +7,41 @@ import ClinicDashboard from "../clinic";
 import AccountManagement from "./account-management";
 import HistoryModal from "../components/history-modal";
 import apiService from "../services/api";
+import { useLanguage } from "../context/LanguageContext";
 import "../market/index.scss";
 
 // const gapSize = 16;
 
 // 顶部 Tab 与市场页面统一风格
 function HeaderTabs({ activeKey, onChange, userRole }) {
+  const { t } = useLanguage();
   // 根据用户角色显示相应的标签页
   const getTabItems = () => {
     const baseTabs = [
-      { key: 'smile', label: '微笑測試' },
-      { key: 'partners', label: '成為夥伴' }
+      { key: 'smile', label: t('admin.tabs.smileTest') },
+      { key: 'partners', label: t('admin.tabs.becomePartner') }
     ];
 
     // 管理員可以管理所有賬戶
     if (userRole === 'admin' || userRole === 'super_admin') {
       baseTabs.push(
-        { key: 'doctors', label: '醫生' },
-        { key: 'clinics', label: '診所' },
-        { key: 'accounts', label: '賬戶管理' }
+        { key: 'doctors', label: t('admin.tabs.doctors') },
+        { key: 'clinics', label: t('admin.tabs.clinics') },
+        { key: 'accounts', label: t('admin.tabs.accounts') }
       );
     }
     // 業務可以管理診所、醫生、患者
     else if (userRole === 'market') {
       baseTabs.push(
-        { key: 'doctors', label: '醫生' },
-        { key: 'clinics', label: '診所' },
-        { key: 'accounts', label: '賬戶管理' }
+        { key: 'doctors', label: t('admin.tabs.doctors') },
+        { key: 'clinics', label: t('admin.tabs.clinics') },
+        { key: 'accounts', label: t('admin.tabs.accounts') }
       );
     }
     // 醫生只能管理患者
     else if (userRole === 'doctor') {
       baseTabs.push(
-        { key: 'accounts', label: '患者管理' }
+        { key: 'accounts', label: t('admin.tabs.patientManagement') }
       );
     }
 
@@ -62,6 +64,7 @@ function HeaderTabs({ activeKey, onChange, userRole }) {
 
 // Admin 内的微笑測試視圖（與 market 一致的資料與交互，僅移除內部頁面 Tab）
 function AdminSmileView() {
+  const { t } = useLanguage();
   const [expanded, setExpanded] = useState({});
   const [items, setItems] = useState([]);
   const [createOpen, setCreateOpen] = useState(false);
@@ -89,7 +92,7 @@ function AdminSmileView() {
             region: s.city || '—',
             downloadUrl: '#',
             considerations: s.considerations || '',
-            statusText: s?.patient_uuid ? s?.uuid : '創建患者信息',
+            statusText: s?.patient_uuid ? s?.uuid : t('admin.table.createPatientInfo'),
             smileUuid: s.uuid,
             createdAt: s.created_at ? new Date(s.created_at).toLocaleString('zh-TW') : '—',
           }));
@@ -128,15 +131,15 @@ function AdminSmileView() {
     <>
       <div className="table">
         <div className="thead">
-          <div className="th seq">編號</div>
-          <div className="th name">患者名稱</div>
-          <div className="th phone">手機號碼</div>
-          <div className="th email">電子信箱</div>
-          <div className="th line_id">Line ID</div>
-          <div className="th region">地址</div>
-          <div className="th created_at">創建時間</div>
-          <div className="th download">資料下載</div>
-          <div className="th status">患者卡</div>
+          <div className="th seq">{t('admin.table.seq')}</div>
+          <div className="th name">{t('admin.table.patientName')}</div>
+          <div className="th phone">{t('admin.table.phone')}</div>
+          <div className="th email">{t('admin.table.email')}</div>
+          <div className="th line_id">{t('admin.table.lineId')}</div>
+          <div className="th region">{t('admin.table.region')}</div>
+          <div className="th created_at">{t('admin.table.createdAt')}</div>
+          <div className="th download">{t('admin.table.download')}</div>
+          <div className="th status">{t('admin.table.status')}</div>
           <div className="th caret" />
         </div>
 
@@ -159,11 +162,11 @@ function AdminSmileView() {
                       onClick={(e) => { e.stopPropagation(); openHistoryModal(row.smileUuid); }}
                       className="link"
                       style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontSize: '12px' }}
-                    >歷史資料</button>
+                      >{t('admin.table.historyData')}</button>
                   </div>
                   <div className="td status">
-                    {row.statusText === '創建患者信息' ? (
-                      <button className="create-patient-info-button" onClick={(e) => { e.stopPropagation(); openBindPatientModal(row.smileUuid); }}>創建患者信息</button>
+                    {row.statusText === t('admin.table.createPatientInfo') ? (
+                      <button className="create-patient-info-button" onClick={(e) => { e.stopPropagation(); openBindPatientModal(row.smileUuid); }}>{t('admin.table.createPatientInfo')}</button>
                     ) : (
                       row.statusText
                     )}
@@ -176,21 +179,21 @@ function AdminSmileView() {
                   <div className="row-expand" onClick={(e) => e.stopPropagation()}>
 
 <div className="user-note-section">
-                        <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>用戶備註：{row.improvement_points || '—'}</div>
+                        <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>{t('admin.table.userNote')}：{row.improvement_points || '—'}</div>
                       </div>
                     <textarea
                       className="note-input"
-                      placeholder="備註"
+                      placeholder={t('admin.table.placeholder')}
                       defaultValue={row.considerations || ''}
                       onBlur={async (e) => {
                         const text = e.target.value || '';
                         if (!row.smileUuid) return;
                         const r = await apiService.updateSmileTestBio(row.smileUuid, text);
                         if (r?.success) {
-                          message.success('已保存');
+                          message.success(t('admin.messages.saved'));
                           setItems((prev) => prev.map(it => it.id === row.id ? { ...it, considerations: text } : it));
                         } else {
-                          message.error(r?.message || '保存失敗');
+                          message.error(r?.message || t('admin.messages.saveFailed'));
                         }
                       }}
                       rows={3}
@@ -205,17 +208,17 @@ function AdminSmileView() {
       </div>
 
       <Modal
-        title="綁定醫師並創建患者"
+        title={t('admin.modal.bindDoctorCreatePatient')}
         open={createOpen}
         onCancel={() => setCreateOpen(false)}
         onOk={async () => {
-          if (!selectedDoctorUuid) { message.error('請選擇醫師'); return; }
-          if (!targetSmileUuid) { message.error('未選擇目標記錄'); return; }
+          if (!selectedDoctorUuid) { message.error(t('admin.messages.selectDoctor')); return; }
+          if (!targetSmileUuid) { message.error(t('admin.messages.noTargetRecord')); return; }
           const detail = await apiService.getSmileTestByUuid(targetSmileUuid);
-          if (!detail?.success || !detail.data?.smileTest) { message.error('獲取記錄失敗'); return; }
+          if (!detail?.success || !detail.data?.smileTest) { message.error(t('admin.messages.getRecordFailed')); return; }
           const res = await apiService.bindExistingSmileTest({ smile_uuid: targetSmileUuid, assigned_doctor_uuid: selectedDoctorUuid });
           if (res?.success) {
-            message.success('創建成功');
+            message.success(t('admin.messages.createSuccess'));
             setCreateOpen(false); setSelectedDoctorUuid('');
             // 重新拉取列表，只显示等待指定的患者信息（patient_uuid 为 null）
             const again = await apiService.getAllSmileTests();
@@ -232,24 +235,24 @@ function AdminSmileView() {
                 region: s.city || '—',
                 downloadUrl: '#',
                 considerations: s.considerations || '',
-                statusText: s?.patient_uuid ? s?.uuid : '創建患者信息',
+                statusText: s?.patient_uuid ? s?.uuid : t('admin.table.createPatientInfo'),
                 smileUuid: s.uuid,
                 createdAt: s.created_at ? new Date(s.created_at).toLocaleString('zh-TW') : '—',
               }));
               setItems(mapped);
             }
           } else {
-            message.error(res?.message || '創建失敗');
+            message.error(res?.message || t('admin.messages.createFailed'));
           }
         }}
-        okText="保存"
-        cancelText="取消"
+        okText={t('admin.modal.save')}
+        cancelText={t('admin.modal.cancel')}
       >
         <div>
-          <div style={{ marginBottom: 8 }}>選擇醫師</div>
+          <div style={{ marginBottom: 8 }}>{t('admin.modal.selectDoctor')}</div>
           <Select
             style={{ width: '100%' }}
-            placeholder="選擇醫師"
+            placeholder={t('admin.modal.selectDoctorPlaceholder')}
             value={selectedDoctorUuid || undefined}
             onChange={(v) => setSelectedDoctorUuid(v)}
             options={(doctors || []).map(d => ({ value: d.uuid, label: `${d.full_name || d.username || '—'}${d.clinic ? `（${d.clinic.clinic_name}）` : ''}` }))}

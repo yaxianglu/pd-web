@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import apiService from '../services/api';
 import BirthdayPicker from '../components/birthday';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 
 const CITIES = [
   '台北市','新北市','桃園市','台中市','台南市','高雄市','基隆市','新竹市','嘉義市','新竹縣','苗栗縣','彰化縣','南投縣','雲林縣','嘉義縣','屏東縣','宜蘭縣','花蓮縣','台東縣','澎湖縣','金門縣','連江縣'
 ];
 
 export default function CreatePatientModal({ open, onClose, onCreated, doctorUser = null }) {
+  const { t } = useLanguage();
   const { userInfo } = useAuth();
   const [form, setForm] = useState({
     full_name: '',
@@ -26,7 +28,7 @@ export default function CreatePatientModal({ open, onClose, onCreated, doctorUse
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.full_name) return alert('請輸入名字');
+    if (!form.full_name) return alert(t('doctor.createPatient.nameRequired'));
 
     setSubmitting(true);
     try {
@@ -39,15 +41,15 @@ export default function CreatePatientModal({ open, onClose, onCreated, doctorUse
       };
       const res = await apiService.createPatientWithSmileTest(payload);
       if (res?.success) {
-        alert('創建成功');
+        alert(t('doctor.createPatient.createSuccess'));
         onCreated && onCreated(res.data);
         onClose && onClose();
       } else {
-        alert(res?.message || '創建失敗');
+        alert(res?.message || t('doctor.createPatient.createFailed'));
       }
     } catch (err) {
       console.error(err);
-      alert('網路錯誤，請稍後再試');
+      alert(t('doctor.createPatient.networkError'));
     } finally {
       setSubmitting(false);
     }
@@ -56,12 +58,12 @@ export default function CreatePatientModal({ open, onClose, onCreated, doctorUse
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-title">創建患者資料卡</div>
+        <div className="modal-title">{t('doctor.createPatient.title')}</div>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <input
               className="input"
-              placeholder="名字"
+              placeholder={t('doctor.createPatient.name')}
               value={form.full_name}
               onChange={(e) => setField('full_name', e.target.value)}
             />
@@ -76,16 +78,16 @@ export default function CreatePatientModal({ open, onClose, onCreated, doctorUse
           </div>
           <div className="form-group">
             <select className="input" value={form.gender} onChange={(e) => setField('gender', e.target.value)}>
-              <option value="">性別</option>
-              <option value="male">男</option>
-              <option value="female">女</option>
-              <option value="other">其他</option>
+              <option value="">{t('doctor.createPatient.gender')}</option>
+              <option value="male">{t('user.male')}</option>
+              <option value="female">{t('user.female')}</option>
+              <option value="other">{t('user.other')}</option>
             </select>
           </div>
           <div className="form-group">
             <input
               className="input"
-              placeholder="手機號碼"
+              placeholder={t('doctor.createPatient.phone')}
               value={form.phone}
               onChange={(e) => setField('phone', e.target.value)}
             />
@@ -93,7 +95,7 @@ export default function CreatePatientModal({ open, onClose, onCreated, doctorUse
           <div className="form-group">
             <input
               className="input"
-              placeholder="電子信箱"
+              placeholder={t('doctor.createPatient.email')}
               type="email"
               value={form.email}
               onChange={(e) => setField('email', e.target.value)}
@@ -102,22 +104,22 @@ export default function CreatePatientModal({ open, onClose, onCreated, doctorUse
           <div className="form-group">
             <input
               className="input"
-              placeholder="LINE ID"
+              placeholder={t('doctor.createPatient.lineId')}
               value={form.line_id}
               onChange={(e) => setField('line_id', e.target.value)}
             />
           </div>
           <div className="form-group">
             <select className="input" value={form.city} onChange={(e) => setField('city', e.target.value)}>
-              <option value="">選擇縣市</option>
+              <option value="">{t('doctor.createPatient.city')}</option>
               {CITIES.map(c => (
                 <option key={c} value={c}>{c}</option>
               ))}
             </select>
           </div>
           <div className="modal-actions">
-            <button type="button" className="btn secondary" onClick={onClose}>取消</button>
-            <button type="submit" className="btn primary" disabled={submitting}>{submitting ? '提交中...' : '送出'}</button>
+            <button type="button" className="btn secondary" onClick={onClose}>{t('common.cancel')}</button>
+            <button type="submit" className="btn primary" disabled={submitting}>{submitting ? t('doctor.createPatient.submitting') : t('doctor.createPatient.submit')}</button>
           </div>
         </form>
       </div>

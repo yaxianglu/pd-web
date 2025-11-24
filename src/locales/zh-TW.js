@@ -1290,10 +1290,55 @@ export default {
   // Admin Management Page Translations
   admin: {
     tabs: {
+      smileTest: '微笑測試',
+      becomePartner: '成為夥伴',
+      doctors: '醫生',
+      clinics: '診所',
+      accounts: '賬戶管理',
       userManagement: '用戶管理',
       clinicManagement: '診所管理', 
       patientManagement: '患者管理',
-      doctorManagement: '醫生管理'
+      doctorManagement: '醫生管理',
+      partners: '合作夥伴'
+    },
+    table: {
+      seq: '編號',
+      patientName: '患者名稱',
+      phone: '手機號碼',
+      email: '電子信箱',
+      lineId: 'Line ID',
+      region: '地址',
+      createdAt: '創建時間',
+      download: '資料下載',
+      status: '患者卡',
+      historyData: '歷史資料',
+      createPatientInfo: '創建患者信息',
+      userNote: '用戶備註',
+      note: '備註',
+      placeholder: '備註'
+    },
+    modal: {
+      bindDoctorCreatePatient: '綁定醫師並創建患者',
+      selectDoctor: '選擇醫師',
+      selectDoctorPlaceholder: '選擇醫師',
+      save: '保存',
+      cancel: '取消'
+    },
+    messages: {
+      selectDoctor: '請選擇醫師',
+      noTargetRecord: '未選擇目標記錄',
+      getRecordFailed: '獲取記錄失敗',
+      createSuccess: '創建成功',
+      createFailed: '創建失敗',
+      saved: '已保存',
+      saveFailed: '保存失敗',
+      missingRecordId: '缺少記錄標識',
+      generatingPhotos: '正在生成照片壓縮包…',
+      photosDownloadStarted: '照片下載已開始',
+      photosDownloadFailed: '照片下載失敗',
+      generatingFiles: '正在生成文件壓縮包…',
+      filesDownloadStarted: '文件下載已開始',
+      filesDownloadFailed: '文件下載失敗'
     },
     userColumns: {
       username: '用戶名',
@@ -1380,7 +1425,50 @@ export default {
       gender: '性別',
       birthday: '生日',
       contact: '聯繫方式',
-      email: '信箱'
+      email: '信箱',
+      account: '帳戶',
+      address: '地址',
+      hello: '你好'
+    },
+    calendar: {
+      appointment: '預約',
+      appointmentCount: '預約數量',
+      createAppointment: '新增預約',
+      searchPlaceholder: '搜索姓名 / 用戶ID / 手機 / 信箱'
+    },
+    createPatient: {
+      title: '創建患者資料卡',
+      name: '名字',
+      gender: '性別',
+      phone: '手機號碼',
+      email: '電子信箱',
+      lineId: 'Line ID',
+      city: '縣市',
+      submit: '提交',
+      submitting: '提交中...',
+      nameRequired: '請輸入名字',
+      createSuccess: '創建成功',
+      createFailed: '創建失敗',
+      networkError: '網路錯誤，請稍後再試'
+    },
+    help: {
+      title: '尋找幫助',
+      faq: '常見問題',
+      q1: '如何創建患者資料卡？',
+      a1: '在患者列表頁面點擊右上角的「創建患者資料卡」按鈕，填寫患者基本信息後提交即可。',
+      q2: '如何篩選患者狀態？',
+      a2: '使用左側菜單的患者狀態篩選，或使用頂部的狀態下拉選單來篩選不同階段的患者。',
+      q3: '如何修改個人信息？',
+      a3: '點擊左側菜單的「個人設置」，在該頁面可以查看和修改個人信息及密碼。'
+    }
+  },
+
+  // Market Dashboard Translations
+  market: {
+    tabs: {
+      smileTest: '微笑測試',
+      partners: '合作夥伴',
+      clinics: '診所'
     }
   }
 };

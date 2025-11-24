@@ -15,6 +15,7 @@ import "./index.scss";
 
 // 用戶信息卡片
 function UserInfoCard({ userInfo, isDoctorDetail = false }) {
+  const { t } = useLanguage();
   // const account = userInfo?.user_id || "—";
   const phone = userInfo?.phone || "—";
   const email = userInfo?.email || "—";
@@ -24,16 +25,16 @@ function UserInfoCard({ userInfo, isDoctorDetail = false }) {
   return (
     <div className="card user-info-card">
       <div className="user-greeting">
-        {fullName || ''} 你好
+        {fullName || ''} {t('doctor.patientInfo.hello')}
       </div>
       
       <div className="pill-list">
-        <div className="pill"><span className="pill-label">帳戶：</span><span className="pill-value">{userInfo?.username}</span></div>
-        <div className="pill"><span className="pill-label">聯繫方式：</span><span className="pill-value">{phone}</span></div>
-        <div className="pill"><span className="pill-label">信箱：</span><span className="pill-value">{email}</span></div>
-        <div className="pill"><span className="pill-label">地址：</span><span className="pill-value">{address}</span></div>
+        <div className="pill"><span className="pill-label">{t('doctor.patientInfo.account')}：</span><span className="pill-value">{userInfo?.username}</span></div>
+        <div className="pill"><span className="pill-label">{t('doctor.patientInfo.contact')}：</span><span className="pill-value">{phone}</span></div>
+        <div className="pill"><span className="pill-label">{t('doctor.patientInfo.email')}：</span><span className="pill-value">{email}</span></div>
+        <div className="pill"><span className="pill-label">{t('doctor.patientInfo.address')}：</span><span className="pill-value">{address}</span></div>
       </div>
-      {isDoctorDetail ? null : <Logout style={{ marginLeft: 12 }}>退出登錄</Logout>}
+      {isDoctorDetail ? null : <Logout style={{ marginLeft: 12 }}>{t('doctor.logout')}</Logout>}
 
     </div>
   );
@@ -86,12 +87,12 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
           const normalized = normalizePatients(res.data);
           setPatients(normalized);
         } else {
-          setError(res?.message || '獲取患者資料失敗');
+          setError(res?.message || t('errors.network'));
         }
       })
       .catch(err => {
         console.error('getPatientsByDoctor error:', err);
-        setError('網路錯誤，請稍後再試');
+        setError(t('errors.network'));
       })
       .finally(() => setLoading(false));
   };
@@ -135,14 +136,14 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
               <div style={{ color: '#fff', fontSize: 16, marginBottom: 10 }} onClick={() => setActiveView('patients')}>{t('doctor.patientList')}</div>
               <div className="account-list">
                 {[
-                  { key: 'all', label: t('doctor.status.all') },
-                  { key: '等待預約', label: t('doctor.status.waitingAppointment') },
-                  { key: '預約完成', label: t('doctor.status.appointmentCompleted') },
-                  { key: '確認方案', label: t('doctor.status.planConfirmed') },
-                  { key: '付款完成', label: t('doctor.status.paymentCompleted') },
-                  { key: '生產完成', label: t('doctor.status.productionCompleted') },
-                  { key: '治療中', label: t('doctor.status.inTreatment') },
-                  { key: '治療完成', label: t('doctor.status.treatmentCompleted') },
+                  { key: 'all', label: t('doctor.status.all'), progressIndex: null },
+                  { key: '0', label: t('doctor.status.waitingAppointment'), progressIndex: 0 },
+                  { key: '1', label: t('doctor.status.appointmentCompleted'), progressIndex: 1 },
+                  { key: '2', label: t('doctor.status.planConfirmed'), progressIndex: 2 },
+                  { key: '3', label: t('doctor.status.paymentCompleted'), progressIndex: 3 },
+                  { key: '4', label: t('doctor.status.productionCompleted'), progressIndex: 4 },
+                  { key: '5', label: t('doctor.status.inTreatment'), progressIndex: 5 },
+                  { key: '6', label: t('doctor.status.treatmentCompleted'), progressIndex: 6 },
                 ].map(item => (
                   <div
                     key={item.key}
@@ -161,7 +162,7 @@ export default function DoctorDashboard({ initialPatients = null, doctorUser = n
             <div>
               <div className="account-list">
                 <div className={`account-item ${activeView==='settings' ? 'active' : ''}`} onClick={() => setActiveView('settings')}>{t('doctor.personalSettings')}</div>
-                <div className={`account-item ${activeView==='help' ? 'active' : ''}`} onClick={() => setActiveView('help')}>{t('doctor.help')}</div>
+                <div className={`account-item ${activeView==='help' ? 'active' : ''}`} onClick={() => setActiveView('help')}>{t('doctor.help.title')}</div>
               </div>
               <Logout style={{ width: '100%' }}>{t('doctor.logout')}</Logout>
             </div>

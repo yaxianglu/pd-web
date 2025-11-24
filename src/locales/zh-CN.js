@@ -1284,10 +1284,55 @@ export default {
   // Admin Management Page Translations
   admin: {
     tabs: {
+      smileTest: '微笑测试',
+      becomePartner: '成为伙伴',
+      doctors: '医生',
+      clinics: '诊所',
+      accounts: '账户管理',
       userManagement: '用户管理',
       clinicManagement: '诊所管理', 
       patientManagement: '患者管理',
-      doctorManagement: '医生管理'
+      doctorManagement: '医生管理',
+      partners: '合作伙伴'
+    },
+    table: {
+      seq: '编号',
+      patientName: '患者名称',
+      phone: '手机号码',
+      email: '电子信箱',
+      lineId: 'Line ID',
+      region: '地址',
+      createdAt: '创建时间',
+      download: '资料下载',
+      status: '患者卡',
+      historyData: '历史资料',
+      createPatientInfo: '创建患者信息',
+      userNote: '用户备注',
+      note: '备注',
+      placeholder: '备注'
+    },
+    modal: {
+      bindDoctorCreatePatient: '绑定医师并创建患者',
+      selectDoctor: '选择医师',
+      selectDoctorPlaceholder: '选择医师',
+      save: '保存',
+      cancel: '取消'
+    },
+    messages: {
+      selectDoctor: '请选择医师',
+      noTargetRecord: '未选择目标记录',
+      getRecordFailed: '获取记录失败',
+      createSuccess: '创建成功',
+      createFailed: '创建失败',
+      saved: '已保存',
+      saveFailed: '保存失败',
+      missingRecordId: '缺少记录标识',
+      generatingPhotos: '正在生成照片压缩包…',
+      photosDownloadStarted: '照片下载已开始',
+      photosDownloadFailed: '照片下载失败',
+      generatingFiles: '正在生成文件压缩包…',
+      filesDownloadStarted: '文件下载已开始',
+      filesDownloadFailed: '文件下载失败'
     },
     userColumns: {
       username: '用户名',
@@ -1374,7 +1419,50 @@ export default {
       gender: '性别',
       birthday: '生日',
       contact: '联系方式',
-      email: '信箱'
+      email: '信箱',
+      account: '账户',
+      address: '地址',
+      hello: '你好'
+    },
+    calendar: {
+      appointment: '预约',
+      appointmentCount: '预约数量',
+      createAppointment: '新增预约',
+      searchPlaceholder: '搜索姓名 / 用户ID / 手机 / 信箱'
+    },
+    createPatient: {
+      title: '创建患者资料卡',
+      name: '名字',
+      gender: '性别',
+      phone: '手机号码',
+      email: '电子信箱',
+      lineId: 'Line ID',
+      city: '县市',
+      submit: '提交',
+      submitting: '提交中...',
+      nameRequired: '请输入名字',
+      createSuccess: '创建成功',
+      createFailed: '创建失败',
+      networkError: '网络错误，请稍后再试'
+    },
+    help: {
+      title: '寻找帮助',
+      faq: '常见问题',
+      q1: '如何创建患者资料卡？',
+      a1: '在患者列表页面点击右上角的「创建患者资料卡」按钮，填写患者基本信息后提交即可。',
+      q2: '如何筛选患者状态？',
+      a2: '使用左侧菜单的患者状态筛选，或使用顶部的状态下拉选单来筛选不同阶段的患者。',
+      q3: '如何修改个人信息？',
+      a3: '点击左侧菜单的「个人设置」，在该页面可以查看和修改个人信息及密码。'
+    }
+  },
+
+  // Market Dashboard Translations
+  market: {
+    tabs: {
+      smileTest: '微笑测试',
+      partners: '合作伙伴',
+      clinics: '诊所'
     }
   }
 };

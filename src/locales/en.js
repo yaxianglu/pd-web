@@ -1297,10 +1297,55 @@ Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
   // Admin Management Page Translations
   admin: {
     tabs: {
+      smileTest: 'Smile Test',
+      becomePartner: 'Become Partner',
+      doctors: 'Doctors',
+      clinics: 'Clinics',
+      accounts: 'Account Management',
       userManagement: 'Accounts',
       clinicManagement: 'Clinics', 
       patientManagement: 'Patients',
-      doctorManagement: 'Doctors'
+      doctorManagement: 'Doctors',
+      partners: 'Partners'
+    },
+    table: {
+      seq: 'No.',
+      patientName: 'Patient Name',
+      phone: 'Phone',
+      email: 'Email',
+      lineId: 'Line ID',
+      region: 'Address',
+      createdAt: 'Created At',
+      download: 'Download',
+      status: 'Patient Card',
+      historyData: 'History',
+      createPatientInfo: 'Create Patient Info',
+      userNote: 'User Note',
+      note: 'Note',
+      placeholder: 'Note'
+    },
+    modal: {
+      bindDoctorCreatePatient: 'Bind Doctor and Create Patient',
+      selectDoctor: 'Select Doctor',
+      selectDoctorPlaceholder: 'Select Doctor',
+      save: 'Save',
+      cancel: 'Cancel'
+    },
+    messages: {
+      selectDoctor: 'Please select a doctor',
+      noTargetRecord: 'No target record selected',
+      getRecordFailed: 'Failed to get record',
+      createSuccess: 'Created successfully',
+      createFailed: 'Failed to create',
+      saved: 'Saved',
+      saveFailed: 'Save failed',
+      missingRecordId: 'Missing record ID',
+      generatingPhotos: 'Generating photos zip...',
+      photosDownloadStarted: 'Photos download started',
+      photosDownloadFailed: 'Photos download failed',
+      generatingFiles: 'Generating files zip...',
+      filesDownloadStarted: 'Files download started',
+      filesDownloadFailed: 'Files download failed'
     },
     userColumns: {
       username: 'Username',
@@ -1387,7 +1432,50 @@ Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
       gender: 'Gender',
       birthday: 'Birthday',
       contact: 'Contact',
-      email: 'E-mail'
+      email: 'E-mail',
+      account: 'Account',
+      address: 'Address',
+      hello: 'Hello'
+    },
+    calendar: {
+      appointment: 'Appointment',
+      appointmentCount: 'Appointment Count',
+      createAppointment: 'New Appointment',
+      searchPlaceholder: 'Search name / User ID / Phone / Email'
+    },
+    createPatient: {
+      title: 'Create Patient Card',
+      name: 'Name',
+      gender: 'Gender',
+      phone: 'Phone',
+      email: 'Email',
+      lineId: 'Line ID',
+      city: 'City',
+      submit: 'Submit',
+      submitting: 'Submitting...',
+      nameRequired: 'Please enter name',
+      createSuccess: 'Created successfully',
+      createFailed: 'Failed to create',
+      networkError: 'Network error, please try again later'
+    },
+    help: {
+      title: 'Help',
+      faq: 'FAQ',
+      q1: 'How to create a patient card?',
+      a1: 'Click the "Create Patient Card" button in the top right corner of the patient list page, fill in the patient\'s basic information and submit.',
+      q2: 'How to filter patient status?',
+      a2: 'Use the patient status filter in the left menu, or use the status dropdown at the top to filter patients at different stages.',
+      q3: 'How to modify personal information?',
+      a3: 'Click "Personal Settings" in the left menu, where you can view and modify personal information and password.'
+    }
+  },
+
+  // Market Dashboard Translations
+  market: {
+    tabs: {
+      smileTest: 'Smile Test',
+      partners: 'Partners',
+      clinics: 'Clinics'
     }
   }
 };

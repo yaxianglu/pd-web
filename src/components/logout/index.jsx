@@ -1,10 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { useLanguage } from '../../context/LanguageContext';
 
-export default function Logout({ children = '退出', className = '', style = {} }) {
+export default function Logout({ children, className = '', style = {} }) {
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const { logout } = useAuth();
+  
+  // 如果没有传入 children，使用翻译
+  const displayText = children || t('common.logout');
 
   const handleLogout = async () => {
     try {
@@ -33,7 +38,7 @@ export default function Logout({ children = '退出', className = '', style = {}
         ...style,
       }}
     >
-      {children}
+      {displayText}
     </button>
   );
 }
