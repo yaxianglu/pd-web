@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useLanguage } from "../context/LanguageContext";
 import ProgressTracker, { l } from "../components/progress";
 import { cardTitleSizeStyle } from "../contants";
 import ContactInfo from "../components/contact-info";
@@ -30,7 +31,9 @@ const list = {
 const gapSize = 16;
 
 function InfoCard({ patientData, doctor, patientInfo, clinic, isInput = false, currentStepFromProgress, onUpdate, isMobile = false }) {
-  console.info("patientInfo", patientInfo)
+  const { t, currentLanguage } = useLanguage();
+  console.info("patientInfo", patientInfo);
+  console.info("Current language:", currentLanguage, "Logout text:", t('common.logout'));
   return (
     <div style={{ 
       background: "#fff", 
@@ -45,7 +48,7 @@ function InfoCard({ patientData, doctor, patientInfo, clinic, isInput = false, c
         isInput ? null : (
           <>
           <div style={{ ...cardTitleSizeStyle }}>
-            {patientData?.full_name || '患者'}　您好 <Logout style={{ float: 'right' }}>退出登录</Logout>
+            {patientData?.full_name || '患者'}　您好 <Logout style={{ float: 'right' }}>{t('common.logout')}</Logout>
           </div>
           <ContactInfo 
             list={[
