@@ -90,9 +90,20 @@ function AdminSmileView() {
     return types.map(type => teethTypeMap[type] || type).join('、') || '—';
   };
 
-  // 格式化考量显示
+  // 判断是否是患者填写的多选选项（格式：price, pain 等）
+  const isPatientConsiderations = (considerations) => {
+    if (!considerations || typeof considerations !== 'string') return false;
+    const validOptions = ['price', 'procedure', 'duration', 'pain', 'none'];
+    const items = considerations.split(/[,，]\s*/).map(s => s.trim()).filter(Boolean);
+    // 如果所有项都是有效的多选选项，则认为是患者填写的
+    return items.length > 0 && items.every(item => validOptions.includes(item));
+  };
+
+  // 格式化考量显示（仅显示患者填写的多选选项）
   const formatConsiderations = (considerations) => {
     if (!considerations || typeof considerations !== 'string') return '—';
+    // 如果不是患者填写的多选选项格式，不显示（可能是管理员备注）
+    if (!isPatientConsiderations(considerations)) return '—';
     const considerationMap = {
       'price': t('upload.step2Form.considerationOptions.price'),
       'procedure': t('upload.step2Form.considerationOptions.procedure'),
@@ -102,6 +113,11 @@ function AdminSmileView() {
     };
     const items = considerations.split(/[,，]\s*/).map(s => s.trim()).filter(Boolean);
     return items.map(item => considerationMap[item] || item).join('、') || '—';
+  };
+
+  // 获取管理员备注（从 current_issues 字段获取）
+  const getAdminNote = (currentIssues) => {
+    return currentIssues || '';
   };
 
   useEffect(() => {
@@ -122,7 +138,8 @@ function AdminSmileView() {
             region: s.city || '—',
             downloadUrl: '#',
             teeth_type: s.teeth_type || '',
-            considerations: s.considerations || '',
+            considerations: s.considerations || '', // 患者填写的多选选项
+            current_issues: s.current_issues || '', // 管理员备注
             statusText: s?.patient_uuid ? s?.uuid : t('admin.table.createPatientInfo'),
             smileUuid: s.uuid,
             createdAt: s.created_at ? new Date(s.created_at).toLocaleString('zh-TW') : '—',
@@ -222,14 +239,15 @@ function AdminSmileView() {
                     <textarea
                       className="note-input"
                       placeholder={t('admin.table.placeholder')}
-                      defaultValue={row.considerations || ''}
+                      defaultValue={getAdminNote(row.current_issues)}
                       onBlur={async (e) => {
                         const text = e.target.value || '';
                         if (!row.smileUuid) return;
                         const r = await apiService.updateSmileTestBio(row.smileUuid, text);
                         if (r?.success) {
                           message.success(t('admin.messages.saved'));
-                          setItems((prev) => prev.map(it => it.id === row.id ? { ...it, considerations: text } : it));
+                          // 更新本地状态，保存管理员备注到 current_issues 字段
+                          setItems((prev) => prev.map(it => it.id === row.id ? { ...it, current_issues: text } : it));
                         } else {
                           message.error(r?.message || t('admin.messages.saveFailed'));
                         }
@@ -273,7 +291,8 @@ function AdminSmileView() {
                 region: s.city || '—',
                 downloadUrl: '#',
                 teeth_type: s.teeth_type || '',
-                considerations: s.considerations || '',
+                considerations: s.considerations || '', // 患者填写的多选选项
+                current_issues: s.current_issues || '', // 管理员备注
                 statusText: s?.patient_uuid ? s?.uuid : t('admin.table.createPatientInfo'),
                 smileUuid: s.uuid,
                 createdAt: s.created_at ? new Date(s.created_at).toLocaleString('zh-TW') : '—',
