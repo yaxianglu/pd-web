@@ -147,16 +147,25 @@ export default function PersonalSettings() {
   const handleProfileSubmit = async (e) => {
     e.preventDefault();
     
-    // 验证用户名
-    if (profileForm.username && profileForm.username !== '') {
-      if (profileForm.username.length < 3) {
-        setProfileMessage({ type: 'error', text: '帳戶名至少需要3個字符' });
-        return;
-      }
-      if (!/^[a-zA-Z0-9_]+$/.test(profileForm.username)) {
-        setProfileMessage({ type: 'error', text: '帳戶名只能包含字母、數字和下劃線' });
-        return;
-      }
+    // 验证姓名（必填）
+    if (!profileForm.full_name || profileForm.full_name.trim() === '') {
+      setProfileMessage({ type: 'error', text: '姓名不能為空' });
+      return;
+    }
+
+    // 验证用户名（必填）
+    if (!profileForm.username || profileForm.username.trim() === '') {
+      setProfileMessage({ type: 'error', text: '帳戶名不能為空' });
+      return;
+    }
+    
+    if (profileForm.username.length < 3) {
+      setProfileMessage({ type: 'error', text: '帳戶名至少需要3個字符' });
+      return;
+    }
+    if (!/^[a-zA-Z0-9_]+$/.test(profileForm.username)) {
+      setProfileMessage({ type: 'error', text: '帳戶名只能包含字母、數字和下劃線' });
+      return;
     }
 
     // 验证邮箱格式
@@ -173,8 +182,8 @@ export default function PersonalSettings() {
 
     try {
       const response = await apiService.updateProfile({
-        full_name: profileForm.full_name || null,
-        username: profileForm.username || null,
+        full_name: profileForm.full_name.trim(),
+        username: profileForm.username.trim(),
         phone: profileForm.phone || null,
         email: profileForm.email || null
       });
@@ -227,7 +236,7 @@ export default function PersonalSettings() {
             <div className="info-grid">
               <div className="info-item">
                 <label>姓名：</label>
-                <span>{userInfo?.full_name || userInfo?.username || '—'}</span>
+                <span>{userInfo?.full_name || '—'}</span>
               </div>
               <div className="info-item">
                 <label>帳戶：</label>
@@ -268,6 +277,7 @@ export default function PersonalSettings() {
                   value={profileForm.full_name}
                   onChange={handleProfileChange}
                   placeholder="請輸入姓名"
+                  required
                 />
               </div>
               <div className="info-item">
@@ -279,6 +289,7 @@ export default function PersonalSettings() {
                   value={profileForm.username}
                   onChange={handleProfileChange}
                   placeholder="請輸入帳戶名"
+                  required
                 />
               </div>
               <div className="info-item">
