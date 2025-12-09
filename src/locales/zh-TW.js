@@ -1382,9 +1382,9 @@ export default {
       clinic: '診所',
       patient: '患者'
     },
-    createButton: '創建{{type}}',
+    createButton: '創建{type}',
     createModal: {
-      title: '創建{{type}}'
+      title: '創建{type}'
     },
     confirm: {
       deleteUser: '確定要刪除此用戶嗎？',

@@ -1376,9 +1376,9 @@ export default {
       clinic: '诊所',
       patient: '患者'
     },
-    createButton: '创建{{type}}',
+    createButton: '创建{type}',
     createModal: {
-      title: '创建{{type}}'
+      title: '创建{type}'
     },
     confirm: {
       deleteUser: '确定要删除此用户吗？',

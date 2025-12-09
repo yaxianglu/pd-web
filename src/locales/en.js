@@ -1389,9 +1389,9 @@ Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
       clinic: 'Clinic',
       patient: 'Patient'
     },
-    createButton: 'Create {{type}}',
+    createButton: 'Create {type}',
     createModal: {
-      title: 'Create {{type}}'
+      title: 'Create {type}'
     },
     confirm: {
       deleteUser: 'Are you sure you want to delete this user?',
