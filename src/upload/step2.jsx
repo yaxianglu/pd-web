@@ -76,13 +76,22 @@ export default function Step2({ onNext, setStep, style }) {
             .filter(Boolean);
         };
 
+        // 將後端存儲的牙齒類型（可能為 'a,b'、'a, b' 或中文逗號）解析為陣列
+        const parseTeethType = (val) => {
+          if (!val || typeof val !== 'string') return [];
+          return val
+            .split(/[,，]\s*/)
+            .map(s => s.trim())
+            .filter(Boolean);
+        };
+
         // 获取备注信息：优先使用 bio 字段（通过 updateSmileTestBio 更新的备注）
         // 如果没有 bio，则使用 improvement_points
         // 注意：considerations 字段用于存储多选选项，不应该作为备注文本使用
         const bioText = data?.improvement_points || data?.bio || '';
 
         setFormData({
-          teethDescription: data?.teeth_type ? [data.teeth_type] : [],
+          teethDescription: parseTeethType(data?.teeth_type),
           alignerConsideration: parseConsiderations(data?.considerations),
           improvement: bioText
         });
@@ -103,14 +112,9 @@ export default function Step2({ onNext, setStep, style }) {
 
     try {
       // 映射数据到数据库字段
-      let teethType = null;
-      if (data.teethDescription.length > 0) {
-        const selectedType = data.teethDescription[0];
-        // 如果选择的是"unsure"，不保存到teeth_type字段
-        if (selectedType !== 'unsure') {
-          teethType = selectedType;
-        }
-      }
+      // 过滤掉"unsure"选项，然后用逗号分隔保存
+      const filteredTeethTypes = data.teethDescription.filter(type => type !== 'unsure');
+      const teethType = filteredTeethTypes.length > 0 ? filteredTeethTypes.join(', ') : null;
 
       const apiData = {
         teeth_type: teethType,
