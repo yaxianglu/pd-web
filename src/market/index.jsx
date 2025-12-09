@@ -42,6 +42,36 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
   const [historyModalOpen, setHistoryModalOpen] = useState(false);
   const [selectedSmileUuid, setSelectedSmileUuid] = useState('');
 
+  // 格式化牙齿类型显示
+  const formatTeethType = (teethType) => {
+    if (!teethType || typeof teethType !== 'string') return '—';
+    const teethTypeMap = {
+      'crowded': t('upload.step2Form.teethOptions.crowded'),
+      'overbite': t('upload.step2Form.teethOptions.overbite'),
+      'spaced': t('upload.step2Form.teethOptions.spaced'),
+      'other': t('upload.step2Form.teethOptions.other'),
+      'normal': '正常',
+      'underbite': '下颚前突',
+      'crossbite': '交叉咬合'
+    };
+    const types = teethType.split(/[,，]\s*/).map(s => s.trim()).filter(Boolean);
+    return types.map(type => teethTypeMap[type] || type).join('、') || '—';
+  };
+
+  // 格式化考量显示
+  const formatConsiderations = (considerations) => {
+    if (!considerations || typeof considerations !== 'string') return '—';
+    const considerationMap = {
+      'price': t('upload.step2Form.considerationOptions.price'),
+      'procedure': t('upload.step2Form.considerationOptions.procedure'),
+      'duration': t('upload.step2Form.considerationOptions.duration'),
+      'pain': t('upload.step2Form.considerationOptions.pain'),
+      'none': t('upload.step2Form.considerationNone')
+    };
+    const items = considerations.split(/[,，]\s*/).map(s => s.trim()).filter(Boolean);
+    return items.map(item => considerationMap[item] || item).join('、') || '—';
+  };
+
   // 首次进入或依赖变化时，从后端获取 smile_test 列表
   useEffect(() => {
     let isMounted = true;
@@ -67,6 +97,7 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
             lineId: s.line_id || '—',
             region: s.city || '—',
             downloadUrl: '#',
+            teeth_type: s.teeth_type || '',
             considerations: s.considerations || '',
             statusText: s?.patient_uuid ? s?.uuid : t('admin.table.createPatientInfo'),
             smileUuid: s.uuid,
@@ -208,7 +239,15 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
                   {isOpen && (
                     <div className="row-expand" onClick={(e) => e.stopPropagation()}>
                       <div className="user-note-section">
-                        <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>{t('admin.table.userNote')}：{row.improvement_points || '—'}</div>
+                        <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
+                          {t('admin.table.teethType')}：{formatTeethType(row.teeth_type)}
+                        </div>
+                        <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
+                          {t('admin.table.considerations')}：{formatConsiderations(row.considerations)}
+                        </div>
+                        <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
+                          {t('admin.table.userNote')}：{row.improvement_points || '—'}
+                        </div>
                       </div>
                       <textarea
                         className="note-input"
@@ -279,6 +318,7 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
                 lineId: s.line_id || '—',
                 region: s.city || '—',
                 downloadUrl: '#',
+                teeth_type: s.teeth_type || '',
                 considerations: s.considerations || '',
                 improvementPoints: s.improvement_points || '',
                 statusText: s?.patient_uuid ? s?.uuid : t('admin.table.createPatientInfo'),

@@ -1309,7 +1309,9 @@ export default {
       createPatientInfo: '创建患者信息',
       userNote: '用户备注',
       note: '备注',
-      placeholder: '备注'
+      placeholder: '备注',
+      teethType: '牙齿类型',
+      considerations: '透明牙套考量'
     },
     modal: {
       bindDoctorCreatePatient: '绑定医师并创建患者',

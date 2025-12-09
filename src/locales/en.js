@@ -1322,7 +1322,9 @@ Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
       createPatientInfo: 'Create Patient Info',
       userNote: 'User Note',
       note: 'Note',
-      placeholder: 'Note'
+      placeholder: 'Note',
+      teethType: 'Teeth Type',
+      considerations: 'Clear Aligner Considerations'
     },
     modal: {
       bindDoctorCreatePatient: 'Bind Doctor and Create Patient',
