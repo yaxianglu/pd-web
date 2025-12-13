@@ -71,7 +71,7 @@ function InfoCard({ patientData, doctor, patientInfo, clinic, isInput = false, c
         )
       }
       <InfoCardComponent 
-        doctorName={doctor?.full_name}
+        doctorName={doctor?.full_name || doctor?.username}
         clinicAddress={clinic?.address}
         contact={doctor?.phone || clinic?.phone || patientData?.phone}
         treatmentProgress={currentStepFromProgress}
