@@ -37,7 +37,15 @@ export default {
     functional: '功能',
     analytics: '分析',
     marketing: '行銷',
-    smileTest: '微笑測試'
+    smileTest: '微笑測試',
+    status: {
+      active: '活躍',
+      inactive: '非活躍',
+      pending: '待審核',
+      suspended: '已暫停',
+      enabled: '啟用',
+      disabled: '停用'
+    }
   },
 
   // 導航
@@ -1471,6 +1479,50 @@ export default {
       smileTest: '微笑測試',
       partners: '合作夥伴',
       clinics: '診所'
+    }
+  },
+
+  // Partners Page Translations
+  partners: {
+    table: {
+      id: 'ID',
+      name: '姓名',
+      clinicName: '診所名稱',
+      phone: '電話',
+      email: '郵箱',
+      status: '狀態',
+      registrationTime: '註冊時間',
+      action: '操作'
+    },
+    buttons: {
+      view: '查看',
+      confirmAdd: '確定添加',
+      reject: '拒絕',
+      close: '關閉'
+    },
+    modal: {
+      title: '合作夥伴詳情',
+      basicInfo: '基本信息',
+      addressInfo: '地址信息',
+      specialNotes: '特別備註',
+      yearsExperience: '經驗年數',
+      treatmentCount: '治療數量',
+      address: '地址'
+    },
+    confirm: {
+      confirmAddTitle: '確定添加？',
+      confirmAddDescription: '將建立診所資料並不可撤銷，確定繼續？',
+      rejectTitle: '拒絕該申請？',
+      rejectDescription: '拒絕申請後不可撤銷，確定繼續？',
+      ok: '確認',
+      cancel: '取消'
+    },
+    messages: {
+      fetchFailed: '獲取合作夥伴列表失敗：',
+      networkError: '獲取合作夥伴列表失敗：網路錯誤',
+      clinicActivated: '已建立診所並激活',
+      applicationRejected: '已拒絕該申請',
+      operationFailed: '操作失敗'
     }
   }
 };

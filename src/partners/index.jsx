@@ -6,6 +6,7 @@ import './index.scss';
 import apiService from '../services/api';
 import { message, Tag, Button, Modal, Popconfirm } from 'antd';
 import { EyeOutlined } from '@ant-design/icons';
+import { useLanguage } from '../context/LanguageContext';
 
 // const { Search } = Input;
 // const { Option } = Select;
@@ -13,6 +14,7 @@ import { EyeOutlined } from '@ant-design/icons';
 export default function Partners() {
   // const navigate = useNavigate();
   // const { logout, userType, userInfo } = useAuth();
+  const { t, currentLanguage } = useLanguage();
   const [partners, setPartners] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchText] = useState('');
@@ -30,11 +32,11 @@ export default function Partners() {
       if (result.success) {
         setPartners(result.data || []);
       } else {
-        message.error('获取合作夥伴列表失败：' + (result.message || '未知错误'));
+        message.error(t('partners.messages.fetchFailed') + (result.message || t('errors.unknown')));
       }
     } catch (error) {
       console.error('获取合作夥伴列表失败:', error);
-              message.error('獲取合作夥伴列表失敗：網路錯誤');
+      message.error(t('partners.messages.networkError'));
     } finally {
       setLoading(false);
     }
@@ -66,17 +68,17 @@ export default function Partners() {
     }
   };
 
-  // 获取狀態中文名称
+  // 获取狀態文本（使用翻译）
   const getStatusText = (status) => {
     switch (status) {
       case 'active':
-        return '活跃';
+        return t('common.status.active');
       case 'pending':
-        return '待审核';
+        return t('common.status.pending');
       case 'inactive':
-        return '非活跃';
+        return t('common.status.inactive');
       case 'suspended':
-        return '已暂停';
+        return t('common.status.suspended');
       default:
         return status;
     }
@@ -104,14 +106,14 @@ export default function Partners() {
       <div className="partners-card">
         <div className="table">
           <div className="thead">
-            <div className="th id">ID</div>
-            <div className="th name">姓名</div>
-            <div className="th clinic">診所名稱</div>
-            <div className="th phone">電話</div>
-            <div className="th email">郵箱</div>
-            <div className="th status">狀態</div>
-            <div className="th created">註冊時間</div>
-            <div className="th action">操作</div>
+            <div className="th id">{t('partners.table.id')}</div>
+            <div className="th name">{t('partners.table.name')}</div>
+            <div className="th clinic">{t('partners.table.clinicName')}</div>
+            <div className="th phone">{t('partners.table.phone')}</div>
+            <div className="th email">{t('partners.table.email')}</div>
+            <div className="th status">{t('partners.table.status')}</div>
+            <div className="th created">{t('partners.table.registrationTime')}</div>
+            <div className="th action">{t('partners.table.action')}</div>
             <div className="th caret" />
           </div>
 
@@ -126,57 +128,63 @@ export default function Partners() {
                     <div className="td phone">{p.phone || '-'}</div>
                     <div className="td email">{p.email || '-'}</div>
                     <div className="td status"><Tag color={getStatusColor(p.status)}>{getStatusText(p.status)}</Tag></div>
-                    <div className="td created">{p.created_at ? new Date(p.created_at).toLocaleString('zh-TW') : '-'}</div>
+                    <div className="td created">
+                      {p.created_at ? new Date(p.created_at).toLocaleString(
+                        currentLanguage === 'zh-TW' ? 'zh-TW' : 
+                        currentLanguage === 'zh-CN' ? 'zh-CN' : 
+                        'en-US'
+                      ) : '-'}
+                    </div>
                     <div className="td action" style={{ display: 'flex', gap: 8 }}>
-                      <Button type="link" icon={<EyeOutlined />} size="small" onClick={() => showDetail(p)}>查看</Button>
+                      <Button type="link" icon={<EyeOutlined />} size="small" onClick={() => showDetail(p)}>{t('partners.buttons.view')}</Button>
                       {p.status === 'pending' && (
                         <>
                           <Popconfirm
-                            title="確定添加？"
-                            description="將建立診所資料並不可撤銷，確定繼續？"
-                            okText="確認"
-                            cancelText="取消"
+                            title={t('partners.confirm.confirmAddTitle')}
+                            description={t('partners.confirm.confirmAddDescription')}
+                            okText={t('partners.confirm.ok')}
+                            cancelText={t('partners.confirm.cancel')}
                             onConfirm={async () => {
                               try {
                                 setLoading(true);
                                 const r = await apiService.approvePartner(p.id);
                                 if (r?.success) {
-                                  message.success('已建立診所並激活');
+                                  message.success(t('partners.messages.clinicActivated'));
                                   fetchPartners();
                                 } else {
-                                  message.error(r?.message || '操作失敗');
+                                  message.error(r?.message || t('partners.messages.operationFailed'));
                                 }
                               } catch (err) {
                                 console.error('approvePartner error:', err);
-                                message.error(err?.message || '操作失敗');
+                                message.error(err?.message || t('partners.messages.operationFailed'));
                               } finally {
                                 setLoading(false);
                               }
                             }}
                           >
-                            <Button type="primary" size="small" disabled={loading}>確定添加</Button>
+                            <Button type="primary" size="small" disabled={loading}>{t('partners.buttons.confirmAdd')}</Button>
                           </Popconfirm>
 
                           <Popconfirm
-                            title="拒絕該申請？"
-                            description="拒絕申請後不可撤銷，確定繼續？"
-                            okText="確認"
-                            cancelText="取消"
+                            title={t('partners.confirm.rejectTitle')}
+                            description={t('partners.confirm.rejectDescription')}
+                            okText={t('partners.confirm.ok')}
+                            cancelText={t('partners.confirm.cancel')}
                             onConfirm={async () => {
                               try {
                                 const r = await apiService.rejectPartner(p.id);
                                 if (r?.success) {
-                                  message.success('已拒絕該申請');
+                                  message.success(t('partners.messages.applicationRejected'));
                                   fetchPartners();
                                 } else {
-                                  message.error(r?.message || '操作失敗');
+                                  message.error(r?.message || t('partners.messages.operationFailed'));
                                 }
                               } catch (err) {
-                                message.error(err?.message || '操作失敗');
+                                message.error(err?.message || t('partners.messages.operationFailed'));
                               }
                             }}
                           >
-                            <Button danger size="small" disabled={loading}>拒絕</Button>
+                            <Button danger size="small" disabled={loading}>{t('partners.buttons.reject')}</Button>
                           </Popconfirm>
                         </>
                       )}
@@ -192,12 +200,12 @@ export default function Partners() {
 
       {/* 詳情模態框 */}
       <Modal
-        title="合作夥伴詳情"
+        title={t('partners.modal.title')}
         open={detailModalVisible}
         onCancel={() => setDetailModalVisible(false)}
         footer={[
           <Button key="close" onClick={() => setDetailModalVisible(false)}>
-            關閉
+            {t('partners.buttons.close')}
           </Button>
         ]}
         width={800}
@@ -205,34 +213,34 @@ export default function Partners() {
         {selectedPartner && (
           <div className="partner-detail">
             <div className="detail-section">
-              <h3>基本信息</h3>
+              <h3>{t('partners.modal.basicInfo')}</h3>
               <div className="detail-grid">
                 <div className="detail-item">
-                  <label>姓名：</label>
+                  <label>{t('partners.table.name')}：</label>
                   <span>{selectedPartner.full_name || '-'}</span>
                 </div>
                 <div className="detail-item">
-                  <label>診所名稱：</label>
+                  <label>{t('partners.table.clinicName')}：</label>
                   <span>{selectedPartner.clinic_name || '-'}</span>
                 </div>
                 <div className="detail-item">
-                  <label>電話：</label>
+                  <label>{t('partners.table.phone')}：</label>
                   <span>{selectedPartner.phone || '-'}</span>
                 </div>
                 <div className="detail-item">
-                  <label>郵箱：</label>
+                  <label>{t('partners.table.email')}：</label>
                   <span>{selectedPartner.email || '-'}</span>
                 </div>
                 <div className="detail-item">
-                  <label>經驗年數：</label>
-                  <span>{selectedPartner.years_experience ? `${selectedPartner.years_experience}年` : '-'}</span>
+                  <label>{t('partners.modal.yearsExperience')}：</label>
+                  <span>{selectedPartner.years_experience ? `${selectedPartner.years_experience}${t('units.year')}` : '-'}</span>
                 </div>
                 <div className="detail-item">
-                  <label>治療數量：</label>
+                  <label>{t('partners.modal.treatmentCount')}：</label>
                   <span>{selectedPartner.treatment_count || '-'}</span>
                 </div>
                 <div className="detail-item">
-                  <label>狀態：</label>
+                  <label>{t('partners.table.status')}：</label>
                   <Tag color={getStatusColor(selectedPartner.status)}>
                     {getStatusText(selectedPartner.status)}
                   </Tag>
@@ -241,16 +249,16 @@ export default function Partners() {
             </div>
 
             <div className="detail-section">
-              <h3>地址信息</h3>
+              <h3>{t('partners.modal.addressInfo')}</h3>
               <div className="detail-item full-width">
-                <label>地址：</label>
+                <label>{t('partners.modal.address')}：</label>
                 <span>{selectedPartner.address || '-'}</span>
               </div>
             </div>
 
             {selectedPartner.special_notes && (
               <div className="detail-section">
-                <h3>特別備註</h3>
+                <h3>{t('partners.modal.specialNotes')}</h3>
                 <div className="detail-item full-width">
                   <span>{selectedPartner.special_notes}</span>
                 </div>

@@ -37,7 +37,15 @@ export default {
     functional: 'Functional',
     analytics: 'Analytics',
     marketing: 'Marketing',
-    smileTest: 'Smile Quiz'
+    smileTest: 'Smile Quiz',
+    status: {
+      active: 'Active',
+      inactive: 'Inactive',
+      pending: 'Pending Review',
+      suspended: 'Suspended',
+      enabled: 'Enabled',
+      disabled: 'Disabled'
+    }
   },
 
   // Navigation
@@ -1478,6 +1486,50 @@ Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
       smileTest: 'Smile Test',
       partners: 'Partners',
       clinics: 'Clinics'
+    }
+  },
+
+  // Partners Page Translations
+  partners: {
+    table: {
+      id: 'ID',
+      name: 'Name',
+      clinicName: 'Clinic Name',
+      phone: 'Phone',
+      email: 'Email',
+      status: 'Status',
+      registrationTime: 'Registration Time',
+      action: 'Action'
+    },
+    buttons: {
+      view: 'View',
+      confirmAdd: 'Confirm Add',
+      reject: 'Reject',
+      close: 'Close'
+    },
+    modal: {
+      title: 'Partner Details',
+      basicInfo: 'Basic Information',
+      addressInfo: 'Address Information',
+      specialNotes: 'Special Notes',
+      yearsExperience: 'Years of Experience',
+      treatmentCount: 'Treatment Count',
+      address: 'Address'
+    },
+    confirm: {
+      confirmAddTitle: 'Confirm Add?',
+      confirmAddDescription: 'This will create clinic data and cannot be undone. Continue?',
+      rejectTitle: 'Reject This Application?',
+      rejectDescription: 'Rejecting the application cannot be undone. Continue?',
+      ok: 'Confirm',
+      cancel: 'Cancel'
+    },
+    messages: {
+      fetchFailed: 'Failed to fetch partners list: ',
+      networkError: 'Failed to fetch partners list: Network error',
+      clinicActivated: 'Clinic created and activated',
+      applicationRejected: 'Application rejected',
+      operationFailed: 'Operation failed'
     }
   }
 };

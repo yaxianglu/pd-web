@@ -37,7 +37,15 @@ export default {
     functional: '功能',
     analytics: '分析',
     marketing: '营销',
-    smileTest: '微笑测试'
+    smileTest: '微笑测试',
+    status: {
+      active: '活跃',
+      inactive: '非活跃',
+      pending: '待审核',
+      suspended: '已暂停',
+      enabled: '启用',
+      disabled: '停用'
+    }
   },
 
   // 导航
@@ -1465,6 +1473,50 @@ export default {
       smileTest: '微笑测试',
       partners: '合作伙伴',
       clinics: '诊所'
+    }
+  },
+
+  // Partners Page Translations
+  partners: {
+    table: {
+      id: 'ID',
+      name: '姓名',
+      clinicName: '诊所名称',
+      phone: '电话',
+      email: '邮箱',
+      status: '状态',
+      registrationTime: '注册时间',
+      action: '操作'
+    },
+    buttons: {
+      view: '查看',
+      confirmAdd: '确定添加',
+      reject: '拒绝',
+      close: '关闭'
+    },
+    modal: {
+      title: '合作伙伴详情',
+      basicInfo: '基本信息',
+      addressInfo: '地址信息',
+      specialNotes: '特别备注',
+      yearsExperience: '经验年数',
+      treatmentCount: '治疗数量',
+      address: '地址'
+    },
+    confirm: {
+      confirmAddTitle: '确定添加？',
+      confirmAddDescription: '将建立诊所资料并不可撤销，确定继续？',
+      rejectTitle: '拒绝该申请？',
+      rejectDescription: '拒绝申请后不可撤销，确定继续？',
+      ok: '确认',
+      cancel: '取消'
+    },
+    messages: {
+      fetchFailed: '获取合作伙伴列表失败：',
+      networkError: '获取合作伙伴列表失败：网络错误',
+      clinicActivated: '已建立诊所并激活',
+      applicationRejected: '已拒绝该申请',
+      operationFailed: '操作失败'
     }
   }
 };
