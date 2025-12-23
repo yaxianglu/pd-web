@@ -1331,6 +1331,7 @@ Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
       userNote: 'User Note',
       note: 'Note',
       placeholder: 'Note',
+      dateOfBirth: 'Date of Birth',
       teethType: 'Teeth Type',
       considerations: 'Clear Aligner Considerations'
     },

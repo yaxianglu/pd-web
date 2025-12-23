@@ -226,6 +226,10 @@ function AdminSmileView() {
                 {isOpen && (
                   <div className="row-expand" onClick={(e) => e.stopPropagation()}>
                     <div className="user-note-section">
+
+                      <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
+                          {t('admin.table.dateOfBirth')}：{row.birth_date || '—'}
+                        </div>
                       <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
                         {t('admin.table.teethType')}：{formatTeethType(row.teeth_type)}
                       </div>

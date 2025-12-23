@@ -1325,6 +1325,7 @@ export default {
       note: '備註',
       placeholder: '備註',
       teethType: '牙齒類型',
+      dateOfBirth: '出生日期',
       considerations: '透明牙套考量'
     },
     modal: {
