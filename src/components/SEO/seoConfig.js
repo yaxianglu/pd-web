@@ -1,16 +1,16 @@
 // SEO Configuration for different pages
 export const seoConfig = {
   home: {
-    title: '珍舒美 Pearly - FDA認證隱形牙套 | AI智能矯正 | 美國品牌',
-    description: '珍舒美（Pearly）隱形牙套，美國FDA認證、AI智能矯正系統。採用醫療級材料，專業團隊30年經驗，台灣ISO 13485認證製造。提供平價、專業、透明的矯正體驗。',
+    title: '珍舒美 ShineSmile - FDA認證隱形牙套 | AI智能矯正 | 美國品牌',
+    description: '珍舒美（ShineSmile）隱形牙套，美國FDA認證、AI智能矯正系統。採用醫療級材料，專業團隊30年經驗，台灣ISO 13485認證製造。提供平價、專業、透明的矯正體驗。',
     keywords: 'clear aligner, invisible braces, orthodontics, teeth straightening, FDA cleared, AI orthodontics, medical grade, transparent aligners, bite correction, malocclusion treatment, 珍舒美, 隱形牙套, 透明牙套, 平價矯正, 微笑矯正, 隱形矯正, 數位化矯正, 美國品牌, AI技術, 亞洲人數據庫, 維持器, 美國FDA認證, 台灣TFDA class II, 台灣醫療器材, 台灣製造工廠, 國際醫療器材標準',
     url: '/',
     structuredData: {
       "@context": "https://schema.org",
       "@type": "MedicalBusiness",
-      "name": "珍舒美 Pearly Digital",
+      "name": "珍舒美 ShineSmile Digital",
       "alternateName": "珍舒美",
-      "description": "珍舒美（Pearly）AI智能隱形牙套矯正系統，美國FDA認證，採用醫療級材料",
+      "description": "珍舒美（ShineSmile）AI智能隱形牙套矯正系統，美國FDA認證，採用醫療級材料",
       "url": "https://pearl-digital.com",
       "medicalSpecialty": "Orthodontics",
       "serviceType": "Clear Aligner Treatment"
@@ -30,7 +30,7 @@ export const seoConfig = {
       "description": "珍舒美FDA認證隱形牙套，AI智能治療規劃",
       "brand": {
         "@type": "Brand",
-        "name": "珍舒美 Pearly Digital"
+        "name": "珍舒美 ShineSmile Digital"
       },
       "category": "Orthodontic Treatment",
       "offers": {
@@ -52,7 +52,7 @@ export const seoConfig = {
       "description": "珍舒美醫療級透明維持器，穩定矯正成果",
       "brand": {
         "@type": "Brand",
-        "name": "珍舒美 Pearly Digital"
+        "name": "珍舒美 ShineSmile Digital"
       },
       "category": "Orthodontic Retainers"
     }
@@ -70,7 +70,7 @@ export const seoConfig = {
       "description": "Step-by-step clear aligner orthodontic treatment process",
       "provider": {
         "@type": "MedicalBusiness",
-        "name": "珍舒美 Pearly Digital"
+        "name": "珍舒美 ShineSmile Digital"
       }
     }
   },
@@ -92,17 +92,17 @@ export const seoConfig = {
 
   about: {
     title: '關於珍舒美 - 美國矽谷AI智能矯正 | 珍舒美品牌故事',
-    description: '了解珍舒美（Pearly Digital）的品牌故事。創立於美國矽谷，結合30年臨床經驗與AI技術，專為亞洲人設計的隱形牙套系統。Dr. David Shen指導醫師，專業醫療團隊。',
-    keywords: 'about Pearly Digital, AI orthodontics, Silicon Valley, orthodontic technology, Dr. David Shen, clinical expertise, orthodontic innovation, 珍舒美, 關於珍舒美, 隱形牙套, 透明牙套, 平價矯正, 微笑矯正, 美國品牌, AI技術, 美國矽谷, 矯正專業團隊',
+    description: '了解珍舒美（ShineSmile Digital）的品牌故事。創立於美國矽谷，結合30年臨床經驗與AI技術，專為亞洲人設計的隱形牙套系統。Dr. David Shen指導醫師，專業醫療團隊。',
+    keywords: 'about ShineSmile Digital, AI orthodontics, Silicon Valley, orthodontic technology, Dr. David Shen, clinical expertise, orthodontic innovation, 珍舒美, 關於珍舒美, 隱形牙套, 透明牙套, 平價矯正, 微笑矯正, 美國品牌, AI技術, 美國矽谷, 矯正專業團隊',
     url: '/about',
     structuredData: {
       "@context": "https://schema.org",
       "@type": "AboutPage",
-      "name": "About Pearly Digital",
+      "name": "About ShineSmile Digital",
       "description": "Learn about our AI-powered orthodontic technology and clinical expertise",
       "mainEntity": {
         "@type": "MedicalBusiness",
-        "name": "珍舒美 Pearly Digital"
+        "name": "珍舒美 ShineSmile Digital"
       }
     }
   },
@@ -115,11 +115,11 @@ export const seoConfig = {
     structuredData: {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "name": "Partner With Pearly",
+      "name": "Partner With ShineSmile",
       "description": "Join our orthodontic partner network and offer clear aligner treatments",
       "mainEntity": {
         "@type": "MedicalBusiness",
-        "name": "珍舒美 Pearly Digital"
+        "name": "珍舒美 ShineSmile Digital"
       }
     }
   },
@@ -132,7 +132,7 @@ export const seoConfig = {
     structuredData: {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "Pearly Smile Quiz",
+      "name": "ShineSmile Smile Quiz",
       "description": "Free online smile assessment for clear aligner suitability",
       "applicationCategory": "HealthApplication",
       "offers": {
@@ -151,7 +151,7 @@ export const seoConfig = {
     structuredData: {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      "name": "Pearly Digital FAQ",
+      "name": "ShineSmile Digital FAQ",
       "description": "Frequently asked questions about clear aligners and orthodontic treatment"
     }
   }
