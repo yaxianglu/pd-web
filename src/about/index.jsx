@@ -13,7 +13,7 @@ import Step from '../components/step';
 import VideoList from '../components/video-list';
 import Description from './description';
 import p3 from './imgs/3.jpg';
-import p4 from './imgs/4.svg';
+import p4 from './imgs/4.png';
 import Creater from './creater';
 import CardWrapper from '../components/card-wrapper';
 import { useLanguage } from '../context/LanguageContext';
