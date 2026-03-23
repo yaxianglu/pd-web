@@ -3,12 +3,13 @@ import './ManufacturingSection.scss';
 import CardWrapper from "../components/card-wrapper";
 import p1 from './imgs/1.jpg';
 import p2 from './imgs/2.jpg';
+import p4 from './imgs/4.png';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function ManufacturingSection() {
   const { t } = useLanguage();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const images = [p1, p2];
+  const images = [p4, p4];
   const labels = [t('invisibleBraces.manufacturing.sideView'), t('invisibleBraces.manufacturing.frontView')];
 
   const handlePrevious = () => {
@@ -31,13 +32,13 @@ export default function ManufacturingSection() {
             <div className="dot yellow"></div>
             <div className="dot green"></div>
           </div>
-          <div className="view-label">
+          {/* <div className="view-label">
             {labels[currentImageIndex]}
-          </div>
+          </div> */}
         </div>
 
         {/* 内容区块 */}
-        <div className="card-content">
+        <div className="card-content" style={{ paddingBottom: 16 }}>
           <div className="card-content-top">
             {t('invisibleBraces.manufacturing.description')}
           </div>
@@ -54,7 +55,7 @@ export default function ManufacturingSection() {
             </div>
           </div>
           {/* 下方翻页按钮 */}
-          <div className="navigation-buttons">
+          {/* <div className="navigation-buttons">
             <button 
               className="nav-button"
               onClick={handlePrevious}
@@ -67,7 +68,7 @@ export default function ManufacturingSection() {
             >
               ›
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </CardWrapper>
