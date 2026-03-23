@@ -114,20 +114,29 @@ export default function BrandCompareTable() {
       title={t('invisibleBraces.brandCompare.title')}
     >
       <div className="table-wrapper">
-          {/* 品牌表头 */}
-          <div className="brand-header">
-            <div className="empty-cell"></div>
-            {brands.map(({ name, isActive }, idx) => (
-              <div
-                key={idx}
-                className={`brand-cell ${isActive ? 'active' : 'inactive'}`}
-              >
-                {name}
-              </div>
-            ))}
-          </div>
-          {/* 表格内容 */}
           <table className="compare-table">
+            <colgroup>
+              <col className="col-category" />
+              <col className="col-metric" />
+              <col className="col-brand" />
+              <col className="col-brand" />
+              <col className="col-brand" />
+              <col className="col-brand" />
+            </colgroup>
+            <thead>
+              <tr className="brand-header-row">
+                <th colSpan={2} className="brand-header-spacer" aria-hidden="true" />
+                {brands.map(({ name, isActive }, idx) => (
+                  <th
+                    key={idx}
+                    scope="col"
+                    className={`brand-header-cell ${isActive ? 'active' : 'inactive'}`}
+                  >
+                    {name}
+                  </th>
+                ))}
+              </tr>
+            </thead>
             <tbody>
               {rowGroups.map((group, groupIdx) => {
                 const isLast = groupIdx === rowGroups.length-1;
@@ -155,11 +164,13 @@ export default function BrandCompareTable() {
                       </td>
                       {/* 各品牌数据单元格 */}
                       {brands.map((brand,idx) => {
-                        const brandName = typeof brand.name === 'string' ? brand.name : 'PEARL DIGITAL';
+                        const brandName = typeof brand.name === 'string'
+                          ? brand.name
+                          : t('invisibleBraces.brandCompare.brands.pearlDigital');
                         const cellData = compareData[rowLabel]?.[brandName] || '';
                         return (
                           <td 
-                            key={brand.name+idx} 
+                            key={`brand-cell-${rowLabel}-${idx}`}
                             className={`brand-cell ${isLast && isLastGroup ? 'last-row' : ''}`}
                           >
                             <div className="cell-content">
