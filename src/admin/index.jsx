@@ -128,6 +128,12 @@ function AdminSmileView() {
         if (res?.success && Array.isArray(res.data)) {
           // 过滤掉 patient_uuid 有值的记录
           const filteredData = res.data.filter((s) => !s.patient_uuid);
+          // 按最新活动时间降序排列（updated_at 优先，fallback 到 created_at）
+          filteredData.sort((a, b) => {
+            const dateA = new Date(a.updated_at || a.created_at).getTime();
+            const dateB = new Date(b.updated_at || b.created_at).getTime();
+            return dateB - dateA;
+          });
           const mapped = filteredData.map((s, idx) => ({
             ...s,
             id: String(idx + 1).padStart(2, '0'),
@@ -142,7 +148,7 @@ function AdminSmileView() {
             current_issues: s.current_issues || '', // 管理员备注
             statusText: s?.patient_uuid ? s?.uuid : t('admin.table.createPatientInfo'),
             smileUuid: s.uuid,
-            createdAt: s.created_at ? new Date(s.created_at).toLocaleString('zh-TW') : '—',
+            createdAt: (s.updated_at || s.created_at) ? new Date(s.updated_at || s.created_at).toLocaleString('zh-TW') : '—',
           }));
           setItems(mapped);
         } else {
@@ -285,6 +291,12 @@ function AdminSmileView() {
             if (again?.success && Array.isArray(again.data)) {
               // 过滤掉 patient_uuid 有值的记录
               const filteredData = again.data.filter((s) => !s.patient_uuid);
+              // 按最新活动时间降序排列
+              filteredData.sort((a, b) => {
+                const dateA = new Date(a.updated_at || a.created_at).getTime();
+                const dateB = new Date(b.updated_at || b.created_at).getTime();
+                return dateB - dateA;
+              });
               const mapped = filteredData.map((s, idx) => ({
                 ...s,
                 id: String(idx + 1).padStart(2, '0'),
@@ -299,7 +311,7 @@ function AdminSmileView() {
                 current_issues: s.current_issues || '', // 管理员备注
                 statusText: s?.patient_uuid ? s?.uuid : t('admin.table.createPatientInfo'),
                 smileUuid: s.uuid,
-                createdAt: s.created_at ? new Date(s.created_at).toLocaleString('zh-TW') : '—',
+                createdAt: (s.updated_at || s.created_at) ? new Date(s.updated_at || s.created_at).toLocaleString('zh-TW') : '—',
               }));
               setItems(mapped);
             }
