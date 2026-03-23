@@ -54,7 +54,7 @@ export default {
     invisibleBraces: 'Invisible Braces',
     maintainer: 'Retainers',
     whitening: 'Pearl Whitening',
-    journey: 'Pearl Journey',
+    journey: 'ShineSmile Journey',
     correction: 'Orthodontics & Aesthetics',
     about: 'About Us',
     partners: 'Partners',
@@ -111,7 +111,7 @@ export default {
 
   // Services
   services: {
-    journey: 'Pearl Journey',
+    journey: 'ShineSmile Journey',
     correction: 'Orthodontics & Aesthetics',
     smileUpgrade: 'Smile Upgrade'
   },
