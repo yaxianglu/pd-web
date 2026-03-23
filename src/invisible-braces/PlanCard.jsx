@@ -55,7 +55,7 @@ export default function WhichPlan() {
     >
       <div className="plan-cards">
         {plans.map((plan, idx) =>
-          <PlanCard key={plan.tag} {...plan} complexityText={isMobile ? '' : currentLanguage === 'en' ? t('invisibleBraces.planSelection.complexity') : '複雜程度'} />
+          <PlanCard key={plan.tag} {...plan} complexityText={isMobile || currentLanguage === 'en' ? '' : '複雜程度'} />
         )}
       </div>
       <DetailButton text={t('invisibleBraces.planSelection.buttonText')}   />
