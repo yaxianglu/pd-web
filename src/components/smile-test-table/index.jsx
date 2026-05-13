@@ -105,6 +105,7 @@ export default function SmileTestTable({
         dataIndex: 'smileUuid',
         key: 'download',
         width: 120,
+        fixed: 'right',
         render: (_, row) => (
           <button
             type="button"
@@ -123,6 +124,7 @@ export default function SmileTestTable({
         dataIndex: 'statusText',
         key: 'status',
         width: 180,
+        fixed: 'right',
         render: (value, row) => (
           value === createPatientLabel ? (
             <button
@@ -143,6 +145,7 @@ export default function SmileTestTable({
       {
         key: Table.EXPAND_COLUMN,
         width: 60,
+        fixed: 'right',
       },
     ];
 

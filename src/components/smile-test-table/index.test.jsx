@@ -73,5 +73,7 @@ describe('SmileTestTable', () => {
     expect(screen.getByText('共 1 条记录')).toBeInTheDocument();
     expect(screen.getByText('王小明')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '创建患者信息' })).toBeInTheDocument();
+    expect(screen.getByText('资料下载').closest('th')).toHaveClass('ant-table-cell-fix-right');
+    expect(screen.getByText('患者卡').closest('th')).toHaveClass('ant-table-cell-fix-right');
   });
 });
