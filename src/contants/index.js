@@ -1,8 +1,9 @@
-
 // API基础URL
-export const API_BASE_URL = process.env.REACT_APP_API_URL || '';
-// export const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://98.83.160.201:3001';
-// export const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+const isDevelopment = process.env.NODE_ENV === 'development';
+
+export const API_BASE_URL = isDevelopment
+  ? ''
+  : (process.env.REACT_APP_API_URL || 'http://98.83.160.201:3001');
 
 
 export const wrapperStyle = {

@@ -1,0 +1,33 @@
+# Robots.txt for Pearly Digital
+# https://www.robotstxt.org/robotstxt.html
+
+User-agent: *
+Allow: /
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /doctor/
+Disallow: /patient/
+Disallow: /clinic/
+Disallow: /hospital/
+Disallow: /sales/
+Disallow: /list/
+
+# Allow important pages
+Allow: /invisible-braces
+Allow: /maintainer
+Allow: /journey
+Allow: /correction
+Allow: /about
+Allow: /join
+Allow: /upload
+Allow: /faq
+Allow: /privacy
+Allow: /terms
+Allow: /login
+
+# Sitemap location
+Sitemap: https://pearl-digital.com/sitemap.xml
+
+# Crawl delay (optional)
+Crawl-delay: 1
