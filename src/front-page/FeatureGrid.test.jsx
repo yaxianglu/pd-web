@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import FeatureGrid from './FeatureGrid';
 
 const mockNavigate = jest.fn();
+const mockWindowOpen = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -16,8 +17,8 @@ jest.mock('../context/LanguageContext', () => ({
       'home.learnMore': '想要了解',
       'home.featureGrid.invisibleBraces.title': '隱形牙套',
       'home.featureGrid.retainer.title': '維持器',
-      'home.featureGrid.journey.title': '療程旅程',
       'home.featureGrid.correctionBeauty.title': '矯正與美',
+      'home.featureGrid.smileTest.title': '微笑測試',
     }[key] || key),
   }),
 }));
@@ -25,17 +26,19 @@ jest.mock('../context/LanguageContext', () => ({
 describe('FeatureGrid', () => {
   beforeEach(() => {
     mockNavigate.mockClear();
+    mockWindowOpen.mockClear();
+    window.open = mockWindowOpen;
   });
 
-  it('renders homepage cards in the same order as the header tabs and navigates to matching pages', async () => {
+  it('renders homepage cards in the requested order and links each card to the matching destination', async () => {
     render(<FeatureGrid />);
 
     expect(screen.getByText('想要了解')).toBeInTheDocument();
     expect(screen.getAllByRole('img').map((image) => image.getAttribute('alt'))).toEqual([
       '隱形牙套',
       '維持器',
-      '療程旅程',
       '矯正與美',
+      '微笑測試',
     ]);
 
     const buttons = screen.getAllByRole('button');
@@ -48,8 +51,8 @@ describe('FeatureGrid', () => {
     expect(mockNavigate.mock.calls).toEqual([
       ['/invisible-braces'],
       ['/maintainer'],
-      ['/journey'],
       ['/correction'],
     ]);
+    expect(mockWindowOpen).toHaveBeenCalledWith('/upload', '_blank');
   });
 });
