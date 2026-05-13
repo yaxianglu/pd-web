@@ -2,10 +2,11 @@ import React, { useState, useCallback, useEffect } from 'react';
 import Logout from '../components/logout';
 import './index.scss';
 import apiService from '../services/api';
-import { Modal, Pagination, Select, Tooltip, message, Tabs } from 'antd';
+import { Modal, Select, message, Tabs } from 'antd';
 import Partners from '../partners';
 import ClinicDashboard from '../clinic';
 import HistoryModal from '../components/history-modal';
+import SmileTestTable from '../components/smile-test-table';
 import { useLanguage } from '../context/LanguageContext';
 import {
   createSmileTestFilters,
@@ -43,7 +44,7 @@ function MarketHeader({ activeTab, onTabChange }) {
 
 export default function MarketDashboard({ items: inputItems = null, bizId = '320123010010' }) {
   const { t } = useLanguage();
-  const [expanded, setExpanded] = useState({});
+  const [expandedRowKeys, setExpandedRowKeys] = useState([]);
   const [items, setItems] = useState([]);
   const [filters, setFilters] = useState(() => createSmileTestFilters());
   const [pagination, setPagination] = useState(() => getSmileTestPagination());
@@ -103,36 +104,6 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
 
   const timeColumns = getSmileTestTimeColumns(t);
 
-  const renderTimeCell = useCallback((value) => {
-    if (!value || value === '—') {
-      return <span className="time-empty">—</span>;
-    }
-
-    const [datePart, ...timeParts] = String(value).split(' ');
-    const timePart = timeParts.join(' ');
-
-    if (!timePart) {
-      return <span className="time-single">{value}</span>;
-    }
-
-    return (
-      <>
-        <span className="time-date">{datePart}</span>
-        <span className="time-time">{timePart}</span>
-      </>
-    );
-  }, []);
-
-  const renderTextCell = useCallback((value, className = '') => {
-    const displayValue = value || '—';
-
-    return (
-      <Tooltip title={displayValue === '—' ? null : displayValue} placement="topLeft">
-        <span className={`cell-text ${className}`.trim()}>{displayValue}</span>
-      </Tooltip>
-    );
-  }, []);
-
   const mapSmileTests = useCallback((records = [], page = 1, pageSize = SMILE_TEST_PAGE_SIZE) => {
     const baseIndex = (page - 1) * pageSize;
 
@@ -160,7 +131,7 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
   }, [t]);
 
   const setFilterValue = useCallback((patch) => {
-    setExpanded({});
+    setExpandedRowKeys([]);
     setFilters((prev) => mergeSmileTestFilters(prev, patch));
   }, []);
 
@@ -217,9 +188,57 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
     setHistoryModalOpen(true);
   };
 
-  const onToggle = useCallback((rowId) => {
-    setExpanded((prev) => ({ ...prev, [rowId]: !prev[rowId] }));
-  }, []);
+  const renderExpandedContent = (row) => (
+    <div className="row-expand-content">
+      <div className="user-note-section">
+        <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
+          {t('admin.table.dateOfBirth')}：{row.birth_date || '—'}
+        </div>
+        <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
+          {t('admin.table.teethType')}：{formatTeethType(row.teeth_type)}
+        </div>
+        <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
+          {t('admin.table.considerations')}：{formatConsiderations(row.considerations)}
+        </div>
+        <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
+          {t('admin.table.userNote')}：{row.improvement_points || '—'}
+        </div>
+        <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
+          {t('admin.table.createdAt')}：{row.createdAt}
+        </div>
+        <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
+          {t('admin.table.imageUploadTime')}：{row.latestImageUploadTime}
+        </div>
+        <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
+          {t('admin.table.updatedAt')}：{row.updatedAt}
+        </div>
+        <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
+          {t('admin.table.appointmentDate')}：{row.appointmentAt}
+        </div>
+        <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
+          {t('admin.table.followUpDate')}：{row.followUpAt}
+        </div>
+      </div>
+      <textarea
+        className="note-input"
+        placeholder={t('admin.table.placeholder')}
+        defaultValue={getAdminNote(row.current_issues)}
+        onBlur={async (e) => {
+          const text = e.target.value || '';
+          if (!row.smileUuid) return;
+          const r = await apiService.updateSmileTestBio(row.smileUuid, text);
+          if (r?.success) {
+            message.success(t('admin.messages.saved'));
+            setItems((prev) => prev.map((it) => it.smileUuid === row.smileUuid ? { ...it, current_issues: text } : it));
+          } else {
+            message.error(r?.message || t('admin.messages.saveFailed'));
+          }
+        }}
+        rows={3}
+        style={{ width: '100%' }}
+      />
+    </div>
+  );
 
   return (
     <div className="market-dashboard" style={{ height: '100%' }}>
@@ -286,129 +305,33 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
             />
           </div>
         </div>
-        <div className="table">
-          <div className="thead">
-            <div className="th seq">{t('admin.table.seq')}</div>
-            <div className="th name">{t('admin.table.patientName')}</div>
-            <div className="th phone">{t('admin.table.phone')}</div>
-            <div className="th email">{t('admin.table.email')}</div>
-            <div className="th line_id">{t('admin.table.lineId')}</div>
-            <div className="th region">{t('admin.table.region')}</div>
-            {timeColumns.map((column) => (
-              <div key={column.key} className={`th ${column.key}`}>{column.header}</div>
-            ))}
-            <div className="th download">{t('admin.table.download')}</div>
-            <div className="th status">{t('admin.table.status')}</div>
-            <div className="th caret" />
-          </div>
-
-          <div className="tbody">
-            {items.map((row) => {
-              const isOpen = !!expanded[row.rowKey];
-              return (
-                <div key={row.rowKey} className={`tr ${isOpen ? 'open' : ''}`}>
-                  <div className="row-main">
-                    <div className="td seq">{row.id}</div>
-                    <div className="td name">{renderTextCell(row.patientName, 'cell-text-strong')}</div>
-                    <div className="td phone">{renderTextCell(row.phone)}</div>
-                    <div className="td email">{renderTextCell(row.email)}</div>
-                    <div className="td line_id">{renderTextCell(row.lineId)}</div>
-                    <div className="td region">{renderTextCell(row.region)}</div>
-                    {timeColumns.map((column) => (
-                      <div key={column.key} className={`td time_cell ${column.key}`}>{renderTimeCell(row[column.key])}</div>
-                    ))}
-                    <div className="td download">
-                      <button
-                        type="button"
-                        onClick={(e) => { e.stopPropagation(); openHistoryModal(row.smileUuid); }}
-                        className="link"
-                        style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontSize: '12px' }}
-                      >{t('admin.table.historyData')}</button>
-                    </div>
-                    <div className="td status">
-                      {row.statusText === t('admin.table.createPatientInfo') ? (
-                        <button className="create-patient-info-button" onClick={(e) => { e.stopPropagation(); openBindPatientModal(row.smileUuid); }}>{t('admin.table.createPatientInfo')}</button>
-                      ) : (
-                        renderTextCell(row.statusText)
-                      )}
-                    </div>
-                    <div className="td caret" onClick={() => onToggle(row.rowKey)}>
-                      <span className={`arrow ${isOpen ? 'up' : 'down'}`}>▾</span>
-                    </div>
-                  </div>
-
-                  {isOpen && (
-                    <div className="row-expand" onClick={(e) => e.stopPropagation()}>
-                      <div className="user-note-section">
-                        <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
-                          {t('admin.table.dateOfBirth')}：{row.birth_date || '—'}
-                        </div>
-                        <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
-                          {t('admin.table.teethType')}：{formatTeethType(row.teeth_type)}
-                        </div>
-                        <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
-                          {t('admin.table.considerations')}：{formatConsiderations(row.considerations)}
-                        </div>
-                        <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
-                          {t('admin.table.userNote')}：{row.improvement_points || '—'}
-                        </div>
-                        <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
-                          {t('admin.table.createdAt')}：{row.createdAt}
-                        </div>
-                        <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
-                          {t('admin.table.imageUploadTime')}：{row.latestImageUploadTime}
-                        </div>
-                        <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
-                          {t('admin.table.updatedAt')}：{row.updatedAt}
-                        </div>
-                        <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
-                          {t('admin.table.appointmentDate')}：{row.appointmentAt}
-                        </div>
-                        <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
-                          {t('admin.table.followUpDate')}：{row.followUpAt}
-                        </div>
-                      </div>
-                      <textarea
-                        className="note-input"
-                        placeholder={t('admin.table.placeholder')}
-                        defaultValue={getAdminNote(row.current_issues)}
-                        onBlur={async (e) => {
-                          const text = e.target.value || '';
-                          if (!row.smileUuid) return;
-                          const r = await apiService.updateSmileTestBio(row.smileUuid, text);
-                        if (r?.success) {
-                          message.success(t('admin.messages.saved'));
-                          // 更新本地状态，保存管理员备注到 current_issues 字段
-                          setItems((prev) => prev.map((it) => it.smileUuid === row.smileUuid ? { ...it, current_issues: text } : it));
-                        } else {
-                          message.error(r?.message || t('admin.messages.saveFailed'));
-                          }
-                        }}
-                        rows={3}
-                        style={{ width: '100%' }}
-                      />
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-        <div className="smile-list-footer">
-          <div className="smile-list-summary">
-            {getSmileTestSummaryText(pagination, t)}
-          </div>
-          <Pagination
-            current={pagination.page}
-            pageSize={pagination.page_size}
-            total={pagination.total}
-            showSizeChanger={false}
-            onChange={(page) => {
-              setExpanded({});
-              setFilters((prev) => ({ ...prev, page, page_size: SMILE_TEST_PAGE_SIZE }));
-            }}
-          />
-        </div>
+        <SmileTestTable
+          items={items}
+          timeColumns={timeColumns}
+          pagination={pagination}
+          totalSummaryText={getSmileTestSummaryText(pagination, t)}
+          createPatientLabel={t('admin.table.createPatientInfo')}
+          historyLabel={t('admin.table.historyData')}
+          labels={{
+            seq: t('admin.table.seq'),
+            patientName: t('admin.table.patientName'),
+            phone: t('admin.table.phone'),
+            email: t('admin.table.email'),
+            lineId: t('admin.table.lineId'),
+            region: t('admin.table.region'),
+            download: t('admin.table.download'),
+            status: t('admin.table.status'),
+          }}
+          expandedRowKeys={expandedRowKeys}
+          onExpandedRowsChange={setExpandedRowKeys}
+          onOpenHistory={openHistoryModal}
+          onOpenBind={openBindPatientModal}
+          onPageChange={(page) => {
+            setExpandedRowKeys([]);
+            setFilters((prev) => ({ ...prev, page, page_size: SMILE_TEST_PAGE_SIZE }));
+          }}
+          renderExpandedContent={renderExpandedContent}
+        />
         </>
         )}
         {activeTab === 'partners' && <Partners />}
