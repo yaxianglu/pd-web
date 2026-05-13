@@ -1438,8 +1438,8 @@ export default {
       close: '關閉'
     },
     pagination: {
-      total: '共 {{total}} 條記錄',
-      currentPageCount: '當前頁 {{count}} 條記錄'
+      total: '共 {total} 條記錄',
+      currentPageCount: '當前頁 {count} 條記錄'
     }
   },
 

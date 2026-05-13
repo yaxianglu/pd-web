@@ -1432,8 +1432,8 @@ export default {
       close: '关闭'
     },
     pagination: {
-      total: '共 {{total}} 条记录',
-      currentPageCount: '当前页 {{count}} 条记录'
+      total: '共 {total} 条记录',
+      currentPageCount: '当前页 {count} 条记录'
     }
   },
 

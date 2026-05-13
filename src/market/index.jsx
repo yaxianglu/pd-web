@@ -14,6 +14,7 @@ import {
   getSmileTestPagination,
   getSmileTestSortOptions,
   getSmileTestSummaryText,
+  getSmileTestTimeColumns,
   mergeSmileTestFilters,
   SMILE_TEST_PAGE_SIZE,
 } from '../utils/smile-test-list';
@@ -99,6 +100,8 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
   const getAdminNote = (currentIssues) => {
     return currentIssues || '';
   };
+
+  const timeColumns = getSmileTestTimeColumns(t);
 
   const mapSmileTests = useCallback((records = [], page = 1, pageSize = SMILE_TEST_PAGE_SIZE) => {
     const baseIndex = (page - 1) * pageSize;
@@ -251,7 +254,9 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
             <div className="th email">{t('admin.table.email')}</div>
             <div className="th line_id">{t('admin.table.lineId')}</div>
             <div className="th region">{t('admin.table.region')}</div>
-            <div className="th time_info">{t('admin.table.timeInfo')}</div>
+            {timeColumns.map((column) => (
+              <div key={column.key} className={`th ${column.key}`}>{column.header}</div>
+            ))}
             <div className="th download">{t('admin.table.download')}</div>
             <div className="th status">{t('admin.table.status')}</div>
             <div className="th caret" />
@@ -269,11 +274,9 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
                     <div className="td email">{row.email || '—'}</div>
                     <div className="td line_id">{row.lineId || '—'}</div>
                     <div className="td region">{row.region || '—'}</div>
-                    <div className="td time_info">
-                      <div className="time-line"><span className="time-label">{t('admin.table.createdAtShort')}</span><span>{row.createdAt}</span></div>
-                      <div className="time-line"><span className="time-label">{t('admin.table.uploadAtShort')}</span><span>{row.latestImageUploadTime}</span></div>
-                      <div className="time-line"><span className="time-label">{t('admin.table.updatedAtShort')}</span><span>{row.updatedAt}</span></div>
-                    </div>
+                    {timeColumns.map((column) => (
+                      <div key={column.key} className={`td time_cell ${column.key}`}>{row[column.key] || '—'}</div>
+                    ))}
                     <div className="td download">
                       <button
                         type="button"
@@ -364,7 +367,6 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
               setExpanded({});
               setFilters((prev) => ({ ...prev, page, page_size: SMILE_TEST_PAGE_SIZE }));
             }}
-            showTotal={pagination.has_total ? (total) => t('admin.pagination.total', { total }) : undefined}
           />
         </div>
         </>

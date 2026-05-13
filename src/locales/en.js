@@ -1444,8 +1444,8 @@ Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
       close: 'Close'
     },
     pagination: {
-      total: 'Total {{total}} records',
-      currentPageCount: '{{count}} records on current page'
+      total: 'Total {total} records',
+      currentPageCount: '{count} records on current page'
     }
   },
 

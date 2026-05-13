@@ -56,6 +56,14 @@ export function getSmileTestSortOptions(t) {
   ];
 }
 
+export function getSmileTestTimeColumns(t) {
+  return [
+    { key: 'createdAt', header: t('admin.table.createdAt') },
+    { key: 'latestImageUploadTime', header: t('admin.table.imageUploadTime') },
+    { key: 'updatedAt', header: t('admin.table.updatedAt') },
+  ];
+}
+
 export function getSmileTestStatusOptions(t) {
   return [
     { value: 'pending', label: t('admin.table.statusPending') },

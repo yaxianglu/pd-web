@@ -3,6 +3,7 @@ import {
   createSmileTestFilters,
   getSmileTestSortOptions,
   getSmileTestSummaryText,
+  getSmileTestTimeColumns,
   mergeSmileTestFilters,
   getSmileTestPagination,
 } from './smile-test-list';
@@ -88,6 +89,14 @@ describe('smile-test-list utils', () => {
       { value: 'created_at', label: 'admin.table.sortCreatedAtDesc' },
       { value: 'image_upload_time', label: 'admin.table.sortImageUploadTimeDesc' },
       { value: 'updated_at', label: 'admin.table.sortUpdatedAtDesc' },
+    ]);
+  });
+
+  it('returns three standalone time columns', () => {
+    expect(getSmileTestTimeColumns((key) => key)).toEqual([
+      { key: 'createdAt', header: 'admin.table.createdAt' },
+      { key: 'latestImageUploadTime', header: 'admin.table.imageUploadTime' },
+      { key: 'updatedAt', header: 'admin.table.updatedAt' },
     ]);
   });
 });
