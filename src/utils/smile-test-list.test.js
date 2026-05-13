@@ -15,6 +15,7 @@ describe('smile-test-list utils', () => {
       date_from: '',
       date_to: '',
       account_keyword: '',
+      patient_name: '',
       bound_state: 'unbound',
       sort_by: 'created_at',
       page: 1,
@@ -27,6 +28,7 @@ describe('smile-test-list utils', () => {
       ...createSmileTestFilters(),
       page: 3,
       account_keyword: 'old',
+      patient_name: 'old name',
     }, {
       account_keyword: 'new',
     })).toEqual({
@@ -34,6 +36,7 @@ describe('smile-test-list utils', () => {
       date_from: '',
       date_to: '',
       account_keyword: 'new',
+      patient_name: 'old name',
       bound_state: 'unbound',
       sort_by: 'created_at',
       page: 1,

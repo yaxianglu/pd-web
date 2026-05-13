@@ -6,6 +6,7 @@ export function createSmileTestFilters() {
     date_from: '',
     date_to: '',
     account_keyword: '',
+    patient_name: '',
     bound_state: 'unbound',
     sort_by: 'created_at',
     page: 1,

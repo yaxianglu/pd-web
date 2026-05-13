@@ -135,6 +135,26 @@ function AdminSmileView() {
 
   const timeColumns = getSmileTestTimeColumns(t);
 
+  const renderTimeCell = useCallback((value) => {
+    if (!value || value === '—') {
+      return <span className="time-empty">—</span>;
+    }
+
+    const [datePart, ...timeParts] = String(value).split(' ');
+    const timePart = timeParts.join(' ');
+
+    if (!timePart) {
+      return <span className="time-single">{value}</span>;
+    }
+
+    return (
+      <>
+        <span className="time-date">{datePart}</span>
+        <span className="time-time">{timePart}</span>
+      </>
+    );
+  }, []);
+
   const mapSmileTests = useCallback((records = [], page = 1, pageSize = SMILE_TEST_PAGE_SIZE) => {
     const baseIndex = (page - 1) * pageSize;
 
@@ -205,49 +225,59 @@ function AdminSmileView() {
 
   return (
     <>
-      <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 16, alignItems: 'end' }}>
-        <div>
-          <div style={{ fontSize: 12, marginBottom: 6 }}>{t('admin.table.createdAt')}</div>
+      <div className="smile-filters">
+        <div className="smile-filter-field">
+          <div className="smile-filter-label">{t('admin.table.createdAt')}</div>
           <input
+            className="smile-filter-input"
             type="date"
             value={filters.date_from}
             onChange={(e) => setFilterValue({ date_from: e.target.value })}
-            style={{ height: 32, padding: '0 8px' }}
           />
         </div>
-        <div>
-          <div style={{ fontSize: 12, marginBottom: 6 }}>{t('admin.table.to')}</div>
+        <div className="smile-filter-field">
+          <div className="smile-filter-label">{t('admin.table.to')}</div>
           <input
+            className="smile-filter-input"
             type="date"
             value={filters.date_to}
             onChange={(e) => setFilterValue({ date_to: e.target.value })}
-            style={{ height: 32, padding: '0 8px' }}
           />
         </div>
-        <div>
-          <div style={{ fontSize: 12, marginBottom: 6 }}>{t('admin.table.account')}</div>
+        <div className="smile-filter-field smile-filter-field-wide">
+          <div className="smile-filter-label">{t('admin.table.patientName')}</div>
           <input
+            className="smile-filter-input"
+            type="text"
+            value={filters.patient_name}
+            placeholder={t('admin.table.patientNamePlaceholder')}
+            onChange={(e) => setFilterValue({ patient_name: e.target.value })}
+          />
+        </div>
+        <div className="smile-filter-field smile-filter-field-wide">
+          <div className="smile-filter-label">{t('admin.table.account')}</div>
+          <input
+            className="smile-filter-input"
             type="text"
             value={filters.account_keyword}
             placeholder={t('admin.table.accountPlaceholder')}
             onChange={(e) => setFilterValue({ account_keyword: e.target.value })}
-            style={{ height: 32, padding: '0 8px', width: 220 }}
           />
         </div>
-        <div>
-          <div style={{ fontSize: 12, marginBottom: 6 }}>{t('admin.table.bind')}</div>
+        <div className="smile-filter-field">
+          <div className="smile-filter-label">{t('admin.table.bind')}</div>
           <Select
+            className="smile-filter-select"
             value={filters.bound_state}
-            style={{ width: 140 }}
             onChange={(value) => setFilterValue({ bound_state: value })}
             options={getSmileTestBindOptions(t)}
           />
         </div>
-        <div>
-          <div style={{ fontSize: 12, marginBottom: 6 }}>{t('admin.table.sortBy')}</div>
+        <div className="smile-filter-field">
+          <div className="smile-filter-label">{t('admin.table.sortBy')}</div>
           <Select
+            className="smile-filter-select"
             value={filters.sort_by}
-            style={{ width: 190 }}
             onChange={(value) => setFilterValue({ sort_by: value })}
             options={getSmileTestSortOptions(t)}
           />
@@ -282,7 +312,7 @@ function AdminSmileView() {
                   <div className="td line_id">{row.lineId || '—'}</div>
                   <div className="td region">{row.region || '—'}</div>
                   {timeColumns.map((column) => (
-                    <div key={column.key} className={`td time_cell ${column.key}`}>{row[column.key] || '—'}</div>
+                    <div key={column.key} className={`td time_cell ${column.key}`}>{renderTimeCell(row[column.key])}</div>
                   ))}
                   <div className="td download">
                     <button
@@ -361,8 +391,8 @@ function AdminSmileView() {
           })}
         </div>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, marginTop: 16 }}>
-        <div style={{ fontSize: 13, color: '#6b7280' }}>
+      <div className="smile-list-footer">
+        <div className="smile-list-summary">
           {getSmileTestSummaryText(pagination, t)}
         </div>
         <Pagination
