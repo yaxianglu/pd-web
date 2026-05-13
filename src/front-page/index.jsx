@@ -1,6 +1,7 @@
 import React from 'react';
 import FeatureGrid from './FeatureGrid';
-import p5 from './imgs/5.jpg';
+import heroImage from './assets/home-hero.jpg';
+import homeVideo from './assets/home-video.mp4';
 
 import Header from '../components/header';
 import Footer from '../components/footer';
@@ -9,33 +10,39 @@ import Thumbnail from '../components/thumbnail';
 import Sketch from '../components/sketch';
 import { useLanguage } from '../context/LanguageContext';
 import { useResponsive } from '../components/responsive-hook';
+import { useNavigate } from 'react-router-dom';
 
 export default function PageCom() {
   const { t } = useLanguage();
-  const { isMobile, isTablet } = useResponsive();
-
-  console.info('isMobile', isMobile);
-
-  const S = isMobile ? 'div' : 'span';
+  const { isMobile } = useResponsive();
+  const navigate = useNavigate();
   
   return (
     <>
       <Header />
       <PageWrapper>
         <Thumbnail 
-          title={<span style={{ fontSize: 56 }}>{t('home.title')}<br />{t('home.subtitle')}</span>}
+          variant="home"
+          title={<span>{t('home.title')}<br />{t('home.subtitle')}</span>}
           subtitle={t('brand.tagline')}
           button1={<div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row' }}><span>{t('home.button1')}</span><span>{t('home.button11')}</span></div>}
           button2={<div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row' }}><span>{t('home.button2')}</span><span>{t('home.button21')}</span></div>}
-          image={p5}
+          onButton1Click={() => window.open('/upload', '_blank')}
+          onButton2Click={() => navigate('/about')}
+          image={heroImage}
           description={<>{t('home.description')}<br />{t('home.description2')}</>}
         />
         <Sketch
+          variant="home"
           title={<>{t('home.sketchTitle')}</>}
-        />
+        >
+          <div className="home-video-shell">
+            <video src={homeVideo} controls playsInline preload="metadata" />
+          </div>
+        </Sketch>
         <FeatureGrid />
       </PageWrapper>
       <Footer />
       </>
   );
-} 
+}

@@ -70,8 +70,8 @@ const AppointmentModal = ({
       } else {
         // 管理员或其他角色，获取所有患者
         console.log('管理员角色，获取所有患者');
-        res = await api.getAllSmileTests();
-        console.log('getAllSmileTests API响应:', res);
+        res = await api.getPatients();
+        console.log('getPatients API响应:', res);
       }
       
       if (res && res.success && Array.isArray(res.data)) {
@@ -95,10 +95,10 @@ const AppointmentModal = ({
               originalData: item
             };
           }
-          // 如果是getAllSmileTests的平铺结构
+          // 如果是患者列表的平铺结构
           else {
             return {
-              // 对于getAllSmileTests，item.uuid就是smile_test的uuid
+              // 对于患者列表，item.uuid 仍然使用 smile_test.uuid
               uuid: item.uuid,
               patient_uuid: item.patient_uuid, // 这是关联的patient uuid
               full_name: item.full_name,

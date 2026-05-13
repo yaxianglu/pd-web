@@ -77,6 +77,7 @@ export default {
     subtitle: 'SMILE RIGHT',
     description: '高透明度材質與口腔護理方案，讓你每個笑容自然明亮',
     description2: 'AI技術輔助與臨床專業設計，實現客製化的科學矯正效果',
+    learnMore: '了解珍舒美的核心服務',
     button1: '微笑',
     button11: '測試', 
     button2: '關於',
@@ -533,6 +534,9 @@ export default {
         title: '提交成功',
         message1: '您的微笑測試已完成並成功提交！',
         message2: '感謝您的參與，我們會盡快為您分析結果。',
+        qrTitle: '加入官方 LINE',
+        qrDescription: '掃描 QR code 或點擊下方按鈕，即可加入官方 LINE 取得後續聯繫。',
+        openLineButton: '打開官方 LINE',
         closeButton: '關閉頁面'
       },
       errors: {

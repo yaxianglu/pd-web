@@ -77,6 +77,7 @@ export default {
     subtitle: 'SMILE RIGHT',
     description: 'High-transparency materials and oral care solutions make every smile look naturally bright.',
     description2: 'With AI technology and professional treatment plan, achieve customized, science-driven orthodontic results.',
+    learnMore: 'Explore ShineSmile core services',
     button1: 'Smile Quiz',
     button11: '',
     button2: 'About Us',
@@ -533,6 +534,9 @@ export default {
         title: 'Submission Successful',
         message1: 'Your smile quiz has been completed and successfully submitted!',
         message2: 'Thank you for your participation. We will analyze the results for you as soon as possible.',
+        qrTitle: 'Join Our Official LINE',
+        qrDescription: 'Scan the QR code or use the button below to connect with our official LINE account for follow-up support.',
+        openLineButton: 'Open Official LINE',
         closeButton: 'Close Page'
       },
       errors: {

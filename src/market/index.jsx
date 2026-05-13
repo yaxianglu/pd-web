@@ -34,6 +34,13 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
   const { t } = useLanguage();
   const [expanded, setExpanded] = useState({});
   const [items, setItems] = useState([]);
+  const [filters, setFilters] = useState({
+    status: '',
+    date_from: '',
+    date_to: '',
+    account_keyword: '',
+    bound_state: 'unbound',
+  });
   const [createOpen, setCreateOpen] = useState(false);
   const [doctors, setDoctors] = useState([]);
   const [selectedDoctorUuid, setSelectedDoctorUuid] = useState('');
@@ -88,54 +95,42 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
     return currentIssues || '';
   };
 
-  // 首次进入或依赖变化时，从后端获取 smile_test 列表
+  const mapSmileTests = useCallback((records = []) => {
+    return records.map((s, idx) => ({
+      ...s,
+      id: String(idx + 1).padStart(2, '0'),
+      patientName: s.full_name || '—',
+      phone: s.phone || '—',
+      email: s.email || '—',
+      lineId: s.line_id || '—',
+      region: s.city || '—',
+      downloadUrl: '#',
+      teeth_type: s.teeth_type || '',
+      considerations: s.considerations || '',
+      current_issues: s.current_issues || '',
+      statusText: s?.patient_uuid ? s?.uuid : t('admin.table.createPatientInfo'),
+      smileUuid: s.uuid,
+      createdAt: s.created_at ? new Date(s.created_at).toLocaleString('zh-TW') : '—',
+    }));
+  }, [t]);
+
+  const loadSmileTests = useCallback(async () => {
+    if (Array.isArray(inputItems) && inputItems.length > 0 && !filters.status && !filters.date_from && !filters.date_to && !filters.account_keyword && filters.bound_state === 'unbound') {
+      setItems(mapSmileTests(inputItems.filter((s) => !s.patient_uuid)));
+      return;
+    }
+
+    const res = await apiService.getAllSmileTests(filters);
+    if (res?.success && Array.isArray(res.data)) {
+      setItems(mapSmileTests(res.data));
+    } else {
+      setItems([]);
+    }
+  }, [filters, inputItems, mapSmileTests]);
+
   useEffect(() => {
-    let isMounted = true;
-    const load = async () => {
-      if (Array.isArray(inputItems) && inputItems.length > 0) {
-        // 过滤掉 patient_uuid 有值的记录
-        const filteredInputItems = inputItems.filter((s) => !s.patient_uuid);
-        if (isMounted) setItems(filteredInputItems);
-        return;
-      }
-      const res = await apiService.getAllSmileTests();
-      if (isMounted) {
-        if (res?.success && Array.isArray(res.data)) {
-          // 过滤掉 patient_uuid 有值的记录
-          const filteredData = res.data.filter((s) => !s.patient_uuid);
-          // 按创建时间降序排列，确保列表与“创建时间”列语义一致
-          filteredData.sort((a, b) => {
-            const dateA = new Date(a.created_at).getTime();
-            const dateB = new Date(b.created_at).getTime();
-            return dateB - dateA;
-          });
-          // 适配表格字段
-          const mapped = filteredData.map((s, idx) => ({
-            ...s,
-            id: String(idx + 1).padStart(2, '0'),
-            patientName: s.full_name || '—',
-            phone: s.phone || '—',
-            email: s.email || '—',
-            lineId: s.line_id || '—',
-            region: s.city || '—',
-            downloadUrl: '#',
-            teeth_type: s.teeth_type || '',
-            considerations: s.considerations || '', // 患者填写的多选选项
-            current_issues: s.current_issues || '', // 管理员备注
-            statusText: s?.patient_uuid ? s?.uuid : t('admin.table.createPatientInfo'),
-            smileUuid: s.uuid,
-            createdAt: s.created_at ? new Date(s.created_at).toLocaleString('zh-TW') : '—',
-          }));
-          setItems(mapped);
-        } else {
-          // 失败时给出空数组
-          setItems([]);
-        }
-      }
-    };
-    load();
-    return () => { isMounted = false; };
-  }, [inputItems]);
+    loadSmileTests();
+  }, [loadSmileTests]);
 
   // 预取醫生+診所
   useEffect(() => {
@@ -158,60 +153,71 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
     setExpanded((prev) => ({ ...prev, [rowId]: !prev[rowId] }));
   }, []);
 
-  const handleDownloadPhotos = useCallback(async (smileUuid) => {
-    try {
-      if (!smileUuid) {
-        message.error(t('admin.messages.missingRecordId'));
-        return;
-      }
-      const key = 'photos-download';
-      message.loading({ content: t('admin.messages.generatingPhotos'), key, duration: 0 });
-      const blob = await apiService.downloadSmilePhotosZip(smileUuid);
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `smile_photos_${smileUuid.slice(0, 8)}.zip`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 2000);
-      message.success({ content: t('admin.messages.photosDownloadStarted'), key, duration: 1.5 });
-    } catch (err) {
-      console.error(err);
-      message.error(t('admin.messages.photosDownloadFailed'));
-    }
-  }, []);
-
-  const handleDownloadFiles = useCallback(async (smileUuid) => {
-    try {
-      if (!smileUuid) {
-        message.error(t('admin.messages.missingRecordId'));
-        return;
-      }
-      const key = 'files-download';
-      message.loading({ content: t('admin.messages.generatingFiles'), key, duration: 0 });
-      const blob = await apiService.downloadUploadedFilesZip(smileUuid);
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `uploaded_files_${smileUuid.slice(0, 8)}.zip`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 2000);
-      message.success({ content: t('admin.messages.filesDownloadStarted'), key, duration: 1.5 });
-    } catch (err) {
-      console.error(err);
-      message.error(t('admin.messages.filesDownloadFailed'));
-    }
-  }, []);
-
   return (
     <div className="market-dashboard" style={{ height: '100%' }}>
       <div className="card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
         <MarketHeader bizId={bizId} activeTab={activeTab} onTabChange={setActiveTab} />
 
         {activeTab === 'smile' && (
+        <>
+        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 16, alignItems: 'end' }}>
+          <div>
+            <div style={{ fontSize: 12, marginBottom: 6 }}>{t('admin.table.status')}</div>
+            <Select
+              value={filters.status || undefined}
+              placeholder={t('admin.table.status')}
+              allowClear
+              style={{ width: 140 }}
+              onChange={(value) => setFilters((prev) => ({ ...prev, status: value || '' }))}
+              options={[
+                { value: 'pending', label: 'pending' },
+                { value: 'in_progress', label: 'in_progress' },
+                { value: 'completed', label: 'completed' },
+                { value: 'cancelled', label: 'cancelled' },
+              ]}
+            />
+          </div>
+          <div>
+            <div style={{ fontSize: 12, marginBottom: 6 }}>{t('admin.table.createdAt')}</div>
+            <input
+              type="date"
+              value={filters.date_from}
+              onChange={(e) => setFilters((prev) => ({ ...prev, date_from: e.target.value }))}
+              style={{ height: 32, padding: '0 8px' }}
+            />
+          </div>
+          <div>
+            <div style={{ fontSize: 12, marginBottom: 6 }}>To</div>
+            <input
+              type="date"
+              value={filters.date_to}
+              onChange={(e) => setFilters((prev) => ({ ...prev, date_to: e.target.value }))}
+              style={{ height: 32, padding: '0 8px' }}
+            />
+          </div>
+          <div>
+            <div style={{ fontSize: 12, marginBottom: 6 }}>Account</div>
+            <input
+              type="text"
+              value={filters.account_keyword}
+              placeholder="Phone / Email / LINE / UUID"
+              onChange={(e) => setFilters((prev) => ({ ...prev, account_keyword: e.target.value }))}
+              style={{ height: 32, padding: '0 8px', width: 220 }}
+            />
+          </div>
+          <div>
+            <div style={{ fontSize: 12, marginBottom: 6 }}>Bind</div>
+            <Select
+              value={filters.bound_state}
+              style={{ width: 140 }}
+              onChange={(value) => setFilters((prev) => ({ ...prev, bound_state: value }))}
+              options={[
+                { value: 'unbound', label: 'Unbound' },
+                { value: 'bound', label: 'Bound' },
+              ]}
+            />
+          </div>
+        </div>
         <div className="table">
           <div className="thead">
             <div className="th seq">{t('admin.table.seq')}</div>
@@ -301,6 +307,7 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
             })}
           </div>
         </div>
+        </>
         )}
         {activeTab === 'partners' && <Partners />}
         {activeTab === 'clinics' && <ClinicDashboard />}
@@ -331,36 +338,7 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
             message.success(t('admin.messages.createSuccess'));
             setCreateOpen(false);
             setSelectedDoctorUuid('');
-            // 重新拉取列表，只显示等待指定的患者信息（patient_uuid 为 null）
-            const again = await apiService.getAllSmileTests();
-            if (again?.success && Array.isArray(again.data)) {
-              // 过滤掉 patient_uuid 有值的记录
-              const filteredData = again.data.filter((s) => !s.patient_uuid);
-              // 按创建时间降序排列，确保列表与“创建时间”列语义一致
-              filteredData.sort((a, b) => {
-                const dateA = new Date(a.created_at).getTime();
-                const dateB = new Date(b.created_at).getTime();
-                return dateB - dateA;
-              });
-              const mapped = filteredData.map((s, idx) => ({
-                ...s,
-                id: String(idx + 1).padStart(2, '0'),
-                patientName: s.full_name || '—',
-                phone: s.phone || '—',
-                email: s.email || '—',
-                lineId: s.line_id || '—',
-                region: s.city || '—',
-                downloadUrl: '#',
-                teeth_type: s.teeth_type || '',
-                considerations: s.considerations || '', // 患者填写的多选选项
-                current_issues: s.current_issues || '', // 管理员备注
-                improvementPoints: s.improvement_points || '',
-                statusText: s?.patient_uuid ? s?.uuid : t('admin.table.createPatientInfo'),
-                smileUuid: s.uuid,
-                createdAt: s.created_at ? new Date(s.created_at).toLocaleString('zh-TW') : '—',
-              }));
-              setItems(mapped);
-            }
+            await loadSmileTests();
           } else {
             message.error(res?.message || t('admin.messages.createFailed'));
           }
@@ -393,4 +371,3 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
     </div>
   );
 }
-

@@ -285,9 +285,20 @@ class ApiService {
   }
 
   // 獲取所有微笑測試（僅未刪除）
-  async getAllSmileTests() {
+  async getAllSmileTests(filters = {}) {
     try {
-      const response = await fetch(`${this.baseURL}/api/smile-test`, {
+      const params = new URLSearchParams();
+      Object.entries(filters || {}).forEach(([key, value]) => {
+        if (value !== undefined && value !== null && value !== '') {
+          params.append(key, String(value));
+        }
+      });
+      const queryString = params.toString();
+      const endpoint = queryString
+        ? `${this.baseURL}/api/smile-test?${queryString}`
+        : `${this.baseURL}/api/smile-test`;
+
+      const response = await fetch(endpoint, {
         method: 'GET',
         headers: this.getHeaders(true), // 添加认证头
       });

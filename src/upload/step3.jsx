@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import QRCode from 'qrcode';
 import { useLocation } from 'react-router-dom';
 import { Modal, Button } from 'antd';
@@ -10,6 +10,9 @@ import p7 from './imgs/7.png';
 import p15 from './imgs/15.png';
 import p16 from './imgs/16.png';
 import p17 from './imgs/17.png';
+import officialLineQr from './assets/official-line-qr.jpg';
+
+const OFFICIAL_LINE_URL = 'https://lin.ee/ygDs8kW';
 
 const pMap = {
   1: [p7, p7],
@@ -253,6 +256,10 @@ export default function Step3({ onNext, setStep, style }) {
     window.location.href = '/';
   };
 
+  const openOfficialLine = () => {
+    window.open(OFFICIAL_LINE_URL, '_blank', 'noopener,noreferrer');
+  };
+
   // 组件加载时初始化狀態
   useEffect(() => {
     // 重置照片狀態，不加载已保存的照片
@@ -336,14 +343,14 @@ export default function Step3({ onNext, setStep, style }) {
   };
 
   // 停止摄像头
-  const stopCamera = () => {
+  const stopCamera = useCallback(() => {
     if (stream) {
       stream.getTracks().forEach(track => track.stop());
       setStream(null);
       setIsCameraActive(false);
       setIsVideoReady(false);
     }
-  };
+  }, [stream]);
 
   // 从相机拍照（移动端）
   const takePhotoFromCamera = () => {
@@ -593,7 +600,7 @@ export default function Step3({ onNext, setStep, style }) {
     return () => {
       stopCamera();
     };
-  }, []);
+  }, [stopCamera]);
 
   // 监听视频狀態变化
   useEffect(() => {
@@ -862,6 +869,9 @@ export default function Step3({ onNext, setStep, style }) {
           open={showSuccessModal}
           onCancel={() => setShowSuccessModal(false)}
           footer={[
+            <Button key="line" onClick={openOfficialLine}>
+              {t('upload.step3Form.successModal.openLineButton')}
+            </Button>,
             <Button key="close" type="primary" onClick={closePage}>
               {t('upload.step3Form.successModal.closeButton')}
             </Button>
@@ -869,8 +879,23 @@ export default function Step3({ onNext, setStep, style }) {
           closable={true}
           maskClosable={false}
         >
-          <p>{t('upload.step3Form.successModal.message1')}</p>
-          <p>{t('upload.step3Form.successModal.message2')}</p>
+          <div className="success-modal-body">
+            <p>{t('upload.step3Form.successModal.message1')}</p>
+            <p>{t('upload.step3Form.successModal.message2')}</p>
+            <div className="success-modal-line-card">
+              <div className="success-modal-line-copy">
+                <div className="success-modal-line-title">{t('upload.step3Form.successModal.qrTitle')}</div>
+                <div className="success-modal-line-description">{t('upload.step3Form.successModal.qrDescription')}</div>
+              </div>
+              <button
+                type="button"
+                className="success-modal-line-qr-button"
+                onClick={openOfficialLine}
+              >
+                <img src={officialLineQr} alt={t('upload.step3Form.successModal.qrTitle')} className="success-modal-line-qr" />
+              </button>
+            </div>
+          </div>
         </Modal>
       </div>
     </div>

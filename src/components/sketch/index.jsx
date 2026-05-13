@@ -1,19 +1,20 @@
 import React from 'react';
-import { useResponsive } from '../responsive-hook';
 import './index.scss';
 
 export default function Sketch(props) {
-  const { title, subtitle, direction = 'left' } = props;
-  const { isMobile, isTablet } = useResponsive();
+  const { title, subtitle, direction = 'left', children, variant = 'default' } = props;
   
   return (
-    <div className={`sketch-bottom-text sketch-bottom-text-${direction}`}>
+    <div className={`sketch-bottom-text sketch-bottom-text-${direction} sketch-bottom-text-${variant}`}>
       <div className={`section-title section-title-${direction}`}>
         {title}
       </div>
-      <div className={`section-subtitle section-subtitle-${direction}`}>
-        {subtitle}
-      </div>
+      {subtitle ? (
+        <div className={`section-subtitle section-subtitle-${direction}`}>
+          {subtitle}
+        </div>
+      ) : null}
+      {children}
     </div>
   );
 }

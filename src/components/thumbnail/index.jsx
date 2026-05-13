@@ -1,11 +1,20 @@
 import React from 'react';
 import './index.scss';
 import { useNavigate } from 'react-router-dom';
-import { useLanguage } from '../../context/LanguageContext';
 
 export default function Thumbnail(props) {
-  const { title, subtitle, image, button1, button2, description, subDescription } = props;
-  const { t } = useLanguage();
+  const {
+    title,
+    subtitle,
+    image,
+    button1,
+    button2,
+    description,
+    subDescription,
+    onButton1Click,
+    onButton2Click,
+    variant = 'default',
+  } = props;
   const navigate = useNavigate();
   const handleClick = (button) => {
     if (button === '微笑測試' || button === 'Smile Quiz' || button === '微笑测试') {
@@ -13,9 +22,26 @@ export default function Thumbnail(props) {
     } else if (button === '關於珍舒美' || button === '关于珍舒美' || button === 'About Pearl Digital') {
       navigate('/about');
     }
-  }
+  };
+
+  const handlePrimaryClick = () => {
+    if (typeof onButton1Click === 'function') {
+      onButton1Click();
+      return;
+    }
+    handleClick(button1);
+  };
+
+  const handleSecondaryClick = () => {
+    if (typeof onButton2Click === 'function') {
+      onButton2Click();
+      return;
+    }
+    handleClick(button2);
+  };
+
   return (
-    <div className="thumbnail-section">
+    <div className={`thumbnail-section thumbnail-section-${variant}`}>
       <div className="content-wrapper">
         <div className="main-content">
           <div className="text-content">
@@ -32,7 +58,7 @@ export default function Thumbnail(props) {
             <div className="button-group">
               {
                 button1 && (
-                  <button className="primary-button" onClick={() => handleClick(button1)}>
+                  <button className="primary-button" onClick={handlePrimaryClick}>
                     {button1}
                     <span className="star-icon">✦</span>
                   </button>
@@ -40,7 +66,7 @@ export default function Thumbnail(props) {
               }
               {
                 button2 && (
-                  <button className="secondary-button" onClick={() => handleClick(button2)}>
+                  <button className="secondary-button" onClick={handleSecondaryClick}>
                     {button2}
                   </button>
                 )
