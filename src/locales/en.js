@@ -77,7 +77,7 @@ export default {
     subtitle: 'SMILE RIGHT',
     description: 'High-transparency materials and oral care solutions make every smile look naturally bright.',
     description2: 'With AI technology and professional treatment plan, achieve customized, science-driven orthodontic results.',
-    learnMore: 'Explore ShineSmile core services',
+    learnMore: 'Want to learn more',
     button1: 'Smile Quiz',
     button11: '',
     button2: 'About Us',
