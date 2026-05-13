@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import Logout from '../components/logout';
 import './index.scss';
 import apiService from '../services/api';
-import { Modal, Pagination, Select, message, Tabs } from 'antd';
+import { Modal, Pagination, Select, Tooltip, message, Tabs } from 'antd';
 import Partners from '../partners';
 import ClinicDashboard from '../clinic';
 import HistoryModal from '../components/history-modal';
@@ -120,6 +120,16 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
         <span className="time-date">{datePart}</span>
         <span className="time-time">{timePart}</span>
       </>
+    );
+  }, []);
+
+  const renderTextCell = useCallback((value, className = '') => {
+    const displayValue = value || '—';
+
+    return (
+      <Tooltip title={displayValue === '—' ? null : displayValue} placement="topLeft">
+        <span className={`cell-text ${className}`.trim()}>{displayValue}</span>
+      </Tooltip>
     );
   }, []);
 
@@ -257,7 +267,7 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
               onChange={(e) => setFilterValue({ account_keyword: e.target.value })}
             />
           </div>
-          <div className="smile-filter-field">
+          <div className="smile-filter-field smile-filter-field-bind">
             <div className="smile-filter-label">{t('admin.table.bind')}</div>
             <Select
               className="smile-filter-select"
@@ -266,7 +276,7 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
               options={getSmileTestBindOptions(t)}
             />
           </div>
-          <div className="smile-filter-field">
+          <div className="smile-filter-field smile-filter-field-sort">
             <div className="smile-filter-label">{t('admin.table.sortBy')}</div>
             <Select
               className="smile-filter-select"
@@ -299,11 +309,11 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
                 <div key={row.rowKey} className={`tr ${isOpen ? 'open' : ''}`}>
                   <div className="row-main">
                     <div className="td seq">{row.id}</div>
-                    <div className="td name">{row.patientName || '—'}</div>
-                    <div className="td phone">{row.phone || '—'}</div>
-                    <div className="td email">{row.email || '—'}</div>
-                    <div className="td line_id">{row.lineId || '—'}</div>
-                    <div className="td region">{row.region || '—'}</div>
+                    <div className="td name">{renderTextCell(row.patientName, 'cell-text-strong')}</div>
+                    <div className="td phone">{renderTextCell(row.phone)}</div>
+                    <div className="td email">{renderTextCell(row.email)}</div>
+                    <div className="td line_id">{renderTextCell(row.lineId)}</div>
+                    <div className="td region">{renderTextCell(row.region)}</div>
                     {timeColumns.map((column) => (
                       <div key={column.key} className={`td time_cell ${column.key}`}>{renderTimeCell(row[column.key])}</div>
                     ))}
@@ -319,7 +329,7 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
                       {row.statusText === t('admin.table.createPatientInfo') ? (
                         <button className="create-patient-info-button" onClick={(e) => { e.stopPropagation(); openBindPatientModal(row.smileUuid); }}>{t('admin.table.createPatientInfo')}</button>
                       ) : (
-                        row.statusText
+                        renderTextCell(row.statusText)
                       )}
                     </div>
                     <div className="td caret" onClick={() => onToggle(row.rowKey)}>

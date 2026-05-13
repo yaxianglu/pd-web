@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Tabs, Modal, Pagination, Select, message } from "antd";
+import { Tabs, Modal, Pagination, Select, Tooltip, message } from "antd";
 import Logout from "../components/logout";
 import Partners from "../partners";
 import HospitalDashboard from "../hospital";
@@ -155,6 +155,16 @@ function AdminSmileView() {
     );
   }, []);
 
+  const renderTextCell = useCallback((value, className = '') => {
+    const displayValue = value || '—';
+
+    return (
+      <Tooltip title={displayValue === '—' ? null : displayValue} placement="topLeft">
+        <span className={`cell-text ${className}`.trim()}>{displayValue}</span>
+      </Tooltip>
+    );
+  }, []);
+
   const mapSmileTests = useCallback((records = [], page = 1, pageSize = SMILE_TEST_PAGE_SIZE) => {
     const baseIndex = (page - 1) * pageSize;
 
@@ -264,7 +274,7 @@ function AdminSmileView() {
             onChange={(e) => setFilterValue({ account_keyword: e.target.value })}
           />
         </div>
-        <div className="smile-filter-field">
+        <div className="smile-filter-field smile-filter-field-bind">
           <div className="smile-filter-label">{t('admin.table.bind')}</div>
           <Select
             className="smile-filter-select"
@@ -273,7 +283,7 @@ function AdminSmileView() {
             options={getSmileTestBindOptions(t)}
           />
         </div>
-        <div className="smile-filter-field">
+        <div className="smile-filter-field smile-filter-field-sort">
           <div className="smile-filter-label">{t('admin.table.sortBy')}</div>
           <Select
             className="smile-filter-select"
@@ -306,11 +316,11 @@ function AdminSmileView() {
               <div key={row.rowKey} className={`tr ${isOpen ? 'open' : ''}`}>
                 <div className="row-main">
                   <div className="td seq">{row.id}</div>
-                  <div className="td name">{row.patientName || '—'}</div>
-                  <div className="td phone">{row.phone || '—'}</div>
-                  <div className="td email">{row.email || '—'}</div>
-                  <div className="td line_id">{row.lineId || '—'}</div>
-                  <div className="td region">{row.region || '—'}</div>
+                  <div className="td name">{renderTextCell(row.patientName, 'cell-text-strong')}</div>
+                  <div className="td phone">{renderTextCell(row.phone)}</div>
+                  <div className="td email">{renderTextCell(row.email)}</div>
+                  <div className="td line_id">{renderTextCell(row.lineId)}</div>
+                  <div className="td region">{renderTextCell(row.region)}</div>
                   {timeColumns.map((column) => (
                     <div key={column.key} className={`td time_cell ${column.key}`}>{renderTimeCell(row[column.key])}</div>
                   ))}
@@ -326,7 +336,7 @@ function AdminSmileView() {
                     {row.statusText === t('admin.table.createPatientInfo') ? (
                       <button className="create-patient-info-button" onClick={(e) => { e.stopPropagation(); openBindPatientModal(row.smileUuid); }}>{t('admin.table.createPatientInfo')}</button>
                     ) : (
-                      row.statusText
+                      renderTextCell(row.statusText)
                     )}
                   </div>
                   <div className="td caret" onClick={() => onToggle(row.rowKey)}>
