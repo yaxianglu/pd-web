@@ -2,11 +2,20 @@ import React, { useState, useCallback, useEffect } from 'react';
 import Logout from '../components/logout';
 import './index.scss';
 import apiService from '../services/api';
-import { Modal, Select, message, Tabs } from 'antd';
+import { Modal, Pagination, Select, message, Tabs } from 'antd';
 import Partners from '../partners';
 import ClinicDashboard from '../clinic';
 import HistoryModal from '../components/history-modal';
 import { useLanguage } from '../context/LanguageContext';
+import {
+  createSmileTestFilters,
+  getSmileTestBindOptions,
+  getSmileTestPagination,
+  getSmileTestStatusOptions,
+  getSmileTestSummaryText,
+  mergeSmileTestFilters,
+  SMILE_TEST_PAGE_SIZE,
+} from '../utils/smile-test-list';
 
 function MarketHeader({ activeTab, onTabChange }) {
   const { t } = useLanguage();
@@ -34,13 +43,8 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
   const { t } = useLanguage();
   const [expanded, setExpanded] = useState({});
   const [items, setItems] = useState([]);
-  const [filters, setFilters] = useState({
-    status: '',
-    date_from: '',
-    date_to: '',
-    account_keyword: '',
-    bound_state: 'unbound',
-  });
+  const [filters, setFilters] = useState(() => createSmileTestFilters());
+  const [pagination, setPagination] = useState(() => getSmileTestPagination());
   const [createOpen, setCreateOpen] = useState(false);
   const [doctors, setDoctors] = useState([]);
   const [selectedDoctorUuid, setSelectedDoctorUuid] = useState('');
@@ -95,10 +99,13 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
     return currentIssues || '';
   };
 
-  const mapSmileTests = useCallback((records = []) => {
+  const mapSmileTests = useCallback((records = [], page = 1, pageSize = SMILE_TEST_PAGE_SIZE) => {
+    const baseIndex = (page - 1) * pageSize;
+
     return records.map((s, idx) => ({
       ...s,
-      id: String(idx + 1).padStart(2, '0'),
+      id: String(baseIndex + idx + 1).padStart(2, '0'),
+      rowKey: s.uuid || String(baseIndex + idx + 1),
       patientName: s.full_name || '—',
       phone: s.phone || '—',
       email: s.email || '—',
@@ -114,15 +121,37 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
     }));
   }, [t]);
 
+  const setFilterValue = useCallback((patch) => {
+    setExpanded({});
+    setFilters((prev) => mergeSmileTestFilters(prev, patch));
+  }, []);
+
   const loadSmileTests = useCallback(async () => {
     if (Array.isArray(inputItems) && inputItems.length > 0 && !filters.status && !filters.date_from && !filters.date_to && !filters.account_keyword && filters.bound_state === 'unbound') {
-      setItems(mapSmileTests(inputItems.filter((s) => !s.patient_uuid)));
+      const localItems = inputItems.filter((s) => !s.patient_uuid);
+      const page = filters.page || 1;
+      const pageSize = filters.page_size || SMILE_TEST_PAGE_SIZE;
+      const total = localItems.length;
+      const totalPages = Math.max(1, Math.ceil(total / pageSize));
+      const startIndex = (page - 1) * pageSize;
+      const pageItems = localItems.slice(startIndex, startIndex + pageSize);
+
+      setPagination({
+        page,
+        page_size: pageSize,
+        total,
+        total_pages: totalPages,
+      });
+      setItems(mapSmileTests(pageItems, page, pageSize));
       return;
     }
 
     const res = await apiService.getAllSmileTests(filters);
+    const nextPagination = getSmileTestPagination(res, filters.page);
+    setPagination(nextPagination);
+
     if (res?.success && Array.isArray(res.data)) {
-      setItems(mapSmileTests(res.data));
+      setItems(mapSmileTests(res.data, nextPagination.page, nextPagination.page_size));
     } else {
       setItems([]);
     }
@@ -168,13 +197,8 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
               placeholder={t('admin.table.status')}
               allowClear
               style={{ width: 140 }}
-              onChange={(value) => setFilters((prev) => ({ ...prev, status: value || '' }))}
-              options={[
-                { value: 'pending', label: 'pending' },
-                { value: 'in_progress', label: 'in_progress' },
-                { value: 'completed', label: 'completed' },
-                { value: 'cancelled', label: 'cancelled' },
-              ]}
+              onChange={(value) => setFilterValue({ status: value || '' })}
+              options={getSmileTestStatusOptions(t)}
             />
           </div>
           <div>
@@ -182,39 +206,36 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
             <input
               type="date"
               value={filters.date_from}
-              onChange={(e) => setFilters((prev) => ({ ...prev, date_from: e.target.value }))}
+              onChange={(e) => setFilterValue({ date_from: e.target.value })}
               style={{ height: 32, padding: '0 8px' }}
             />
           </div>
           <div>
-            <div style={{ fontSize: 12, marginBottom: 6 }}>To</div>
+            <div style={{ fontSize: 12, marginBottom: 6 }}>{t('admin.table.to')}</div>
             <input
               type="date"
               value={filters.date_to}
-              onChange={(e) => setFilters((prev) => ({ ...prev, date_to: e.target.value }))}
+              onChange={(e) => setFilterValue({ date_to: e.target.value })}
               style={{ height: 32, padding: '0 8px' }}
             />
           </div>
           <div>
-            <div style={{ fontSize: 12, marginBottom: 6 }}>Account</div>
+            <div style={{ fontSize: 12, marginBottom: 6 }}>{t('admin.table.account')}</div>
             <input
               type="text"
               value={filters.account_keyword}
-              placeholder="Phone / Email / LINE / UUID"
-              onChange={(e) => setFilters((prev) => ({ ...prev, account_keyword: e.target.value }))}
+              placeholder={t('admin.table.accountPlaceholder')}
+              onChange={(e) => setFilterValue({ account_keyword: e.target.value })}
               style={{ height: 32, padding: '0 8px', width: 220 }}
             />
           </div>
           <div>
-            <div style={{ fontSize: 12, marginBottom: 6 }}>Bind</div>
+            <div style={{ fontSize: 12, marginBottom: 6 }}>{t('admin.table.bind')}</div>
             <Select
               value={filters.bound_state}
               style={{ width: 140 }}
-              onChange={(value) => setFilters((prev) => ({ ...prev, bound_state: value }))}
-              options={[
-                { value: 'unbound', label: 'Unbound' },
-                { value: 'bound', label: 'Bound' },
-              ]}
+              onChange={(value) => setFilterValue({ bound_state: value })}
+              options={getSmileTestBindOptions(t)}
             />
           </div>
         </div>
@@ -233,10 +254,10 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
           </div>
 
           <div className="tbody">
-            {items.map((row, idx) => {
-              const isOpen = !!expanded[row.id];
+            {items.map((row) => {
+              const isOpen = !!expanded[row.rowKey];
               return (
-                <div key={row.id} className={`tr ${isOpen ? 'open' : ''}`}>
+                <div key={row.rowKey} className={`tr ${isOpen ? 'open' : ''}`}>
                   <div className="row-main">
                     <div className="td seq">{row.id}</div>
                     <div className="td name">{row.patientName || '—'}</div>
@@ -260,7 +281,7 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
                         row.statusText
                       )}
                     </div>
-                    <div className="td caret" onClick={() => onToggle(row.id)}>
+                    <div className="td caret" onClick={() => onToggle(row.rowKey)}>
                       <span className={`arrow ${isOpen ? 'up' : 'down'}`}>▾</span>
                     </div>
                   </div>
@@ -289,10 +310,10 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
                           const text = e.target.value || '';
                           if (!row.smileUuid) return;
                           const r = await apiService.updateSmileTestBio(row.smileUuid, text);
-                          if (r?.success) {
+                        if (r?.success) {
                           message.success(t('admin.messages.saved'));
                           // 更新本地状态，保存管理员备注到 current_issues 字段
-                          setItems((prev) => prev.map(it => it.id === row.id ? { ...it, current_issues: text } : it));
+                          setItems((prev) => prev.map((it) => it.smileUuid === row.smileUuid ? { ...it, current_issues: text } : it));
                         } else {
                           message.error(r?.message || t('admin.messages.saveFailed'));
                           }
@@ -306,6 +327,22 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
               );
             })}
           </div>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, marginTop: 16 }}>
+          <div style={{ fontSize: 13, color: '#6b7280' }}>
+            {getSmileTestSummaryText(pagination, t)}
+          </div>
+          <Pagination
+            current={pagination.page}
+            pageSize={pagination.page_size}
+            total={pagination.total}
+            showSizeChanger={false}
+            onChange={(page) => {
+              setExpanded({});
+              setFilters((prev) => ({ ...prev, page, page_size: SMILE_TEST_PAGE_SIZE }));
+            }}
+            showTotal={(total) => t('admin.pagination.total', { total })}
+          />
         </div>
         </>
         )}

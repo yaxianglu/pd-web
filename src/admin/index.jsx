@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Tabs, Modal, Select, message } from "antd";
+import { Tabs, Modal, Pagination, Select, message } from "antd";
 import Logout from "../components/logout";
 import Partners from "../partners";
 import HospitalDashboard from "../hospital";
@@ -8,6 +8,15 @@ import AccountManagement from "./account-management";
 import HistoryModal from "../components/history-modal";
 import apiService from "../services/api";
 import { useLanguage } from "../context/LanguageContext";
+import {
+  createSmileTestFilters,
+  getSmileTestBindOptions,
+  getSmileTestPagination,
+  getSmileTestStatusOptions,
+  getSmileTestSummaryText,
+  mergeSmileTestFilters,
+  SMILE_TEST_PAGE_SIZE,
+} from "../utils/smile-test-list";
 import "../market/index.scss";
 
 // const gapSize = 16;
@@ -67,13 +76,8 @@ function AdminSmileView() {
   const { t } = useLanguage();
   const [expanded, setExpanded] = useState({});
   const [items, setItems] = useState([]);
-  const [filters, setFilters] = useState({
-    status: '',
-    date_from: '',
-    date_to: '',
-    account_keyword: '',
-    bound_state: 'unbound',
-  });
+  const [filters, setFilters] = useState(() => createSmileTestFilters());
+  const [pagination, setPagination] = useState(() => getSmileTestPagination());
   const [createOpen, setCreateOpen] = useState(false);
   const [doctors, setDoctors] = useState([]);
   const [selectedDoctorUuid, setSelectedDoctorUuid] = useState('');
@@ -127,10 +131,13 @@ function AdminSmileView() {
     return currentIssues || '';
   };
 
-  const mapSmileTests = useCallback((records = []) => {
+  const mapSmileTests = useCallback((records = [], page = 1, pageSize = SMILE_TEST_PAGE_SIZE) => {
+    const baseIndex = (page - 1) * pageSize;
+
     return records.map((s, idx) => ({
       ...s,
-      id: String(idx + 1).padStart(2, '0'),
+      id: String(baseIndex + idx + 1).padStart(2, '0'),
+      rowKey: s.uuid || String(baseIndex + idx + 1),
       patientName: s.full_name || '—',
       phone: s.phone || '—',
       email: s.email || '—',
@@ -146,10 +153,18 @@ function AdminSmileView() {
     }));
   }, [t]);
 
+  const setFilterValue = useCallback((patch) => {
+    setExpanded({});
+    setFilters((prev) => mergeSmileTestFilters(prev, patch));
+  }, []);
+
   const loadSmileTests = useCallback(async () => {
     const res = await apiService.getAllSmileTests(filters);
+    const nextPagination = getSmileTestPagination(res, filters.page);
+    setPagination(nextPagination);
+
     if (res?.success && Array.isArray(res.data)) {
-      setItems(mapSmileTests(res.data));
+      setItems(mapSmileTests(res.data, nextPagination.page, nextPagination.page_size));
     } else {
       setItems([]);
     }
@@ -190,13 +205,8 @@ function AdminSmileView() {
             placeholder={t('admin.table.status')}
             allowClear
             style={{ width: 140 }}
-            onChange={(value) => setFilters((prev) => ({ ...prev, status: value || '' }))}
-            options={[
-              { value: 'pending', label: 'pending' },
-              { value: 'in_progress', label: 'in_progress' },
-              { value: 'completed', label: 'completed' },
-              { value: 'cancelled', label: 'cancelled' },
-            ]}
+            onChange={(value) => setFilterValue({ status: value || '' })}
+            options={getSmileTestStatusOptions(t)}
           />
         </div>
         <div>
@@ -204,39 +214,36 @@ function AdminSmileView() {
           <input
             type="date"
             value={filters.date_from}
-            onChange={(e) => setFilters((prev) => ({ ...prev, date_from: e.target.value }))}
+            onChange={(e) => setFilterValue({ date_from: e.target.value })}
             style={{ height: 32, padding: '0 8px' }}
           />
         </div>
         <div>
-          <div style={{ fontSize: 12, marginBottom: 6 }}>To</div>
+          <div style={{ fontSize: 12, marginBottom: 6 }}>{t('admin.table.to')}</div>
           <input
             type="date"
             value={filters.date_to}
-            onChange={(e) => setFilters((prev) => ({ ...prev, date_to: e.target.value }))}
+            onChange={(e) => setFilterValue({ date_to: e.target.value })}
             style={{ height: 32, padding: '0 8px' }}
           />
         </div>
         <div>
-          <div style={{ fontSize: 12, marginBottom: 6 }}>Account</div>
+          <div style={{ fontSize: 12, marginBottom: 6 }}>{t('admin.table.account')}</div>
           <input
             type="text"
             value={filters.account_keyword}
-            placeholder="Phone / Email / LINE / UUID"
-            onChange={(e) => setFilters((prev) => ({ ...prev, account_keyword: e.target.value }))}
+            placeholder={t('admin.table.accountPlaceholder')}
+            onChange={(e) => setFilterValue({ account_keyword: e.target.value })}
             style={{ height: 32, padding: '0 8px', width: 220 }}
           />
         </div>
         <div>
-          <div style={{ fontSize: 12, marginBottom: 6 }}>Bind</div>
+          <div style={{ fontSize: 12, marginBottom: 6 }}>{t('admin.table.bind')}</div>
           <Select
             value={filters.bound_state}
             style={{ width: 140 }}
-            onChange={(value) => setFilters((prev) => ({ ...prev, bound_state: value }))}
-            options={[
-              { value: 'unbound', label: 'Unbound' },
-              { value: 'bound', label: 'Bound' },
-            ]}
+            onChange={(value) => setFilterValue({ bound_state: value })}
+            options={getSmileTestBindOptions(t)}
           />
         </div>
       </div>
@@ -256,9 +263,9 @@ function AdminSmileView() {
 
         <div className="tbody">
           {items.map((row) => {
-            const isOpen = !!expanded[row.id];
+            const isOpen = !!expanded[row.rowKey];
             return (
-              <div key={row.id} className={`tr ${isOpen ? 'open' : ''}`}>
+              <div key={row.rowKey} className={`tr ${isOpen ? 'open' : ''}`}>
                 <div className="row-main">
                   <div className="td seq">{row.id}</div>
                   <div className="td name">{row.patientName || '—'}</div>
@@ -282,7 +289,7 @@ function AdminSmileView() {
                       row.statusText
                     )}
                   </div>
-                  <div className="td caret" onClick={() => onToggle(row.id)}>
+                  <div className="td caret" onClick={() => onToggle(row.rowKey)}>
                     <span className={`arrow ${isOpen ? 'up' : 'down'}`}>▾</span>
                   </div>
                 </div>
@@ -314,7 +321,7 @@ function AdminSmileView() {
                         if (r?.success) {
                           message.success(t('admin.messages.saved'));
                           // 更新本地状态，保存管理员备注到 current_issues 字段
-                          setItems((prev) => prev.map(it => it.id === row.id ? { ...it, current_issues: text } : it));
+                          setItems((prev) => prev.map((it) => it.smileUuid === row.smileUuid ? { ...it, current_issues: text } : it));
                         } else {
                           message.error(r?.message || t('admin.messages.saveFailed'));
                         }
@@ -328,6 +335,22 @@ function AdminSmileView() {
             );
           })}
         </div>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, marginTop: 16 }}>
+        <div style={{ fontSize: 13, color: '#6b7280' }}>
+          {getSmileTestSummaryText(pagination, t)}
+        </div>
+        <Pagination
+          current={pagination.page}
+          pageSize={pagination.page_size}
+          total={pagination.total}
+          showSizeChanger={false}
+          onChange={(page) => {
+            setExpanded({});
+            setFilters((prev) => ({ ...prev, page, page_size: SMILE_TEST_PAGE_SIZE }));
+          }}
+          showTotal={(total) => t('admin.pagination.total', { total })}
+        />
       </div>
 
       <Modal
@@ -387,7 +410,7 @@ function SmileTestTable() {
         <div className="th status">狀態</div>
       </div>
       <div className="tbody">
-        {Array.from({ length: 5 }).map((_, i) => (
+          {Array.from({ length: 5 }).map((_, i) => (
           <div className="tr" key={i}>
             <div className="row-main">
               <div className="td seq">0{i + 1}</div>
