@@ -78,7 +78,7 @@ const SEOHead = ({
       { property: 'og:title', content: title },
       { property: 'og:description', content: description },
       { property: 'og:image', content: fullImage },
-      { property: 'og:site_name', content: 'ShineSmile Digital' },
+      { property: 'og:site_name', content: 'Shineville Digital' },
       { property: 'og:locale', content: 'en_US' }
     ];
 

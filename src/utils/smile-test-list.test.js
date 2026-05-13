@@ -1,6 +1,7 @@
 import {
   SMILE_TEST_PAGE_SIZE,
   createSmileTestFilters,
+  getSmileTestBindOptions,
   getSmileTestSortOptions,
   getSmileTestSummaryText,
   getSmileTestTimeColumns,
@@ -100,6 +101,14 @@ describe('smile-test-list utils', () => {
       { key: 'createdAt', header: 'admin.table.createdAt' },
       { key: 'latestImageUploadTime', header: 'admin.table.imageUploadTime' },
       { key: 'updatedAt', header: 'admin.table.updatedAt' },
+    ]);
+  });
+
+  it('returns bind options including all state', () => {
+    expect(getSmileTestBindOptions((key) => key)).toEqual([
+      { value: '', label: 'common.all' },
+      { value: 'unbound', label: 'admin.table.unbound' },
+      { value: 'bound', label: 'admin.table.bound' },
     ]);
   });
 });

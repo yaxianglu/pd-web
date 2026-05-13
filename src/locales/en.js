@@ -54,7 +54,7 @@ export default {
     invisibleBraces: 'Invisible Braces',
     maintainer: 'Retainers',
     whitening: 'Pearl Whitening',
-    journey: 'ShineSmile Journey',
+    journey: 'Shineville Journey',
     correction: 'Orthodontics & Aesthetics',
     about: 'About Us',
     partners: 'Partners',
@@ -97,7 +97,7 @@ export default {
         description: 'Learn when to wear retainers and how to care for them.'
       },
       journey: {
-        title: 'ShineSmile Journey',
+        title: 'Shineville Journey',
         description: 'Explore the full smile-upgrade flow,\nfrom consultation to treatment completion.'
       },
       smileTest: {
@@ -116,7 +116,7 @@ export default {
 
   // Services
   services: {
-    journey: 'ShineSmile Journey',
+    journey: 'Shineville Journey',
     correction: 'Orthodontics & Aesthetics',
     smileUpgrade: 'Smile Upgrade'
   },
@@ -128,32 +128,32 @@ export default {
     faq: 'FAQ',
     // About page content
     companyIntro: 'Our Story',
-    companyDescription: 'Founded in Silicon Valley by Pearl Digital Inc., ShineSmile brings together world-class orthodontic expertise and cutting-edge AI technology.\nOur clinical advisor, Dr. David Shen, has over 30 years of orthodontic experience. He is the founder and CEO of OrthoWorks Orthodontic Group, with 11 clinics across the San Francisco Bay Area — the region’s oldest and longest-standing private orthodontic network.',
+    companyDescription: 'Founded in Silicon Valley by Pearl Digital Inc., Shineville brings together world-class orthodontic expertise and cutting-edge AI technology.\nOur clinical advisor, Dr. David Shen, has over 30 years of orthodontic experience. He is the founder and CEO of OrthoWorks Orthodontic Group, with 11 clinics across the San Francisco Bay Area — the region’s oldest and longest-standing private orthodontic network.',
     drDavidShen: 'DR. DAVID SHEN',
-    drDescription: 'A graduate of the University of Pennsylvania School of Dental Medicine, Dr. Shen has taught at UCSF, served as the founding president of the Northern California Asian American Dental Association, and now chairs the Advisory Board at his alma mater. He is an internationally recognized speaker at global dental conferences.\nAt ShineSmile, our professional medical team is empowered by AI-powered treatment planning. By combining advanced simulations with clinical expertise and 3D imaging, we deliver precise, efficient, and safe orthodontic care.\nShineSmile is also one of the few brands to offer combo orthodontic treatment — offers uniquely designed clear aligner solutions that seamlessly transition from traditional braces. As Dr. Shen emphasizes, patients can switch to more comfortable and aesthetic clear aligners during the later stages of treatment without disrupting progress.',
+    drDescription: 'A graduate of the University of Pennsylvania School of Dental Medicine, Dr. Shen has taught at UCSF, served as the founding president of the Northern California Asian American Dental Association, and now chairs the Advisory Board at his alma mater. He is an internationally recognized speaker at global dental conferences.\nAt Shineville, our professional medical team is empowered by AI-powered treatment planning. By combining advanced simulations with clinical expertise and 3D imaging, we deliver precise, efficient, and safe orthodontic care.\nShineville is also one of the few brands to offer combo orthodontic treatment — offers uniquely designed clear aligner solutions that seamlessly transition from traditional braces. As Dr. Shen emphasizes, patients can switch to more comfortable and aesthetic clear aligners during the later stages of treatment without disrupting progress.',
     innovationTitle: 'Pioneering Combo Treatment',
-    innovationDescription: 'At ShineSmile, we believe orthodontics should be flexible. While we provide complete clear aligner treatments, our aligners are also designed to work alongside traditional braces — serving as a seamless finishing solution or transition tool.',
+    innovationDescription: 'At Shineville, we believe orthodontics should be flexible. While we provide complete clear aligner treatments, our aligners are also designed to work alongside traditional braces — serving as a seamless finishing solution or transition tool.',
     innovationSubtitle: '',
     innovationDetail: 'As one of the few brands specializing in combo orthodontic treatment, we recognize a growing need: many braces patients wish to switch to clear aligners during the final stages of treatment. That’s why we created a process that allows patients to smoothly transition from braces to aligners — for precise finishing, aesthetic improvements, and a more comfortable experience.',
-    whyChooseTitle: 'Why Choose ShineSmile Clear Aligners?',
+    whyChooseTitle: 'Why Choose Shineville Clear Aligners?',
     medicalSoftware: 'Medical-Grade Software',
-    medicalSoftwareDescription: 'ShineSmile combines the latest AI design algorithms with over 30 years of orthodontic planning expertise to create fully customized treatment plans for each patient. With the support of AI-powered systems, treatment designs integrate CBCT root scans and cephalometric X-rays, making orthodontics more scientific and comprehensive.',
-    medicalSoftwareDescription2: 'By collaborating with Taiwanese medical device manufacturers, ShineSmile has built a large orthodontic database for Asian patients. This allows optimization for common dental and facial issues such as protrusive upper jaws and receding chins, delivering results that better match facial contours and create a naturally harmonious smile curve.',
+    medicalSoftwareDescription: 'Shineville combines the latest AI design algorithms with over 30 years of orthodontic planning expertise to create fully customized treatment plans for each patient. With the support of AI-powered systems, treatment designs integrate CBCT root scans and cephalometric X-rays, making orthodontics more scientific and comprehensive.',
+    medicalSoftwareDescription2: 'By collaborating with Taiwanese medical device manufacturers, Shineville has built a large orthodontic database for Asian patients. This allows optimization for common dental and facial issues such as protrusive upper jaws and receding chins, delivering results that better match facial contours and create a naturally harmonious smile curve.',
     qualityTitle: 'Trusted Quality, On-Time Delivery',
-    qualityDescription: 'Each ShineSmile aligner is crafted in ISO 13485 and GMP-certified facilities in Taiwan. From raw materials to production, we maintain rigorous controls — ensuring consistent quality and reliable delivery for every patient.',
+    qualityDescription: 'Each Shineville aligner is crafted in ISO 13485 and GMP-certified facilities in Taiwan. From raw materials to production, we maintain rigorous controls — ensuring consistent quality and reliable delivery for every patient.',
     materialTitle: 'Crystal-Clear, Medical-Grade Comfort',
-    materialDescription: 'Made from BPA-free, high-transparency materials, ShineSmile aligners are made to be nearly invisible, stain-resistant, and easy to clean. With their natural fit and clarity, patients can enjoy a confident smile every step of the way.',
+    materialDescription: 'Made from BPA-free, high-transparency materials, Shineville aligners are made to be nearly invisible, stain-resistant, and easy to clean. With their natural fit and clarity, patients can enjoy a confident smile every step of the way.',
     // Page titles and buttons
     pageTitle: 'Powered by Technology, Guided by Expertise',
     pageSubtitle: 'For a Smile You Can Trust. Create a Reassuring Beautiful Teeth Experience',
     becomePartner: 'Become a Partner',
     // Precise control section
     preciseControl: 'Precision Control',
-    preciseControlDescription: 'Born from collaboration with orthodontists, our approach addresses a key need: in the final stages of traditional braces treatment, patients often require more detailed control — without sacrificing comfort or aesthetics. With ShineSmile\'s stable materials, clear transition design, and predictable pacing, treatment outcomes are not just preserved during the switch, but refined with even greater precision.',
+    preciseControlDescription: 'Born from collaboration with orthodontists, our approach addresses a key need: in the final stages of traditional braces treatment, patients often require more detailed control — without sacrificing comfort or aesthetics. With Shineville\'s stable materials, clear transition design, and predictable pacing, treatment outcomes are not just preserved during the switch, but refined with even greater precision.',
     // Company introduction description
     companyMission: 'We are committed to applying advanced technology to orthodontics, improving treatment quality and patient experience. We believe that beautiful smiles should be built on the foundation of professionalism, safety, and technology.',
     // Description section
-    descriptionText: 'At ShineSmile, we combine advanced technology, clinical expertise, and strict quality standards to deliver more than just straight teeth. We strive for natural results and a treatment journey that patients can trust with confidence and peace of mind.',
+    descriptionText: 'At Shineville, we combine advanced technology, clinical expertise, and strict quality standards to deliver more than just straight teeth. We strive for natural results and a treatment journey that patients can trust with confidence and peace of mind.',
     smileSteps: {
       step1: {
         title: 'Booking',
@@ -192,8 +192,8 @@ export default {
     title: 'American Brand, FDA Cleared',
     subtitle: 'Orthodontic treatment plans are designed by a professional team, with AI precisely simulating tooth movement.',
     buttonText: 'Smile Quiz',
-    whyChooseTitle: 'Why choose ShineSmile Clear Aligners?',
-    whyChooseDescription: 'ShineSmile is a brand under Pearl Digital Inc., combining artificial intelligence technology to create a smart invisible orthodontic system. The product is FDA-cleared in the United States, with quality and safety meeting international medical device standards. We believe that orthodontic treatment is not only about straightening teeth — it is also a transformative journey toward better health and greater confidence.',
+    whyChooseTitle: 'Why choose Shineville Clear Aligners?',
+    whyChooseDescription: 'Shineville is a brand under Pearl Digital Inc., combining artificial intelligence technology to create a smart invisible orthodontic system. The product is FDA-cleared in the United States, with quality and safety meeting international medical device standards. We believe that orthodontic treatment is not only about straightening teeth — it is also a transformative journey toward better health and greater confidence.',
     
     // Feature highlights
     features: {
@@ -226,7 +226,7 @@ export default {
     // Manufacturing process
     manufacturing: {
       title: 'Advanced Technology, Expertly Made',
-      description: 'ShineSmile aligners can also be combined with traditional orthodontic treatments, serving as a finishing stage, for fine adjustments, or for aesthetic optimization. They are ideal for patients who wish to smoothly transition from fixed braces to clear aligners.',
+      description: 'Shineville aligners can also be combined with traditional orthodontic treatments, serving as a finishing stage, for fine adjustments, or for aesthetic optimization. They are ideal for patients who wish to smoothly transition from fixed braces to clear aligners.',
       sideView: 'Side View',
       frontView: 'Front View'
     },
@@ -234,7 +234,7 @@ export default {
     // Plan selection
     planSelection: {
       title: 'Which Treatment Is Right for You?',
-      subtitle: 'Our experts recommend three clear aligner options tailored to your needs. From minor alignment to complex cases, ShineSmile provides complete solutions designed to deliver your brightest, most confident smile.',
+      subtitle: 'Our experts recommend three clear aligner options tailored to your needs. From minor alignment to complex cases, Shineville provides complete solutions designed to deliver your brightest, most confident smile.',
       buttonText: 'Which Plan Suits Me?',
       plans: {
         mild: {
@@ -378,7 +378,7 @@ export default {
     subtitle: 'Keeping your new smile stable after treatment is key.',
     buttonText: 'Smile Quiz',
     sketchTitle: 'Stabilize Your Smile Upgrade Results',
-    sketchDescription: 'ShineSmile retainers are designed to maintain your teeth after orthodontic treatment. Whether you\'ve completed a traditional braces treatment or a clear aligner therapy, our retainers effectively prevent teeth from relapse, keep your bite stable, and preserve the results of your straightened smile.',
+    sketchDescription: 'Shineville retainers are designed to maintain your teeth after orthodontic treatment. Whether you\'ve completed a traditional braces treatment or a clear aligner therapy, our retainers effectively prevent teeth from relapse, keep your bite stable, and preserve the results of your straightened smile.',
     
     // Product features
     productFeatures: {
@@ -459,7 +459,7 @@ export default {
   upload: {
     brandName: 'PEARL DIGITAL',
     title: 'Unlock Your Best Smile — Naturally and Confidently',
-    description: 'Take ShineSmile’s free smile quiz. Upload just a few photos to see if clear aligners are right for you and get personalized advice instantly.',
+    description: 'Take Shineville’s free smile quiz. Upload just a few photos to see if clear aligners are right for you and get personalized advice instantly.',
     steps: 'step',
     minutes: 'min',
     startTest: 'Start Quiz',
@@ -609,11 +609,11 @@ export default {
   journey: {
     title: 'A Confident Smile, Custom-Made for You',
     buttonText: 'Smile Quiz',
-    sketchTitle: 'How Do ShineSmile Clear Aligners Work?',
-    sketchDescription: `ShineSmile clear aligners are designed to transform your smile. The principle is simple: by changing to a new set of aligners over time, your teeth are gradually moved into the ideal position. This offers a convenient and reliable way to achieve a straighter, more confident smile.
+    sketchTitle: 'How Do Shineville Clear Aligners Work?',
+    sketchDescription: `Shineville clear aligners are designed to transform your smile. The principle is simple: by changing to a new set of aligners over time, your teeth are gradually moved into the ideal position. This offers a convenient and reliable way to achieve a straighter, more confident smile.
 Getting started is easy — simply upload a few photos online for a preliminary smile assessment to see if clear aligners are right for you. From there, your smile upgrade journey begins!
-After booking, one of our professional partner doctors will provide consultation and a full examination. Based on your needs and dental condition, they will design the most suitable treatment plan for you. Once you and the doctor agree to move forward, ShineSmile will create your custom-made clear aligners.
-Below is the step-by-step process of how ShineSmile clear aligners work:`,
+After booking, one of our professional partner doctors will provide consultation and a full examination. Based on your needs and dental condition, they will design the most suitable treatment plan for you. Once you and the doctor agree to move forward, Shineville will create your custom-made clear aligners.
+Below is the step-by-step process of how Shineville clear aligners work:`,
     additionalCosts: {
       title: 'Are there any additional costs during the Smile Journey?',
       description: 'Invisible braces not only have uniform pricing across Taiwan, but also truly achieve transparent pricing with no hidden fees! To help you achieve your expected new smile, our professional partner doctors will conduct oral examinations and scans. These examination/scan fees, or registration fees, are considered additional expenses not included in the invisible braces cost and will be collected by the clinic.',
@@ -637,14 +637,14 @@ Below is the step-by-step process of how ShineSmile clear aligners work:`,
       footnotes: '* Any treatments or services related to the clinic will be charged directly by the clinic. Prices shown in emails or online are for reference only and may change; please follow the clinic’s latest official fees.\n** At follow-up visits, the attending doctor will assess whether your final aligner can be used as a retainer or if a new intraoral scan is required to fabricate retainers. Retainer pricing may vary with market conditions. For current fees, please contact customer service.'
     },
     pricingFeatures: {
-      title: 'ShineSmile Journey — Clear Aligner Pricing',
+      title: 'Shineville Journey — Clear Aligner Pricing',
       transparentPricing: {
         title: 'Transparent Pricing',
         description: 'Treatment costs are evaluated based on your dental condition and chosen plan (Light / Moderate / Comprehensive). We provide detailed quotations with clear explanations at every stage — no hidden fees, no surprises.'
       },
       affordablePricing: {
         title: 'Affordable, Without Compromising on Quality',
-        description: 'ShineSmile is committed to delivering high-quality orthodontic care at a fair price. We make it possible for more people to improve their alignment and smile with confidence. Treatment effectiveness, comfort, and affordability are always our priorities.'
+        description: 'Shineville is committed to delivering high-quality orthodontic care at a fair price. We make it possible for more people to improve their alignment and smile with confidence. Treatment effectiveness, comfort, and affordability are always our priorities.'
       },
       pricingTable: {
         mild: 'Mild/Complexity Level',
@@ -962,7 +962,7 @@ At any age, your smile can be redesigned.
     },
     manufacturingSection: {
       buttonText: 'Understand Your Dental Condition',
-      description: 'Using CBCT and cephalometric X-rays, ShineSmile analyzes both jaw structure and tooth alignment. This integrated approach enhances facial balance and bite function — creating a smile that looks natural, harmonious, and beautifully you.'
+      description: 'Using CBCT and cephalometric X-rays, Shineville analyzes both jaw structure and tooth alignment. This integrated approach enhances facial balance and bite function — creating a smile that looks natural, harmonious, and beautifully you.'
     },
     upgrade: {
       title: 'Orthodontics Is More Than Beauty — It’s a Lifestyle Upgrade',
@@ -973,7 +973,7 @@ At any age, your smile can be redesigned.
       },
       adultNeeds: {
         title: 'Designed for Adult Lifestyles:',
-        description: 'ShineSmile clear aligners are flexible and removable, allowing you to stay comfortable and confident during work meetings, social events, and business trips.'
+        description: 'Shineville clear aligners are flexible and removable, allowing you to stay comfortable and confident during work meetings, social events, and business trips.'
       }
     }
   },
@@ -989,11 +989,11 @@ At any age, your smile can be redesigned.
       buttonText: 'Become a Partner'
     },
     features: {
-      title: 'Why Partner With ShineSmile?',
+      title: 'Why Partner With Shineville?',
       items: {
         usBrand: {
           title: 'Trusted U.S. Brand',
-          description: 'Founded in Silicon Valley by Pearl Digital Inc., ShineSmile combines AI-powered design with over 30 years of orthodontic expertise. With FDA and TFDA approvals clearance, our aligners meet the highest international safety and quality standards.'
+          description: 'Founded in Silicon Valley by Pearl Digital Inc., Shineville combines AI-powered design with over 30 years of orthodontic expertise. With FDA and TFDA approvals clearance, our aligners meet the highest international safety and quality standards.'
         },
         taiwanMade: {
           title: 'Made in Taiwan, Delivered With Confidence',
@@ -1002,7 +1002,7 @@ At any age, your smile can be redesigned.
         marketing: {
           title: 'Marketing Support for Clinics',
           description: `We go beyond aligners — helping your practice grow with:\n
-Listing in the official ShineSmile partner clinic directory\n
+Listing in the official Shineville partner clinic directory\n
 Exclusive Smile Test link to attract and guide new patients online\n
 Ready-to-use marketing content, social media assets, and branding resources\n
 Dedicated support with digital tools for lead generation and filtering\n
@@ -1038,7 +1038,7 @@ Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
       }
     },
     map: {
-      title: 'Where to Find ShineSmile Partner Clinics',
+      title: 'Where to Find Shineville Partner Clinics',
       locations: {
         taiwan: {
           name: 'Taiwan',
@@ -1074,11 +1074,11 @@ Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
         answer: 'Many patients start seeing changes in just 2–4 months — like straighter front teeth or reduced gaps. Although the improvements might be noticeable early on, your final results depend on completing the full treatment as planned.'
       },
       age: {
-        question: 'Are ShineSmile Clear Aligners Right for Teens Under 18?',
-        answer: 'ShineSmile provides aligner solutions tailored for teenagers.\nStudents around 12 years and older, with good wearing habits, can begin treatment after a dentist\'s evaluation.\nFor children still transitioning from baby to permanent teeth, regular monitoring is advised, with treatment planned once they reach the right age.'
+        question: 'Are Shineville Clear Aligners Right for Teens Under 18?',
+        answer: 'Shineville provides aligner solutions tailored for teenagers.\nStudents around 12 years and older, with good wearing habits, can begin treatment after a dentist\'s evaluation.\nFor children still transitioning from baby to permanent teeth, regular monitoring is advised, with treatment planned once they reach the right age.'
       },
       safety: {
-        question: 'Are ShineSmile Aligners Safe?',
+        question: 'Are Shineville Aligners Safe?',
         answer: 'Absolutely. Safety and quality are at the core of everything we do.\nBPA-free, medical-grade materials.\nFDA-cleared U.S. brand.\nISO 13485 and GMP-certified manufacturing in Taiwan.\nA professional team with 30+ years of orthodontic expertise, with AI as a supporting tool for precision.\n\nEvery aligner is designed and produced to meet strict international medical device standards — giving patients confidence in both safety and results.'
       },
       pricing: {
@@ -1091,10 +1091,10 @@ Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
       },
       satisfaction: {
         question: 'What If I\'m Not Happy With the Results?',
-        answer: 'Your smile is our commitment. If refinements are needed after your initial treatment:\nExtra aligners will be provided at no additional charge.\nIf a new intra-oral scan is required, the clinic may collect a rescan fee.\nWith ShineSmile, you can feel confident knowing we\'ll support you until you achieve the smile you deserve.'
+        answer: 'Your smile is our commitment. If refinements are needed after your initial treatment:\nExtra aligners will be provided at no additional charge.\nIf a new intra-oral scan is required, the clinic may collect a rescan fee.\nWith Shineville, you can feel confident knowing we\'ll support you until you achieve the smile you deserve.'
       },
       extraction: {
-        question: 'Do I Need Extractions for ShineSmile Treatment?',
+        question: 'Do I Need Extractions for Shineville Treatment?',
         answer: 'In most cases, no.\nMild Case: Usually no extractions needed.\nModerate & Comprehensive Cases: May require extractions depending on your teeth alignment and bite.\nYour orthodontist will carefully evaluate your case. If extractions are necessary, you\'ll be informed during consultation and guided through the process.'
       }
     }
@@ -1109,7 +1109,7 @@ Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
     privacyPolicy: 'Privacy Policy',
     termsOfService: 'Terms of Service',
     cookieSettings: 'Cookie Settings',
-    hotlineTitle: 'ShineSmile Hotline',
+    hotlineTitle: 'Shineville Hotline',
     joinLine: 'Join LINE',
     copyright: 'Pearl Digital Inc. All Rights Reserved. ©2025',
     address: '2975 Scott Blvd, Ste 110, Santa Clara, CA 95054',

@@ -3,6 +3,10 @@
 .feature-grid {
   margin-top: 52px;
 
+  @media (max-width: 1125px) {
+    margin-top: 36px;
+  }
+
   .feature-grid-heading {
     font-size: 24px;
     font-weight: 700;
@@ -12,7 +16,7 @@
 
     @media (max-width: 1125px) {
       font-size: 22px;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
   }
 

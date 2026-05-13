@@ -76,6 +76,7 @@ export function getSmileTestStatusOptions(t) {
 
 export function getSmileTestBindOptions(t) {
   return [
+    { value: '', label: t('common.all') },
     { value: 'unbound', label: t('admin.table.unbound') },
     { value: 'bound', label: t('admin.table.bound') },
   ];

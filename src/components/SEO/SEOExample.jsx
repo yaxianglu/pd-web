@@ -23,18 +23,18 @@ const InvisibleBracesPage = () => {
     <div>
       {/* Option 1: Use SEOHead component */}
       <SEOHead
-        title="Clear Aligners - FDA Cleared Invisible Braces | ShineSmile Digital"
-        description="Discover ShineSmile clear aligners - FDA cleared, AI-powered invisible braces. Medical-grade materials, professional treatment planning, and precise tooth movement simulation for optimal orthodontic results."
+        title="Clear Aligners - FDA Cleared Invisible Braces | Shineville Digital"
+        description="Discover Shineville clear aligners - FDA cleared, AI-powered invisible braces. Medical-grade materials, professional treatment planning, and precise tooth movement simulation for optimal orthodontic results."
         keywords="clear aligner, invisible braces, FDA cleared, AI orthodontics, transparent aligners, teeth straightening, orthodontic treatment, medical grade materials, 珍舒美，隱形牙套，隱形矯正，數位化矯正，美國品牌，AI技術，亞洲人數據庫，維持器， 美國FDA認證，台灣TFDA class II，台灣醫療器材，台灣製造工廠，國際醫療器材標準"
         url="/invisible-braces"
         structuredData={{
           "@context": "https://schema.org",
           "@type": "Product",
-          "name": "ShineSmile Clear Aligners",
+          "name": "Shineville Clear Aligners",
           "description": "FDA cleared clear aligners with AI-powered treatment planning",
           "brand": {
             "@type": "Brand",
-            "name": "ShineSmile Digital"
+            "name": "Shineville Digital"
           },
           "category": "Orthodontic Treatment",
           "offers": {
