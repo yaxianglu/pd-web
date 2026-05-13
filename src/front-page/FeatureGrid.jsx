@@ -4,7 +4,7 @@ import './FeatureGrid.scss';
 import cardInvisible from './assets/home-card-invisible.png';
 import cardCorrection from './assets/home-card-correction.png';
 import cardRetainer from './assets/home-card-retainer.png';
-import cardSmileTest from './assets/home-card-smile-test.png';
+import cardJourney from './assets/home-card-journey.png';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function FeatureGrid() {
@@ -28,9 +28,9 @@ export default function FeatureGrid() {
       onClick: () => navigate('/maintainer'),
     },
     {
-      image: cardSmileTest,
-      alt: t('home.featureGrid.smileTest.title'),
-      onClick: () => window.open('/upload', '_blank'),
+      image: cardJourney,
+      alt: t('home.featureGrid.journey.title'),
+      onClick: () => navigate('/journey'),
     },
   ];
 

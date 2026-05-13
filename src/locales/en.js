@@ -96,6 +96,10 @@ export default {
         title: 'Retainers',
         description: 'Learn when to wear retainers and how to care for them.'
       },
+      journey: {
+        title: 'ShineSmile Journey',
+        description: 'Explore the full smile-upgrade flow,\nfrom consultation to treatment completion.'
+      },
       smileTest: {
         title: 'Smile Quiz',
         description: 'Free Smile Quiz — Upload a few photos to see if clear aligners are right for you and get tailored advice.'

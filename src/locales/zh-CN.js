@@ -95,6 +95,10 @@ export default {
         title: '维持器',
         description: '了解维持器的佩戴时机与\n保养方式'
       },
+      journey: {
+        title: '珍舒美旅程',
+        description: '从初步咨询到治疗完成，\n了解完整微笑升级流程'
+      },
       smileTest: {
         title: '微笑测试',
         description: '透过珍舒美的免费微笑测试，只需几张照片，\n就能快速了解您是否适合进行隐形矫正，并获得专属建议'
