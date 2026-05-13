@@ -5,7 +5,6 @@ import { Modal, Button } from 'antd';
 import { smileTestApi } from '../services/smileTestApi';
 import apiService from '../services/api';
 import { useLanguage } from '../context/LanguageContext';
-import { ensureSmileTestRecord } from './ensureSmileTestRecord';
 import './step3.scss';
 import p7 from './imgs/7.png';
 import p15 from './imgs/15.png';
@@ -78,46 +77,19 @@ export default function Step3({ onNext, setStep, style }) {
   const canvasRef = useRef(null);
   const fileInputRef = useRef(null);
   const cameraInputRef = useRef(null);
-  const readyRecordRequestRef = useRef({ uuid: null, promise: null });
 
   // 获取当前URL
   const currentUrl = window.location.href;
 
   // 从URL获取UUID
-  const testUuid = new URLSearchParams(location.search).get('id');
-
-  const ensureTestRecordReady = useCallback(async () => {
-    if (!testUuid) {
-      return false;
-    }
-
-    if (
-      !readyRecordRequestRef.current.promise ||
-      readyRecordRequestRef.current.uuid !== testUuid
-    ) {
-      const pendingRequest = ensureSmileTestRecord(testUuid, smileTestApi)
-        .then(() => true)
-        .catch((error) => {
-          console.error('Failed to ensure smile test record:', error);
-          return false;
-        })
-        .finally(() => {
-          if (readyRecordRequestRef.current.uuid === testUuid) {
-            readyRecordRequestRef.current = { uuid: testUuid, promise: null };
-          }
-        });
-
-      readyRecordRequestRef.current = {
-        uuid: testUuid,
-        promise: pendingRequest,
-      };
-    }
-
-    return readyRecordRequestRef.current.promise;
-  }, [testUuid]);
+  const getTestUuid = () => {
+    const urlParams = new URLSearchParams(location.search);
+    return urlParams.get('id');
+  };
 
   // 保存照片到数据库
   const savePhotoToDatabase = async (photoData) => {
+    const testUuid = getTestUuid();
     if (!testUuid) {
       console.error('No test UUID found for saving photo');
       return;
@@ -130,12 +102,6 @@ export default function Step3({ onNext, setStep, style }) {
     });
 
     try {
-      const isReady = await ensureTestRecordReady();
-      if (!isReady) {
-        alert(t('upload.step3Form.errors.saveFailedRetry'));
-        return;
-      }
-
       // 检查是否是base64数据
       const isBase64 = photoData.url && photoData.url.startsWith('data:image/');
       
@@ -168,6 +134,7 @@ export default function Step3({ onNext, setStep, style }) {
 
   // 删除照片从数据库（现在删除整个图片组）
   const deletePhotoFromDatabase = async (step) => {
+    const testUuid = getTestUuid();
     if (!testUuid) {
       console.error('No test UUID found for deleting photo');
       return;
@@ -218,6 +185,7 @@ export default function Step3({ onNext, setStep, style }) {
     }
 
     setSaving(true);
+    const testUuid = getTestUuid();
     
     console.log('🔍 完成提交 - 使用的UUID:', testUuid);
     console.log('🔍 完成提交 - 照片数量:', photos.length);
@@ -297,8 +265,7 @@ export default function Step3({ onNext, setStep, style }) {
     // 重置照片狀態，不加载已保存的照片
     setPhotos([]);
     setCurrentStep(1);
-    ensureTestRecordReady();
-  }, [ensureTestRecordReady]);
+  }, [location.search]);
 
   // 检测是否为移动设备
   useEffect(() => {
