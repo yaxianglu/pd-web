@@ -1,6 +1,18 @@
 import { API_BASE_URL } from '../contants';
 
 export const smileTestApi = {
+  // 验证微笑测试 UUID 是否可继续使用
+  async validateSmileTestUuid(uuid) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/smile-test/validate-uuid/${uuid}`);
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error('Failed to validate smile test UUID:', error);
+      throw error;
+    }
+  },
+
   // 通过UUID获取微笑测试数据
   async getSmileTestByUuid(uuid) {
     try {

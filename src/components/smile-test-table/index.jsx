@@ -36,6 +36,7 @@ function TimeCell({ value }) {
 
 export default function SmileTestTable({
   items,
+  loading = false,
   timeColumns,
   pagination,
   totalSummaryText,
@@ -158,6 +159,7 @@ export default function SmileTestTable({
         className="smile-test-table"
         columns={columns}
         dataSource={items}
+        loading={loading}
         rowKey="rowKey"
         pagination={false}
         scroll={{ x: SMILE_TEST_TABLE_SCROLL_X }}

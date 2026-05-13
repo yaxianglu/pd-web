@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import Logout from '../components/logout';
 import './index.scss';
 import apiService from '../services/api';
@@ -55,6 +55,8 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
   const [activeTab, setActiveTab] = useState('smile');
   const [historyModalOpen, setHistoryModalOpen] = useState(false);
   const [selectedSmileUuid, setSelectedSmileUuid] = useState('');
+  const [isTableLoading, setIsTableLoading] = useState(false);
+  const latestLoadRequestRef = useRef(0);
 
   // 格式化牙齿类型显示
   const formatTeethType = (teethType) => {
@@ -136,6 +138,9 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
   }, []);
 
   const loadSmileTests = useCallback(async () => {
+    const requestId = latestLoadRequestRef.current + 1;
+    latestLoadRequestRef.current = requestId;
+
     if (Array.isArray(inputItems) && inputItems.length > 0 && !filters.status && !filters.date_from && !filters.date_to && !filters.account_keyword && !filters.patient_name && filters.bound_state === 'unbound' && filters.sort_by === 'created_at') {
       const localItems = inputItems.filter((s) => !s.patient_uuid);
       const page = filters.page || 1;
@@ -153,17 +158,38 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
         has_total: true,
       });
       setItems(mapSmileTests(pageItems, page, pageSize));
+      setIsTableLoading(false);
       return;
     }
 
-    const res = await apiService.getAllSmileTests(filters);
-    const nextPagination = getSmileTestPagination(res, filters.page);
-    setPagination(nextPagination);
+    setIsTableLoading(true);
 
-    if (res?.success && Array.isArray(res.data)) {
-      setItems(mapSmileTests(res.data, nextPagination.page, nextPagination.page_size));
-    } else {
+    try {
+      const res = await apiService.getAllSmileTests(filters);
+
+      if (latestLoadRequestRef.current !== requestId) {
+        return;
+      }
+
+      const nextPagination = getSmileTestPagination(res, filters.page);
+      setPagination(nextPagination);
+
+      if (res?.success && Array.isArray(res.data)) {
+        setItems(mapSmileTests(res.data, nextPagination.page, nextPagination.page_size));
+      } else {
+        setItems([]);
+      }
+    } catch (error) {
+      if (latestLoadRequestRef.current !== requestId) {
+        return;
+      }
+
       setItems([]);
+      setPagination(getSmileTestPagination(undefined, filters.page));
+    } finally {
+      if (latestLoadRequestRef.current === requestId) {
+        setIsTableLoading(false);
+      }
     }
   }, [filters, inputItems, mapSmileTests]);
 
@@ -290,6 +316,7 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
             <div className="smile-filter-label">{t('admin.table.bind')}</div>
             <Select
               className="smile-filter-select"
+              variant="outlined"
               value={filters.bound_state}
               onChange={(value) => setFilterValue({ bound_state: value })}
               options={getSmileTestBindOptions(t)}
@@ -299,6 +326,7 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
             <div className="smile-filter-label">{t('admin.table.sortBy')}</div>
             <Select
               className="smile-filter-select"
+              variant="outlined"
               value={filters.sort_by}
               onChange={(value) => setFilterValue({ sort_by: value })}
               options={getSmileTestSortOptions(t)}
@@ -307,6 +335,7 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
         </div>
         <SmileTestTable
           items={items}
+          loading={isTableLoading}
           timeColumns={timeColumns}
           pagination={pagination}
           totalSummaryText={getSmileTestSummaryText(pagination, t)}

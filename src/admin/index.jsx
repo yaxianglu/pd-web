@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Tabs, Modal, Select, message } from "antd";
 import Logout from "../components/logout";
 import Partners from "../partners";
@@ -87,6 +87,8 @@ function AdminSmileView() {
   const [targetSmileUuid, setTargetSmileUuid] = useState('');
   const [historyModalOpen, setHistoryModalOpen] = useState(false);
   const [selectedSmileUuid, setSelectedSmileUuid] = useState('');
+  const [isTableLoading, setIsTableLoading] = useState(false);
+  const latestLoadRequestRef = useRef(0);
 
   // 格式化牙齿类型显示
   const formatTeethType = (teethType) => {
@@ -168,14 +170,36 @@ function AdminSmileView() {
   }, []);
 
   const loadSmileTests = useCallback(async () => {
-    const res = await apiService.getAllSmileTests(filters);
-    const nextPagination = getSmileTestPagination(res, filters.page);
-    setPagination(nextPagination);
+    const requestId = latestLoadRequestRef.current + 1;
+    latestLoadRequestRef.current = requestId;
+    setIsTableLoading(true);
 
-    if (res?.success && Array.isArray(res.data)) {
-      setItems(mapSmileTests(res.data, nextPagination.page, nextPagination.page_size));
-    } else {
+    try {
+      const res = await apiService.getAllSmileTests(filters);
+
+      if (latestLoadRequestRef.current !== requestId) {
+        return;
+      }
+
+      const nextPagination = getSmileTestPagination(res, filters.page);
+      setPagination(nextPagination);
+
+      if (res?.success && Array.isArray(res.data)) {
+        setItems(mapSmileTests(res.data, nextPagination.page, nextPagination.page_size));
+      } else {
+        setItems([]);
+      }
+    } catch (error) {
+      if (latestLoadRequestRef.current !== requestId) {
+        return;
+      }
+
       setItems([]);
+      setPagination(getSmileTestPagination(undefined, filters.page));
+    } finally {
+      if (latestLoadRequestRef.current === requestId) {
+        setIsTableLoading(false);
+      }
     }
   }, [filters, mapSmileTests]);
 
@@ -298,6 +322,7 @@ function AdminSmileView() {
           <div className="smile-filter-label">{t('admin.table.bind')}</div>
           <Select
             className="smile-filter-select"
+            variant="outlined"
             value={filters.bound_state}
             onChange={(value) => setFilterValue({ bound_state: value })}
             options={getSmileTestBindOptions(t)}
@@ -307,6 +332,7 @@ function AdminSmileView() {
           <div className="smile-filter-label">{t('admin.table.sortBy')}</div>
           <Select
             className="smile-filter-select"
+            variant="outlined"
             value={filters.sort_by}
             onChange={(value) => setFilterValue({ sort_by: value })}
             options={getSmileTestSortOptions(t)}
@@ -315,6 +341,7 @@ function AdminSmileView() {
       </div>
       <SmileTestTable
         items={items}
+        loading={isTableLoading}
         timeColumns={timeColumns}
         pagination={pagination}
         totalSummaryText={getSmileTestSummaryText(pagination, t)}

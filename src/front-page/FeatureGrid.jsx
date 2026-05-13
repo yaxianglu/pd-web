@@ -1,10 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './FeatureGrid.scss';
-import cardInvisible from './assets/home-card-invisible.png';
-import cardCorrection from './assets/home-card-correction.png';
+import cardCorrection from './assets/home-card-invisible.png';
 import cardRetainer from './assets/home-card-retainer.png';
-import cardSmileTest from './assets/home-card-smile-test.png';
+import cardSmileTest from './assets/home-card-correction.png';
+import cardInvisible from './assets/home-card-smile-test.png';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function FeatureGrid() {

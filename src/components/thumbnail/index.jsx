@@ -40,11 +40,16 @@ export default function Thumbnail(props) {
     handleClick(button2);
   };
 
+  const isHomeVariant = variant === 'home';
+  const mainContentClassName = `main-content${isHomeVariant ? ' main-content-home' : ''}`;
+  const textContentClassName = `text-content${isHomeVariant ? ' text-content-home' : ''}`;
+  const imageContainerClassName = `image-container${isHomeVariant ? ' image-container-home' : ''}`;
+
   return (
     <div className={`thumbnail-section thumbnail-section-${variant}`}>
       <div className="content-wrapper">
-        <div className="main-content">
-          <div className="text-content">
+        <div className={mainContentClassName}>
+          <div className={textContentClassName}>
             <h1 className="main-title">
               {title}
             </h1>
@@ -81,7 +86,7 @@ export default function Thumbnail(props) {
               )
             }
           </div>
-          <div className="image-container">
+          <div className={imageContainerClassName}>
             <img
               src={image}
               alt="#"

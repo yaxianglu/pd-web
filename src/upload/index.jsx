@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import p2 from '../asserts/2.svg';
@@ -7,13 +7,16 @@ import Step from './step';
 import Step1 from './step1';
 import Step2 from './step2';
 import Step3 from './step3';
+import { smileTestApi } from '../services/smileTestApi';
 import './index.scss';
 
 export default function Upload() {
   const { t } = useLanguage();
   const [step, setStep] = useState(1);
+  const [isInitializing, setIsInitializing] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
+  const lastValidatedIdRef = useRef(null);
 
   // 生成UUID
   const generateUUID = () => {
@@ -38,39 +41,112 @@ export default function Upload() {
     navigate(`${location.pathname}?${params.toString()}`, { replace: true });
   };
 
-  // 初始：確保存在 id，並從 URL 初始化 step
+  const clampStep = (value) => Math.max(1, Math.min(4, Number(value) || 1));
+
+  // 初始：確保存在 id，並在渲染表單前驗證是否為過期連結
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    let id = params.get('id');
-    if (!id) {
-      id = generateUUID();
-      params.set('id', id);
-    }
+    let cancelled = false;
 
-    const s = Math.max(1, Math.min(4, Number(params.get('step')) || 1));
-    if (s !== step) {
-      setStep(s);
-    }
+    const initializeUploadSession = async () => {
+      const params = new URLSearchParams(location.search);
+      let id = params.get('id');
+      const hadIdInUrl = Boolean(id);
+      const shouldBlockRender = !id || (hadIdInUrl && lastValidatedIdRef.current !== id);
 
-    // 可能新增了 id 或規整了 step，寫回 URL
-    navigate(`${location.pathname}?${params.toString()}`, { replace: true });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+      if (shouldBlockRender) {
+        setIsInitializing(true);
+      }
+
+      let shouldReplace = false;
+
+      if (!id) {
+        id = generateUUID();
+        params.set('id', id);
+        lastValidatedIdRef.current = id;
+        shouldReplace = true;
+      }
+
+      let nextStep = clampStep(params.get('step'));
+      if (params.get('step') !== String(nextStep)) {
+        params.set('step', String(nextStep));
+        shouldReplace = true;
+      }
+
+      if (hadIdInUrl && id && lastValidatedIdRef.current !== id) {
+        try {
+          const result = await smileTestApi.validateSmileTestUuid(id);
+          if (cancelled) return;
+
+          if (!result.success && result.error_code === 'uuid_expired') {
+            const regeneratedId = generateUUID();
+            params.set('id', regeneratedId);
+            params.set('step', '1');
+            lastValidatedIdRef.current = regeneratedId;
+            nextStep = 1;
+            shouldReplace = true;
+            window.alert(t('upload.linkExpiredMessage'));
+          } else {
+            lastValidatedIdRef.current = id;
+          }
+        } catch (error) {
+          console.error('Failed to validate upload UUID:', error);
+          lastValidatedIdRef.current = id;
+        }
+      }
+
+      if (cancelled) return;
+
+      if (step !== nextStep) {
+        setStep(nextStep);
+      }
+
+      if (shouldReplace) {
+        navigate(`${location.pathname}?${params.toString()}`, { replace: true });
+        return;
+      }
+
+      setIsInitializing(false);
+    };
+
+    initializeUploadSession();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [location.pathname, location.search, navigate, step, t]);
 
   // 當 URL 查詢中的 step 改變（例如使用瀏覽器前進/後退），同步到本地 state
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const s = Math.max(1, Math.min(4, Number(params.get('step')) || 1));
+    const s = clampStep(params.get('step'));
     if (s !== step) setStep(s);
   }, [location.search, step]);
 
   // 封裝設置步驟：同時更新 URL
   const handleSetStep = (nextStep) => {
     const resolved = typeof nextStep === 'function' ? nextStep(step) : nextStep;
-    const clamped = Math.max(1, Math.min(4, Number(resolved) || 1));
+    const clamped = clampStep(resolved);
     setStep(clamped);
     updateQueryParams({ step: clamped });
   };
+
+  if (isInitializing) {
+    return (
+      <div className="upload-wrapper">
+        <div className="upload-top">
+          <img src={p2} alt="p2" />
+          {t('upload.brandName')}
+        </div>
+        <div className="upload-content-wrapper">
+          <div className="step1-wrapper">
+            <div className="step1-content">
+              <div className="loading">{t('upload.step1Form.loading')}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="upload-wrapper">

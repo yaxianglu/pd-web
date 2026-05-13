@@ -76,4 +76,36 @@ describe('SmileTestTable', () => {
     expect(screen.getByText('资料下载').closest('th')).toHaveClass('ant-table-cell-fix-right');
     expect(screen.getByText('患者卡').closest('th')).toHaveClass('ant-table-cell-fix-right');
   });
+
+  it('shows a loading spinner when the table is fetching data', () => {
+    const { container } = render(
+      <SmileTestTable
+        items={[]}
+        timeColumns={[]}
+        pagination={{ page: 1, page_size: 50, total: 0 }}
+        totalSummaryText="共 0 条记录"
+        createPatientLabel="创建患者信息"
+        historyLabel="历史资料"
+        labels={{
+          seq: '编号',
+          patientName: '患者名称',
+          phone: '手机号码',
+          email: '电子信箱',
+          lineId: 'Line ID',
+          region: '地址',
+          download: '资料下载',
+          status: '患者卡',
+        }}
+        expandedRowKeys={[]}
+        onExpandedRowsChange={jest.fn()}
+        onOpenHistory={jest.fn()}
+        onOpenBind={jest.fn()}
+        onPageChange={jest.fn()}
+        renderExpandedContent={() => <div>展开内容</div>}
+        loading
+      />,
+    );
+
+    expect(container.querySelector('.ant-spin-spinning')).toBeTruthy();
+  });
 });
