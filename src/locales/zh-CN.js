@@ -1325,6 +1325,18 @@ export default {
       bind: '绑定状态',
       bound: '已绑定',
       unbound: '未绑定',
+      sortBy: '排序方式',
+      timeInfo: '时间信息',
+      imageUploadTime: '图片上传时间',
+      updatedAt: '更新时间',
+      appointmentDate: '预约时间',
+      followUpDate: '跟进时间',
+      createdAtShort: '创建',
+      uploadAtShort: '上传',
+      updatedAtShort: '更新',
+      sortCreatedAtDesc: '创建时间：新到旧',
+      sortImageUploadTimeDesc: '图片上传时间：新到旧',
+      sortUpdatedAtDesc: '更新时间：新到旧',
       statusPending: '待处理',
       statusInProgress: '处理中',
       statusCompleted: '已完成',
@@ -1420,7 +1432,8 @@ export default {
       close: '关闭'
     },
     pagination: {
-      total: '共 {{total}} 条记录'
+      total: '共 {{total}} 条记录',
+      currentPageCount: '当前页 {{count}} 条记录'
     }
   },
 

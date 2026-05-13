@@ -1,6 +1,7 @@
 import {
   SMILE_TEST_PAGE_SIZE,
   createSmileTestFilters,
+  getSmileTestSortOptions,
   getSmileTestSummaryText,
   mergeSmileTestFilters,
   getSmileTestPagination,
@@ -14,6 +15,7 @@ describe('smile-test-list utils', () => {
       date_to: '',
       account_keyword: '',
       bound_state: 'unbound',
+      sort_by: 'created_at',
       page: 1,
       page_size: SMILE_TEST_PAGE_SIZE,
     });
@@ -32,6 +34,7 @@ describe('smile-test-list utils', () => {
       date_to: '',
       account_keyword: 'new',
       bound_state: 'unbound',
+      sort_by: 'created_at',
       page: 1,
       page_size: SMILE_TEST_PAGE_SIZE,
     });
@@ -51,10 +54,11 @@ describe('smile-test-list utils', () => {
       page_size: 50,
       total: 107,
       total_pages: 3,
+      has_total: true,
     });
   });
 
-  it('falls back to response length when pagination metadata is missing', () => {
+  it('marks total as unknown when pagination metadata is missing', () => {
     expect(getSmileTestPagination({
       data: [{ uuid: '1' }, { uuid: '2' }],
     })).toEqual({
@@ -62,12 +66,28 @@ describe('smile-test-list utils', () => {
       page_size: SMILE_TEST_PAGE_SIZE,
       total: 2,
       total_pages: 1,
+      has_total: false,
     });
   });
 
   it('formats total summary text from pagination data', () => {
-    expect(getSmileTestSummaryText({ total: 107 }, (key, vars) => `${key}:${vars.total}`)).toBe(
+    expect(getSmileTestSummaryText({ total: 107, has_total: true }, (key, vars) => `${key}:${vars.total}`)).toBe(
       'admin.pagination.total:107',
     );
+  });
+
+  it('formats current page count when total is unknown', () => {
+    expect(getSmileTestSummaryText(
+      { total: 50, has_total: false },
+      (key, vars) => `${key}:${vars.count}`,
+    )).toBe('admin.pagination.currentPageCount:50');
+  });
+
+  it('returns descending time sort options', () => {
+    expect(getSmileTestSortOptions((key) => key)).toEqual([
+      { value: 'created_at', label: 'admin.table.sortCreatedAtDesc' },
+      { value: 'image_upload_time', label: 'admin.table.sortImageUploadTimeDesc' },
+      { value: 'updated_at', label: 'admin.table.sortUpdatedAtDesc' },
+    ]);
   });
 });

@@ -10,9 +10,10 @@ import apiService from "../services/api";
 import { useLanguage } from "../context/LanguageContext";
 import {
   createSmileTestFilters,
+  formatSmileTestDateTime,
   getSmileTestBindOptions,
   getSmileTestPagination,
-  getSmileTestStatusOptions,
+  getSmileTestSortOptions,
   getSmileTestSummaryText,
   mergeSmileTestFilters,
   SMILE_TEST_PAGE_SIZE,
@@ -149,7 +150,11 @@ function AdminSmileView() {
       current_issues: s.current_issues || '',
       statusText: s?.patient_uuid ? s?.uuid : t('admin.table.createPatientInfo'),
       smileUuid: s.uuid,
-      createdAt: s.created_at ? new Date(s.created_at).toLocaleString('zh-TW') : '—',
+      createdAt: formatSmileTestDateTime(s.created_at),
+      latestImageUploadTime: formatSmileTestDateTime(s.latest_image_upload_time),
+      updatedAt: formatSmileTestDateTime(s.updated_at),
+      appointmentAt: formatSmileTestDateTime(s.appointment_date),
+      followUpAt: formatSmileTestDateTime(s.follow_up_date),
     }));
   }, [t]);
 
@@ -199,17 +204,6 @@ function AdminSmileView() {
     <>
       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 16, alignItems: 'end' }}>
         <div>
-          <div style={{ fontSize: 12, marginBottom: 6 }}>{t('admin.table.status')}</div>
-          <Select
-            value={filters.status || undefined}
-            placeholder={t('admin.table.status')}
-            allowClear
-            style={{ width: 140 }}
-            onChange={(value) => setFilterValue({ status: value || '' })}
-            options={getSmileTestStatusOptions(t)}
-          />
-        </div>
-        <div>
           <div style={{ fontSize: 12, marginBottom: 6 }}>{t('admin.table.createdAt')}</div>
           <input
             type="date"
@@ -246,6 +240,15 @@ function AdminSmileView() {
             options={getSmileTestBindOptions(t)}
           />
         </div>
+        <div>
+          <div style={{ fontSize: 12, marginBottom: 6 }}>{t('admin.table.sortBy')}</div>
+          <Select
+            value={filters.sort_by}
+            style={{ width: 190 }}
+            onChange={(value) => setFilterValue({ sort_by: value })}
+            options={getSmileTestSortOptions(t)}
+          />
+        </div>
       </div>
       <div className="table">
         <div className="thead">
@@ -255,7 +258,7 @@ function AdminSmileView() {
           <div className="th email">{t('admin.table.email')}</div>
           <div className="th line_id">{t('admin.table.lineId')}</div>
           <div className="th region">{t('admin.table.region')}</div>
-          <div className="th created_at">{t('admin.table.createdAt')}</div>
+          <div className="th time_info">{t('admin.table.timeInfo')}</div>
           <div className="th download">{t('admin.table.download')}</div>
           <div className="th status">{t('admin.table.status')}</div>
           <div className="th caret" />
@@ -273,7 +276,11 @@ function AdminSmileView() {
                   <div className="td email">{row.email || '—'}</div>
                   <div className="td line_id">{row.lineId || '—'}</div>
                   <div className="td region">{row.region || '—'}</div>
-                  <div className="td created_at">{row.createdAt || '—'}</div>
+                  <div className="td time_info">
+                    <div className="time-line"><span className="time-label">{t('admin.table.createdAtShort')}</span><span>{row.createdAt}</span></div>
+                    <div className="time-line"><span className="time-label">{t('admin.table.uploadAtShort')}</span><span>{row.latestImageUploadTime}</span></div>
+                    <div className="time-line"><span className="time-label">{t('admin.table.updatedAtShort')}</span><span>{row.updatedAt}</span></div>
+                  </div>
                   <div className="td download">
                     <button
                       type="button"
@@ -308,6 +315,21 @@ function AdminSmileView() {
                       </div>
                       <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
                         {t('admin.table.userNote')}：{row.improvement_points || '—'}
+                      </div>
+                      <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
+                        {t('admin.table.createdAt')}：{row.createdAt}
+                      </div>
+                      <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
+                        {t('admin.table.imageUploadTime')}：{row.latestImageUploadTime}
+                      </div>
+                      <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
+                        {t('admin.table.updatedAt')}：{row.updatedAt}
+                      </div>
+                      <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
+                        {t('admin.table.appointmentDate')}：{row.appointmentAt}
+                      </div>
+                      <div className="note-label" style={{ textAlign: 'left', marginBottom: 8, fontSize: 14 }}>
+                        {t('admin.table.followUpDate')}：{row.followUpAt}
                       </div>
                     </div>
                     <textarea
@@ -349,7 +371,7 @@ function AdminSmileView() {
             setExpanded({});
             setFilters((prev) => ({ ...prev, page, page_size: SMILE_TEST_PAGE_SIZE }));
           }}
-          showTotal={(total) => t('admin.pagination.total', { total })}
+          showTotal={pagination.has_total ? (total) => t('admin.pagination.total', { total }) : undefined}
         />
       </div>
 

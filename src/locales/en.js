@@ -1337,6 +1337,18 @@ Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
       bind: 'Bind',
       bound: 'Bound',
       unbound: 'Unbound',
+      sortBy: 'Sort By',
+      timeInfo: 'Time Info',
+      imageUploadTime: 'Image Upload Time',
+      updatedAt: 'Updated At',
+      appointmentDate: 'Appointment Time',
+      followUpDate: 'Follow-up Time',
+      createdAtShort: 'Created',
+      uploadAtShort: 'Upload',
+      updatedAtShort: 'Updated',
+      sortCreatedAtDesc: 'Created Time: Newest First',
+      sortImageUploadTimeDesc: 'Image Upload Time: Newest First',
+      sortUpdatedAtDesc: 'Updated Time: Newest First',
       statusPending: 'Pending',
       statusInProgress: 'In Progress',
       statusCompleted: 'Completed',
@@ -1432,7 +1444,8 @@ Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
       close: 'Close'
     },
     pagination: {
-      total: 'Total {{total}} records'
+      total: 'Total {{total}} records',
+      currentPageCount: '{{count}} records on current page'
     }
   },
 

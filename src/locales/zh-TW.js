@@ -1331,6 +1331,18 @@ export default {
       bind: '綁定狀態',
       bound: '已綁定',
       unbound: '未綁定',
+      sortBy: '排序方式',
+      timeInfo: '時間資訊',
+      imageUploadTime: '圖片上傳時間',
+      updatedAt: '更新時間',
+      appointmentDate: '預約時間',
+      followUpDate: '跟進時間',
+      createdAtShort: '建立',
+      uploadAtShort: '上傳',
+      updatedAtShort: '更新',
+      sortCreatedAtDesc: '建立時間：新到舊',
+      sortImageUploadTimeDesc: '圖片上傳時間：新到舊',
+      sortUpdatedAtDesc: '更新時間：新到舊',
       statusPending: '待處理',
       statusInProgress: '處理中',
       statusCompleted: '已完成',
@@ -1426,7 +1438,8 @@ export default {
       close: '關閉'
     },
     pagination: {
-      total: '共 {{total}} 條記錄'
+      total: '共 {{total}} 條記錄',
+      currentPageCount: '當前頁 {{count}} 條記錄'
     }
   },
 
