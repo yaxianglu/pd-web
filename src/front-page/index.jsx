@@ -2,49 +2,36 @@ import React from 'react';
 import FeatureGrid from './FeatureGrid';
 import heroImage from './assets/home-hero.png';
 import homeVideo from './assets/home-video.mp4';
-import './home.scss';
 
 import Header from '../components/header';
 import Footer from '../components/footer';
 import PageWrapper from '../components/page-wrapper';
+import Thumbnail from '../components/thumbnail';
 import Sketch from '../components/sketch';
 import { useLanguage } from '../context/LanguageContext';
+import { useResponsive } from '../components/responsive-hook';
 import { useNavigate } from 'react-router-dom';
 
 export default function PageCom() {
   const { t } = useLanguage();
+  const { isMobile } = useResponsive();
   const navigate = useNavigate();
   
   return (
     <>
       <Header />
       <PageWrapper>
-        <section className="home-hero-banner">
-          <img
-            src={heroImage}
-            alt={t('brand.tagline')}
-            className="home-hero-banner-image"
-          />
-          <div className="home-hero-actions">
-            <button
-              type="button"
-              className="home-hero-primary"
-              onClick={() => window.open('/upload', '_blank')}
-            >
-              <span>{t('home.button1')}</span>
-              <span>{t('home.button11')}</span>
-              <span className="home-hero-action-star">✦</span>
-            </button>
-            <button
-              type="button"
-              className="home-hero-secondary"
-              onClick={() => navigate('/about')}
-            >
-              <span>{t('home.button2')}</span>
-              <span>{t('home.button21')}</span>
-            </button>
-          </div>
-        </section>
+        <Thumbnail
+          variant="home"
+          title={<span>{t('home.title')}<br />{t('home.subtitle')}</span>}
+          subtitle={t('brand.tagline')}
+          button1={<div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row' }}><span>{t('home.button1')}</span><span>{t('home.button11')}</span></div>}
+          button2={<div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row' }}><span>{t('home.button2')}</span><span>{t('home.button21')}</span></div>}
+          onButton1Click={() => window.open('/upload', '_blank')}
+          onButton2Click={() => navigate('/about')}
+          image={heroImage}
+          description={<>{t('home.description')}<br />{t('home.description2')}</>}
+        />
         <Sketch
           variant="home"
           title={<>{t('home.sketchTitle')}</>}
