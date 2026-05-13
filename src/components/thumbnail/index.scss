@@ -237,6 +237,8 @@
     .text-content-home {
       @media (max-width: 1125px) {
         order: 1;
+        flex: 0 0 auto;
+        width: 100%;
       }
     }
 
@@ -320,12 +322,15 @@
     .image-container-home {
       @media (max-width: 1125px) {
         order: 2;
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: 100%;
         margin-top: 2px;
       }
     }
 
     @media (max-width: 1125px) {
-      padding-top: 36px;
+      padding-top: 72px;
     }
   }
 }
