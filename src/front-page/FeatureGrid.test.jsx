@@ -11,14 +11,28 @@ jest.mock('react-router-dom', () => ({
   useNavigate: () => mockNavigate,
 }));
 
+jest.mock('../config/localizedMarketingImages', () => ({
+  getLocalizedMarketingImages: () => ({
+    homeHero: 'hero-en-image',
+    maintainerHero: 'maintainer-en-image',
+    homepageCards: {
+      invisibleBraces: 'card-invisible-en',
+      retainer: 'card-retainer-en',
+      correctionBeauty: 'card-correction-en',
+      smileTest: 'card-smile-en',
+    },
+  }),
+}));
+
 jest.mock('../context/LanguageContext', () => ({
   useLanguage: () => ({
+    currentLanguage: 'en',
     t: (key) => ({
-      'home.learnMore': '想要了解',
-      'home.featureGrid.invisibleBraces.title': '隱形牙套',
-      'home.featureGrid.retainer.title': '維持器',
-      'home.featureGrid.correctionBeauty.title': '矯正與美',
-      'home.featureGrid.smileTest.title': '微笑測試',
+      'home.learnMore': 'Learn more',
+      'home.featureGrid.invisibleBraces.title': 'Invisible Braces',
+      'home.featureGrid.retainer.title': 'Retainers',
+      'home.featureGrid.correctionBeauty.title': 'Orthodontics & Aesthetics',
+      'home.featureGrid.smileTest.title': 'Smile Quiz',
     }[key] || key),
   }),
 }));
@@ -33,12 +47,18 @@ describe('FeatureGrid', () => {
   it('renders homepage cards in the requested order and links each card to the matching destination', async () => {
     render(<FeatureGrid />);
 
-    expect(screen.getByText('想要了解')).toBeInTheDocument();
+    expect(screen.getByText('Learn more')).toBeInTheDocument();
     expect(screen.getAllByRole('img').map((image) => image.getAttribute('alt'))).toEqual([
-      '隱形牙套',
-      '維持器',
-      '矯正與美',
-      '微笑測試',
+      'Invisible Braces',
+      'Retainers',
+      'Orthodontics & Aesthetics',
+      'Smile Quiz',
+    ]);
+    expect(screen.getAllByRole('img').map((image) => image.getAttribute('src'))).toEqual([
+      'card-invisible-en',
+      'card-retainer-en',
+      'card-correction-en',
+      'card-smile-en',
     ]);
 
     const buttons = screen.getAllByRole('button');

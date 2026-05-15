@@ -1,34 +1,32 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './FeatureGrid.scss';
-import cardCorrection from './assets/home-card-invisible.png';
-import cardRetainer from './assets/home-card-retainer.png';
-import cardSmileTest from './assets/home-card-correction.png';
-import cardInvisible from './assets/home-card-smile-test.png';
 import { useLanguage } from '../context/LanguageContext';
+import { getLocalizedMarketingImages } from '../config/localizedMarketingImages';
 
 export default function FeatureGrid() {
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, currentLanguage } = useLanguage();
+  const { homepageCards } = getLocalizedMarketingImages(currentLanguage);
 
   const cards = [
     {
-      image: cardInvisible,
+      image: homepageCards.invisibleBraces,
       alt: t('home.featureGrid.invisibleBraces.title'),
       onClick: () => navigate('/invisible-braces'),
     },
     {
-      image: cardRetainer,
+      image: homepageCards.retainer,
       alt: t('home.featureGrid.retainer.title'),
       onClick: () => navigate('/maintainer'),
     },
     {
-      image: cardCorrection,
+      image: homepageCards.correctionBeauty,
       alt: t('home.featureGrid.correctionBeauty.title'),
       onClick: () => navigate('/correction'),
     },
     {
-      image: cardSmileTest,
+      image: homepageCards.smileTest,
       alt: t('home.featureGrid.smileTest.title'),
       onClick: () => window.open('/upload', '_blank'),
     },

@@ -6,12 +6,13 @@ import Footer from '../components/footer';
 import FAQ from '../components/FAQ';
 import PageWrapper from '../components/page-wrapper';
 import Thumbnail from '../components/thumbnail';
-import p14 from '../asserts/14.jpg';
 import Sketch from '../components/sketch';
 import { useLanguage } from '../context/LanguageContext';
+import { getLocalizedMarketingImages } from '../config/localizedMarketingImages';
 
 export default function PageCom() {
-  const { t } = useLanguage();
+  const { t, currentLanguage } = useLanguage();
+  const marketingImages = getLocalizedMarketingImages(currentLanguage);
   
   return (
     <>
@@ -21,7 +22,7 @@ export default function PageCom() {
           title={<>{t('maintainer.title')}</>}
           subtitle={<>{t('maintainer.subtitle')}</>}
           button1={t('maintainer.buttonText')}
-          image={p14}
+          image={marketingImages.maintainerHero}
         />
         <Sketch
           title={t('maintainer.sketchTitle')}
