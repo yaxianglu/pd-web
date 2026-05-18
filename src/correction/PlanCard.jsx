@@ -9,7 +9,7 @@ export default function PlanCard(props) {
   
   return (
     <CardWrapper>
-      <div className="correction-plan-card-section">
+      <div className={`correction-plan-card-section ${imgRight ? 'is-image-right' : 'is-image-left'}`}>
         {!imgRight && <div className="correction-plan-card-section-item">
           <img src={image} alt="p7" />
         </div>}

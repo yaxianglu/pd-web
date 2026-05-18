@@ -4,8 +4,12 @@ import './index.scss';
 
 export default function ContentTextImg(props) {
   const { title, description, image, imgRight = true } = props;
-  const { isMobile, isTablet } = useResponsive();
-  const borderStyle = imgRight ? { borderLeft: '3px solid #48d2ce', textAlign: 'left', paddingLeft: '16px' } : { borderRight: '3px solid #48d2ce', textAlign: 'right', paddingRight: '10px' };
+  const { isMobile } = useResponsive();
+  const borderStyle = isMobile
+    ? { borderLeft: '3px solid #48d2ce', textAlign: 'left', paddingLeft: '16px' }
+    : imgRight
+      ? { borderLeft: '3px solid #48d2ce', textAlign: 'left', paddingLeft: '16px' }
+      : { borderRight: '3px solid #48d2ce', textAlign: 'right', paddingRight: '10px' };
   return (
     <div className={`content-text-img-section ${!imgRight ? 'content-text-img-section-reverse' : ''}`}>
       {!imgRight && <div className="content-text-img-section-img" style={{ justifyContent: 'start' }}>
@@ -22,7 +26,7 @@ export default function ContentTextImg(props) {
         </div>
         <div
           className="content-text-img-section-item-description"
-          style={{ textAlign: imgRight ? 'left' : 'right' }}
+          style={{ textAlign: isMobile ? 'left' : imgRight ? 'left' : 'right' }}
         >
           {
             description || (

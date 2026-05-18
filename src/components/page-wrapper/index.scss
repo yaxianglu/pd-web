@@ -27,7 +27,7 @@
     .page-content {
       max-width: 90%;
       // min-width: 768px;
-      padding: 0 40px;
+      padding: 0 32px;
     }
   }
 }
@@ -38,7 +38,15 @@
     .page-content {
       max-width: 100%;
       min-width: 320px;
-      padding: 0 40px;
+      padding: 0 24px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .page-wrapper {
+    .page-content {
+      padding: 0 16px;
     }
   }
 }

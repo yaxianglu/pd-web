@@ -14,7 +14,7 @@ export default function ProductFeatures() {
   
   return (
     <CardWrapper>
-      <Grid3>
+      <Grid3 className="correction-features-grid correction-features-grid-intro">
         <div className="correction-dkfjsl-wrapper-item correction-dkfjsl-wrapper-item-tttt">
           {t('correction.facialIssues.description').split('\n').map((line, index) => (
             <span key={index}>
@@ -40,7 +40,7 @@ export default function ProductFeatures() {
           </div>
         </div>
       </Grid3>
-      <Grid3 style={{ marginTop: '24px' }}>
+      <Grid3 className="correction-features-grid" style={{ marginTop: '24px' }}>
         <div className="correction-dkfjsl-wrapper-item">
           <img src={p17} alt="p3" />
           <div className="correction-dkfjsl-wrapper-item-content">
@@ -69,7 +69,7 @@ export default function ProductFeatures() {
           </div>
         </div>
       </Grid3>
-      <Grid3 style={{ marginTop: '24px' }}>
+      <Grid3 className="correction-features-grid" style={{ marginTop: '24px' }}>
         <div className="correction-dkfjsl-wrapper-item">
           <img src={p15} alt="p3" />
           <div className="correction-dkfjsl-wrapper-item-content">
