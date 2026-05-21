@@ -73,7 +73,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 注意：需要在本地打包上传！！！！！！
 ```
 
-sudo systemctl restart nginx
+sudo systemctl restart nginx˜
 
 
 ```

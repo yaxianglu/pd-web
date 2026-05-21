@@ -163,6 +163,7 @@ export default function SmileTestTable({
         rowKey="rowKey"
         pagination={false}
         scroll={{ x: SMILE_TEST_TABLE_SCROLL_X }}
+        sticky
         rowClassName={() => 'smile-test-table-row'}
         expandable={{
           expandedRowKeys,

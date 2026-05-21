@@ -9,6 +9,7 @@ import HistoryModal from "../components/history-modal";
 import apiService from "../services/api";
 import { useLanguage } from "../context/LanguageContext";
 import SmileTestTable from "../components/smile-test-table";
+import GlobalHorizontalScrollbar from "../components/global-horizontal-scrollbar";
 import {
   createSmileTestFilters,
   formatSmileTestDateTime,
@@ -89,6 +90,7 @@ function AdminSmileView() {
   const [selectedSmileUuid, setSelectedSmileUuid] = useState('');
   const [isTableLoading, setIsTableLoading] = useState(false);
   const latestLoadRequestRef = useRef(0);
+  const smileViewRef = useRef(null);
 
   // 格式化牙齿类型显示
   const formatTeethType = (teethType) => {
@@ -279,6 +281,7 @@ function AdminSmileView() {
 
   return (
     <>
+      <div className="smile-view-with-global-scrollbar" ref={smileViewRef}>
       <div className="smile-filters">
         <div className="smile-filter-field">
           <div className="smile-filter-label">{t('admin.table.createdAt')}</div>
@@ -367,6 +370,20 @@ function AdminSmileView() {
         }}
         renderExpandedContent={renderExpandedContent}
       />
+      <GlobalHorizontalScrollbar
+        scopeRef={smileViewRef}
+        deps={[
+          items.length,
+          pagination.page,
+          filters.date_from,
+          filters.date_to,
+          filters.account_keyword,
+          filters.patient_name,
+          filters.bound_state,
+          filters.sort_by,
+        ]}
+      />
+      </div>
 
       <Modal
         title={t('admin.modal.bindDoctorCreatePatient')}

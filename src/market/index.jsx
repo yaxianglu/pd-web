@@ -7,6 +7,7 @@ import Partners from '../partners';
 import ClinicDashboard from '../clinic';
 import HistoryModal from '../components/history-modal';
 import SmileTestTable from '../components/smile-test-table';
+import GlobalHorizontalScrollbar from '../components/global-horizontal-scrollbar';
 import { useLanguage } from '../context/LanguageContext';
 import {
   createSmileTestFilters,
@@ -57,6 +58,7 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
   const [selectedSmileUuid, setSelectedSmileUuid] = useState('');
   const [isTableLoading, setIsTableLoading] = useState(false);
   const latestLoadRequestRef = useRef(0);
+  const smileViewRef = useRef(null);
 
   // 格式化牙齿类型显示
   const formatTeethType = (teethType) => {
@@ -272,7 +274,7 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
         <MarketHeader bizId={bizId} activeTab={activeTab} onTabChange={setActiveTab} />
 
         {activeTab === 'smile' && (
-        <>
+        <div className="smile-view-with-global-scrollbar" ref={smileViewRef}>
         <div className="smile-filters">
           <div className="smile-filter-field">
             <div className="smile-filter-label">{t('admin.table.createdAt')}</div>
@@ -361,7 +363,21 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
           }}
           renderExpandedContent={renderExpandedContent}
         />
-        </>
+        <GlobalHorizontalScrollbar
+          scopeRef={smileViewRef}
+          deps={[
+            activeTab,
+            items.length,
+            pagination.page,
+            filters.date_from,
+            filters.date_to,
+            filters.account_keyword,
+            filters.patient_name,
+            filters.bound_state,
+            filters.sort_by,
+          ]}
+        />
+        </div>
         )}
         {activeTab === 'partners' && <Partners />}
         {activeTab === 'clinics' && <ClinicDashboard />}
