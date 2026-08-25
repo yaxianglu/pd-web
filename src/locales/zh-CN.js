@@ -1012,7 +1012,9 @@ export default {
         experienceYears: '几年的牙医经验',
         treatmentCount: '牙科治疗的数量',
         address: '您的地址',
-        remarks: '有什么特别备注的吗?'
+        remarks: '有什么特别备注的吗?',
+        courseTimeSlot: '希望参加的免费线上课程时段',
+        selectCourseSlot: '请选择时段'
       },
       submit: '提交',
       submitting: '提交中...',
@@ -1520,6 +1522,7 @@ export default {
       email: '邮箱',
       status: '状态',
       registrationTime: '注册时间',
+      courseTimeSlot: '课程时段',
       action: '操作'
     },
     buttons: {

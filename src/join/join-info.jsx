@@ -6,6 +6,7 @@ import apiService from '../services/api';
 import { message } from 'antd';
 import 'antd/dist/reset.css';
 import { useLanguage } from '../context/LanguageContext';
+import { COURSE_TIME_SLOTS } from '../config/courseSlots';
 
 export default function JoinInfo() {
   const { t } = useLanguage();
@@ -20,9 +21,10 @@ export default function JoinInfo() {
     experienceYears: '',
     treatmentCount: '',
     address: '',
+    courseTimeSlot: '',
     remarks: ''
   });
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -122,6 +124,7 @@ export default function JoinInfo() {
         treatment_count: parseInt(formData.treatmentCount),
         address: formData.address.trim(),
         special_notes: formData.remarks.trim(),
+        course_time_slot: formData.courseTimeSlot,
         status: 'pending'
       };
 
@@ -140,6 +143,7 @@ export default function JoinInfo() {
         experienceYears: '',
         treatmentCount: '',
         address: '',
+        courseTimeSlot: '',
         remarks: ''
       });
       setErrors({});
@@ -262,6 +266,20 @@ export default function JoinInfo() {
               required
             />
             {errors.address && <div className="error-message">{errors.address}</div>}
+          </div>
+
+          <div className="form-field">
+            <label className="form-label">{t('join.form.fields.courseTimeSlot')}</label>
+            <select
+              className="form-input"
+              value={formData.courseTimeSlot}
+              onChange={(e) => handleInputChange('courseTimeSlot', e.target.value)}
+            >
+              <option value="">{t('join.form.fields.selectCourseSlot')}</option>
+              {COURSE_TIME_SLOTS.map((slot) => (
+                <option key={slot} value={slot}>{slot}</option>
+              ))}
+            </select>
           </div>
 
           <div className="form-field">

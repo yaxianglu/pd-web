@@ -1018,7 +1018,9 @@ export default {
         experienceYears: '幾年的牙醫經驗',
         treatmentCount: '牙科治療的數量',
         address: '您的地址',
-        remarks: '有什麼特別備註的嗎?'
+        remarks: '有什麼特別備註的嗎?',
+        courseTimeSlot: '希望參加的免費線上課程時段',
+        selectCourseSlot: '請選擇時段'
       },
       submit: '提交',
       submitting: '提交中...',
@@ -1526,6 +1528,7 @@ export default {
       email: '郵箱',
       status: '狀態',
       registrationTime: '註冊時間',
+      courseTimeSlot: '課程時段',
       action: '操作'
     },
     buttons: {

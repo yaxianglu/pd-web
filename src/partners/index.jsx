@@ -113,6 +113,7 @@ export default function Partners() {
             <div className="th email">{t('partners.table.email')}</div>
             <div className="th status">{t('partners.table.status')}</div>
             <div className="th created">{t('partners.table.registrationTime')}</div>
+            <div className="th courseSlot">{t('partners.table.courseTimeSlot')}</div>
             <div className="th action">{t('partners.table.action')}</div>
             <div className="th caret" />
           </div>
@@ -130,11 +131,12 @@ export default function Partners() {
                     <div className="td status"><Tag color={getStatusColor(p.status)}>{getStatusText(p.status)}</Tag></div>
                     <div className="td created">
                       {p.created_at ? new Date(p.created_at).toLocaleString(
-                        currentLanguage === 'zh-TW' ? 'zh-TW' : 
-                        currentLanguage === 'zh-CN' ? 'zh-CN' : 
+                        currentLanguage === 'zh-TW' ? 'zh-TW' :
+                        currentLanguage === 'zh-CN' ? 'zh-CN' :
                         'en-US'
                       ) : '-'}
                     </div>
+                    <div className="td courseSlot">{p.course_time_slot || '-'}</div>
                     <div className="td action" style={{ display: 'flex', gap: 8 }}>
                       <Button type="link" icon={<EyeOutlined />} size="small" onClick={() => showDetail(p)}>{t('partners.buttons.view')}</Button>
                       {p.status === 'pending' && (
@@ -238,6 +240,10 @@ export default function Partners() {
                 <div className="detail-item">
                   <label>{t('partners.modal.treatmentCount')}：</label>
                   <span>{selectedPartner.treatment_count || '-'}</span>
+                </div>
+                <div className="detail-item">
+                  <label>{t('partners.table.courseTimeSlot')}：</label>
+                  <span>{selectedPartner.course_time_slot || '-'}</span>
                 </div>
                 <div className="detail-item">
                   <label>{t('partners.table.status')}：</label>

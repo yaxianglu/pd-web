@@ -1025,7 +1025,9 @@ Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
         experienceYears: 'Years of Dental Experience',
         treatmentCount: 'Number of Dental Treatments',
         address: 'Your Address',
-        remarks: 'Any Special Notes?'
+        remarks: 'Any Special Notes?',
+        courseTimeSlot: 'Preferred Free Online Course Session',
+        selectCourseSlot: 'Please select a session'
       },
       submit: 'Submit',
       submitting: 'Submitting...',
@@ -1532,6 +1534,7 @@ Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
       email: 'Email',
       status: 'Status',
       registrationTime: 'Registration Time',
+      courseTimeSlot: 'Course Session',
       action: 'Action'
     },
     buttons: {
