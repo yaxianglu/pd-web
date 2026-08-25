@@ -289,8 +289,8 @@ export default function JoinInfo() {
               onChange={(e) => handleInputChange('courseTimeSlot', e.target.value)}
             >
               <option value="">{t('join.form.fields.selectCourseSlot')}</option>
-              {COURSE_TIME_SLOTS.map((slot) => (
-                <option key={slot} value={slot}>{slot}</option>
+              {COURSE_TIME_SLOTS.map((slot, i) => (
+                <option key={slot} value={slot}>{t(`join.form.courseSlots.slot${i + 1}`)}</option>
               ))}
             </select>
           </div>

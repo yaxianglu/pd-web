@@ -94,7 +94,7 @@ export default function Upload() {
             lastValidatedIdRef.current = regeneratedId;
             nextStep = 1;
             shouldReplace = true;
-            window.alert(t('upload.linkExpiredMessage'));
+            window.alert(t(result.error_code === 'uuid_inactive' ? 'upload.linkInactiveMessage' : 'upload.linkExpiredMessage'));
           } else {
             lastValidatedIdRef.current = id;
           }
@@ -151,7 +151,7 @@ export default function Upload() {
           next.set('id', regeneratedId);
           next.set('step', '1');
           lastValidatedIdRef.current = regeneratedId;
-          window.alert(t('upload.linkExpiredMessage'));
+          window.alert(t('upload.linkInactiveMessage'));
           navigate(`${location.pathname}?${next.toString()}`, { replace: true });
         }
       });

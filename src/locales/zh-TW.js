@@ -461,6 +461,7 @@ export default {
     title: '你的笑容，可以更自然、更自信！',
     description: '透過珍舒美的免費微笑測試，只需幾張照片，就能快速了解您是否適合進行隱形矯正，並獲得專屬建議！',
     linkExpiredMessage: '此微笑測試連結已超過 7 天，系統已為您建立新的測試連結，請重新開始填寫。',
+    linkInactiveMessage: '此微笑測試連結超過 15 分鐘無操作已失效，系統已為您建立新的測試連結，請重新開始填寫。',
     linkCompletedMessage: '此微笑測試已完成上傳，連結已失效。',
     steps: 'step',
     minutes: 'min',
@@ -1022,6 +1023,11 @@ export default {
         remarks: '有什麼特別備註的嗎?',
         courseTimeSlot: '希望參加的免費線上課程時段',
         selectCourseSlot: '請選擇時段'
+      },
+      courseSlots: {
+        slot1: '9月30日 22:00–23:00',
+        slot2: '10月11日 10:00–11:00',
+        slot3: '10月18日 10:00–11:00'
       },
       submit: '提交',
       submitting: '提交中...',

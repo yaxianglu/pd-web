@@ -461,6 +461,7 @@ export default {
     title: 'Unlock Your Best Smile — Naturally and Confidently',
     description: 'Take Shineville’s free smile quiz. Upload just a few photos to see if clear aligners are right for you and get personalized advice instantly.',
     linkExpiredMessage: 'This smile quiz link is more than 7 days old. A new link has been created for you, so please start again.',
+    linkInactiveMessage: 'This smile quiz link expired after 15 minutes of inactivity. A new link has been created for you, so please start again.',
     linkCompletedMessage: 'This smile test has been completed. The link is no longer valid.',
     steps: 'step',
     minutes: 'min',
@@ -1029,6 +1030,11 @@ Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
         remarks: 'Any Special Notes?',
         courseTimeSlot: 'Preferred Free Online Course Session',
         selectCourseSlot: 'Please select a session'
+      },
+      courseSlots: {
+        slot1: 'Sep 30, 10:00–11:00 PM',
+        slot2: 'Oct 11, 10:00–11:00 AM',
+        slot3: 'Oct 18, 10:00–11:00 AM'
       },
       submit: 'Submit',
       submitting: 'Submitting...',
