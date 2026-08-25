@@ -109,9 +109,22 @@ export default function JoinInfo() {
     
     const hasErrors = validateForm();
     if (hasErrors) {
+      messageApi.warning({
+        content: t('join.form.errors.incomplete'),
+        duration: 3,
+        style: { marginTop: '100px' },
+      });
+      // 滚动到第一个出错字段并聚焦（等 React 渲染出 .error 类后再查）
+      setTimeout(() => {
+        const firstError = document.querySelector('.join-info-form .form-input.error');
+        if (firstError) {
+          firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          firstError.focus({ preventScroll: true });
+        }
+      }, 50);
       return;
     }
-    
+
     setIsSubmitting(true);
 
     try {

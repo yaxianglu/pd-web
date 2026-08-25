@@ -1031,7 +1031,8 @@ export default {
         invalidPhone: '請填寫正確的台灣電話號碼格式',
         invalidEmail: '請填寫正確的電子郵箱格式',
         invalidNumber: '請填寫有效的{field}',
-        networkError: '提交失敗：網路錯誤，請稍後重試'
+        networkError: '提交失敗：網路錯誤，請稍後重試',
+        incomplete: '請完整填寫必填項（注意電話和信箱格式）。'
       }
     },
     map: {

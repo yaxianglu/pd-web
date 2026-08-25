@@ -1025,7 +1025,8 @@ export default {
         invalidPhone: '请填写正确的台湾电话号码格式',
         invalidEmail: '请填写正确的电子邮箱格式',
         invalidNumber: '请填写有效的{field}',
-        networkError: '提交失败：网络错误，请稍后重试'
+        networkError: '提交失败：网络错误，请稍后重试',
+        incomplete: '请完整填写必填项（注意电话和邮箱格式）。'
       }
     },
     map: {

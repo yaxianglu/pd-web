@@ -1038,7 +1038,8 @@ Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
         invalidPhone: 'Please enter a valid Taiwan phone number format',
         invalidEmail: 'Please enter a valid email format',
         invalidNumber: 'Please enter a valid {field}',
-        networkError: 'Submission failed: Network error, please try again later'
+        networkError: 'Submission failed: Network error, please try again later',
+        incomplete: 'Please complete all required fields (check phone and email format).'
       }
     },
     map: {
