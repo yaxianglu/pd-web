@@ -461,6 +461,7 @@ export default {
     title: 'Unlock Your Best Smile — Naturally and Confidently',
     description: 'Take Shineville’s free smile quiz. Upload just a few photos to see if clear aligners are right for you and get personalized advice instantly.',
     linkExpiredMessage: 'This smile quiz link is more than 7 days old. A new link has been created for you, so please start again.',
+    linkCompletedMessage: 'This smile test has been completed. The link is no longer valid.',
     steps: 'step',
     minutes: 'min',
     startTest: 'Start Quiz',

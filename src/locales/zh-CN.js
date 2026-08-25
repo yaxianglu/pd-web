@@ -457,6 +457,7 @@ export default {
     title: '你的笑容，可以更自然、更自信！',
     description: '通过珍舒美的免费微笑测试，只需几张照片，就能快速了解您是否适合进行隐形矫正，并获得专属建议！',
     linkExpiredMessage: '此微笑测试链接已超过 7 天，系统已为您建立新的测试链接，请重新开始填写。',
+    linkCompletedMessage: '此微笑测试已完成上传，链接已失效。',
     steps: 'step',
     minutes: 'min',
     startTest: '开始测试',

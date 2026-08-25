@@ -119,6 +119,19 @@ export const smileTestApi = {
     }
   },
 
+  // 刷新上传会话活动时间（切 tab 心跳）
+  async touchSmileTestUuid(uuid) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/smile-test/uuid/${uuid}/touch`, {
+        method: 'POST',
+      });
+      return await response.json();
+    } catch (error) {
+      console.error('Failed to touch smile test UUID:', error);
+      return { success: false, error_code: 'network_error' };
+    }
+  },
+
   // 保存或更新数据（通过UUID，如果存在则更新，不存在则創建）
   async saveOrUpdateSmileTestByUuid(uuid, data) {
     try {

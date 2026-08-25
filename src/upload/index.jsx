@@ -14,6 +14,7 @@ export default function Upload() {
   const { t } = useLanguage();
   const [step, setStep] = useState(1);
   const [isInitializing, setIsInitializing] = useState(true);
+  const [isCompleted, setIsCompleted] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const lastValidatedIdRef = useRef(null);
@@ -77,7 +78,16 @@ export default function Upload() {
           const result = await smileTestApi.validateSmileTestUuid(id);
           if (cancelled) return;
 
-          if (!result.success && result.error_code === 'uuid_expired') {
+          if (!result.success && result.error_code === 'uuid_completed') {
+            setIsCompleted(true);
+            setIsInitializing(false);
+            return;
+          }
+
+          if (
+            !result.success &&
+            (result.error_code === 'uuid_expired' || result.error_code === 'uuid_inactive')
+          ) {
             const regeneratedId = generateUUID();
             params.set('id', regeneratedId);
             params.set('step', '1');
@@ -122,12 +132,30 @@ export default function Upload() {
     if (s !== step) setStep(s);
   }, [location.search, step]);
 
-  // 封裝設置步驟：同時更新 URL
+  // 封裝設置步驟：同時更新 URL，並在切換時觸發 touch 心跳
   const handleSetStep = (nextStep) => {
     const resolved = typeof nextStep === 'function' ? nextStep(step) : nextStep;
     const clamped = clampStep(resolved);
     setStep(clamped);
     updateQueryParams({ step: clamped });
+
+    const params = new URLSearchParams(location.search);
+    const id = params.get('id');
+    if (id) {
+      smileTestApi.touchSmileTestUuid(id).then((res) => {
+        if (res && res.error_code === 'uuid_completed') {
+          setIsCompleted(true);
+        } else if (res && res.error_code === 'uuid_inactive') {
+          const regeneratedId = generateUUID();
+          const next = new URLSearchParams(location.search);
+          next.set('id', regeneratedId);
+          next.set('step', '1');
+          lastValidatedIdRef.current = regeneratedId;
+          window.alert(t('upload.linkExpiredMessage'));
+          navigate(`${location.pathname}?${next.toString()}`, { replace: true });
+        }
+      });
+    }
   };
 
   if (isInitializing) {
@@ -141,6 +169,24 @@ export default function Upload() {
           <div className="step1-wrapper">
             <div className="step1-content">
               <div className="loading">{t('upload.step1Form.loading')}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (isCompleted) {
+    return (
+      <div className="upload-wrapper">
+        <div className="upload-top">
+          <img src={p2} alt="p2" />
+          {t('upload.brandName')}
+        </div>
+        <div className="upload-content-wrapper">
+          <div className="step1-wrapper">
+            <div className="step1-content">
+              <div className="loading">{t('upload.linkCompletedMessage')}</div>
             </div>
           </div>
         </div>
