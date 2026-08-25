@@ -57,7 +57,7 @@ function App() {
               <Route path="/join" element={<Join />} />
               <Route path="/upload" element={<Upload />} />
               <Route path="/partners" element={
-                <ProtectedRoute requiredRole="operator">
+                <ProtectedRoute allowedRoles={["admin","super_admin","market"]}>
                   <Partners />
                 </ProtectedRoute>
               } />
