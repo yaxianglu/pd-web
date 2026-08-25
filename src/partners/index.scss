@@ -22,7 +22,7 @@
   .table {
     .thead {
       display: grid;
-      grid-template-columns: 80px 1.1fr 1.4fr 1fr 1.4fr .8fr 1.2fr .8fr 60px;
+      grid-template-columns: 80px 1.1fr 1.4fr 1fr 1.4fr .8fr 1.2fr 1fr .8fr 60px;
       background: #06cbc5;
       color: #fff;
       border-radius: 6px 6px 0 0;
@@ -37,7 +37,7 @@
 
         .row-main {
           display: grid;
-          grid-template-columns: 80px 1.1fr 1.4fr 1fr 1.4fr .8fr 1.2fr .8fr 60px;
+          grid-template-columns: 80px 1.1fr 1.4fr 1fr 1.4fr .8fr 1.2fr 1fr .8fr 60px;
           align-items: center;
           background: #cceff0;
           padding: 12px 0;
