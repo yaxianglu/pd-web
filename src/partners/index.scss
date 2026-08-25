@@ -22,11 +22,11 @@
   .table {
     .thead {
       display: grid;
-      grid-template-columns: 80px 1.1fr 1.4fr 1fr 1.4fr .8fr 1.2fr 1fr .8fr 60px;
+      grid-template-columns: 80px minmax(0,1.1fr) minmax(0,1.4fr) minmax(0,1fr) minmax(0,1.4fr) minmax(0,.8fr) minmax(0,1.2fr) minmax(0,1.4fr) 210px 60px;
       background: #06cbc5;
       color: #fff;
       border-radius: 6px 6px 0 0;
-      .th { padding: 14px 18px; font-weight: 700; font-size: 14px; }
+      .th { padding: 14px 18px; font-weight: 700; font-size: 14px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .th.caret { text-align: right; padding-right: 20px; }
     }
 
@@ -37,11 +37,12 @@
 
         .row-main {
           display: grid;
-          grid-template-columns: 80px 1.1fr 1.4fr 1fr 1.4fr .8fr 1.2fr 1fr .8fr 60px;
+          grid-template-columns: 80px minmax(0,1.1fr) minmax(0,1.4fr) minmax(0,1fr) minmax(0,1.4fr) minmax(0,.8fr) minmax(0,1.2fr) minmax(0,1.4fr) 210px 60px;
           align-items: center;
           background: #cceff0;
           padding: 12px 0;
-          .td { padding: 0 18px; font-size: 14px; color: #333; }
+          .td { padding: 0 18px; font-size: 14px; color: #333; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+          .td.action { overflow: visible; }
           .td.caret { text-align: right; padding-right: 20px; color: #8c8c8c; }
           .arrow { transition: transform .2s; }
           .arrow.up { transform: rotate(180deg); }
