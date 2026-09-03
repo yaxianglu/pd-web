@@ -18,7 +18,7 @@ export default function Thumbnail(props) {
   const navigate = useNavigate();
   const handleClick = (button) => {
     if (button === '微笑測試' || button === 'Smile Quiz' || button === '微笑测试') {
-      window.open('/upload', '_blank');
+      window.open('/upload?new=1', '_blank');
     } else if (button === '關於珍舒美' || button === '关于珍舒美' || button === 'About Pearl Digital') {
       navigate('/about');
     }

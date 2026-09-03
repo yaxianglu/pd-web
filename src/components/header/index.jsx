@@ -169,7 +169,7 @@ export default function Header() {
         </>
         )}
         
-        <button className="test-btn" onClick={() => window.open('/upload', '_blank')}>
+        <button className="test-btn" onClick={() => window.open('/upload?new=1', '_blank')}>
           {t('navigation.smileTest')} <span className="star">✦</span>
         </button>
       </div>

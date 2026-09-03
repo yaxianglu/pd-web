@@ -28,7 +28,7 @@ export default function FeatureGrid() {
     {
       image: homepageCards.smileTest,
       alt: t('home.featureGrid.smileTest.title'),
-      onClick: () => window.open('/upload', '_blank'),
+      onClick: () => window.open('/upload?new=1', '_blank'),
     },
   ];
 

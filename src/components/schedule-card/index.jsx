@@ -5,6 +5,7 @@ import "antd/dist/reset.css";
 import "./index.scss";
 import png13 from "../../asserts/13.png";
 import { useAuth } from "../../context/AuthContext";
+import * as uploadSession from "../../upload/uploadSession";
 import HistoryModal from "../history-modal";
 
 export default function ScheduleCard({
@@ -735,8 +736,9 @@ export default function ScheduleCard({
               onClick={() => {
                 if (userType === 'patient') {
                   const idForUpload = smileTestUuid || currentPatient?.uuid;
-                  const url = idForUpload ? `/upload?id=${encodeURIComponent(idForUpload)}&step=4` : '/upload';
-                  window.open(url, '_blank');
+                  // 写入本地会话定位到自己那份测试，不把 id 放进 URL
+                  if (idForUpload) uploadSession.setSessionId(idForUpload, 4);
+                  window.open('/upload', '_blank');
                 } else {
                   staffUploadAnyFile();
                 }

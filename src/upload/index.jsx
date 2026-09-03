@@ -8,113 +8,69 @@ import Step1 from './step1';
 import Step2 from './step2';
 import Step3 from './step3';
 import { smileTestApi } from '../services/smileTestApi';
+import * as session from './uploadSession';
 import './index.scss';
+
+const clampStep = (value) => Math.max(1, Math.min(4, Number(value) || 1));
 
 export default function Upload() {
   const { t } = useLanguage();
-  const [step, setStep] = useState(1);
+  // 用 ref 持有最新 t：t 每次渲染都是新函数，放进 effect 依赖会因语言自动检测重跑而卡住初始化。
+  const tRef = useRef(t);
+  useEffect(() => { tRef.current = t; }, [t]);
+
+  const [step, setStepState] = useState(1);
   const [isInitializing, setIsInitializing] = useState(true);
   const [isCompleted, setIsCompleted] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const lastValidatedIdRef = useRef(null);
 
-  // 生成UUID
-  const generateUUID = () => {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      const r = Math.floor(Math.random() * 16);
-      const v = c === 'x' ? r : ((r & 0x3) | 0x8);
-      return v.toString(16);
-    });
-  };
-
-  // 将某些查詢參數寫回 URL（保留其餘參數）
-  const updateQueryParams = (patch) => {
-    const params = new URLSearchParams(location.search);
-    Object.keys(patch).forEach((key) => {
-      const value = patch[key];
-      if (value === undefined || value === null) {
-        params.delete(key);
-      } else {
-        params.set(key, String(value));
-      }
-    });
-    navigate(`${location.pathname}?${params.toString()}`, { replace: true });
-  };
-
-  const clampStep = (value) => Math.max(1, Math.min(4, Number(value) || 1));
-
-  // 初始：確保存在 id，並在渲染表單前驗證是否為過期連結
+  // 初始化会话。核心安全规则：URL 里出现的任何 id 一律【不采纳】，
+  // 只信任 localStorage；带 id/new/其它 query 的链接都清成干净的 /upload。
   useEffect(() => {
     let cancelled = false;
 
     const initializeUploadSession = async () => {
       const params = new URLSearchParams(location.search);
-      let id = params.get('id');
-      const hadIdInUrl = Boolean(id);
-      const shouldBlockRender = !id || (hadIdInUrl && lastValidatedIdRef.current !== id);
+      const hasQuery = Boolean(location.search && location.search.length > 1);
 
-      if (shouldBlockRender) {
-        setIsInitializing(true);
-      }
-
-      let shouldReplace = false;
-
-      if (!id) {
-        id = generateUUID();
-        params.set('id', id);
-        lastValidatedIdRef.current = id;
-        shouldReplace = true;
-      }
-
-      let nextStep = clampStep(params.get('step'));
-      if (params.get('step') !== String(nextStep)) {
-        params.set('step', String(nextStep));
-        shouldReplace = true;
-      }
-
-      if (hadIdInUrl && id && lastValidatedIdRef.current !== id) {
-        try {
-          const result = await smileTestApi.validateSmileTestUuid(id);
-          if (cancelled) return;
-
-          if (!result.success && result.error_code === 'uuid_completed') {
-            setIsCompleted(true);
-            setIsInitializing(false);
-            return;
-          }
-
-          if (
-            !result.success &&
-            (result.error_code === 'uuid_expired' || result.error_code === 'uuid_inactive')
-          ) {
-            const regeneratedId = generateUUID();
-            params.set('id', regeneratedId);
-            params.set('step', '1');
-            lastValidatedIdRef.current = regeneratedId;
-            nextStep = 1;
-            shouldReplace = true;
-            window.alert(t(result.error_code === 'uuid_inactive' ? 'upload.linkInactiveMessage' : 'upload.linkExpiredMessage'));
-          } else {
-            lastValidatedIdRef.current = id;
-          }
-        } catch (error) {
-          console.error('Failed to validate upload UUID:', error);
-          lastValidatedIdRef.current = id;
+      if (hasQuery) {
+        // 带 id(老链接/泄漏链接) 或 new(各 CTA 入口) → 开一份全新测试，忽视 URL 里的 id
+        if (params.has('id') || params.has('new')) {
+          session.startNewSession();
         }
-      }
-
-      if (cancelled) return;
-
-      if (step !== nextStep) {
-        setStep(nextStep);
-      }
-
-      if (shouldReplace) {
-        navigate(`${location.pathname}?${params.toString()}`, { replace: true });
+        // 无论何种 query，都把地址栏清干净；渲染逻辑留给“干净 URL”的这次重跑处理
+        navigate('/upload', { replace: true });
         return;
       }
 
+      // 干净的 /upload：从 localStorage 续填；没有则新建一份
+      let current = session.getSession() || session.startNewSession();
+
+      try {
+        const result = await smileTestApi.validateSmileTestUuid(current.id);
+        if (cancelled) return;
+
+        if (!result.success && result.error_code === 'uuid_completed') {
+          setIsCompleted(true);
+          setIsInitializing(false);
+          return;
+        }
+
+        if (
+          !result.success &&
+          (result.error_code === 'uuid_expired' || result.error_code === 'uuid_inactive')
+        ) {
+          current = session.startNewSession();
+          window.alert(tRef.current(result.error_code === 'uuid_inactive' ? 'upload.linkInactiveMessage' : 'upload.linkExpiredMessage'));
+        }
+      } catch (error) {
+        // 校验失败/超时不阻塞进入（新建的 uuid 后端本就不存在，属正常）
+        console.error('Failed to validate upload UUID:', error);
+      }
+
+      if (cancelled) return;
+      setStepState(clampStep(current.step));
       setIsInitializing(false);
     };
 
@@ -123,36 +79,25 @@ export default function Upload() {
     return () => {
       cancelled = true;
     };
-  }, [location.pathname, location.search, navigate, step, t]);
+  }, [location.search, navigate]);
 
-  // 當 URL 查詢中的 step 改變（例如使用瀏覽器前進/後退），同步到本地 state
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const s = clampStep(params.get('step'));
-    if (s !== step) setStep(s);
-  }, [location.search, step]);
-
-  // 封裝設置步驟：同時更新 URL，並在切換時觸發 touch 心跳
+  // 封裝設置步驟：写入 localStorage，並在切換時觸發 touch 心跳
   const handleSetStep = (nextStep) => {
     const resolved = typeof nextStep === 'function' ? nextStep(step) : nextStep;
     const clamped = clampStep(resolved);
-    setStep(clamped);
-    updateQueryParams({ step: clamped });
+    setStepState(clamped);
+    session.setStep(clamped);
 
-    const params = new URLSearchParams(location.search);
-    const id = params.get('id');
-    if (id) {
-      smileTestApi.touchSmileTestUuid(id).then((res) => {
+    const current = session.getSession();
+    if (current && current.id) {
+      smileTestApi.touchSmileTestUuid(current.id).then((res) => {
         if (res && res.error_code === 'uuid_completed') {
           setIsCompleted(true);
         } else if (res && res.error_code === 'uuid_inactive') {
-          const regeneratedId = generateUUID();
-          const next = new URLSearchParams(location.search);
-          next.set('id', regeneratedId);
-          next.set('step', '1');
-          lastValidatedIdRef.current = regeneratedId;
-          window.alert(t('upload.linkInactiveMessage'));
-          navigate(`${location.pathname}?${next.toString()}`, { replace: true });
+          // 15 分钟无操作失效：换新测试并重载到干净初始态
+          session.startNewSession();
+          window.alert(tRef.current('upload.linkInactiveMessage'));
+          window.location.reload();
         }
       });
     }

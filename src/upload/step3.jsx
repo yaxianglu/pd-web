@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import QRCode from 'qrcode';
 import { useLocation } from 'react-router-dom';
 import { Modal, Button } from 'antd';
 import { smileTestApi } from '../services/smileTestApi';
 import apiService from '../services/api';
+import * as session from './uploadSession';
 import { useLanguage } from '../context/LanguageContext';
 import './step3.scss';
 import p7 from './imgs/7.png';
@@ -21,45 +21,6 @@ const pMap = {
   4: [p17, p17]
 }
 
-// 二维码组件
-const QRCodeComponent = ({ url, size = 120, onClick }) => {
-  const [qrCodeUrl, setQrCodeUrl] = useState('');
-
-  useEffect(() => {
-    if (url) {
-      QRCode.toDataURL(url, {
-        width: size,
-        margin: 2,
-        color: {
-          dark: '#000000',
-          light: '#FFFFFF'
-        }
-      })
-      .then(url => {
-        setQrCodeUrl(url);
-      })
-      .catch(err => {
-        console.error('生成二维码失败:', err);
-      });
-    }
-  }, [url, size]);
-
-  return qrCodeUrl ? (
-    <img 
-      src={qrCodeUrl} 
-      alt="二维码" 
-      style={{ 
-        width: size, 
-        height: size,
-        borderRadius: '8px',
-        border: '2px solid rgba(255, 255, 255, 0.2)',
-        cursor: onClick ? 'pointer' : 'default'
-      }} 
-      onClick={onClick}
-    />
-  ) : null;
-};
-
 export default function Step3({ onNext, setStep, style }) {
   const location = useLocation();
   const { t } = useLanguage();
@@ -69,7 +30,6 @@ export default function Step3({ onNext, setStep, style }) {
   const [isVideoReady, setIsVideoReady] = useState(false);
   const [stream, setStream] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [showQrFull, setShowQrFull] = useState(false);
   const [saving, setSaving] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   
@@ -79,13 +39,9 @@ export default function Step3({ onNext, setStep, style }) {
   const cameraInputRef = useRef(null);
 
   // 获取当前URL
-  const currentUrl = window.location.href;
 
   // 从URL获取UUID
-  const getTestUuid = () => {
-    const urlParams = new URLSearchParams(location.search);
-    return urlParams.get('id');
-  };
+  const getTestUuid = () => session.getTestUuid();
 
   // 保存照片到数据库
   const savePhotoToDatabase = async (photoData) => {
@@ -234,6 +190,8 @@ export default function Step3({ onNext, setStep, style }) {
       
       if (result.success) {
         console.log('✅ Test completed successfully with all 4 photos saved');
+        // 上传完成：清空本地会话，下次进 /upload 自然是全新测试
+        session.clearSession();
         // 显示成功Modal
         setShowSuccessModal(true);
         // 调用onNext回调
@@ -659,9 +617,6 @@ export default function Step3({ onNext, setStep, style }) {
           </div>
           {!isMobile && (
             <div className="mobile-prompt" onClick={selectFromGallery}>
-              <div className="mobile-icon">
-                <QRCodeComponent url={currentUrl} size={80} onClick={e => { e.stopPropagation(); setShowQrFull(true); }} />
-              </div>
               <span>{t('upload.step3Form.mobilePrompt')}</span>
             </div>
           )}
@@ -855,14 +810,6 @@ export default function Step3({ onNext, setStep, style }) {
           onChange={handleCameraFileSelect}
           style={{ display: 'none' }}
         />
-        {/* 全屏二维码遮罩 */}
-        {showQrFull && (
-          <div className="qr-fullscreen-mask" onClick={() => setShowQrFull(false)}>
-            <QRCodeComponent url={currentUrl} size={280} />
-            <div className="qr-fullscreen-tip">{t('upload.step3Form.qrCloseTip')}</div>
-          </div>
-        )}
-
         {/* 成功提示Modal */}
         <Modal
           title={t('upload.step3Form.successModal.title')}

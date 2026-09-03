@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import BirthdayPicker from '../components/birthday';
 import { smileTestApi } from '../services/smileTestApi';
+import * as session from './uploadSession';
 import './step1.scss';
 
 export default function Step1({ onNext, style, setStep }) {
@@ -20,11 +21,8 @@ export default function Step1({ onNext, style, setStep }) {
   const [phoneError, setPhoneError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // 从URL获取UUID
-  const getTestUuid = () => {
-    const urlParams = new URLSearchParams(location.search);
-    return urlParams.get('id');
-  };
+  // 从 localStorage 会话获取 UUID（不再从 URL 读，避免 id 暴露）
+  const getTestUuid = () => session.getTestUuid();
 
   // 从API获取数据
   const fetchData = async () => {

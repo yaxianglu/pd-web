@@ -3,13 +3,18 @@ import { API_BASE_URL } from '../contants';
 export const smileTestApi = {
   // 验证微笑测试 UUID 是否可继续使用
   async validateSmileTestUuid(uuid) {
+    // 加超时：请求卡住时快速失败，避免上传页永久停留在“载入中”
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 10000);
     try {
-      const response = await fetch(`${API_BASE_URL}/api/smile-test/validate-uuid/${uuid}`);
+      const response = await fetch(`${API_BASE_URL}/api/smile-test/validate-uuid/${uuid}`, { signal: controller.signal });
       const result = await response.json();
       return result;
     } catch (error) {
       console.error('Failed to validate smile test UUID:', error);
       throw error;
+    } finally {
+      clearTimeout(timer);
     }
   },
 

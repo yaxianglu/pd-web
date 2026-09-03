@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { smileTestApi } from '../services/smileTestApi';
+import * as session from './uploadSession';
 import './step2.scss';
 import p3 from './imgs/3.png';
 import p4 from './imgs/4.png';
@@ -38,10 +39,7 @@ export default function Step2({ onNext, setStep, style }) {
   ];
 
   // 从URL获取UUID
-  const getTestUuid = () => {
-    const urlParams = new URLSearchParams(location.search);
-    return urlParams.get('id');
-  };
+  const getTestUuid = () => session.getTestUuid();
 
   // 从API获取数据
   const fetchData = async () => {

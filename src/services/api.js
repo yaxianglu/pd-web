@@ -94,7 +94,16 @@ class ApiService {
   // 处理响应
   async handleResponse(response) {
     if (response.status === 401) {
-      // Token过期，尝试刷新
+      // 未登录状态下的 401 = 该请求本身鉴权失败(如登录密码错误)：
+      // 把服务器的错误信息抛给调用方显示，不做整页跳转/清状态，
+      // 否则会在登录组件展示“密码错误”之前就整页刷新回登录页，表现为“登不进去/闪一下”。
+      const hasSession = !!localStorage.getItem('auth_token') || !!localStorage.getItem('refresh_token');
+      if (!hasSession) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || '認證失敗');
+      }
+
+      // 已登录：可能是 token 过期，尝试刷新
       const refreshSuccess = await this.refreshToken();
       if (!refreshSuccess) {
         // 刷新失败，清除登录狀態

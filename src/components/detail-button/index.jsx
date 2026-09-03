@@ -16,7 +16,7 @@ export default function DetailButton({ text, style, size, disabled, onClick }) {
       case '微笑測試':
       case '微笑测试':
       case t('common.smileTest'):
-        window.open('/upload', '_blank');
+        window.open('/upload?new=1', '_blank');
         break;
       case '關於珍舒美':
       case t('about.title'):
@@ -36,18 +36,18 @@ export default function DetailButton({ text, style, size, disabled, onClick }) {
       case 'Start Your Smile Journey':
       case '開啟你的微笑旅程':
       case '开启你的微笑旅程':
-        window.open('/upload', '_blank');
+        window.open('/upload?new=1', '_blank');
         break;
       case '我需要哪種治療？':
       case '我需要哪种治疗？':
       case 'Which Plan Suits Me?':
       case 'What Treatment Do I Need?':
-        window.open('/upload', '_blank');
+        window.open('/upload?new=1', '_blank');
         break;
       case '了解你的牙齒狀況':
       case 'Understand Your Dental Condition':
       case 'Learn about your dental condition':
-        window.open('/upload', '_blank');
+        window.open('/upload?new=1', '_blank');
         break;
       default:
         break;

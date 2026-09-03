@@ -28,7 +28,7 @@ export default function PageCom() {
           subtitle={t('brand.tagline')}
           button1={<div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row' }}><span>{t('home.button1')}</span><span>{t('home.button11')}</span></div>}
           button2={<div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row' }}><span>{t('home.button2')}</span><span>{t('home.button21')}</span></div>}
-          onButton1Click={() => window.open('/upload', '_blank')}
+          onButton1Click={() => window.open('/upload?new=1', '_blank')}
           onButton2Click={() => navigate('/about')}
           image={marketingImages.homeHero}
           description={<>{t('home.description')}<br />{t('home.description2')}</>}

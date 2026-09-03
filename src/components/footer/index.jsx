@@ -116,7 +116,7 @@ export default function Footer({ style }) {
               </div>
               <div 
                 className="column-item"
-                onClick={() => handleItemClick('/upload')}
+                onClick={() => handleItemClick('/upload?new=1')}
                 style={{ cursor: 'pointer' }}
               >
                 {t('services.smileUpgrade')}
