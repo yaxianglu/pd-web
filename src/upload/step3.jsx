@@ -615,11 +615,6 @@ export default function Step3({ onNext, setStep, style }) {
               {t('upload.step3Form.instruction')}
             </div>
           </div>
-          {!isMobile && (
-            <div className="mobile-prompt" onClick={selectFromGallery}>
-              <span>{t('upload.step3Form.mobilePrompt')}</span>
-            </div>
-          )}
         </div>
 
         {/* 中部拍照区域 */}
