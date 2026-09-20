@@ -346,6 +346,13 @@ export default function MarketDashboard({ items: inputItems = null, bizId = '320
           labels={{
             seq: t('admin.table.seq'),
             patientName: t('admin.table.patientName'),
+            gender: t('admin.table.gender'),
+            age: t('admin.table.age'),
+            genderMap: {
+              male: t('upload.step1Form.genderOptions.male'),
+              female: t('upload.step1Form.genderOptions.female'),
+              other: t('upload.step1Form.genderOptions.other'),
+            },
             phone: t('admin.table.phone'),
             email: t('admin.table.email'),
             lineId: t('admin.table.lineId'),

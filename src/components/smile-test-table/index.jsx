@@ -4,6 +4,18 @@ import './index.scss';
 
 const SMILE_TEST_TABLE_SCROLL_X = 1908;
 
+// 由生日实时计算年龄（后台展示用，不入库）
+function computeAge(birthDate) {
+  if (!birthDate) return null;
+  const d = new Date(birthDate);
+  if (Number.isNaN(d.getTime())) return null;
+  const now = new Date();
+  let age = now.getFullYear() - d.getFullYear();
+  const m = now.getMonth() - d.getMonth();
+  if (m < 0 || (m === 0 && now.getDate() < d.getDate())) age -= 1;
+  return age >= 0 && age < 130 ? age : null;
+}
+
 function TextCell({ value, strong = false }) {
   const displayValue = value || '—';
 
@@ -66,6 +78,30 @@ export default function SmileTestTable({
         width: 180,
         render: (value) => <TextCell value={value} strong />,
       },
+      // 性别 / 年龄列：仅当调用方传入 labels.gender 时显示（后台视图）
+      ...(labels.gender
+        ? [
+            {
+              title: labels.gender,
+              dataIndex: 'gender',
+              key: 'gender',
+              width: 100,
+              render: (value) => (
+                <TextCell value={(labels.genderMap && labels.genderMap[value]) || undefined} />
+              ),
+            },
+            {
+              title: labels.age,
+              dataIndex: 'birth_date',
+              key: 'age',
+              width: 90,
+              render: (value) => {
+                const age = computeAge(value);
+                return <TextCell value={age === null ? undefined : String(age)} />;
+              },
+            },
+          ]
+        : []),
       {
         title: labels.phone,
         dataIndex: 'phone',
@@ -162,7 +198,7 @@ export default function SmileTestTable({
         loading={loading}
         rowKey="rowKey"
         pagination={false}
-        scroll={{ x: SMILE_TEST_TABLE_SCROLL_X }}
+        scroll={{ x: SMILE_TEST_TABLE_SCROLL_X + (labels.gender ? 190 : 0) }}
         sticky
         rowClassName={() => 'smile-test-table-row'}
         expandable={{

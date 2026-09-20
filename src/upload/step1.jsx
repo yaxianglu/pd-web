@@ -12,6 +12,7 @@ export default function Step1({ onNext, style, setStep }) {
   const [formData, setFormData] = useState({
     full_name: '',
     birth_date: '',
+    gender: '',
     phone: '',
     email: '',
     line_id: '',
@@ -45,19 +46,15 @@ export default function Step1({ onNext, style, setStep }) {
         setFormData({
           full_name: smile?.full_name || patient?.full_name || '',
           birth_date: birthDateNormalized,
+          gender: smile?.gender || patient?.gender || '',
           phone: smile?.phone || patient?.phone || '',
           email: smile?.email || patient?.email || '',
           line_id: smile?.line_id || patient?.line_id || '',
           city: smile?.city || patient?.city || ''
         });
-      } else {
-        // 若記錄不存在，先創建一筆空記錄，避免後續步驟查不到資料
-        try {
-          await smileTestApi.saveOrUpdateSmileTestByUuid(testUuid, { test_status: 'in_progress' });
-        } catch (e) {
-          console.error('Failed to initialize smile test record:', e);
-        }
       }
+      // 記錄不存在時【不再】預建空記錄：避免每次打開 /upload 都在後端塞一條空的 in_progress
+      // 造成後台數據重複。記錄改為在用戶首次提交(step1 handleSubmit→saveData)時才創建。
     } catch (error) {
       console.error('Failed to fetch data:', error);
     } finally {
@@ -186,6 +183,20 @@ export default function Step1({ onNext, style, setStep }) {
               onChange={handleBirthdayChange}
               placeholder={t('upload.step1Form.birthday')}
             />
+          </div>
+
+          <div className="form-group">
+            <select
+              name="gender"
+              value={formData.gender}
+              onChange={handleInputChange}
+              required
+            >
+              <option value="">{t('upload.step1Form.gender')}</option>
+              <option value="male">{t('upload.step1Form.genderOptions.male')}</option>
+              <option value="female">{t('upload.step1Form.genderOptions.female')}</option>
+              <option value="other">{t('upload.step1Form.genderOptions.other')}</option>
+            </select>
           </div>
 
           <div className="form-group">

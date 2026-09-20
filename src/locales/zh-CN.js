@@ -487,6 +487,8 @@ export default {
       email: '电子信箱',
       lineId: 'LINE ID',
       city: '选择县市',
+      gender: '选择性别',
+      genderOptions: { male: '男', female: '女', other: '其他' },
       phoneError: '请输入正确的台湾手机号码格式 (09xxxxxxxx)',
       consent: '点击此处即表示你接受我们的使用者条款和隐私权条款，并同意根据隐私权条款内之内容，透过LINE、SMS 或其他管道联系我',
       nextButton: '下一步',
@@ -535,8 +537,8 @@ export default {
       qrCloseTip: '点击任意处关闭',
       successModal: {
         title: '提交成功',
-        message1: '您的微笑测试已完成并成功提交！',
-        message2: '感谢您的参与，我们会尽快为您分析结果。',
+        message1: '感谢您参加珍舒美微笑测试！',
+        message2: '请点击下方官方 LINE 链接加入我们，并发送您填写的「微笑测试姓名」告知小编，我们将尽速为您确认资料并安排后续预约流程哦～',
         qrTitle: '加入官方 LINE',
         qrDescription: '扫描二维码或点击下方按钮，即可加入官方 LINE 取得后续联系。',
         openLineButton: '打开官方 LINE',
@@ -1325,6 +1327,8 @@ export default {
     table: {
       seq: '编号',
       patientName: '患者名称',
+      gender: '性别',
+      age: '年龄',
       phone: '手机号码',
       email: '电子信箱',
       lineId: 'Line ID',

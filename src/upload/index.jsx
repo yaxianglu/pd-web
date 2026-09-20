@@ -35,8 +35,11 @@ export default function Upload() {
       const hasQuery = Boolean(location.search && location.search.length > 1);
 
       if (hasQuery) {
-        // 带 id(老链接/泄漏链接) 或 new(各 CTA 入口) → 开一份全新测试，忽视 URL 里的 id
-        if (params.has('id') || params.has('new')) {
+        // 安全：URL 里出现的任何 id 一律【不采纳】，只信任 localStorage。
+        // 防重复：不再“带 query 就铸新 UUID”。仅当本地【没有任何进行中的会话】时才开一份新的；
+        // 已有会话则复用它——避免同一人重复点 CTA / 重开链接各自生成新 UUID、后端各建一条记录。
+        // 完成上传时 step3 会 clearSession()，届时再进来自然是全新测试。
+        if ((params.has('id') || params.has('new')) && !session.getSession()) {
           session.startNewSession();
         }
         // 无论何种 query，都把地址栏清干净；渲染逻辑留给“干净 URL”的这次重跑处理

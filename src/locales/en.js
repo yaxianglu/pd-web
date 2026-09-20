@@ -491,6 +491,8 @@ export default {
       email: 'Email',
       lineId: 'LINE ID',
       city: 'Select City',
+      gender: 'Select Gender',
+      genderOptions: { male: 'Male', female: 'Female', other: 'Other' },
       phoneError: 'Please enter the correct Taiwan mobile phone number format (09xxxxxxxx)',
       consent: 'By clicking, you agree to our Terms of Use and Privacy Policy, and consent to us contacting you through LINE, SMS, or other methods as outlined in the policy.',
       nextButton: 'Next',
@@ -539,8 +541,8 @@ export default {
       qrCloseTip: 'Click anywhere to close',
       successModal: {
         title: 'Submission Successful',
-        message1: 'Your smile quiz has been completed and successfully submitted!',
-        message2: 'Thank you for your participation. We will analyze the results for you as soon as possible.',
+        message1: 'Thank you for taking the PEARL DIGITAL Smile Test!',
+        message2: 'Please tap the official LINE link below to add us, then send us the name you entered for the Smile Test so our team can verify your details and arrange your appointment as soon as possible.',
         qrTitle: 'Join Our Official LINE',
         qrDescription: 'Scan the QR code or use the button below to connect with our official LINE account for follow-up support.',
         openLineButton: 'Open Official LINE',
@@ -1337,6 +1339,8 @@ Offline promo kits (QR codes, brochures, clinic profile pages, and more)`
     table: {
       seq: 'No.',
       patientName: 'Patient Name',
+      gender: 'Gender',
+      age: 'Age',
       phone: 'Phone',
       email: 'Email',
       lineId: 'Line ID',
